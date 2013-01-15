@@ -1,0 +1,28 @@
+  ------
+ AppFuse Maven Plugin - Simple Configuration
+ ------
+ Matt Raible
+ <matt@raibledesigns.com>
+ ------
+ 2 September 2007
+
+Overview
+
+  The following configuration should work for any project created with AppFuse.
+
+Example
+
++---
+<project>
+...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appfuse-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+...
+</project>
++---
