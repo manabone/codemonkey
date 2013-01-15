@@ -1,0 +1,69 @@
+<archetype-descriptor
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+  
+	<fileSets>
+		<fileSet filtered="true" packaged="true" encoding="utf-8">
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="true" encoding="utf-8">
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>**/*.xml</include>
+				<include>**/*.properties</include>
+			</includes>
+			<excludes>
+				<exclude>META-INF/maven/archetype-metadata.xml</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet>
+			<directory></directory>
+			<excludes>
+				<exclude>.classpath</exclude>
+				<exclude>.project</exclude>
+				<exclude>create-project.bat.txt</exclude>
+				<exclude>logs</exclude>
+				<exclude>target</exclude>
+				<exclude>sonar-project.proterties</exclude>
+				<exclude>test.txt</exclude>
+				<exclude>test1.txt</exclude>
+				<exclude>todo.proterties</exclude>
+			</excludes>
+		</fileSet>
+		
+		<fileSet  filtered="true" packaged="true" encoding="utf-8">
+			<directory>target</directory>
+			<excludes>
+				<exclude>classes</exclude>
+				<exclude>test-classes</exclude>
+				<exclude>**/*.jar</exclude>
+			</excludes>	
+		</fileSet>
+		
+		<fileSet filtered="true" packaged="true" encoding="utf-8">
+			<directory>code-templates/default/src/main/java</directory>
+			<includes>
+				<include>**/*.java.ftl</include>
+			</includes>
+			<excludes />
+		</fileSet>
+		<fileSet filtered="true" packaged="true" encoding="utf-8">
+			<directory>code-templates/default/src/main/resources</directory>
+			<includes>
+				<include>**/*.properties.ftl</include>
+			</includes>
+			<excludes />
+		</fileSet>
+		<fileSet filtered="false" packaged="false" encoding="utf-8">
+			<directory>code-templates/default/src/main/webapp</directory>
+			<includes>
+				<include>**/*.js.ftl</include>
+			</includes>
+			<excludes />
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

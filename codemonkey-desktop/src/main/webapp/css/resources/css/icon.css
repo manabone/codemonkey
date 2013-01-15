@@ -1,0 +1,44 @@
+.icon-create {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/create_16.png) !important;
+}
+
+.icon-read {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/edit_16.png) !important;
+}
+
+.icon-destroy {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/destroy_16.png) !important;
+}
+
+.icon-update {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/update_16.png) !important;
+}
+
+.icon-back-to-list {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/back_to_list_16.png) !important;
+}
+
+.icon-edit {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/edit_16.png) !important;
+}
+
+.icon-home {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/home_16.png) !important;
+}
+
+.icon-search {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/search_16.png) !important;
+}
+
+.icon-reset {
+    background-repeat:no-repeat !important;
+	background-image:url(../icon/reset_16.png) !important;
+}
