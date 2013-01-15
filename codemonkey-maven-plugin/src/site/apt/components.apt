@@ -1,0 +1,16 @@
+  ------
+ AppFuse Maven Plugin - Component Configuration
+ ------
+ Matt Raible
+ <matt@raibledesigns.com>
+ ------
+ 2 September 2007
+
+Component Configuration
+
+*-------------+--------------------------------------+---------------------------------+
+| <<name>>    | <<outputDirectory>>                  | <<implementation>>
+*-------------+--------------------------------------+---------------------------------+
+*-------------+--------------------------------------+---------------------------------+
+| gen      | target/appfuse/generated-sources  | annotationconfiguration (jdk15)
+*-------------+--------------------------------------+---------------------------------+

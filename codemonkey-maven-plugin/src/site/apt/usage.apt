@@ -1,0 +1,69 @@
+  ------
+ AppFuse Maven Plugin - Usage
+ ------
+ Matt Raible
+ <matt@raibledesigns.com>
+ ------
+ 2 September 2007
+
+Usage
+
+* How to Use
+
+  In the pom.xml, insert this segment.
+
+------------------------------------------------------------------------------
+<project>
+...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appfuse-maven-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <genericCore>true</genericCore> <!-- Set to false if you want Java files generated for your DAOs and Managers -->
+          <fullSource>false</fullSource> <!-- Set to true if you've "full-sourced" your project and changed org.appfuse to your package name -->
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>${jdbc.groupId}</groupId>
+            <artifactId>${jdbc.artifactId}</artifactId>
+            <version>${jdbc.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+...
+</project>
+------------------------------------------------------------------------------
+
+* Using in pre 2.0-M5 Projects
+
+   You should be able to use this plugin in AppFuse projects created with an older 2.x release of AppFuse. However,
+   it does rely on a few "placeholders", so you'll need to make sure the following files have the following text.
+
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| <<File>>                                       | <<Comment Replaced>>                            | <<Web Framework>> |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/webapp/WEB-INF/applicationContext.xml | \<!-- Add new DAOs here --\>                    | All               |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/webapp/WEB-INF/applicationContext.xml | \<!-- Add new Managers here --\>                | All               |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| core/src/main/resources/applicationContext.xml | \<!-- Add new DAOs here --\>                    | All               |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| core/src/main/resources/applicationContext.xml | \<!-- Add new Managers here --\>                | All               |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/webapp/WEB-INF/faces-config.xml       | \<!-- Add additional rules here --\>            | JSF               |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/webapp/WEB-INF/faces-config.xml       | \<!-- Add additional beans here --\>            | JSF               |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/webapp/WEB-INF/dispatcher-servlet.xml | \<!-- Add additional controller beans here --\> | Spring MVC        |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/webapp/WEB-INF/applicationContext.xml | \<!-- Add new Actions here --\>                 | Struts            |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+| src/main/resources/struts.xml                  | \<!-- Add additional actions here --\>          | Struts            |
+*------------------------------------------------+-------------------------------------------------+-------------------+
+
+  If you have issues integrating this plugin in your project, please send an e-mail to the {{{http://appfuse.org/display/APF/Mailing+Lists}user mailing list.}}

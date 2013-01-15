@@ -1,0 +1,201 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>codemonkey-maven-plugin</artifactId>
+    <version>1.0</version>
+    <packaging>maven-plugin</packaging>
+    <name>codemonkey Maven Plugin</name>
+
+	<parent>
+    	<groupId>com.codemonkey</groupId>
+    	<artifactId>codemonkey</artifactId>
+    	<version>1.0.0</version>
+    	<relativePath>../codemonkey/pom.xml</relativePath>
+    </parent>
+    
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+    <build>
+    	<defaultGoal>install</defaultGoal>
+        <plugins>
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <configuration>
+                    <goalPrefix>codemonkey</goalPrefix>
+                </configuration>
+            </plugin>
+
+			<plugin>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-maven-plugin</artifactId>
+				<version>1.3.8</version>
+			</plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+    	<dependency>
+			<groupId>com.codemonkey</groupId>
+			<artifactId>codemonkey-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+    	<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+    
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>${maven-plugin-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-interactivity-api</artifactId>
+            <version>${plexus-interactivity-api.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>plexus</groupId>
+                    <artifactId>plexus-utils</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>${plexus-utils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo.hibernate3</groupId>
+            <artifactId>maven-hibernate3-api</artifactId>
+            <version>${hibernate3.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo.hibernate3</groupId>
+            <artifactId>maven-hibernate3-jdk15</artifactId>
+            <version>${hibernate3.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo.hibernate3</groupId>
+            <artifactId>maven-hibernate3-jdk14</artifactId>
+            <version>${hibernate3.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- This is to support the ant calls within the mojos -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.archetype</groupId>
+            <artifactId>archetype-common</artifactId>
+            <version>${archetype-common.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>${maven-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-embedder</artifactId>
+            <version>${maven-embedder.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-plugin-testing-harness</artifactId>
+            <version>${maven-plugin-testing-harness.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tmatesoft</groupId>
+            <artifactId>svnkit</artifactId>
+            <version>${svnkit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+	        <groupId>org.jyaml</groupId>
+	        <artifactId>jyaml</artifactId>
+	        <version>${jyaml.version}</version> 
+	    </dependency>
+	    
+	    <dependency>
+		   <groupId>org.codehaus.plexus</groupId>
+		   <artifactId>plexus-digest</artifactId>
+		   <version>${plexus-digest.version}</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+         <dependency>
+		   <groupId>commons-lang</groupId>
+		   <artifactId>commons-lang</artifactId>
+		   <version>${commons-lang.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.metaparadigm</groupId>
+		    <artifactId>json-rpc</artifactId>
+		    <version>${json-rpc.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${validation-api.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+    </dependencies>
+    
+    <properties>
+		<freemarker.version>2.3.18</freemarker.version>
+		<maven-plugin-api.version>2.0.8</maven-plugin-api.version>
+		<plexus-interactivity-api.version>1.0-alpha-4</plexus-interactivity-api.version>
+		<plexus-utils.version>1.5.6</plexus-utils.version>
+		<archetype-common.version>2.0-alpha-4</archetype-common.version>
+		<maven-core.version>2.0.8</maven-core.version>
+		<maven-embedder.version>2.0.4</maven-embedder.version>
+		<maven-plugin-testing-harness.version>1.1</maven-plugin-testing-harness.version>
+		<svnkit.version>1.1.2</svnkit.version>
+		<jyaml.version>1.3</jyaml.version>
+		<plexus-digest.version>1.1</plexus-digest.version>
+		<cglib.version>2.2</cglib.version>
+		<hibernate3.plugin.version>2.2</hibernate3.plugin.version>
+    </properties>
+</project>
