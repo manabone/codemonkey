@@ -16,16 +16,6 @@
 		    }
 		});
 	
-		Ext.Loader.setConfig({
-			enabled : true,
-			paths : {
-				'Ext.ux.desktop' : '../../js/desktop/ux',
-				'MyDesktop' : '../../js/desktop',
-				'AM.modules' : '../../js/desktop/modules',
-				'AM' : '../../js/apps'
-			}
-		});	
-		
 		Ext.form.field.Base.prototype.initComponent = function(){
 			var me = this; 
 			Ext.form.field.Base.superclass.initComponent.call(this);

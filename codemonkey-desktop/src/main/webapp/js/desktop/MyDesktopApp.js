@@ -23,14 +23,14 @@ Ext.define('MyDesktopApp', {
         'AM.modules.UploadFileModule'
     ],
     
-    //桌面图标
+    //妗岄潰鍥炬爣
     shortcutItems : [
-        { name: '角色列表', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
+        { name: '瑙掕壊鍒楄〃', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
 		{ name: 'fooList', iconCls: 'grid-shortcut', module: 'fooListModule'},
 		{ name: 'bar', iconCls: 'grid-shortcut', module: 'barModule'},
-		{ name: '树', iconCls: 'grid-shortcut', module: 'treeModule'},
+		{ name: '鏍�' , iconCls: 'grid-shortcut', module: 'treeModule'},
 		{ name: 'tree grid', iconCls: 'grid-shortcut', module: 'treeGridModule'},
-		{ name: '上传文件', iconCls: 'grid-shortcut', module: 'uploadFileModule'},
+		{ name: '涓婁紶鏂囦欢', iconCls: 'grid-shortcut', module: 'uploadFileModule'},
     ],
     
     quickStartItems : [
