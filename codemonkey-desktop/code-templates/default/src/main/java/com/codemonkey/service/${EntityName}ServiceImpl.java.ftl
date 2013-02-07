@@ -1,8 +1,8 @@
-package com.codemonkey.service;
+package ${groupId}.service;
 
 import org.springframework.stereotype.Service;
 
-import com.codemonkey.domain.${EntityName};
+import ${groupId}.domain.${EntityName};
 
 @Service
 public class ${EntityName}ServiceImpl extends GenericServiceImpl<${EntityName}> implements ${EntityName}Service{

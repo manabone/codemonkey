@@ -1,6 +1,6 @@
-package com.codemonkey.service;
+package ${groupId}.service;
 
-import com.codemonkey.domain.${EntityName};
+import ${groupId}.domain.${EntityName};
 
 public interface ${EntityName}Service extends GenericService<${EntityName}>{
 

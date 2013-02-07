@@ -13,8 +13,6 @@ Ext.define('AM.modules.${EntityName}FormModule', {
     modelFields : [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>],
     
     formItems : [
-		<#list fieldsJson as f>
-			${f}<#if f_has_next>,</#if>
-		</#list>
+		${fieldsJson}
     ]
 });
