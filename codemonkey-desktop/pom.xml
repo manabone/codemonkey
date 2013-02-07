@@ -2,11 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.hy</groupId>
-	<artifactId>hy-main</artifactId>
+	<groupId>com.codemonkey</groupId>
+	<artifactId>codemonkey-desktop</artifactId>
 	
 	<packaging>war</packaging>
-	<name>hy-main</name>
+	<name>codemonkey-desktop</name>
 	<url>http://maven.apache.org</url>
 	
 	<parent>
@@ -26,7 +26,11 @@
 			<version>1.0.0</version>
 		</dependency>
 		
-		
+		<dependency>
+			<groupId>com.codemonkey</groupId>
+			<artifactId>codemonkey-erp</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!--				  WEB									 -->
