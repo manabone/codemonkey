@@ -27,7 +27,8 @@ public class AbsEntity implements Serializable{
     @Id
     @GeneratedValue(generator="pkgenerator") 
     @GenericGenerator(name="pkgenerator", strategy = "increment") 
-	private Long id;
+    @Label("自动编号")
+    private Long id;
 	
     @Label("编码")
     @Index(name = "code_index")
@@ -74,11 +75,10 @@ public class AbsEntity implements Serializable{
 	}
 	
 	public boolean isOptimisticLockingFailure() {
-		if (getOriginVersion() == null)
+		if (getOriginVersion() == null){
 			return false;
-		boolean isBadVersion = !getOriginVersion().equals(this.version);
-		originVersion = null;
-		return isBadVersion;
+		}
+		return  !getOriginVersion().equals(this.version);
 	}
 	
 	public void setId(Long id) {
