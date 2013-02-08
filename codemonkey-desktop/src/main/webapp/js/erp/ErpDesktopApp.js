@@ -14,6 +14,9 @@ Ext.define('erp.ErpDesktopApp', {
     extend: 'AM.base.AbsDesktopApp',
 
     requires: [
+		'erp.modules.CustomerListModule',
+		'erp.modules.CustomerFormModule',      
+               
         'AM.modules.FooListModule',
         'AM.modules.FooFormModule',
         'AM.modules.BarModule'
@@ -21,7 +24,8 @@ Ext.define('erp.ErpDesktopApp', {
     
     shortcutItems : [
 		{ name: 'fooList', iconCls: 'grid-shortcut', module: 'fooListModule'},
-		{ name: 'bar', iconCls: 'grid-shortcut', module: 'barModule'}
+		{ name: 'bar', iconCls: 'grid-shortcut', module: 'barModule'},
+		{ name: 'customerList', iconCls: 'grid-shortcut', module: 'customerListModule'}
     ],
     
     quickStartItems : [
@@ -30,6 +34,9 @@ Ext.define('erp.ErpDesktopApp', {
     
     getModules : function(){
         return [
+			new erp.modules.CustomerListModule(),
+			new erp.modules.CustomerFormModule(),  
+			
 			new AM.modules.FooListModule(),
 			new AM.modules.FooFormModule(),
 			new AM.modules.BarModule()
