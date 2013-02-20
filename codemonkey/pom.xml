@@ -155,6 +155,7 @@
 		<dbunit.version>2.2</dbunit.version>
 		<db.name>codemonkey_springmvc</db.name>
 		<test.db.name>${db.name}_test</test.db.name>
+		<basePackage>${groupId}</basePackage>
 	</properties>	
 	
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

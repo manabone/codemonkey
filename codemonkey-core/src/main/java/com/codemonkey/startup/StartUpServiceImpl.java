@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.codemonkey.dbMigration.api.Configure;
 import com.codemonkey.dbMigration.jdbc.DBType;
@@ -32,6 +33,7 @@ import com.codemonkey.web.controller.SecurityController;
 @Component
 @Lazy(false)
 @SuppressWarnings("restriction")
+@Transactional
 public class StartUpServiceImpl implements StartUpService {
 
 	@Autowired private MMServiceHolder mmServiceHolder;
