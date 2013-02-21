@@ -28,7 +28,9 @@ public abstract class DocumentLine extends AbsEE {
 	//abstract methods
 	public abstract Document getHeader();
 	
-	public abstract List<Transaction> createTransactions();
+	public abstract List<Transaction> createItemTransactions();
+	
+	public abstract List<Transaction> createCurrencyTransactions();
 	
 	//customized methods
 	public Warehouse getWarehouse(){

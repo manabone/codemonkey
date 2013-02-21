@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 
 @Entity
-public class SalesOrderTransaction extends ItemTransaction {
+public class SalesOrderItemTransaction extends ItemTransaction {
 
 	
 	/**
@@ -14,10 +14,10 @@ public class SalesOrderTransaction extends ItemTransaction {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public SalesOrderTransaction(Item item, Double qty, Warehouse warehouse) {
-		setItem(item);
-		setQty(qty);
-		setWarehouse(warehouse);
+	public SalesOrderItemTransaction(SalesOrderLine soLine) {
+		setItem(soLine.getItem());
+		setQty(soLine.getQty());
+		setWarehouse(soLine.getWarehouse());
 	}
 
 	@Override

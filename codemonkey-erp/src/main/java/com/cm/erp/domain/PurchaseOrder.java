@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PurchaseOrder extends Document {
+public class PurchaseOrder extends DocumentAdapter {
 
 	/**
 	 * 
@@ -17,7 +17,7 @@ public class PurchaseOrder extends Document {
 	private Vendor vendor;
 
 	@Override
-	public List<Transaction> createTransactions() {
+	public List<CurrencyTransaction> createCurrencyTransactions() {
 		return null;
 	}
 	

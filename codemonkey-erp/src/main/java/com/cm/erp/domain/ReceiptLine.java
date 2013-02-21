@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ReceiptLine extends DocumentLine {
+public class ReceiptLine extends DocumentLineAdapter {
 
 	/**
 	 * 
@@ -25,8 +25,7 @@ public class ReceiptLine extends DocumentLine {
 	}
 
 	@Override
-	public List<Transaction> createTransactions() {
-		// TODO Auto-generated method stub
+	public List<Transaction> createItemTransactions() {
 		return null;
 	}
 }

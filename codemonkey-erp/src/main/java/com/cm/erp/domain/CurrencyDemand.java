@@ -12,4 +12,9 @@ public class CurrencyDemand extends CurrencyPlanning {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public CurrencyDemand(SalesOrderCurrencyTransaction tran) {
+		setCurrency(tran.getCurrency());
+		setAmount(tran.getAmount());
+	}
+	
 }

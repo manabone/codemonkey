@@ -1,6 +1,7 @@
 package com.cm.erp.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,6 +24,11 @@ public abstract class CurrencyTransaction  extends Transaction {
 	private Double amount;
 	
 	private Date date;
+	
+	public abstract void updateStockCard(CurrencyStockCard stockCard);
+	
+	public abstract List<CurrencyPlanning> createPlanning();
+	
 
 	public Currency getCurrency() {
 		return currency;

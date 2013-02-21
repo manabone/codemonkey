@@ -7,28 +7,25 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cm.erp.domain.PurchaseOrder;
-import com.cm.erp.domain.SalesOrder;
-import com.cm.erp.domain.SalesOrderLine;
+import com.cm.erp.domain.Document;
+import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.Transaction;
 
 @Service
-public class TransactionFactory {
+public abstract class TransactionFactory {
 
-	@Autowired private SalesOrderLineService salesOrderLineService;
-	
-	@Autowired private PurchaseOrderLineService purchaseOrderLineService;
-	
 	@Autowired private TransactionService transactionService;
+
+	public abstract List<Transaction> createTransactions(DocumentLine line);
 	
-	public List<Transaction> createTransactions(SalesOrder so){
+	public List<Transaction> createTransactions(Document doc , DocumentLineService docLineService ){
 		List<Transaction> list = new ArrayList<Transaction>();
-		List<SalesOrderLine> soLines =  salesOrderLineService.findAllBy("salesOrder", so.getId());
-		
-		if(CollectionUtils.isNotEmpty(soLines)){
-			for(SalesOrderLine soLine : soLines){
-				if(CollectionUtils.isNotEmpty(soLine.createTransactions())){
-					list.addAll(soLine.createTransactions());
+		List<DocumentLine> lines =  docLineService.getLinesByHeader(doc);
+		if(CollectionUtils.isNotEmpty(lines)){
+			for(DocumentLine line : lines){
+				List<Transaction> itemTrans = createTransactions(line);
+				if(CollectionUtils.isNotEmpty(itemTrans)){
+					list.addAll(itemTrans);
 				}
 			}
 		}
@@ -38,12 +35,6 @@ public class TransactionFactory {
 				transactionService.doSave(tran);
 			}
 		}
-		
-		return list;
-	}
-	
-	public List<Transaction> createTransactions(PurchaseOrder po){
-		List<Transaction> list = new ArrayList<Transaction>();
 		
 		return list;
 	}

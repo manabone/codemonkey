@@ -20,9 +20,13 @@ public class CurrencyStockCard  extends AbsEE {
 	
 	private Double amountOnHand = 0d;
 
+	private Double amountOnSalesOrder = 0d;
+	
 	private Double amountOnSalesInvoice = 0d;
 	
 	private Double amountOnPurchaseInvoice = 0d;
+	
+	private Double amountOnPurchaseOrder = 0d;
 	
 	public CurrencyStockCard(Currency currency) {
 		this.currency = currency;
@@ -58,6 +62,22 @@ public class CurrencyStockCard  extends AbsEE {
 
 	public void setAmountOnPurchaseInvoice(Double amountOnPurchaseInvoice) {
 		this.amountOnPurchaseInvoice = amountOnPurchaseInvoice;
+	}
+
+	public Double getAmountOnSalesOrder() {
+		return amountOnSalesOrder;
+	}
+
+	public void setAmountOnSalesOrder(Double amountOnSalesOrder) {
+		this.amountOnSalesOrder = amountOnSalesOrder;
+	}
+
+	public Double getAmountOnPurchaseOrder() {
+		return amountOnPurchaseOrder;
+	}
+
+	public void setAmountOnPurchaseOrder(Double amountOnPurchaseOrder) {
+		this.amountOnPurchaseOrder = amountOnPurchaseOrder;
 	}
 	
 }

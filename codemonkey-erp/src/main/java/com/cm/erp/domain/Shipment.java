@@ -1,12 +1,10 @@
 package com.cm.erp.domain;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Shipment extends Document {
+public class Shipment extends DocumentAdapter {
 
 	/**
 	 * 
@@ -22,11 +20,5 @@ public class Shipment extends Document {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	@Override
-	public List<Transaction> createTransactions() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

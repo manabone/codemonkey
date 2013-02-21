@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.codemonkey.utils.Calc;
+
 @Entity
-public class SalesOrderLine extends DocumentLine {
+public class SalesOrderLine extends DocumentLineAdapter {
 
 	/**
 	 * 
@@ -19,9 +21,23 @@ public class SalesOrderLine extends DocumentLine {
 	
 	private Double price;
 
+	private Double taxRate;
+	
 	@Override
 	public SalesOrder getHeader() {
 		return salesOrder;
+	}
+	
+	public List<Transaction> createItemTransactions() {
+		List<Transaction> trans = new ArrayList<Transaction>();
+		trans.add(new SalesOrderItemTransaction(this));
+		return trans;
+	}
+	
+	public List<Transaction> createCurrencyTransactions() {
+		List<Transaction> trans = new ArrayList<Transaction>();
+		trans.add(new SalesOrderCurrencyTransaction(this));
+		return trans;
 	}
 	
 	public Double getPrice() {
@@ -32,10 +48,16 @@ public class SalesOrderLine extends DocumentLine {
 		this.price = price;
 	}
 
-	public List<Transaction> createTransactions() {
-		List<Transaction> trans = new ArrayList<Transaction>();
-		trans.add(new SalesOrderTransaction(getItem() , getQty() , getWarehouse()));
-		return trans;
+	public Double getTaxRate() {
+		return taxRate;
+	}
+
+	public void setTaxRate(Double taxRate) {
+		this.taxRate = taxRate;
+	}
+
+	public Double getAmount() {
+		return Calc.mul(getPrice() , getQty());
 	}
 
 }

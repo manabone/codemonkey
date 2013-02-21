@@ -20,7 +20,9 @@ public abstract class Document extends AbsEE {
 	@ManyToOne
 	private Warehouse warehouse;
 
-	public abstract List<Transaction> createTransactions();
+	public abstract List<ItemTransaction> createItemTransactions();
+
+	public abstract List<CurrencyTransaction> createCurrencyTransactions();
 	
 	public Double getTotalAmount() {
 		return totalAmount;
