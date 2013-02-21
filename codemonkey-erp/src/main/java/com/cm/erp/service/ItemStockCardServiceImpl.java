@@ -8,7 +8,7 @@ import com.cm.erp.domain.Warehouse;
 import com.codemonkey.service.GenericServiceImpl;
 
 @Service
-public class StockCardServiceImpl extends GenericServiceImpl<ItemStockCard> implements StockCardService{
+public class ItemStockCardServiceImpl extends GenericServiceImpl<ItemStockCard> implements ItemStockCardService{
 
 	public ItemStockCard getStockCard(Item item, Warehouse warehouse) {
 		ItemStockCard stockCard = findBy("item.idAndwarhouse.id", item.getId() , warehouse.getId());

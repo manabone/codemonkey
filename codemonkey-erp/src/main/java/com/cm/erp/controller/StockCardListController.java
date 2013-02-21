@@ -5,17 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cm.erp.domain.ItemStockCard;
-import com.cm.erp.service.StockCardService;
+import com.cm.erp.service.ItemStockCardService;
 import com.codemonkey.web.controller.AbsListExtController;
 
 @Controller
 @RequestMapping("/ext/stockCardList/**")
 public class StockCardListController extends AbsListExtController<ItemStockCard>{
 
-	@Autowired private StockCardService stockCardService;
+	@Autowired private ItemStockCardService stockCardService;
 	
 	@Override
-	protected StockCardService service() {
+	protected ItemStockCardService service() {
 		return stockCardService;
 	}
 
