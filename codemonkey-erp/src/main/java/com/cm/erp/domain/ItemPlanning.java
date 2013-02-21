@@ -3,11 +3,14 @@ package com.cm.erp.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 import com.codemonkey.domain.AbsEE;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class ItemPlanning extends AbsEE {
 
 	/**
@@ -21,6 +24,14 @@ public class ItemPlanning extends AbsEE {
 	private Double qty;
 	
 	private Date date;
+	
+	@ManyToOne
+	private Warehouse warehouse;
+	
+	@ManyToOne
+	private Transaction transaction;
+	
+	
 
 	public Item getItem() {
 		return item;
@@ -44,6 +55,22 @@ public class ItemPlanning extends AbsEE {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+	}
+
+	public Transaction getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
 	}
 
 }

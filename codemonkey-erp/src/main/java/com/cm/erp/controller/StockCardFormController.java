@@ -5,12 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.codemonkey.web.controller.AbsFormExtController;
 
-import com.cm.erp.domain.StockCard;
+import com.cm.erp.domain.ItemStockCard;
 import com.cm.erp.service.StockCardService;
 
 @Controller
 @RequestMapping("/ext/stockCard/**")
-public class StockCardFormController extends AbsFormExtController<StockCard>{
+public class StockCardFormController extends AbsFormExtController<ItemStockCard>{
 
 	@Autowired private StockCardService stockCardService;
 	
@@ -20,7 +20,7 @@ public class StockCardFormController extends AbsFormExtController<StockCard>{
 	}
 
 	@Override
-	protected StockCard createEntity() {
-		return new StockCard();
+	protected ItemStockCard createEntity() {
+		return null;
 	}
 }

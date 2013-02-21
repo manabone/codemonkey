@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import com.codemonkey.domain.AbsEE;
 
 @Entity
-public class StockCard  extends AbsEE {
+public class ItemStockCard  extends AbsEE {
 
 	/**
 	 * 
@@ -20,7 +20,14 @@ public class StockCard  extends AbsEE {
 	@ManyToOne
 	private Warehouse warehouse;
 	
-	private Double qtyOnHand;
+	private Double qtyOnHand = 0d;
+
+	private Double qtyRequired = 0d;
+	
+	public ItemStockCard(Item item, Warehouse warehouse) {
+		this.item = item;
+		this.warehouse = warehouse;
+	}
 
 	public Item getItem() {
 		return item;
@@ -44,5 +51,13 @@ public class StockCard  extends AbsEE {
 
 	public void setQtyOnHand(Double qtyOnHand) {
 		this.qtyOnHand = qtyOnHand;
+	}
+
+	public Double getQtyRequired() {
+		return qtyRequired;
+	}
+
+	public void setQtyRequired(Double qtyRequired) {
+		this.qtyRequired = qtyRequired;
 	}
 }

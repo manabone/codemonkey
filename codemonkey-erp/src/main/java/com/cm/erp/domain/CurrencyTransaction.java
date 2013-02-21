@@ -8,17 +8,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import com.codemonkey.domain.AbsEE;
-
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class CurrencyPlanning extends AbsEE {
+public abstract class CurrencyTransaction  extends Transaction {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
 	
@@ -26,20 +24,20 @@ public class CurrencyPlanning extends AbsEE {
 	
 	private Date date;
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public Currency getCurrency() {
 		return currency;
 	}
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Double getAmount() {

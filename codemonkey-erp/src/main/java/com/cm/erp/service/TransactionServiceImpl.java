@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cm.erp.domain.ItemPlanning;
-import com.cm.erp.domain.StockCard;
+import com.cm.erp.domain.ItemTransaction;
+import com.cm.erp.domain.ItemStockCard;
 import com.cm.erp.domain.Transaction;
 import com.codemonkey.service.GenericServiceImpl;
 
@@ -18,7 +19,7 @@ public class TransactionServiceImpl extends GenericServiceImpl<Transaction> impl
 	@Autowired private StockCardService stockCardService;
 	@Autowired private ItemPlanningService planningService;
 	
-	public void postInventoryTransactions(List<Transaction> list) {
+	public void postInventoryTransactions(List<ItemTransaction> list) {
 		
 		if(CollectionUtils.isEmpty(list)) {
 			return;
@@ -26,9 +27,9 @@ public class TransactionServiceImpl extends GenericServiceImpl<Transaction> impl
 		
 		List<ItemPlanning> planningList = new ArrayList<ItemPlanning>();
 			
-		for(Transaction tran : list){
+		for(ItemTransaction tran : list){
 			//update stock card
-			StockCard stockCard = stockCardService.findBy("item.idAndwarhouse.id", tran.getItem().getId() , tran.getWarehouse().getId());
+			ItemStockCard stockCard = stockCardService.getStockCard(tran.getItem() , tran.getWarehouse());
 			tran.updateStockCard(stockCard);
 			stockCardService.doSave(stockCard);
 			

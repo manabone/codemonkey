@@ -31,6 +31,9 @@ public abstract class DocumentLine extends AbsEE {
 	public abstract List<Transaction> createTransactions();
 	
 	//customized methods
+	public Warehouse getWarehouse(){
+		return getHeader().getWarehouse();
+	}
 	
 	//getter and setters
 	public Item getItem() {

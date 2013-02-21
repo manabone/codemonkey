@@ -1,5 +1,6 @@
 package com.cm.erp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -32,7 +33,9 @@ public class SalesOrderLine extends DocumentLine {
 	}
 
 	public List<Transaction> createTransactions() {
-		return null;
+		List<Transaction> trans = new ArrayList<Transaction>();
+		trans.add(new SalesOrderTransaction(getItem() , getQty() , getWarehouse()));
+		return trans;
 	}
 
 }

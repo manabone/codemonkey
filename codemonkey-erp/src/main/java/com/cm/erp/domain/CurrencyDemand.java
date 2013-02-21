@@ -4,12 +4,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("ItemSupply")
-public class ItemSupply extends ItemPlanning {
+@DiscriminatorValue("CurrencyDemand")
+public class CurrencyDemand extends CurrencyPlanning {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 }

@@ -19,6 +19,8 @@ public class TransactionFactory {
 	
 	@Autowired private PurchaseOrderLineService purchaseOrderLineService;
 	
+	@Autowired private TransactionService transactionService;
+	
 	public List<Transaction> createTransactions(SalesOrder so){
 		List<Transaction> list = new ArrayList<Transaction>();
 		List<SalesOrderLine> soLines =  salesOrderLineService.findAllBy("salesOrder", so.getId());
@@ -28,6 +30,12 @@ public class TransactionFactory {
 				if(CollectionUtils.isNotEmpty(soLine.createTransactions())){
 					list.addAll(soLine.createTransactions());
 				}
+			}
+		}
+		
+		if(CollectionUtils.isNotEmpty(list)){
+			for(Transaction tran : list){
+				transactionService.doSave(tran);
 			}
 		}
 		
