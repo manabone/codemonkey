@@ -25,6 +25,10 @@ public abstract class CurrencyTransaction  extends Transaction {
 	
 	private Date date;
 	
+	CurrencyTransaction(DocumentLine docLine) {
+		super(docLine);
+	}
+	
 	public abstract void updateStockCard(CurrencyStockCard stockCard);
 	
 	public abstract List<CurrencyPlanning> createPlanning();

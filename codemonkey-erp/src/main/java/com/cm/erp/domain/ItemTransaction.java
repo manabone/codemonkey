@@ -29,7 +29,11 @@ public abstract class ItemTransaction  extends Transaction {
 	private Double cost;
 	
 	private Double amount;
-
+	
+	ItemTransaction(DocumentLine docLine) {
+		super(docLine);
+	}
+	
 	public abstract void updateStockCard(ItemStockCard stockCard);
 	
 	public abstract List<ItemPlanning> createPlanning();
@@ -66,20 +70,20 @@ public abstract class ItemTransaction  extends Transaction {
 		this.cost = cost;
 	}
 
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
 	public Warehouse getWarehouse() {
 		return warehouse;
 	}
 
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 }

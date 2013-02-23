@@ -16,16 +16,14 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Autowired private SalesOrderLine salesOrderLine;
-	
-	
 	public SalesOrderCurrencyTransaction(SalesOrderLine soLine) {
-		salesOrderLine = soLine;
+		super(soLine);
+		
 	}
 
 	@Override
 	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnSalesOrder(stockCard.getAmountOnSalesOrder() + salesOrderLine.getAmount());
+		stockCard.setAmountOnSalesOrder(stockCard.getAmountOnSalesOrder() + getDocLine().getAmount());
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import com.cm.erp.domain.Transaction;
 import com.codemonkey.service.GenericServiceImpl;
 
 @Service
-public class CurrencyTransactionServiceImpl extends GenericServiceImpl<Transaction> implements ItemTransactionService{
+public class CurrencyTransactionServiceImpl extends GenericServiceImpl<Transaction> implements CurrencyTransactionService{
 
 	@Autowired private CurrencyStockCardService currencyStockCardService;
 

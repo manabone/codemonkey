@@ -24,14 +24,14 @@ public abstract class DocumentLine extends AbsEE {
 	private Double qty;
 
 	//constructors
-	
+
 	//abstract methods
 	public abstract Document getHeader();
 	
 	public abstract List<Transaction> createItemTransactions();
 	
 	public abstract List<Transaction> createCurrencyTransactions();
-	
+
 	//customized methods
 	public Warehouse getWarehouse(){
 		return getHeader().getWarehouse();
@@ -52,6 +52,10 @@ public abstract class DocumentLine extends AbsEE {
 
 	public void setQty(Double qty) {
 		this.qty = qty;
+	}
+
+	public Double getAmount() {
+		return 0d;
 	}
 
 }

@@ -25,7 +25,7 @@ public class SalesOrderLine extends DocumentLineAdapter {
 	
 	@Override
 	public SalesOrder getHeader() {
-		return salesOrder;
+		return getSalesOrder();
 	}
 	
 	public List<Transaction> createItemTransactions() {
@@ -58,6 +58,14 @@ public class SalesOrderLine extends DocumentLineAdapter {
 
 	public Double getAmount() {
 		return Calc.mul(getPrice() , getQty());
+	}
+
+	public SalesOrder getSalesOrder() {
+		return salesOrder;
+	}
+
+	public void setSalesOrder(SalesOrder salesOrder) {
+		this.salesOrder = salesOrder;
 	}
 
 }

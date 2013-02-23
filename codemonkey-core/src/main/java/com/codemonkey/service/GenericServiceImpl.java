@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.StopWatch;
@@ -34,8 +31,6 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 	public GenericServiceImpl(){
 		this.type = ClassHelper.getSuperClassGenricType(getClass());
 	}
-	
-	@Autowired private Validator validator;
 	
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -83,7 +78,7 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 			throw new BadObjVersionError(entity);
 		}
 		
-		Set<ConstraintViolation<T>> set = validator.validate(entity, javax.validation.groups.Default.class);
+//		Set<ConstraintViolation<T>> set = validator.validate(entity, javax.validation.groups.Default.class);
 		
 		if(StringUtils.isNotBlank(entity.getCode())){
 			long count = getDao().countBy("code" , entity.getCode());
@@ -92,11 +87,11 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 			}
 		}
 		
-		if(CollectionUtils.isNotEmpty(set)){
-			for(ConstraintViolation<T> c : set){
-				errorSet.add(new FieldValidation(c));
-			}
-		}
+//		if(CollectionUtils.isNotEmpty(set)){
+//			for(ConstraintViolation<T> c : set){
+//				errorSet.add(new FieldValidation(c));
+//			}
+//		}
 		return errorSet;
 	}
 

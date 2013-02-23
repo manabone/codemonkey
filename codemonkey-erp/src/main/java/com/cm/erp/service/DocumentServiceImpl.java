@@ -28,6 +28,8 @@ public abstract class DocumentServiceImpl extends GenericServiceImpl<Document> i
 	
 	public void post(Document doc) {
 		
+		doSave(doc);
+		
 		validate4post(doc);
 		
 		List<Transaction> itemTrans = itemTransactionFactory.createTransactions(doc, getDocumentLineService());
