@@ -24,14 +24,10 @@ public abstract class ItemTransaction  extends Transaction {
 	
 	private Double qty;
 	
-	private Double price;
-	
-	private Double cost;
-	
-	private Double amount;
-	
 	ItemTransaction(DocumentLine docLine) {
-		super(docLine);
+		this.qty = docLine.getQty();
+		this.item = docLine.getItem();
+		setWarehouse(docLine.getWarehouse());
 	}
 	
 	public abstract void updateStockCard(ItemStockCard stockCard);
@@ -54,36 +50,12 @@ public abstract class ItemTransaction  extends Transaction {
 		this.qty = qty;
 	}
 
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public Double getCost() {
-		return cost;
-	}
-
-	public void setCost(Double cost) {
-		this.cost = cost;
-	}
-
 	public Warehouse getWarehouse() {
 		return warehouse;
 	}
 
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
-	}
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
 	}
 
 }

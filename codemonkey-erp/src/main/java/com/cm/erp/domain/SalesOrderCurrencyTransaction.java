@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
@@ -15,6 +14,12 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne
+	private Customer customer;
+	
+	@ManyToOne
+	private SalesOrderLine soLine;
 
 	public SalesOrderCurrencyTransaction(SalesOrderLine soLine) {
 		super(soLine);
@@ -31,6 +36,27 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 		List<CurrencyPlanning> plannings = new ArrayList<CurrencyPlanning>();
 		plannings.add(new CurrencyDemand(this));
 		return plannings;
+	}
+
+	@Override
+	public DocumentLine getDocLine() {
+		return getSoLine();
+	}
+
+	public SalesOrderLine getSoLine() {
+		return soLine;
+	}
+
+	public void setSoLine(SalesOrderLine soLine) {
+		this.soLine = soLine;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

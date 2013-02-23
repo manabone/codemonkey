@@ -26,7 +26,7 @@ public abstract class CurrencyTransaction  extends Transaction {
 	private Date date;
 	
 	CurrencyTransaction(DocumentLine docLine) {
-		super(docLine);
+		this.amount = docLine.getAmount();
 	}
 	
 	public abstract void updateStockCard(CurrencyStockCard stockCard);

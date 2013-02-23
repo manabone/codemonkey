@@ -11,7 +11,7 @@ import com.codemonkey.service.GenericServiceImpl;
 public class ItemStockCardServiceImpl extends GenericServiceImpl<ItemStockCard> implements ItemStockCardService{
 
 	public ItemStockCard getStockCard(Item item, Warehouse warehouse) {
-		ItemStockCard stockCard = findBy("item.idAndwarhouse.id", item.getId() , warehouse.getId());
+		ItemStockCard stockCard = findBy("item.idAndwarehouse.id", item.getId() , warehouse.getId());
 		if(stockCard == null){
 			stockCard = new ItemStockCard(item , warehouse);
 			doSave(stockCard);

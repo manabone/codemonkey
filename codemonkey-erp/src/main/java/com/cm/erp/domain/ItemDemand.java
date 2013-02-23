@@ -12,11 +12,8 @@ public class ItemDemand extends ItemPlanning {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public ItemDemand(ItemTransaction trans) {
-		setItem(trans.getItem());
-		setQty(trans.getQty());
-		setWarehouse(trans.getWarehouse());
-		setTransaction(trans);
+	public ItemDemand(ItemTransaction tran) {
+		super(tran);
 	}
 
 }

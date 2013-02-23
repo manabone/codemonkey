@@ -7,6 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 
 import com.codemonkey.domain.AbsEE;
 
@@ -25,6 +26,14 @@ public class CurrencyPlanning extends AbsEE {
 	private Double amount;
 	
 	private Date date;
+	
+	@ManyToOne
+	private CurrencyTransaction currencyTransaction;
+	
+	CurrencyPlanning(CurrencyTransaction tran){
+		setCurrency(tran.getCurrency());
+		setAmount(tran.getAmount());
+	}
 
 	public Date getDate() {
 		return date;

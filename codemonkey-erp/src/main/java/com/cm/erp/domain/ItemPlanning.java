@@ -29,9 +29,15 @@ public class ItemPlanning extends AbsEE {
 	private Warehouse warehouse;
 	
 	@ManyToOne
-	private Transaction transaction;
+	private ItemTransaction itemTransaction;
 	
-	
+	ItemPlanning(ItemTransaction tran){
+		setItem(tran.getItem());
+		setQty(tran.getQty());
+		setWarehouse(tran.getWarehouse());
+		setItemTransaction(tran);
+	}
+
 
 	public Item getItem() {
 		return item;
@@ -65,12 +71,12 @@ public class ItemPlanning extends AbsEE {
 		this.warehouse = warehouse;
 	}
 
-	public Transaction getTransaction() {
-		return transaction;
+	public ItemTransaction getItemTransaction() {
+		return itemTransaction;
 	}
 
-	public void setTransaction(Transaction transaction) {
-		this.transaction = transaction;
+	public void setItemTransaction(ItemTransaction itemTransaction) {
+		this.itemTransaction = itemTransaction;
 	}
 
 }
