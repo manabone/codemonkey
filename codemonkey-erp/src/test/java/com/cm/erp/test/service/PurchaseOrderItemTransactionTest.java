@@ -31,7 +31,7 @@ public class PurchaseOrderItemTransactionTest extends ItemTransactionTest {
 		//2-test StockCard
 		List<ItemStockCard> stackCardList = new ArrayList<ItemStockCard>();
 		
-		upadteItemStockCard(trans , stackCardList);
+		updateItemStockCard(trans , stackCardList);
 		
 		verifyPurchaseOrderStockCard(stackCardList);
 		

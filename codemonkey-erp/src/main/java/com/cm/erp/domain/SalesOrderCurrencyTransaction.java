@@ -23,7 +23,9 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 
 	public SalesOrderCurrencyTransaction(SalesOrderLine soLine) {
 		super(soLine);
-		
+		this.soLine = soLine;
+		this.customer = soLine.getHeader().getCustomer();
+		setDate(soLine.getHeader().getPaymentDate());
 	}
 
 	@Override

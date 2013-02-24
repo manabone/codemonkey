@@ -33,6 +33,8 @@ public class CurrencyPlanning extends AbsEE {
 	CurrencyPlanning(CurrencyTransaction tran){
 		setCurrency(tran.getCurrency());
 		setAmount(tran.getAmount());
+		setDate(tran.getDate());
+		this.currencyTransaction = tran;
 	}
 
 	public Date getDate() {
@@ -57,6 +59,14 @@ public class CurrencyPlanning extends AbsEE {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public CurrencyTransaction getCurrencyTransaction() {
+		return currencyTransaction;
+	}
+
+	public void setCurrencyTransaction(CurrencyTransaction currencyTransaction) {
+		this.currencyTransaction = currencyTransaction;
 	}
 
 }

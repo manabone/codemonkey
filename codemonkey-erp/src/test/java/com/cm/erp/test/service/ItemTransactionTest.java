@@ -47,7 +47,7 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 		}
 	}
 	
-	void upadteItemStockCard(List<Transaction> trans,
+	void updateItemStockCard(List<Transaction> trans,
 			List<ItemStockCard> stackCardList) {
 		
 		if(CollectionUtils.isEmpty(trans)) {

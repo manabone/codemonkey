@@ -37,6 +37,10 @@ public abstract class DocumentLine extends AbsEE {
 		return getHeader().getWarehouse();
 	}
 	
+	public Currency getCurrency(){
+		return getHeader().getCurrency();
+	}
+	
 	//getter and setters
 	public Item getItem() {
 		return item;

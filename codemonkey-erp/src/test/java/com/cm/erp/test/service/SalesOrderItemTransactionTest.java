@@ -29,7 +29,7 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 		
 		List<ItemStockCard> stackCardList = new ArrayList<ItemStockCard>();
 		
-		upadteItemStockCard(trans , stackCardList);
+		updateItemStockCard(trans , stackCardList);
 		
 		verifySalesOrderStockCard(stackCardList);
 		

@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cm.erp.domain.Currency;
 import com.cm.erp.domain.Customer;
 import com.cm.erp.domain.Item;
 import com.cm.erp.domain.PurchaseOrder;
@@ -30,6 +31,8 @@ public class AbsErpServiceTest {
 	public static final Double QTY = 7d;
 	
 	public static final Double PRICE = 11.5;
+	
+	public static final Double AMOUNT = PRICE * QTY;
 	
 	@Autowired private ItemService itemService;
 	
@@ -97,6 +100,8 @@ public class AbsErpServiceTest {
 		Customer customer = buildCustomer();
 		so.setCustomer(customer);
 		so.setWarehouse(buildWarehouse());
+		so.setCurrency(Currency.RMB);
+		so.setPaymentDate(new Date());
 		return so;
 	}
 

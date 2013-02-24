@@ -1,6 +1,6 @@
 package com.cm.erp.domain;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,6 +15,8 @@ public class SalesOrder extends DocumentAdapter {
 
 	@ManyToOne
 	private Customer customer;
+	
+	private Date paymentDate;
 
 	public Customer getCustomer() {
 		return customer;
@@ -24,8 +26,11 @@ public class SalesOrder extends DocumentAdapter {
 		this.customer = customer;
 	}
 
-	@Override
-	public List<CurrencyTransaction> createCurrencyTransactions() {
-		return null;
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 }
