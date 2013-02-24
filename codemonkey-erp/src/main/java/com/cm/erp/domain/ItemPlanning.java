@@ -36,6 +36,7 @@ public class ItemPlanning extends AbsEE {
 		setQty(tran.getQty());
 		setWarehouse(tran.getWarehouse());
 		setItemTransaction(tran);
+		setDate(tran.getRequiredDate());
 	}
 
 

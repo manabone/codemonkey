@@ -1,5 +1,6 @@
 package com.cm.erp.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,10 +25,13 @@ public abstract class ItemTransaction  extends Transaction {
 	
 	private Double qty;
 	
+	private Date requiredDate;
+	
 	ItemTransaction(DocumentLine docLine) {
 		this.qty = docLine.getQty();
 		this.item = docLine.getItem();
-		setWarehouse(docLine.getWarehouse());
+		this.warehouse = docLine.getWarehouse();
+		this.requiredDate = docLine.getRequiredDate();
 	}
 	
 	public abstract void updateStockCard(ItemStockCard stockCard);
@@ -56,6 +60,14 @@ public abstract class ItemTransaction  extends Transaction {
 
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
+	}
+
+	public Date getRequiredDate() {
+		return requiredDate;
+	}
+
+	public void setRequiredDate(Date requiredDate) {
+		this.requiredDate = requiredDate;
 	}
 
 }

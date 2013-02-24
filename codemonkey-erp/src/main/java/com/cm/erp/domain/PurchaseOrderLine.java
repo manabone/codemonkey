@@ -1,11 +1,12 @@
 package com.cm.erp.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
+import com.codemonkey.utils.Calc;
 
 @Entity
 public class PurchaseOrderLine extends DocumentLineAdapter {
@@ -20,8 +21,6 @@ public class PurchaseOrderLine extends DocumentLineAdapter {
 	
 	private Double price;
 	
-	private Date requiredDate;
-
 	@Override
 	public PurchaseOrder getHeader() {
 		return getPurchaseOrder();
@@ -40,6 +39,10 @@ public class PurchaseOrderLine extends DocumentLineAdapter {
 		trans.add(new PurchaseOrderCurrencyTransaction(this));
 		return trans;
 	}
+	
+	public Double getAmount() {
+		return Calc.mul(getPrice() , getQty());
+	}
 
 	public PurchaseOrder getPurchaseOrder() {
 		return purchaseOrder;
@@ -55,14 +58,6 @@ public class PurchaseOrderLine extends DocumentLineAdapter {
 
 	public void setPrice(Double price) {
 		this.price = price;
-	}
-
-	public Date getRequiredDate() {
-		return requiredDate;
-	}
-
-	public void setRequiredDate(Date requiredDate) {
-		this.requiredDate = requiredDate;
 	}
 
 }

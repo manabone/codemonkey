@@ -1,5 +1,6 @@
 package com.cm.erp.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.ManyToOne;
@@ -22,6 +23,8 @@ public abstract class DocumentLine extends AbsEE {
 	private Item item;
 	
 	private Double qty;
+	
+	private Date requiredDate;
 
 	//constructors
 
@@ -60,6 +63,14 @@ public abstract class DocumentLine extends AbsEE {
 
 	public Double getAmount() {
 		return 0d;
+	}
+
+	public Date getRequiredDate() {
+		return requiredDate;
+	}
+
+	public void setRequiredDate(Date requiredDate) {
+		this.requiredDate = requiredDate;
 	}
 
 }

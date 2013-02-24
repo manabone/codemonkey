@@ -1,7 +1,6 @@
 package com.cm.erp.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,13 +23,10 @@ public class SalesOrderItemTransaction extends ItemTransaction {
 	@ManyToOne
 	private SalesOrderLine soLine;
 	
-	private Date requiredDate; 
-	
 	public SalesOrderItemTransaction(SalesOrderLine soLine) {
 		super(soLine);
 		this.customer = soLine.getHeader().getCustomer();
 		this.soLine = soLine;
-		this.requiredDate = soLine.getRequiredDate();
 	}
 
 	@Override
@@ -58,14 +54,6 @@ public class SalesOrderItemTransaction extends ItemTransaction {
 	@Override
 	public DocumentLine getDocLine() {
 		return soLine;
-	}
-
-	public Date getRequiredDate() {
-		return requiredDate;
-	}
-
-	public void setRequiredDate(Date requiredDate) {
-		this.requiredDate = requiredDate;
 	}
 
 }

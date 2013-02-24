@@ -1,7 +1,6 @@
 package com.cm.erp.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,13 +23,10 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 	@ManyToOne
 	private PurchaseOrderLine poLine;
 	
-	private Date requiredDate; 
-	
 	public PurchaseOrderItemTransaction(PurchaseOrderLine poLine) {
 		super(poLine);
 		this.vendor = poLine.getHeader().getVendor();
 		this.poLine = poLine;
-		this.requiredDate = poLine.getRequiredDate();
 	}
 
 	@Override
@@ -52,14 +48,6 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 		return getPoLine();
 	}
 	
-	public Date getRequiredDate() {
-		return requiredDate;
-	}
-
-	public void setRequiredDate(Date requiredDate) {
-		this.requiredDate = requiredDate;
-	}
-
 	public Vendor getVendor() {
 		return vendor;
 	}

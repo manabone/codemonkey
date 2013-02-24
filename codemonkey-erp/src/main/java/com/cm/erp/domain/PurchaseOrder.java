@@ -1,5 +1,7 @@
 package com.cm.erp.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -13,6 +15,8 @@ public class PurchaseOrder extends DocumentAdapter {
 	
 	@ManyToOne 
 	private Vendor vendor;
+	
+	private Date paymentDate;
 
 	public Vendor getVendor() {
 		return vendor;
@@ -20,6 +24,14 @@ public class PurchaseOrder extends DocumentAdapter {
 
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
+	}
+
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 	
 }

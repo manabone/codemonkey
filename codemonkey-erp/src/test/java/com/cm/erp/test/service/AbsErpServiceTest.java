@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cm.erp.domain.Currency;
 import com.cm.erp.domain.Customer;
+import com.cm.erp.domain.Document;
+import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.Item;
 import com.cm.erp.domain.PurchaseOrder;
 import com.cm.erp.domain.PurchaseOrderLine;
@@ -62,20 +64,29 @@ public class AbsErpServiceTest {
 	PurchaseOrderLine buildPurchaseOrderLine(){
 		PurchaseOrder po = buildPurchaseOrder();
 		PurchaseOrderLine line = new PurchaseOrderLine();
-		line.setItem(buildItem());
+		
+		setDocumentLineAttr(line);
+		
 		line.setPurchaseOrder(po);
-		line.setQty(QTY);
 		line.setPrice(PRICE);
-		line.setRequiredDate(new Date());
 		return line;
 	}
 	
 	PurchaseOrder buildPurchaseOrder() {
 		PurchaseOrder po = new PurchaseOrder();
+		
+		setDocumentAttr(po);
+		
 		Vendor vendor = buildVendor();
 		po.setVendor(vendor);
-		po.setWarehouse(buildWarehouse());
+		po.setPaymentDate(new Date());
+		
 		return po;
+	}
+	
+	private void setDocumentAttr(Document doc){
+		doc.setWarehouse(buildWarehouse());
+		doc.setCurrency(Currency.RMB);
 	}
 
 	Vendor buildVendor() {
@@ -87,21 +98,30 @@ public class AbsErpServiceTest {
 	SalesOrderLine buildSalesOrderLine(){
 		SalesOrder so = buildSalesOrder();
 		SalesOrderLine line = new SalesOrderLine();
-		line.setItem(buildItem());
+		
+		setDocumentLineAttr(line);
+		
 		line.setSalesOrder(so);
-		line.setQty(QTY);
 		line.setPrice(PRICE);
-		line.setRequiredDate(new Date());
+		
 		return line;
+	}
+	
+	private void setDocumentLineAttr(DocumentLine line){
+		line.setQty(QTY);
+		line.setItem(buildItem());
+		line.setRequiredDate(new Date());
 	}
 
 	SalesOrder buildSalesOrder() {
 		SalesOrder so = new SalesOrder();
+
+		setDocumentAttr(so);
+		
 		Customer customer = buildCustomer();
 		so.setCustomer(customer);
-		so.setWarehouse(buildWarehouse());
-		so.setCurrency(Currency.RMB);
 		so.setPaymentDate(new Date());
+		
 		return so;
 	}
 

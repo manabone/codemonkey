@@ -1,7 +1,6 @@
 package com.cm.erp.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,8 +23,6 @@ public class SalesOrderLine extends DocumentLineAdapter {
 
 	private Double taxRate;
 	
-	private Date requiredDate;
-	
 	@Override
 	public SalesOrder getHeader() {
 		return getSalesOrder();
@@ -41,6 +38,10 @@ public class SalesOrderLine extends DocumentLineAdapter {
 		List<Transaction> trans = new ArrayList<Transaction>();
 		trans.add(new SalesOrderCurrencyTransaction(this));
 		return trans;
+	}
+	
+	public Double getAmount() {
+		return Calc.mul(getPrice() , getQty());
 	}
 	
 	public Double getPrice() {
@@ -59,24 +60,12 @@ public class SalesOrderLine extends DocumentLineAdapter {
 		this.taxRate = taxRate;
 	}
 
-	public Double getAmount() {
-		return Calc.mul(getPrice() , getQty());
-	}
-
 	public SalesOrder getSalesOrder() {
 		return salesOrder;
 	}
 
 	public void setSalesOrder(SalesOrder salesOrder) {
 		this.salesOrder = salesOrder;
-	}
-
-	public Date getRequiredDate() {
-		return requiredDate;
-	}
-
-	public void setRequiredDate(Date requiredDate) {
-		this.requiredDate = requiredDate;
 	}
 
 }
