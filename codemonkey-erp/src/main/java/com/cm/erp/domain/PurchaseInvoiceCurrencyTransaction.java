@@ -45,13 +45,13 @@ public class PurchaseInvoiceCurrencyTransaction extends CurrencyTransaction {
 	}
 
 	private CurrencyPlanning createCurrencyOrderSupply() {
-		CurrencyPlanning plan = create(new CurrencyOrderSupply());
+		CurrencyPlanning plan = create(new CurrencyOrderDemand());
 		plan.setAmount(-Calc.abs(getAmount()));
 		return plan;
 	}
 
 	private CurrencyPlanning createCurrencyInvoiceSupply() {
-		CurrencyPlanning plan = create(new CurrencyInvoiceSupply());
+		CurrencyPlanning plan = create(new CurrencyInvoiceDemand());
 		plan.setAmount(getAmount());
 		return plan;
 	}
