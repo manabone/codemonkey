@@ -25,23 +25,23 @@ public class SalesOrderCurrencyTransactionTest extends CurrencyTransactionTest {
 		
 		List<Transaction> trans = createTransactions(line);
 		
-		verifySalesOrderTransactions(trans);
+		verifyTransactions(trans);
 		
 		List<CurrencyStockCard> stackCardList = new ArrayList<CurrencyStockCard>();
 		
 		updateCurrencyStockCard(trans , stackCardList);
 		
-		verifySalesOrderStockCard(stackCardList);
+		verifyStockCard(stackCardList);
 		
 		List<CurrencyPlanning> planList = new ArrayList<CurrencyPlanning>();
 		
 		createCurrencyPlanning(trans , planList);
 		
-		verifySalesOrderPlanning(planList);
+		verifyPlanning(planList);
 		
 	}
 	
-	private List<Transaction> verifySalesOrderTransactions(List<Transaction> trans) {
+	private List<Transaction> verifyTransactions(List<Transaction> trans) {
 		
 		assertEquals(1 , trans.size());
 		
@@ -59,7 +59,7 @@ public class SalesOrderCurrencyTransactionTest extends CurrencyTransactionTest {
 		
 	}
 	
-	private void verifySalesOrderStockCard(List<CurrencyStockCard> stackCardList) {
+	private void verifyStockCard(List<CurrencyStockCard> stackCardList) {
 		
 		for(CurrencyStockCard stockCard : stackCardList){
 			verify(stockCard);
@@ -68,7 +68,7 @@ public class SalesOrderCurrencyTransactionTest extends CurrencyTransactionTest {
 		
 	}
 	
-	protected void verifySalesOrderPlanning(List<CurrencyPlanning> planningList) {
+	protected void verifyPlanning(List<CurrencyPlanning> planningList) {
 		
 		for(CurrencyPlanning plan : planningList){
 			CurrencySupply supply = (CurrencySupply) plan;

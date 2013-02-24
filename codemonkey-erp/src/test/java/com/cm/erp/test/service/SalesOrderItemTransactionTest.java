@@ -25,23 +25,23 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 		
 		List<Transaction> trans = createTransactions(line);
 		
-		verifySalesOrderTransactions(trans);
+		verifyTransactions(trans);
 		
 		List<ItemStockCard> stackCardList = new ArrayList<ItemStockCard>();
 		
 		updateItemStockCard(trans , stackCardList);
 		
-		verifySalesOrderStockCard(stackCardList);
+		verifyStockCard(stackCardList);
 		
 		List<ItemPlanning> planList = new ArrayList<ItemPlanning>();
 		
 		createItemPlanning(trans , planList);
 		
-		verifySalesOrderPlanning(planList);
+		verifyPlanning(planList);
 		
 	}
 	
-	private List<Transaction> verifySalesOrderTransactions(List<Transaction> trans) {
+	private List<Transaction> verifyTransactions(List<Transaction> trans) {
 		
 		assertEquals(1 , trans.size());
 		
@@ -59,7 +59,7 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 		
 	}
 	
-	private void verifySalesOrderStockCard(List<ItemStockCard> stackCardList) {
+	private void verifyStockCard(List<ItemStockCard> stackCardList) {
 		
 		for(ItemStockCard stockCard : stackCardList){
 			verify(stockCard);
@@ -68,7 +68,7 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 		
 	}
 	
-	protected void verifySalesOrderPlanning(List<ItemPlanning> planningList) {
+	protected void verifyPlanning(List<ItemPlanning> planningList) {
 		
 		for(ItemPlanning plan : planningList){
 			ItemOrderDemand demand = (ItemOrderDemand) plan;
