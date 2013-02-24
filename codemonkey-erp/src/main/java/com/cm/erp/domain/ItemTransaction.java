@@ -38,6 +38,15 @@ public abstract class ItemTransaction  extends Transaction {
 	
 	public abstract List<ItemPlanning> createPlanning();
 	
+	ItemPlanning create(ItemPlanning plan){
+		plan.setItem(getItem());
+		plan.setQty(getQty());
+		plan.setWarehouse(getWarehouse());
+		plan.setItemTransaction(this);
+		plan.setDate(getRequiredDate());
+		return plan;
+	}
+	
 	public Item getItem() {
 		return item;
 	}

@@ -45,15 +45,24 @@ public class ShipmentItemTransaction extends ItemTransaction {
 		
 		List<ItemPlanning> plannings = new ArrayList<ItemPlanning>();
 		
-		ItemOrderDemand demand = new ItemOrderDemand(this);
-		ItemOnhandSupply supply = new ItemOnhandSupply(this);
-		
-		plannings.add(demand);
-		plannings.add(supply);
+		plannings.add(createItemOrderDemand());
+		plannings.add(createItemOnhandSupply());
 		
 		return plannings;
 	}
 	
+	private ItemPlanning createItemOnhandSupply() {
+		ItemPlanning supply = create(new ItemOnhandSupply());
+		supply.setQty(-Calc.abs(getQty()));
+		return supply;
+	}
+
+	private ItemPlanning createItemOrderDemand() {
+		ItemPlanning demand = create(new ItemOrderDemand());
+		demand.setQty(-Calc.abs(getQty()));
+		return demand;
+	}
+
 	public Customer getCustomer(){
 		return customer;
 	}

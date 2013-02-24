@@ -31,14 +31,6 @@ public class ItemPlanning extends AbsEE {
 	@ManyToOne
 	private ItemTransaction itemTransaction;
 	
-	ItemPlanning(ItemTransaction tran){
-		setItem(tran.getItem());
-		setQty(tran.getQty());
-		setWarehouse(tran.getWarehouse());
-		setItemTransaction(tran);
-		setDate(tran.getRequiredDate());
-	}
-
 
 	public Item getItem() {
 		return item;

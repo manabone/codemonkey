@@ -34,6 +34,15 @@ public abstract class CurrencyTransaction  extends Transaction {
 	
 	public abstract List<CurrencyPlanning> createPlanning();
 	
+	CurrencyPlanning create(CurrencyPlanning plan){
+		plan.setCurrency(getCurrency());
+		plan.setAmount(getAmount());
+		plan.setDate(getDate());
+		plan.setCurrencyTransaction(this);
+		return plan;
+		
+	}
+	
 
 	public Currency getCurrency() {
 		return currency;

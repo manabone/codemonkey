@@ -14,10 +14,14 @@ import com.cm.erp.domain.Customer;
 import com.cm.erp.domain.Document;
 import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.Item;
+import com.cm.erp.domain.PurchaseInvoice;
+import com.cm.erp.domain.PurchaseInvoiceLine;
 import com.cm.erp.domain.PurchaseOrder;
 import com.cm.erp.domain.PurchaseOrderLine;
 import com.cm.erp.domain.Receipt;
 import com.cm.erp.domain.ReceiptLine;
+import com.cm.erp.domain.SalesInvoice;
+import com.cm.erp.domain.SalesInvoiceLine;
 import com.cm.erp.domain.SalesOrder;
 import com.cm.erp.domain.SalesOrderLine;
 import com.cm.erp.domain.Shipment;
@@ -41,6 +45,9 @@ public class AbsErpServiceTest {
 	public static final Double PRICE = 11.5;
 	
 	public static final Double AMOUNT = PRICE * QTY;
+	
+	public static final Double NEG_AMOUNT = -AMOUNT;
+	
 	
 	@Autowired private ItemService itemService;
 	
@@ -175,6 +182,56 @@ public class AbsErpServiceTest {
 		so.setPaymentDate(new Date());
 		
 		return so;
+	}
+	
+	SalesInvoiceLine buildSalesInvoiceLine(){
+		
+		SalesInvoice si = buildSalesInvoice();
+		SalesInvoiceLine line = new SalesInvoiceLine();
+		
+		setDocumentLineAttr(line);
+		
+		line.setSalesInvoice(si);
+		line.setPrice(PRICE);
+		
+		return line;
+	}
+	
+	SalesInvoice buildSalesInvoice(){
+		SalesInvoice si = new SalesInvoice();
+
+		setDocumentAttr(si);
+		
+		Customer customer = buildCustomer();
+		si.setCustomer(customer);
+		si.setPaymentDate(new Date());
+		
+		return si;
+	}
+	
+	PurchaseInvoiceLine buildPurchaseInvoiceLine(){
+		
+		PurchaseInvoice pi = buildPurchaseInvoice();
+		PurchaseInvoiceLine line = new PurchaseInvoiceLine();
+		
+		setDocumentLineAttr(line);
+		
+		line.setPurchaseInvoice(pi);
+		line.setPrice(PRICE);
+		
+		return line;
+	}
+	
+	PurchaseInvoice buildPurchaseInvoice(){
+		PurchaseInvoice pi = new PurchaseInvoice();
+
+		setDocumentAttr(pi);
+		
+		Vendor vendor = buildVendor();
+		pi.setVendor(vendor);
+		pi.setPaymentDate(new Date());
+		
+		return pi;
 	}
 
 	Customer buildCustomer() {

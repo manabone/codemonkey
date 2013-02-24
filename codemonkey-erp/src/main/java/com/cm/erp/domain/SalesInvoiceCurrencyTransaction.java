@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import com.codemonkey.utils.Calc;
 
 @Entity
-public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
+public class SalesInvoiceCurrencyTransaction extends CurrencyTransaction {
 
 	
 	/**
@@ -21,43 +21,43 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 	private Customer customer;
 	
 	@ManyToOne
-	private SalesOrderLine soLine;
+	private SalesInvoiceLine siLine;
 
-	public SalesOrderCurrencyTransaction(SalesOrderLine soLine) {
-		super(soLine);
-		this.soLine = soLine;
-		this.customer = soLine.getHeader().getCustomer();
-		setDate(soLine.getHeader().getPaymentDate());
+	public SalesInvoiceCurrencyTransaction(SalesInvoiceLine siLine) {
+		super(siLine);
+		this.setSiLine(siLine);
+		this.customer = siLine.getHeader().getCustomer();
+		setDate(siLine.getHeader().getPaymentDate());
 	}
 
 	@Override
 	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnSalesOrder(Calc.add(stockCard.getAmountOnSalesOrder() , getDocLine().getAmount()));
+		stockCard.setAmountOnSalesInvoice(Calc.add(stockCard.getAmountOnSalesInvoice() , getDocLine().getAmount()));
+		stockCard.setAmountOnSalesOrder(Calc.sub(stockCard.getAmountOnSalesOrder() , getDocLine().getAmount()));
 	}
 
 	@Override
 	public List<CurrencyPlanning> createPlanning() {
 		List<CurrencyPlanning> plannings = new ArrayList<CurrencyPlanning>();
 		plannings.add(createCurrencyOrderSupply());
+		plannings.add(createCurrencyInvoiceSupply());
 		return plannings;
+	}
+
+	private CurrencyPlanning createCurrencyInvoiceSupply() {
+		CurrencyPlanning plan = create(new CurrencyInvoiceSupply());
+		return plan;
 	}
 
 	private CurrencyPlanning createCurrencyOrderSupply() {
 		CurrencyPlanning plan = create(new CurrencyOrderSupply());
+		plan.setAmount(-Calc.abs(getAmount()));
 		return plan;
 	}
 
 	@Override
 	public DocumentLine getDocLine() {
-		return getSoLine();
-	}
-
-	public SalesOrderLine getSoLine() {
-		return soLine;
-	}
-
-	public void setSoLine(SalesOrderLine soLine) {
-		this.soLine = soLine;
+		return getSiLine();
 	}
 
 	public Customer getCustomer() {
@@ -66,6 +66,14 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public SalesInvoiceLine getSiLine() {
+		return siLine;
+	}
+
+	public void setSiLine(SalesInvoiceLine siLine) {
+		this.siLine = siLine;
 	}
 
 }

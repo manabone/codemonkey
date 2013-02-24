@@ -1,6 +1,5 @@
 package com.cm.erp.test.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -9,10 +8,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.CurrencyPlanning;
 import com.cm.erp.domain.CurrencyStockCard;
 import com.cm.erp.domain.CurrencyTransaction;
+import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.Transaction;
 import com.cm.erp.service.CurrencyStockCardService;
 import com.cm.erp.service.CurrencyTransactionFactory;
@@ -67,7 +66,6 @@ public class CurrencyTransactionTest extends AbsErpServiceTest {
 	public void verify(CurrencyPlanning plan) {
 		assertNotNull(plan.getCurrency());
 		assertNotNull(plan.getDate());
-		assertEquals(AMOUNT , plan.getAmount());
 		assertNotNull(plan.getCurrencyTransaction());
 	}
 

@@ -38,8 +38,13 @@ public class PurchaseOrderCurrencyTransaction extends CurrencyTransaction {
 	@Override
 	public List<CurrencyPlanning> createPlanning() {
 		List<CurrencyPlanning> plannings = new ArrayList<CurrencyPlanning>();
-		plannings.add(new CurrencyDemand(this));
+		plannings.add(createCurrencyOrderDemand());
 		return plannings;
+	}
+
+	private CurrencyPlanning createCurrencyOrderDemand() {
+		CurrencyPlanning plan = create(new CurrencyOrderDemand());
+		return plan;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.cm.erp.domain.ItemOrderDemand;
+import com.cm.erp.domain.ItemOrderSupply;
 import com.cm.erp.domain.ItemPlanning;
 import com.cm.erp.domain.ItemStockCard;
 import com.cm.erp.domain.PurchaseOrderItemTransaction;
@@ -74,8 +74,10 @@ public class PurchaseOrderItemTransactionTest extends ItemTransactionTest {
 	protected void verifyPlanning(List<ItemPlanning> planningList) {
 		
 		for(ItemPlanning plan : planningList){
-			ItemOrderDemand demand = (ItemOrderDemand) plan;
-			verify(demand);
+			ItemOrderSupply supply = (ItemOrderSupply) plan;
+			verify(supply);
+			
+			assertEquals(QTY , supply.getQty());
 		}
 	}
 }

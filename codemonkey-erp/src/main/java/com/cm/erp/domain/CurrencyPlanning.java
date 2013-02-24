@@ -30,13 +30,6 @@ public class CurrencyPlanning extends AbsEE {
 	@ManyToOne
 	private CurrencyTransaction currencyTransaction;
 	
-	CurrencyPlanning(CurrencyTransaction tran){
-		setCurrency(tran.getCurrency());
-		setAmount(tran.getAmount());
-		setDate(tran.getDate());
-		this.currencyTransaction = tran;
-	}
-
 	public Date getDate() {
 		return date;
 	}

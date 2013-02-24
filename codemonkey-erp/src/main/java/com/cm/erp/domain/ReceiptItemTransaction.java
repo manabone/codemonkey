@@ -38,13 +38,24 @@ public class ReceiptItemTransaction extends ItemTransaction {
 	@Override
 	public List<ItemPlanning> createPlanning() {
 		List<ItemPlanning> plannings = new ArrayList<ItemPlanning>();
-		ItemOrderSupply supply1 = new ItemOrderSupply(this);
-		ItemOnhandSupply supply2 = new ItemOnhandSupply(this);
-		plannings.add(supply1);
-		plannings.add(supply2);
+		plannings.add(createItemOrderSupply());
+		plannings.add(createItemOnhandSupply());
 		return plannings;
 	}
 	
+	private ItemPlanning createItemOnhandSupply() {
+		ItemPlanning supply = create(new ItemOnhandSupply());
+		supply.setQty(getQty());
+		return supply;
+	}
+
+	private ItemPlanning createItemOrderSupply() {
+		ItemPlanning demand = create(new ItemOrderSupply());
+		demand.setQty(-Calc.abs(getQty()));
+		return demand;
+	}
+
+
 	@Override
 	public DocumentLine getDocLine() {
 		return getRpLine();

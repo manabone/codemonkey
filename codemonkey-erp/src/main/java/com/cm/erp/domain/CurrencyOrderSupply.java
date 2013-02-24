@@ -3,11 +3,11 @@ package com.cm.erp.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class ItemOrderSupply extends ItemPlanning {
+public class CurrencyOrderSupply extends CurrencyPlanning {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 }

@@ -37,12 +37,17 @@ public class SalesOrderItemTransaction extends ItemTransaction {
 	@Override
 	public List<ItemPlanning> createPlanning() {
 		List<ItemPlanning> plannings = new ArrayList<ItemPlanning>();
-		ItemOrderDemand demand = new ItemOrderDemand(this);
-		demand.setDate(getRequiredDate());
-		plannings.add(demand);
+		plannings.add(createItemOrderDemand());
 		return plannings;
 	}
 	
+	private ItemPlanning createItemOrderDemand() {
+		ItemPlanning demand = create(new ItemOrderDemand());
+		demand.setQty(getQty());
+		demand.setDate(getRequiredDate());
+		return demand;
+	}
+
 	public Customer getCustomer(){
 		return customer;
 	}
