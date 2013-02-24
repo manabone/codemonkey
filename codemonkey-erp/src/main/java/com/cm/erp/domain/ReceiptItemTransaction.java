@@ -51,7 +51,7 @@ public class ReceiptItemTransaction extends ItemTransaction {
 
 	private ItemPlanning createItemOrderSupply() {
 		ItemPlanning demand = create(new ItemOrderSupply());
-		demand.setQty(-Calc.abs(getQty()));
+		demand.setQty(Calc.neg(getQty()));
 		return demand;
 	}
 

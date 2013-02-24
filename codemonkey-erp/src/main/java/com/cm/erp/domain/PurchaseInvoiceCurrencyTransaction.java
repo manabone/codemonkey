@@ -46,7 +46,7 @@ public class PurchaseInvoiceCurrencyTransaction extends CurrencyTransaction {
 
 	private CurrencyPlanning createCurrencyOrderSupply() {
 		CurrencyPlanning plan = create(new CurrencyOrderDemand());
-		plan.setAmount(-Calc.abs(getAmount()));
+		plan.setAmount(Calc.neg(getAmount()));
 		return plan;
 	}
 

@@ -17,6 +17,10 @@ public class Calc {
 		}
 		return val;
 	}
+	
+	public static double neg(Double v){
+		return -abs(v);
+	}
 
 	public static double add(Double...values) {
 		BigDecimal result = new BigDecimal("0");

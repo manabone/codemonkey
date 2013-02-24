@@ -53,13 +53,13 @@ public class ShipmentItemTransaction extends ItemTransaction {
 	
 	private ItemPlanning createItemOnhandSupply() {
 		ItemPlanning supply = create(new ItemOnhandSupply());
-		supply.setQty(-Calc.abs(getQty()));
+		supply.setQty(Calc.neg(getQty()));
 		return supply;
 	}
 
 	private ItemPlanning createItemOrderDemand() {
 		ItemPlanning demand = create(new ItemOrderDemand());
-		demand.setQty(-Calc.abs(getQty()));
+		demand.setQty(Calc.neg(getQty()));
 		return demand;
 	}
 
