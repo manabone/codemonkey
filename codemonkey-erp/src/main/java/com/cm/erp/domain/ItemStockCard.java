@@ -22,7 +22,9 @@ public class ItemStockCard  extends AbsEE {
 	
 	private Double qtyOnHand = 0d;
 
-	private Double qtyRequired = 0d;
+	private Double qtyOnSalesOrder = 0d;
+	
+	private Double qtyOnPurchaseOrder = 0d;
 	
 	public ItemStockCard(Item item, Warehouse warehouse) {
 		this.item = item;
@@ -53,11 +55,20 @@ public class ItemStockCard  extends AbsEE {
 		this.qtyOnHand = qtyOnHand;
 	}
 
-	public Double getQtyRequired() {
-		return qtyRequired;
+	public Double getQtyOnSalesOrder() {
+		return qtyOnSalesOrder;
 	}
 
-	public void setQtyRequired(Double qtyRequired) {
-		this.qtyRequired = qtyRequired;
+	public void setQtyOnSalesOrder(Double qtyOnSalesOrder) {
+		this.qtyOnSalesOrder = qtyOnSalesOrder;
 	}
+
+	public Double getQtyOnPurchaseOrder() {
+		return qtyOnPurchaseOrder;
+	}
+
+	public void setQtyOnPurchaseOrder(Double qtyOnPurchaseOrder) {
+		this.qtyOnPurchaseOrder = qtyOnPurchaseOrder;
+	}
+
 }

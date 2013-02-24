@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
+public class PurchaseOrderCurrencyTransaction extends CurrencyTransaction {
 
 	
 	/**
@@ -16,13 +16,13 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	private Customer customer;
+	private Vendor vendor;
 	
 	@ManyToOne
-	private SalesOrderLine soLine;
+	private PurchaseOrderLine poLine;
 
-	public SalesOrderCurrencyTransaction(SalesOrderLine soLine) {
-		super(soLine);
+	public PurchaseOrderCurrencyTransaction(PurchaseOrderLine poLine) {
+		super(poLine);
 		
 	}
 
@@ -34,29 +34,29 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 	@Override
 	public List<CurrencyPlanning> createPlanning() {
 		List<CurrencyPlanning> plannings = new ArrayList<CurrencyPlanning>();
-		plannings.add(new CurrencySupply(this));
+		plannings.add(new CurrencyDemand(this));
 		return plannings;
 	}
 
 	@Override
 	public DocumentLine getDocLine() {
-		return getSoLine();
+		return getPoLine();
 	}
 
-	public SalesOrderLine getSoLine() {
-		return soLine;
+	public Vendor getVendor() {
+		return vendor;
 	}
 
-	public void setSoLine(SalesOrderLine soLine) {
-		this.soLine = soLine;
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public PurchaseOrderLine getPoLine() {
+		return poLine;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setPoLine(PurchaseOrderLine poLine) {
+		this.poLine = poLine;
 	}
 
 }

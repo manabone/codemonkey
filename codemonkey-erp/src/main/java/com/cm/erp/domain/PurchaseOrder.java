@@ -1,7 +1,5 @@
 package com.cm.erp.domain;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -16,9 +14,12 @@ public class PurchaseOrder extends DocumentAdapter {
 	@ManyToOne 
 	private Vendor vendor;
 
-	@Override
-	public List<CurrencyTransaction> createCurrencyTransactions() {
-		return null;
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 	
 }

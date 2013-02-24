@@ -11,37 +11,40 @@ import org.junit.Test;
 import com.cm.erp.domain.ItemDemand;
 import com.cm.erp.domain.ItemPlanning;
 import com.cm.erp.domain.ItemStockCard;
-import com.cm.erp.domain.SalesOrderItemTransaction;
-import com.cm.erp.domain.SalesOrderLine;
+import com.cm.erp.domain.PurchaseOrderItemTransaction;
+import com.cm.erp.domain.PurchaseOrderLine;
 import com.cm.erp.domain.Transaction;
 
 
-public class SalesOrderItemTransactionTest extends ItemTransactionTest {
+public class PurchaseOrderItemTransactionTest extends ItemTransactionTest {
 	
 	@Test
-	public void test4SalesOrderLine(){
+	public void test4PurchaseOrderLine(){
 		
-		SalesOrderLine line = buildSalesOrderLine();
+		//1-test transactions
+		PurchaseOrderLine line = buildPurchaseOrderLine();
 		
 		List<Transaction> trans = createTransactions(line);
 		
-		verifySalesOrderTransactions(trans);
+		verifyPurchaseOrderTransactions(trans);
 		
+		//2-test StockCard
 		List<ItemStockCard> stackCardList = new ArrayList<ItemStockCard>();
 		
 		upadteItemStockCard(trans , stackCardList);
 		
-		verifySalesOrderStockCard(stackCardList);
+		verifyPurchaseOrderStockCard(stackCardList);
 		
+		//3-test itemPlanning
 		List<ItemPlanning> planList = new ArrayList<ItemPlanning>();
 		
 		createItemPlanning(trans , planList);
 		
-		verifySalesOrderPlanning(planList);
+		verifyPurchaseOrderPlanning(planList);
 		
 	}
 	
-	private List<Transaction> verifySalesOrderTransactions(List<Transaction> trans) {
+	private List<Transaction> verifyPurchaseOrderTransactions(List<Transaction> trans) {
 		
 		assertEquals(1 , trans.size());
 		
@@ -49,9 +52,9 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 			
 			verify(t);
 			
-			SalesOrderItemTransaction t1 = (SalesOrderItemTransaction) t;
+			PurchaseOrderItemTransaction t1 = (PurchaseOrderItemTransaction) t;
 			
-			assertNotNull(t1.getCustomer());
+			assertNotNull(t1.getVendor());
 			
 		}
 		
@@ -59,16 +62,16 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 		
 	}
 	
-	private void verifySalesOrderStockCard(List<ItemStockCard> stackCardList) {
+	private void verifyPurchaseOrderStockCard(List<ItemStockCard> stackCardList) {
 		
 		for(ItemStockCard stockCard : stackCardList){
 			verify(stockCard);
-			assertEquals(QTY , stockCard.getQtyOnSalesOrder());
+			assertEquals(QTY , stockCard.getQtyOnPurchaseOrder());
 		}
 		
 	}
 	
-	protected void verifySalesOrderPlanning(List<ItemPlanning> planningList) {
+	protected void verifyPurchaseOrderPlanning(List<ItemPlanning> planningList) {
 		
 		for(ItemPlanning plan : planningList){
 			ItemDemand demand = (ItemDemand) plan;

@@ -9,10 +9,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.ItemPlanning;
 import com.cm.erp.domain.ItemStockCard;
 import com.cm.erp.domain.ItemTransaction;
-import com.cm.erp.domain.SalesOrderLine;
 import com.cm.erp.domain.Transaction;
 import com.cm.erp.service.ItemStockCardService;
 import com.cm.erp.service.ItemTransactionFactory;
@@ -28,7 +28,7 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 		assertNotNull(itemStockCardService);
 	}
 	
-	protected List<Transaction> createTransactions(SalesOrderLine line) {
+	protected List<Transaction> createTransactions(DocumentLine line) {
 		List<Transaction> trans = itemTransactionFactory.createTransactions(line);
 		return trans;
 	}
@@ -73,7 +73,6 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 	}
 
 	public void verify(ItemStockCard stockCard) {
-		assertEquals(QTY , stockCard.getQtyRequired());
 		assertNotNull(stockCard.getWarehouse());
 		assertNotNull(stockCard.getItem());
 	}

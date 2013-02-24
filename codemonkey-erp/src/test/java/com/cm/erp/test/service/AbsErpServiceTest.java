@@ -10,11 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cm.erp.domain.Customer;
 import com.cm.erp.domain.Item;
+import com.cm.erp.domain.PurchaseOrder;
+import com.cm.erp.domain.PurchaseOrderLine;
 import com.cm.erp.domain.SalesOrder;
 import com.cm.erp.domain.SalesOrderLine;
+import com.cm.erp.domain.Vendor;
 import com.cm.erp.domain.Warehouse;
 import com.cm.erp.service.CustomerService;
 import com.cm.erp.service.ItemService;
+import com.cm.erp.service.VendorService;
 import com.cm.erp.service.WarehouseService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,6 +36,8 @@ public class AbsErpServiceTest {
 	
 	@Autowired private CustomerService customerService;
 	
+	@Autowired private VendorService vendorService;
+	
 	Item buildItem(){
 		Item item = new Item();
 		itemService.doSave(item);
@@ -44,6 +50,31 @@ public class AbsErpServiceTest {
 		return warehouse;
 	}
 	
+	PurchaseOrderLine buildPurchaseOrderLine(){
+		PurchaseOrder po = buildPurchaseOrder();
+		PurchaseOrderLine line = new PurchaseOrderLine();
+		line.setItem(buildItem());
+		line.setPurchaseOrder(po);
+		line.setQty(QTY);
+		line.setPrice(PRICE);
+		line.setRequiredDate(new Date());
+		return line;
+	}
+	
+	PurchaseOrder buildPurchaseOrder() {
+		PurchaseOrder po = new PurchaseOrder();
+		Vendor vendor = buildVendor();
+		po.setVendor(vendor);
+		po.setWarehouse(buildWarehouse());
+		return po;
+	}
+
+	Vendor buildVendor() {
+		Vendor vendor = new Vendor();
+		vendorService.doSave(vendor);
+		return vendor;
+	}
+
 	SalesOrderLine buildSalesOrderLine(){
 		SalesOrder so = buildSalesOrder();
 		SalesOrderLine line = new SalesOrderLine();
@@ -55,7 +86,7 @@ public class AbsErpServiceTest {
 		return line;
 	}
 
-	public SalesOrder buildSalesOrder() {
+	SalesOrder buildSalesOrder() {
 		SalesOrder so = new SalesOrder();
 		Customer customer = buildCustomer();
 		so.setCustomer(customer);
@@ -63,7 +94,7 @@ public class AbsErpServiceTest {
 		return so;
 	}
 
-	private Customer buildCustomer() {
+	Customer buildCustomer() {
 		Customer customer = new Customer();
 		customerService.doSave(customer);
 		return customer;

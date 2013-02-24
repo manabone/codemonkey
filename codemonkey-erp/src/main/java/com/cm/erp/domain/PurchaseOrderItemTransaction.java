@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import com.codemonkey.utils.Calc;
 
 @Entity
-public class SalesOrderItemTransaction extends ItemTransaction {
+public class PurchaseOrderItemTransaction extends ItemTransaction {
 
 	
 	/**
@@ -19,23 +19,23 @@ public class SalesOrderItemTransaction extends ItemTransaction {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	private Customer customer;
+	private Vendor vendor;
 	
 	@ManyToOne
-	private SalesOrderLine soLine;
+	private PurchaseOrderLine poLine;
 	
 	private Date requiredDate; 
 	
-	public SalesOrderItemTransaction(SalesOrderLine soLine) {
-		super(soLine);
-		this.customer = soLine.getHeader().getCustomer();
-		this.soLine = soLine;
-		this.requiredDate = soLine.getRequiredDate();
+	public PurchaseOrderItemTransaction(PurchaseOrderLine poLine) {
+		super(poLine);
+		this.vendor = poLine.getHeader().getVendor();
+		this.poLine = poLine;
+		this.requiredDate = poLine.getRequiredDate();
 	}
 
 	@Override
 	public void updateStockCard(ItemStockCard stockCard) {
-		stockCard.setQtyOnSalesOrder(Calc.add(stockCard.getQtyOnSalesOrder() , getQty()));
+		stockCard.setQtyOnPurchaseOrder(Calc.add(stockCard.getQtyOnPurchaseOrder() , getQty()));
 	}
 
 	@Override
@@ -47,25 +47,33 @@ public class SalesOrderItemTransaction extends ItemTransaction {
 		return plannings;
 	}
 	
-	public Customer getCustomer(){
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	@Override
 	public DocumentLine getDocLine() {
-		return soLine;
+		return getPoLine();
 	}
-
+	
 	public Date getRequiredDate() {
 		return requiredDate;
 	}
 
 	public void setRequiredDate(Date requiredDate) {
 		this.requiredDate = requiredDate;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
+	public PurchaseOrderLine getPoLine() {
+		return poLine;
+	}
+
+	public void setPoLine(PurchaseOrderLine poLine) {
+		this.poLine = poLine;
 	}
 
 }

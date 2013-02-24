@@ -10,7 +10,7 @@ public class CurrencySupply extends CurrencyPlanning {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	CurrencySupply(CurrencyTransaction tran) {
+	public CurrencySupply(SalesOrderCurrencyTransaction tran) {
 		super(tran);
 	}
 }
