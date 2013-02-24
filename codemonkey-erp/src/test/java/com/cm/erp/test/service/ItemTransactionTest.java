@@ -3,18 +3,15 @@ package com.cm.erp.test.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cm.erp.domain.ItemDemand;
 import com.cm.erp.domain.ItemPlanning;
 import com.cm.erp.domain.ItemStockCard;
 import com.cm.erp.domain.ItemTransaction;
-import com.cm.erp.domain.SalesOrderItemTransaction;
 import com.cm.erp.domain.SalesOrderLine;
 import com.cm.erp.domain.Transaction;
 import com.cm.erp.service.ItemStockCardService;
@@ -26,23 +23,18 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 	@Autowired private ItemStockCardService itemStockCardService;
 	
 	@Test
-	public void test4SalesOrderLine(){
-		
-		SalesOrderLine line = buildSalesOrderLine();
-		
+	public void testServices(){
 		assertNotNull(itemTransactionFactory);
-		
-		List<Transaction> trans = verifySalesOrderTransactions(line);
-		
-		verifySalesOrderStockCard(trans);
-		
-		verifySalesOrderPlanning(trans);
-		
+		assertNotNull(itemStockCardService);
 	}
-
-	private void verifySalesOrderPlanning(List<Transaction> trans) {
-		
-		List<ItemPlanning> planningList = new ArrayList<ItemPlanning>();
+	
+	protected List<Transaction> createTransactions(SalesOrderLine line) {
+		List<Transaction> trans = itemTransactionFactory.createTransactions(line);
+		return trans;
+	}
+	
+	protected void createItemPlanning(List<Transaction> trans,
+			List<ItemPlanning> planList) {
 		
 		for(Transaction t : trans){
 			
@@ -50,24 +42,16 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 			
 			//create planning
 			if(CollectionUtils.isNotEmpty(tran.createPlanning())){
-				planningList.addAll(tran.createPlanning());
+				planList.addAll(tran.createPlanning());
 			}
 		}
-		
-		for(ItemPlanning plan : planningList){
-			ItemDemand demand = (ItemDemand) plan;
-			assertNotNull(demand.getItem());
-			assertNotNull(demand.getDate());
-			assertEquals(QTY , demand.getQty());
-			assertNotNull(demand.getItemTransaction());
-			assertNotNull(demand.getWarehouse());
-		}
 	}
-
-	private void verifySalesOrderStockCard(List<Transaction> trans) {
+	
+	void upadteItemStockCard(List<Transaction> trans,
+			List<ItemStockCard> stackCardList) {
 		
 		if(CollectionUtils.isEmpty(trans)) {
-			return;
+			return ;
 		}
 		
 		for(Transaction t : trans){
@@ -75,30 +59,27 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 			ItemStockCard stockCard = itemStockCardService.getStockCard(tran.getItem() , tran.getWarehouse());
 			tran.updateStockCard(stockCard);
 			
-			assertEquals(QTY , stockCard.getQtyRequired());
-			assertNotNull(stockCard.getWarehouse());
-			assertNotNull(stockCard.getItem());
+			stackCardList.add(stockCard);
 		}
 		
 	}
-
-	private List<Transaction> verifySalesOrderTransactions(SalesOrderLine line) {
-		
-		List<Transaction> trans = itemTransactionFactory.createTransactions(line);
-		
-		assertEquals(1 , trans.size());
-		
-		verify(trans.get(0));
-		
-		SalesOrderItemTransaction t = (SalesOrderItemTransaction) trans.get(0);
-		
-		assertNotNull(t.getCustomer());
-		
-		return trans;
-		
+	
+	public void verify(ItemPlanning plan) {
+		assertNotNull(plan.getItem());
+		assertNotNull(plan.getDate());
+		assertEquals(QTY , plan.getQty());
+		assertNotNull(plan.getItemTransaction());
+		assertNotNull(plan.getWarehouse());
 	}
 
-	private void verify(Transaction tran) {
+	public void verify(ItemStockCard stockCard) {
+		assertEquals(QTY , stockCard.getQtyRequired());
+		assertNotNull(stockCard.getWarehouse());
+		assertNotNull(stockCard.getItem());
+	}
+
+
+	protected void verify(Transaction tran) {
 		ItemTransaction t = (ItemTransaction) tran;
 		assertNotNull(t.getItem());
 		assertNotNull(t.getQty());
