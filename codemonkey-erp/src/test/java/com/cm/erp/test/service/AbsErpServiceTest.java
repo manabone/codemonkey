@@ -16,8 +16,12 @@ import com.cm.erp.domain.DocumentLine;
 import com.cm.erp.domain.Item;
 import com.cm.erp.domain.PurchaseOrder;
 import com.cm.erp.domain.PurchaseOrderLine;
+import com.cm.erp.domain.Receipt;
+import com.cm.erp.domain.ReceiptLine;
 import com.cm.erp.domain.SalesOrder;
 import com.cm.erp.domain.SalesOrderLine;
+import com.cm.erp.domain.Shipment;
+import com.cm.erp.domain.ShipmentLine;
 import com.cm.erp.domain.Vendor;
 import com.cm.erp.domain.Warehouse;
 import com.cm.erp.service.CustomerService;
@@ -31,6 +35,8 @@ import com.cm.erp.service.WarehouseService;
 public class AbsErpServiceTest {
 
 	public static final Double QTY = 7d;
+	
+	public static final Double NEG_QTY = -QTY;
 	
 	public static final Double PRICE = 11.5;
 	
@@ -59,6 +65,52 @@ public class AbsErpServiceTest {
 		Warehouse warehouse = new Warehouse();
 		warehouseService.doSave(warehouse);
 		return warehouse;
+	}
+	
+	Receipt buildReceipt(){
+		
+		Receipt rp = new Receipt();
+		
+		setDocumentAttr(rp);
+		
+		return rp;
+	}
+	
+	
+	ReceiptLine buildReceiptLine() {
+		
+		Receipt rp = buildReceipt();
+		ReceiptLine line = new ReceiptLine();
+		
+		setDocumentLineAttr(line);
+		
+		line.setReceipt(rp);
+		line.setPurchaseOrderLine(buildPurchaseOrderLine());
+		
+		return line;
+	}
+	
+	Shipment buildShipment(){
+		
+		Shipment sp = new Shipment();
+		
+		setDocumentAttr(sp);
+		
+		return sp;
+	}
+	
+	
+	ShipmentLine buildShipmentLine() {
+		
+		Shipment sp = buildShipment();
+		ShipmentLine line = new ShipmentLine();
+		
+		setDocumentLineAttr(line);
+		
+		line.setShipment(sp);
+		line.setSalesOrderLine(buildSalesOrderLine());
+		
+		return line;
 	}
 	
 	PurchaseOrderLine buildPurchaseOrderLine(){

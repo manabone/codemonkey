@@ -22,7 +22,7 @@ public class ReceiptLine extends DocumentLineAdapter {
 
 	@Override
 	public Receipt getHeader() {
-		return receipt;
+		return getReceipt();
 	}
 
 	@Override
@@ -38,5 +38,13 @@ public class ReceiptLine extends DocumentLineAdapter {
 
 	public void setPurchaseOrderLine(PurchaseOrderLine purchaseOrderLine) {
 		this.purchaseOrderLine = purchaseOrderLine;
+	}
+
+	public Receipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
 	}
 }

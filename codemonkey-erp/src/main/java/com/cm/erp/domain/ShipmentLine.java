@@ -1,5 +1,6 @@
 package com.cm.erp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -21,13 +22,30 @@ public class ShipmentLine extends DocumentLineAdapter {
 	
 	@Override
 	public Shipment getHeader() {
-		return shipment;
+		return getShipment();
 	}
 
 	@Override
 	public List<Transaction> createItemTransactions() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Transaction> trans = new ArrayList<Transaction>();
+		trans.add(new ShipmentItemTransaction(this));
+		return trans;
+	}
+
+	public Shipment getShipment() {
+		return shipment;
+	}
+
+	public void setShipment(Shipment shipment) {
+		this.shipment = shipment;
+	}
+
+	public SalesOrderLine getSalesOrderLine() {
+		return salesOrderLine;
+	}
+
+	public void setSalesOrderLine(SalesOrderLine salesOrderLine) {
+		this.salesOrderLine = salesOrderLine;
 	}
 
 }

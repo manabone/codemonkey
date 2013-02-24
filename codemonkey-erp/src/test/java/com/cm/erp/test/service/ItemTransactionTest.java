@@ -1,6 +1,5 @@
 package com.cm.erp.test.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -67,7 +66,6 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 	public void verify(ItemPlanning plan) {
 		assertNotNull(plan.getItem());
 		assertNotNull(plan.getDate());
-		assertEquals(QTY , plan.getQty());
 		assertNotNull(plan.getItemTransaction());
 		assertNotNull(plan.getWarehouse());
 	}
@@ -76,7 +74,6 @@ public class ItemTransactionTest extends AbsErpServiceTest {
 		assertNotNull(stockCard.getWarehouse());
 		assertNotNull(stockCard.getItem());
 	}
-
 
 	protected void verify(Transaction tran) {
 		ItemTransaction t = (ItemTransaction) tran;
