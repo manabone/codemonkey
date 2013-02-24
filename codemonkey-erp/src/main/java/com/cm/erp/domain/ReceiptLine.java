@@ -1,5 +1,6 @@
 package com.cm.erp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -26,6 +27,16 @@ public class ReceiptLine extends DocumentLineAdapter {
 
 	@Override
 	public List<Transaction> createItemTransactions() {
-		return null;
+		List<Transaction> trans = new ArrayList<Transaction>();
+		trans.add(new ReceiptItemTransaction(this));
+		return trans;
+	}
+
+	public PurchaseOrderLine getPurchaseOrderLine() {
+		return purchaseOrderLine;
+	}
+
+	public void setPurchaseOrderLine(PurchaseOrderLine purchaseOrderLine) {
+		this.purchaseOrderLine = purchaseOrderLine;
 	}
 }

@@ -3,14 +3,14 @@ package com.cm.erp.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class ItemSupply extends ItemPlanning {
+public class ItemOnhandSupply extends ItemOrderSupply {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	ItemSupply(ItemTransaction tran) {
+	ItemOnhandSupply(ItemTransaction tran) {
 		super(tran);
 	}
 	

@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import com.codemonkey.utils.Calc;
 
 @Entity
-public class PurchaseOrderItemTransaction extends ItemTransaction {
+public class ReceiptItemTransaction extends ItemTransaction {
 
 	
 	/**
@@ -21,31 +21,33 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 	private Vendor vendor;
 	
 	@ManyToOne
-	private PurchaseOrderLine poLine;
+	private ReceiptLine rpLine;
 	
-	public PurchaseOrderItemTransaction(PurchaseOrderLine poLine) {
-		super(poLine);
-		this.vendor = poLine.getHeader().getVendor();
-		this.poLine = poLine;
+	public ReceiptItemTransaction(ReceiptLine rpLine) {
+		super(rpLine);
+		this.vendor = rpLine.getPurchaseOrderLine().getHeader().getVendor();
+		this.setRpLine(rpLine);
 	}
 
 	@Override
 	public void updateStockCard(ItemStockCard stockCard) {
-		stockCard.setQtyOnPurchaseOrder(Calc.add(stockCard.getQtyOnPurchaseOrder() , getQty()));
+		stockCard.setQtyOnPurchaseOrder(Calc.sub(stockCard.getQtyOnPurchaseOrder() , getQty()));
+		stockCard.setQtyOnHand(Calc.add(stockCard.getQtyOnHand() , getQty()));
 	}
 
 	@Override
 	public List<ItemPlanning> createPlanning() {
 		List<ItemPlanning> plannings = new ArrayList<ItemPlanning>();
-		ItemOrderDemand demand = new ItemOrderDemand(this);
-		demand.setDate(getRequiredDate());
-		plannings.add(demand);
+		ItemOrderSupply supply1 = new ItemOrderSupply(this);
+		ItemOnhandSupply supply2 = new ItemOnhandSupply(this);
+		plannings.add(supply1);
+		plannings.add(supply2);
 		return plannings;
 	}
 	
 	@Override
 	public DocumentLine getDocLine() {
-		return getPoLine();
+		return getRpLine();
 	}
 	
 	public Vendor getVendor() {
@@ -56,12 +58,12 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 		this.vendor = vendor;
 	}
 
-	public PurchaseOrderLine getPoLine() {
-		return poLine;
+	public ReceiptLine getRpLine() {
+		return rpLine;
 	}
 
-	public void setPoLine(PurchaseOrderLine poLine) {
-		this.poLine = poLine;
+	public void setRpLine(ReceiptLine rpLine) {
+		this.rpLine = rpLine;
 	}
 
 }
