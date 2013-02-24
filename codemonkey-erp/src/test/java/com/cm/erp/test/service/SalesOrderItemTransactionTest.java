@@ -63,6 +63,7 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 		
 		for(ItemStockCard stockCard : stackCardList){
 			verify(stockCard);
+			assertEquals(QTY , stockCard.getQtyRequired());
 		}
 		
 	}
