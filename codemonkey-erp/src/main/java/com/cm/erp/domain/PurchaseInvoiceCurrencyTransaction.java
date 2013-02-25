@@ -39,18 +39,18 @@ public class PurchaseInvoiceCurrencyTransaction extends CurrencyTransaction {
 	@Override
 	public List<CurrencyPlanning> createPlanning() {
 		List<CurrencyPlanning> plannings = new ArrayList<CurrencyPlanning>();
-		plannings.add(createCurrencyOrderSupply());
-		plannings.add(createCurrencyInvoiceSupply());
+		plannings.add(createCurrencyOrderDemand());
+		plannings.add(createCurrencyInvoiceDemand());
 		return plannings;
 	}
 
-	private CurrencyPlanning createCurrencyOrderSupply() {
+	private CurrencyPlanning createCurrencyOrderDemand() {
 		CurrencyPlanning plan = create(new CurrencyOrderDemand());
 		plan.setAmount(Calc.neg(getAmount()));
 		return plan;
 	}
 
-	private CurrencyPlanning createCurrencyInvoiceSupply() {
+	private CurrencyPlanning createCurrencyInvoiceDemand() {
 		CurrencyPlanning plan = create(new CurrencyInvoiceDemand());
 		plan.setAmount(getAmount());
 		return plan;

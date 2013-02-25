@@ -18,6 +18,8 @@ import com.cm.erp.domain.PurchaseInvoice;
 import com.cm.erp.domain.PurchaseInvoiceLine;
 import com.cm.erp.domain.PurchaseOrder;
 import com.cm.erp.domain.PurchaseOrderLine;
+import com.cm.erp.domain.PurchasePayment;
+import com.cm.erp.domain.PurchasePaymentLine;
 import com.cm.erp.domain.Receipt;
 import com.cm.erp.domain.ReceiptLine;
 import com.cm.erp.domain.SalesInvoice;
@@ -141,6 +143,30 @@ public class AbsErpServiceTest {
 		po.setPaymentDate(new Date());
 		
 		return po;
+	}
+	
+	
+	PurchasePaymentLine buildPurchasePaymentLine() {
+		PurchasePayment pp = buildPurchasePayment();
+		PurchasePaymentLine line = new PurchasePaymentLine();
+		
+		setDocumentLineAttr(line);
+		
+		line.setPurchasePayment(pp);
+		line.setPrice(PRICE);
+		return line;
+	}
+	
+	PurchasePayment buildPurchasePayment() {
+		PurchasePayment pp = new PurchasePayment();
+		
+		setDocumentAttr(pp);
+		
+		Vendor vendor = buildVendor();
+		pp.setVendor(vendor);
+		pp.setPaymentDate(new Date());
+		
+		return pp;
 	}
 	
 	private void setDocumentAttr(Document doc){
