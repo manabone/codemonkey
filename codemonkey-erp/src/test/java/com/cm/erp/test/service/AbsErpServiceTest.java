@@ -22,6 +22,8 @@ import com.cm.erp.domain.PurchasePayment;
 import com.cm.erp.domain.PurchasePaymentLine;
 import com.cm.erp.domain.Receipt;
 import com.cm.erp.domain.ReceiptLine;
+import com.cm.erp.domain.SalesCashReceipt;
+import com.cm.erp.domain.SalesCashReceiptLine;
 import com.cm.erp.domain.SalesInvoice;
 import com.cm.erp.domain.SalesInvoiceLine;
 import com.cm.erp.domain.SalesOrder;
@@ -192,12 +194,6 @@ public class AbsErpServiceTest {
 		return line;
 	}
 	
-	private void setDocumentLineAttr(DocumentLine line){
-		line.setQty(QTY);
-		line.setItem(buildItem());
-		line.setRequiredDate(new Date());
-	}
-
 	SalesOrder buildSalesOrder() {
 		SalesOrder so = new SalesOrder();
 
@@ -210,6 +206,12 @@ public class AbsErpServiceTest {
 		return so;
 	}
 	
+	private void setDocumentLineAttr(DocumentLine line){
+		line.setQty(QTY);
+		line.setItem(buildItem());
+		line.setRequiredDate(new Date());
+	}
+
 	SalesInvoiceLine buildSalesInvoiceLine(){
 		
 		SalesInvoice si = buildSalesInvoice();
@@ -233,6 +235,31 @@ public class AbsErpServiceTest {
 		si.setPaymentDate(new Date());
 		
 		return si;
+	}
+	
+	SalesCashReceiptLine buildSalesCashReceiptLine(){
+		
+		SalesCashReceipt scr = buildSalesCashReceipt();
+		SalesCashReceiptLine line = new SalesCashReceiptLine();
+		
+		setDocumentLineAttr(line);
+		
+		line.setSalesCashReceipt(scr);
+		line.setPrice(PRICE);
+		
+		return line;
+	}
+	
+	SalesCashReceipt buildSalesCashReceipt(){
+		SalesCashReceipt scr = new SalesCashReceipt();
+
+		setDocumentAttr(scr);
+		
+		Customer customer = buildCustomer();
+		scr.setCustomer(customer);
+		scr.setPaymentDate(new Date());
+		
+		return scr;
 	}
 	
 	PurchaseInvoiceLine buildPurchaseInvoiceLine(){

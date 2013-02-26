@@ -20,7 +20,7 @@ import com.cm.erp.domain.Transaction;
 public class ReceiptItemTransactionTest extends ItemTransactionTest {
 	
 	@Test
-	public void test4PurchaseOrderLine(){
+	public void test(){
 		
 		//1-test transactions
 		ReceiptLine line = buildReceiptLine();

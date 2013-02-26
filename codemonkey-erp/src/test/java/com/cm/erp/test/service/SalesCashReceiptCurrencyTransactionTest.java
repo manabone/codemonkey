@@ -8,20 +8,21 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.cm.erp.domain.CurrencyOrderDemand;
+import com.cm.erp.domain.CurrencyInvoiceSupply;
+import com.cm.erp.domain.CurrencyOrderSupply;
 import com.cm.erp.domain.CurrencyPlanning;
 import com.cm.erp.domain.CurrencyStockCard;
-import com.cm.erp.domain.PurchaseOrderCurrencyTransaction;
-import com.cm.erp.domain.PurchaseOrderLine;
+import com.cm.erp.domain.SalesInvoiceCurrencyTransaction;
+import com.cm.erp.domain.SalesInvoiceLine;
 import com.cm.erp.domain.Transaction;
 
 
-public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTest {
+public class SalesCashReceiptCurrencyTransactionTest extends CurrencyTransactionTest {
 	
 	@Test
-	public void test4PurchaseOrderLine(){
+	public void test(){
 		
-		PurchaseOrderLine line = buildPurchaseOrderLine();
+		SalesInvoiceLine line = buildSalesInvoiceLine();
 		
 		List<Transaction> trans = createTransactions(line);
 		
@@ -49,9 +50,9 @@ public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTes
 			
 			verify(t);
 			
-			PurchaseOrderCurrencyTransaction t1 = (PurchaseOrderCurrencyTransaction) t;
+			SalesInvoiceCurrencyTransaction t1 = (SalesInvoiceCurrencyTransaction) t;
 			
-			assertNotNull(t1.getVendor());
+			assertNotNull(t1.getCustomer());
 			
 		}
 		
@@ -63,7 +64,8 @@ public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTes
 		
 		for(CurrencyStockCard stockCard : stackCardList){
 			verify(stockCard);
-			assertEquals(AMOUNT , stockCard.getAmountOnPurchaseOrder());
+			assertEquals(NEG_AMOUNT , stockCard.getAmountOnSalesOrder());
+			assertEquals(AMOUNT , stockCard.getAmountOnSalesInvoice());
 		}
 		
 	}
@@ -71,9 +73,13 @@ public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTes
 	protected void verifyPlanning(List<CurrencyPlanning> planningList) {
 		
 		for(CurrencyPlanning plan : planningList){
-			CurrencyOrderDemand demand = (CurrencyOrderDemand) plan;
-			verify(demand);
-			assertEquals(AMOUNT , demand.getAmount());
+			verify(plan);
 		}
+		
+		CurrencyOrderSupply supply0 = (CurrencyOrderSupply) planningList.get(0);
+		assertEquals(NEG_AMOUNT , supply0.getAmount());
+		
+		CurrencyInvoiceSupply supply1 = (CurrencyInvoiceSupply) planningList.get(1);
+		assertEquals(AMOUNT , supply1.getAmount());
 	}
 }
