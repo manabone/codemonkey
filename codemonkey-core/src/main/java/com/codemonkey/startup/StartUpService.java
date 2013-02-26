@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 
-@SuppressWarnings("restriction")
 public interface StartUpService {
 	
 	@PostConstruct
