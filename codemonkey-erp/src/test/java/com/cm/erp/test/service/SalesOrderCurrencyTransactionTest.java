@@ -53,6 +53,8 @@ public class SalesOrderCurrencyTransactionTest extends CurrencyTransactionTest {
 			
 			assertNotNull(t1.getCustomer());
 			
+			assertEquals(AMOUNT , t1.getAmountOnSalesOrder());
+			
 		}
 		
 		return trans;

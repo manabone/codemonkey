@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.cm.erp.domain.CurrencyInvoiceDemand;
-import com.cm.erp.domain.CurrencyOnhandSupply;
+import com.cm.erp.domain.CurrencyOnHandSupply;
 import com.cm.erp.domain.CurrencyPlanning;
 import com.cm.erp.domain.CurrencyStockCard;
 import com.cm.erp.domain.PurchasePaymentCurrencyTransaction;
@@ -54,6 +54,9 @@ public class PurchasePaymentCurrencyTransactionTest extends CurrencyTransactionT
 			
 			assertNotNull(t1.getVendor());
 			
+			assertEquals(NEG_AMOUNT , t1.getAmountOnHand());
+			assertEquals(AMOUNT , t1.getAmountOnPurchaseInvoice());
+			
 		}
 		
 		return trans;
@@ -65,7 +68,7 @@ public class PurchasePaymentCurrencyTransactionTest extends CurrencyTransactionT
 		for(CurrencyStockCard stockCard : stackCardList){
 			verify(stockCard);
 			assertEquals(NEG_AMOUNT , stockCard.getAmountOnHand());
-			assertEquals(NEG_AMOUNT , stockCard.getAmountOnPurchaseInvoice());
+			assertEquals(AMOUNT , stockCard.getAmountOnPurchaseInvoice());
 		}
 		
 	}
@@ -79,7 +82,7 @@ public class PurchasePaymentCurrencyTransactionTest extends CurrencyTransactionT
 		CurrencyInvoiceDemand demand = (CurrencyInvoiceDemand) planningList.get(0);
 		assertEquals(NEG_AMOUNT , demand.getAmount());
 		
-		CurrencyOnhandSupply supply = (CurrencyOnhandSupply) planningList.get(1);
+		CurrencyOnHandSupply supply = (CurrencyOnHandSupply) planningList.get(1);
 		assertEquals(NEG_AMOUNT , supply.getAmount());
 	}
 }

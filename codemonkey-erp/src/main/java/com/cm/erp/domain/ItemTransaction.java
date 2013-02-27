@@ -8,6 +8,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+import com.codemonkey.utils.Calc;
+
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class ItemTransaction  extends Transaction {
@@ -25,6 +27,12 @@ public abstract class ItemTransaction  extends Transaction {
 	
 	private Double qty;
 	
+	private Double qtyOnSalesOrder = 0d;
+	
+	private Double qtyOnPurchaseOrder = 0d;
+	
+	private Double qtyOnHand = 0d;
+	
 	private Date requiredDate;
 	
 	ItemTransaction(DocumentLine docLine) {
@@ -34,7 +42,11 @@ public abstract class ItemTransaction  extends Transaction {
 		this.requiredDate = docLine.getRequiredDate();
 	}
 	
-	public abstract void updateStockCard(ItemStockCard stockCard);
+	public void updateStockCard(ItemStockCard stockCard){
+		stockCard.setQtyOnSalesOrder(Calc.add(stockCard.getQtyOnSalesOrder() , getQtyOnSalesOrder()));
+		stockCard.setQtyOnPurchaseOrder(Calc.add(stockCard.getQtyOnPurchaseOrder() , getQtyOnPurchaseOrder()));
+		stockCard.setQtyOnHand(Calc.add(stockCard.getQtyOnHand() , getQtyOnHand()));
+	}
 	
 	public abstract List<ItemPlanning> createPlanning();
 	
@@ -77,6 +89,30 @@ public abstract class ItemTransaction  extends Transaction {
 
 	public void setRequiredDate(Date requiredDate) {
 		this.requiredDate = requiredDate;
+	}
+
+	public Double getQtyOnSalesOrder() {
+		return qtyOnSalesOrder;
+	}
+
+	public void setQtyOnSalesOrder(Double qtyOnSalesOrder) {
+		this.qtyOnSalesOrder = qtyOnSalesOrder;
+	}
+
+	public Double getQtyOnPurchaseOrder() {
+		return qtyOnPurchaseOrder;
+	}
+
+	public void setQtyOnPurchaseOrder(Double qtyOnPurchaseOrder) {
+		this.qtyOnPurchaseOrder = qtyOnPurchaseOrder;
+	}
+
+	public Double getQtyOnHand() {
+		return qtyOnHand;
+	}
+
+	public void setQtyOnHand(Double qtyOnHand) {
+		this.qtyOnHand = qtyOnHand;
 	}
 
 }

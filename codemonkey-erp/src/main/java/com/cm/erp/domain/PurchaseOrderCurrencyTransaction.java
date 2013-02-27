@@ -28,11 +28,7 @@ public class PurchaseOrderCurrencyTransaction extends CurrencyTransaction {
 		setDate(poLine.getHeader().getPaymentDate());
 		this.poLine = poLine;
 		this.vendor = poLine.getHeader().getVendor();
-	}
-
-	@Override
-	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnPurchaseOrder(Calc.add(stockCard.getAmountOnPurchaseOrder() , getDocLine().getAmount()));
+		this.setAmountOnPurchaseOrder(Calc.neg(poLine.getAmount()));
 	}
 
 	@Override

@@ -28,12 +28,8 @@ public class PurchaseInvoiceCurrencyTransaction extends CurrencyTransaction {
 		setDate(piLine.getHeader().getPaymentDate());
 		this.setPiLine(piLine);
 		this.vendor = piLine.getHeader().getVendor();
-	}
-
-	@Override
-	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnPurchaseOrder(Calc.sub(stockCard.getAmountOnPurchaseOrder() , getDocLine().getAmount()));
-		stockCard.setAmountOnPurchaseInvoice(Calc.add(stockCard.getAmountOnPurchaseInvoice() , getDocLine().getAmount()));
+		this.setAmountOnPurchaseOrder(piLine.getAmount());
+		this.setAmountOnPurchaseInvoice(Calc.neg(piLine.getAmount()));
 	}
 
 	@Override

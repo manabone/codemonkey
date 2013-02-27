@@ -28,30 +28,26 @@ public class SalesCashReceiptCurrencyTransaction extends CurrencyTransaction {
 		this.setScrLine(scrLine);
 		this.customer = scrLine.getHeader().getCustomer();
 		setDate(scrLine.getHeader().getPaymentDate());
-	}
-
-	@Override
-	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnSalesInvoice(Calc.add(stockCard.getAmountOnSalesInvoice() , getDocLine().getAmount()));
-		stockCard.setAmountOnSalesOrder(Calc.sub(stockCard.getAmountOnSalesOrder() , getDocLine().getAmount()));
+		this.setAmountOnHand(scrLine.getAmount());
+		this.setAmountOnSalesInvoice(Calc.neg(scrLine.getAmount()));
 	}
 
 	@Override
 	public List<CurrencyPlanning> createPlanning() {
 		List<CurrencyPlanning> plannings = new ArrayList<CurrencyPlanning>();
-		plannings.add(createCurrencyOrderSupply());
+		plannings.add(createCurrencyOnHandSupply());
 		plannings.add(createCurrencyInvoiceSupply());
 		return plannings;
 	}
 
 	private CurrencyPlanning createCurrencyInvoiceSupply() {
 		CurrencyPlanning plan = create(new CurrencyInvoiceSupply());
+		plan.setAmount(Calc.neg(getAmount()));
 		return plan;
 	}
 
-	private CurrencyPlanning createCurrencyOrderSupply() {
-		CurrencyPlanning plan = create(new CurrencyOrderSupply());
-		plan.setAmount(Calc.neg(getAmount()));
+	private CurrencyPlanning createCurrencyOnHandSupply() {
+		CurrencyPlanning plan = create(new CurrencyOnHandSupply());
 		return plan;
 	}
 

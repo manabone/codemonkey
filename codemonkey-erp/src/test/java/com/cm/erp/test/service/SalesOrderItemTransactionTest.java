@@ -52,6 +52,10 @@ public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 			SalesOrderItemTransaction t1 = (SalesOrderItemTransaction) t;
 			
 			assertNotNull(t1.getCustomer());
+
+			assertEquals(QTY, t1.getQty());
+			
+			assertEquals(QTY, t1.getQtyOnSalesOrder());
 			
 		}
 		

@@ -53,6 +53,10 @@ public class SalesInvoiceCurrencyTransactionTest extends CurrencyTransactionTest
 			SalesInvoiceCurrencyTransaction t1 = (SalesInvoiceCurrencyTransaction) t;
 			
 			assertNotNull(t1.getCustomer());
+
+			assertEquals(AMOUNT , t1.getAmountOnSalesInvoice());
+
+			assertEquals(NEG_AMOUNT , t1.getAmountOnSalesOrder());
 			
 		}
 		

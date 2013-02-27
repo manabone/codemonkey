@@ -53,6 +53,8 @@ public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTes
 			
 			assertNotNull(t1.getVendor());
 			
+			assertEquals(NEG_AMOUNT , t1.getAmountOnPurchaseOrder());
+			
 		}
 		
 		return trans;
@@ -63,7 +65,7 @@ public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTes
 		
 		for(CurrencyStockCard stockCard : stackCardList){
 			verify(stockCard);
-			assertEquals(AMOUNT , stockCard.getAmountOnPurchaseOrder());
+			assertEquals(NEG_AMOUNT , stockCard.getAmountOnPurchaseOrder());
 		}
 		
 	}

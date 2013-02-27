@@ -27,12 +27,8 @@ public class ReceiptItemTransaction extends ItemTransaction {
 		super(rpLine);
 		this.vendor = rpLine.getPurchaseOrderLine().getHeader().getVendor();
 		this.setRpLine(rpLine);
-	}
-
-	@Override
-	public void updateStockCard(ItemStockCard stockCard) {
-		stockCard.setQtyOnPurchaseOrder(Calc.sub(stockCard.getQtyOnPurchaseOrder() , getQty()));
-		stockCard.setQtyOnHand(Calc.add(stockCard.getQtyOnHand() , getQty()));
+		this.setQtyOnHand(rpLine.getQty());
+		this.setQtyOnPurchaseOrder(Calc.neg(rpLine.getQty()));
 	}
 
 	@Override

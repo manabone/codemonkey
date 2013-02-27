@@ -57,6 +57,13 @@ public class ShipmentItemTransactionTest extends ItemTransactionTest {
 			
 			assertNotNull(t1.getCustomer());
 			
+			assertEquals(QTY, t1.getQty());
+			
+			assertEquals(NEG_QTY, t1.getQtyOnHand());
+			
+			assertEquals(NEG_QTY, t1.getQtyOnSalesOrder());
+			
+		
 		}
 		
 		return trans;

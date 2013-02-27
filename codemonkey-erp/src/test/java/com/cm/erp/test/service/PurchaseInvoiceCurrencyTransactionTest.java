@@ -54,6 +54,9 @@ public class PurchaseInvoiceCurrencyTransactionTest extends CurrencyTransactionT
 			
 			assertNotNull(t1.getVendor());
 			
+			assertEquals(NEG_AMOUNT , t1.getAmountOnPurchaseInvoice());
+			
+			assertEquals(AMOUNT , t1.getAmountOnPurchaseOrder());
 		}
 		
 		return trans;
@@ -64,8 +67,8 @@ public class PurchaseInvoiceCurrencyTransactionTest extends CurrencyTransactionT
 		
 		for(CurrencyStockCard stockCard : stackCardList){
 			verify(stockCard);
-			assertEquals(NEG_AMOUNT , stockCard.getAmountOnPurchaseOrder());
-			assertEquals(AMOUNT , stockCard.getAmountOnPurchaseInvoice());
+			assertEquals(AMOUNT , stockCard.getAmountOnPurchaseOrder());
+			assertEquals(NEG_AMOUNT , stockCard.getAmountOnPurchaseInvoice());
 		}
 		
 	}

@@ -9,11 +9,11 @@ import java.util.List;
 import org.junit.Test;
 
 import com.cm.erp.domain.CurrencyInvoiceSupply;
-import com.cm.erp.domain.CurrencyOrderSupply;
+import com.cm.erp.domain.CurrencyOnHandSupply;
 import com.cm.erp.domain.CurrencyPlanning;
 import com.cm.erp.domain.CurrencyStockCard;
-import com.cm.erp.domain.SalesInvoiceCurrencyTransaction;
-import com.cm.erp.domain.SalesInvoiceLine;
+import com.cm.erp.domain.SalesCashReceiptCurrencyTransaction;
+import com.cm.erp.domain.SalesCashReceiptLine;
 import com.cm.erp.domain.Transaction;
 
 
@@ -22,7 +22,7 @@ public class SalesCashReceiptCurrencyTransactionTest extends CurrencyTransaction
 	@Test
 	public void test(){
 		
-		SalesInvoiceLine line = buildSalesInvoiceLine();
+		SalesCashReceiptLine line = buildSalesCashReceiptLine();
 		
 		List<Transaction> trans = createTransactions(line);
 		
@@ -50,9 +50,13 @@ public class SalesCashReceiptCurrencyTransactionTest extends CurrencyTransaction
 			
 			verify(t);
 			
-			SalesInvoiceCurrencyTransaction t1 = (SalesInvoiceCurrencyTransaction) t;
+			SalesCashReceiptCurrencyTransaction t1 = (SalesCashReceiptCurrencyTransaction) t;
 			
 			assertNotNull(t1.getCustomer());
+			
+			assertEquals(AMOUNT , t1.getAmountOnHand());
+			
+			assertEquals(NEG_AMOUNT , t1.getAmountOnSalesInvoice());
 			
 		}
 		
@@ -64,8 +68,8 @@ public class SalesCashReceiptCurrencyTransactionTest extends CurrencyTransaction
 		
 		for(CurrencyStockCard stockCard : stackCardList){
 			verify(stockCard);
-			assertEquals(NEG_AMOUNT , stockCard.getAmountOnSalesOrder());
-			assertEquals(AMOUNT , stockCard.getAmountOnSalesInvoice());
+			assertEquals(AMOUNT , stockCard.getAmountOnHand());
+			assertEquals(NEG_AMOUNT , stockCard.getAmountOnSalesInvoice());
 		}
 		
 	}
@@ -76,10 +80,10 @@ public class SalesCashReceiptCurrencyTransactionTest extends CurrencyTransaction
 			verify(plan);
 		}
 		
-		CurrencyOrderSupply supply0 = (CurrencyOrderSupply) planningList.get(0);
-		assertEquals(NEG_AMOUNT , supply0.getAmount());
+		CurrencyOnHandSupply supply0 = (CurrencyOnHandSupply) planningList.get(0);
+		assertEquals(AMOUNT , supply0.getAmount());
 		
 		CurrencyInvoiceSupply supply1 = (CurrencyInvoiceSupply) planningList.get(1);
-		assertEquals(AMOUNT , supply1.getAmount());
+		assertEquals(NEG_AMOUNT , supply1.getAmount());
 	}
 }

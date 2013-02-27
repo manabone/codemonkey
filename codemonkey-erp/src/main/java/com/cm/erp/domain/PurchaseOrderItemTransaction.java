@@ -6,8 +6,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.codemonkey.utils.Calc;
-
 @Entity
 public class PurchaseOrderItemTransaction extends ItemTransaction {
 
@@ -27,11 +25,7 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 		super(poLine);
 		this.vendor = poLine.getHeader().getVendor();
 		this.poLine = poLine;
-	}
-
-	@Override
-	public void updateStockCard(ItemStockCard stockCard) {
-		stockCard.setQtyOnPurchaseOrder(Calc.add(stockCard.getQtyOnPurchaseOrder() , getQty()));
+		this.setQtyOnPurchaseOrder(poLine.getQty());
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package com.cm.erp.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class CurrencyOnhandSupply extends CurrencyPlanning {
+public class CurrencyOnHandSupply extends CurrencyPlanning {
 
 	/**
 	 * 

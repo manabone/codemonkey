@@ -28,12 +28,8 @@ public class PurchasePaymentCurrencyTransaction extends CurrencyTransaction {
 		setDate(ppLine.getHeader().getPaymentDate());
 		this.setPpLine(ppLine);
 		this.vendor = ppLine.getHeader().getVendor();
-	}
-
-	@Override
-	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnPurchaseInvoice(Calc.sub(stockCard.getAmountOnPurchaseInvoice() , getDocLine().getAmount()));
-		stockCard.setAmountOnHand(Calc.sub(stockCard.getAmountOnHand(), getDocLine().getAmount()));
+		this.setAmountOnHand(Calc.neg(ppLine.getAmount()));
+		this.setAmountOnPurchaseInvoice(ppLine.getAmount());
 	}
 
 	@Override
@@ -51,7 +47,7 @@ public class PurchasePaymentCurrencyTransaction extends CurrencyTransaction {
 	}
 
 	private CurrencyPlanning createCurrencyOnHandSupply() {
-		CurrencyPlanning plan = create(new CurrencyOnhandSupply());
+		CurrencyPlanning plan = create(new CurrencyOnHandSupply());
 		plan.setAmount(Calc.neg(getAmount()));
 		return plan;
 	}

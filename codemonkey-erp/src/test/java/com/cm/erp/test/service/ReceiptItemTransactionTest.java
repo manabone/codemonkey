@@ -57,6 +57,11 @@ public class ReceiptItemTransactionTest extends ItemTransactionTest {
 			
 			assertNotNull(t1.getVendor());
 			
+			assertEquals(QTY, t1.getQty());
+			
+			assertEquals(NEG_QTY, t1.getQtyOnPurchaseOrder());
+			
+			assertEquals(QTY, t1.getQtyOnHand());
 		}
 		
 		return trans;

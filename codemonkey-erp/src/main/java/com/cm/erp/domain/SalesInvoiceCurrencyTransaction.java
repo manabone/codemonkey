@@ -28,12 +28,8 @@ public class SalesInvoiceCurrencyTransaction extends CurrencyTransaction {
 		this.setSiLine(siLine);
 		this.customer = siLine.getHeader().getCustomer();
 		setDate(siLine.getHeader().getPaymentDate());
-	}
-
-	@Override
-	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnSalesInvoice(Calc.add(stockCard.getAmountOnSalesInvoice() , getDocLine().getAmount()));
-		stockCard.setAmountOnSalesOrder(Calc.sub(stockCard.getAmountOnSalesOrder() , getDocLine().getAmount()));
+		this.setAmountOnSalesOrder(Calc.neg(siLine.getAmount()));
+		this.setAmountOnSalesInvoice(siLine.getAmount());
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import com.cm.erp.domain.Transaction;
 public class PurchaseOrderItemTransactionTest extends ItemTransactionTest {
 	
 	@Test
-	public void test4PurchaseOrderLine(){
+	public void test(){
 		
 		//1-test transactions
 		PurchaseOrderLine line = buildPurchaseOrderLine();
@@ -55,6 +55,8 @@ public class PurchaseOrderItemTransactionTest extends ItemTransactionTest {
 			PurchaseOrderItemTransaction t1 = (PurchaseOrderItemTransaction) t;
 			
 			assertNotNull(t1.getVendor());
+			assertEquals(QTY, t1.getQty());
+			assertEquals(QTY, t1.getQtyOnPurchaseOrder());
 			
 		}
 		

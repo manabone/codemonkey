@@ -27,17 +27,13 @@ public class ShipmentItemTransaction extends ItemTransaction {
 		super(spLine);
 		this.customer = spLine.getSalesOrderLine().getHeader().getCustomer();
 		this.setSpLine(spLine);
+		this.setQtyOnHand(Calc.neg(spLine.getQty()));
+		this.setQtyOnSalesOrder(Calc.neg(spLine.getQty()));
 	}
 	
 	@Override
 	public DocumentLine getDocLine() {
 		return getSpLine();
-	}
-
-	@Override
-	public void updateStockCard(ItemStockCard stockCard) {
-		stockCard.setQtyOnHand(Calc.sub(stockCard.getQtyOnHand() , getQty()));
-		stockCard.setQtyOnSalesOrder(Calc.sub(stockCard.getQtyOnSalesOrder() , getQty()));
 	}
 
 	@Override

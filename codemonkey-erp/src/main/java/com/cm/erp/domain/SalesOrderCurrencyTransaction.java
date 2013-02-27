@@ -28,11 +28,7 @@ public class SalesOrderCurrencyTransaction extends CurrencyTransaction {
 		this.soLine = soLine;
 		this.customer = soLine.getHeader().getCustomer();
 		setDate(soLine.getHeader().getPaymentDate());
-	}
-
-	@Override
-	public void updateStockCard(CurrencyStockCard stockCard) {
-		stockCard.setAmountOnSalesOrder(Calc.add(stockCard.getAmountOnSalesOrder() , getDocLine().getAmount()));
+		this.setAmountOnSalesOrder(soLine.getAmount());
 	}
 
 	@Override

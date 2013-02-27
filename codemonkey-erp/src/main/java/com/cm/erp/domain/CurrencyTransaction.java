@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.codemonkey.utils.Calc;
+
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class CurrencyTransaction  extends Transaction {
@@ -23,6 +25,16 @@ public abstract class CurrencyTransaction  extends Transaction {
 	
 	private Double amount;
 	
+	private Double amountOnHand = 0d;
+
+	private Double amountOnSalesOrder = 0d;
+	
+	private Double amountOnSalesInvoice = 0d;
+	
+	private Double amountOnPurchaseInvoice = 0d;
+	
+	private Double amountOnPurchaseOrder = 0d;
+
 	private Date date;
 	
 	CurrencyTransaction(DocumentLine docLine) {
@@ -30,7 +42,13 @@ public abstract class CurrencyTransaction  extends Transaction {
 		this.currency = docLine.getCurrency();
 	}
 	
-	public abstract void updateStockCard(CurrencyStockCard stockCard);
+	public void updateStockCard(CurrencyStockCard stockCard){
+		stockCard.setAmountOnHand(Calc.add(stockCard.getAmountOnHand() , getAmountOnHand()));
+		stockCard.setAmountOnPurchaseInvoice(Calc.add(stockCard.getAmountOnPurchaseInvoice() , getAmountOnPurchaseInvoice()));
+		stockCard.setAmountOnPurchaseOrder(Calc.add(stockCard.getAmountOnPurchaseOrder() , getAmountOnPurchaseOrder()));
+		stockCard.setAmountOnSalesInvoice(Calc.add(stockCard.getAmountOnSalesInvoice() , getAmountOnSalesInvoice()));
+		stockCard.setAmountOnSalesOrder(Calc.add(stockCard.getAmountOnSalesOrder() , getAmountOnSalesOrder()));
+	}
 	
 	public abstract List<CurrencyPlanning> createPlanning();
 	
@@ -66,6 +84,46 @@ public abstract class CurrencyTransaction  extends Transaction {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public Double getAmountOnHand() {
+		return amountOnHand;
+	}
+
+	public void setAmountOnHand(Double amountOnHand) {
+		this.amountOnHand = amountOnHand;
+	}
+
+	public Double getAmountOnSalesOrder() {
+		return amountOnSalesOrder;
+	}
+
+	public void setAmountOnSalesOrder(Double amountOnSalesOrder) {
+		this.amountOnSalesOrder = amountOnSalesOrder;
+	}
+
+	public Double getAmountOnSalesInvoice() {
+		return amountOnSalesInvoice;
+	}
+
+	public void setAmountOnSalesInvoice(Double amountOnSalesInvoice) {
+		this.amountOnSalesInvoice = amountOnSalesInvoice;
+	}
+
+	public Double getAmountOnPurchaseInvoice() {
+		return amountOnPurchaseInvoice;
+	}
+
+	public void setAmountOnPurchaseInvoice(Double amountOnPurchaseInvoice) {
+		this.amountOnPurchaseInvoice = amountOnPurchaseInvoice;
+	}
+
+	public Double getAmountOnPurchaseOrder() {
+		return amountOnPurchaseOrder;
+	}
+
+	public void setAmountOnPurchaseOrder(Double amountOnPurchaseOrder) {
+		this.amountOnPurchaseOrder = amountOnPurchaseOrder;
 	}
 
 }
