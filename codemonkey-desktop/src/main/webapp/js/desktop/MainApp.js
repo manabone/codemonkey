@@ -9,7 +9,7 @@ Ext.Loader.setConfig({
 	}
 });
 
-Ext.define('MyDesktopApp', {
+Ext.define('MainApp', {
     extend: 'AM.base.AbsDesktopApp',
 
     requires: [

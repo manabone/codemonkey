@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/common/taglibs.jsp" %>
 <head>
 	<link rel="stylesheet" type="text/css" href="${ctx}/css/desktop/css/desktop.css" />
-	<script type="text/javascript" src="${ctx}/js/erp/ErpDesktopApp.js"></script>
+	<script type="text/javascript" src="${ctx}/js/${module}/MainApp.js"></script>
 	
 	<script type="text/javascript">
 		Ext.define('OverrideConnection', {
@@ -38,7 +38,7 @@
 		Ext.onReady(function() {
 			Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
 			//myDesktopApp = new MyDesktopApp();
-			Ext.create('erp.ErpDesktopApp');
+			Ext.create('${module}.MainApp');
 		});
 	</script>
 </head>
