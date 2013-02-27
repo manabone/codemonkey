@@ -1,6 +1,6 @@
 
 Ext.define('erp.modules.${EntityName}FormModule', {
-    extend: 'erp.modules.FormModule',
+    extend: 'AM.modules.FormModule',
 
     id:'${entityName}FormModule',
     
@@ -12,7 +12,7 @@ Ext.define('erp.modules.${EntityName}FormModule', {
     
     modelFields : [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>],
     
-    formItems : [
-		${fieldsJson}
-    ]
+    formItems : function(){
+		return ${fieldsJson};
+    }
 });
