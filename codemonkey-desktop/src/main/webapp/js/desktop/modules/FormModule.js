@@ -59,14 +59,7 @@ Ext.define('AM.modules.FormModule', {
     createWindowItem : function(){
     	var me = this;
     	
-    	if(me.entityId){
-    		this.Model.load(me.entityId , {
-        	    success: function(model) {
-        	        Ext.getCmp(me.formId).getForm().loadRecord(model);
-        	        me.afterModelLoad(model);
-        	    }
-        	});
-    	}
+    	me.loadEntityToForm();
     	
     	me.formId = me.winId + '_form';
     	var formConfig = {
@@ -76,6 +69,22 @@ Ext.define('AM.modules.FormModule', {
     	var form2 = Ext.apply(formConfig , this.form);
     	
     	return form2;
+    },
+    
+    afterWindowCreate : function(){
+    	this.loadEntityToForm();
+    },
+    
+    loadEntityToForm : function(){
+    	var me = this;
+    	if(me.entityId){
+    		me.Model.load(me.entityId , {
+        	    success: function(model) {
+        	        Ext.getCmp(me.formId).getForm().loadRecord(model);
+        	        me.afterModelLoad(model);
+        	    }
+        	});
+    	}
     }
     
 });

@@ -35,12 +35,9 @@ Ext.define('erp.MainApp', {
     ],
     
     getModules : function(){
-        debugger;
-        
     	return [
 			new AM.modules.AppRoleListModule(),
-			new AM.modules.AppRoleFormModule()
-			,
+			new AM.modules.AppRoleFormModule(),
 			new AM.modules.AppUserListModule(),
 			new AM.modules.AppUserFormModule(),
 			new erp.modules.ItemListModule(),
