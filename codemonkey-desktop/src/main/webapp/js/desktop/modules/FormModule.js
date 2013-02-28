@@ -59,13 +59,12 @@ Ext.define('AM.modules.FormModule', {
     createWindowItem : function(){
     	var me = this;
     	
-    	me.loadEntityToForm();
-    	
     	me.formId = me.winId + '_form';
     	var formConfig = {
 			id : me.formId,
 			buttons : me.getActionBar({module : me}).createActionBar()
     	};
+    	
     	var form2 = Ext.apply(formConfig , this.form);
     	
     	return form2;
@@ -84,6 +83,8 @@ Ext.define('AM.modules.FormModule', {
         	        me.afterModelLoad(model);
         	    }
         	});
+    	}else{
+    		 Ext.getCmp(me.formId).getForm().reset();
     	}
     }
     

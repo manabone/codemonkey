@@ -368,7 +368,6 @@ var ExtUtils = {
         			if(errorKey == "ValidationError" && errors){
         				ExtUtils.markInvalidFields(module.formId , errors);
         			}else if(errorKey == "BadObjVersionError" && data){
-        				debugger;
         				Ext.getCmp(module.formId).getForm().loadRecord(data);
         			}
         			
