@@ -38,6 +38,9 @@ Ext.define('Ext.ux.desktop.Module', {
                 title: me.winTitle ,
                 items: this.createWindowItem() || []
             });
+        }else{
+        	 win.taskButton = desktop.taskbar.addTaskButton(win);
+        	 win.animateTarget = win.taskButton.el;
         }
         win.show();
         this.afterWindowCreate();

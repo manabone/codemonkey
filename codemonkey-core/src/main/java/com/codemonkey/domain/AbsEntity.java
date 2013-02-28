@@ -64,6 +64,7 @@ public class AbsEntity implements Serializable{
 		JSONObject jo = new JSONObject();
 		jo.put("id", OgnlUtils.stringValue("id", this));
 		jo.put("originVersion", OgnlUtils.stringValue("originVersion", this));
+		jo.put("code", OgnlUtils.stringValue("code", this));
 		jo.put("name", OgnlUtils.stringValue("name", this));
 		jo.put("description", OgnlUtils.stringValue("description", this));
 		jo.put("creationDate", OgnlUtils.stringValue("creationDate", this));

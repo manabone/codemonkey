@@ -28,6 +28,14 @@
 	                inputType:'password', 
 	                allowBlank:false,
 	                value : 'admin'
+	            },{
+	            	editable: false,
+	                fieldLabel: 'Theme',
+	                value: 'erp',
+	                xtype: 'combo',
+	                store: [
+	                    ['erp', 'erp']
+	                ]
 	            }],
 		 
 		        buttons:[{ 
@@ -46,7 +54,6 @@
 		    var win = new Ext.Window({
 		        layout:'fit',
 		        width:300,
-		        height:150,
 		        closable: false,
 		        resizable: false,
 		        plain: true,
