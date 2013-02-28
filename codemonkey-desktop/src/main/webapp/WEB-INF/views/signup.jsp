@@ -30,7 +30,7 @@
 	                value : 'admin'
 	            },{
 	            	editable: false,
-	                fieldLabel: 'Theme',
+	                fieldLabel: 'Module',
 	                value: 'erp',
 	                xtype: 'combo',
 	                store: [

@@ -79,7 +79,11 @@ Ext.define('AM.base.AbsDesktopApp', {
     },
 
     onLogout: function () {
-        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?');
+        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?' , function(btn){
+        	if(btn == 'yes'){
+        		window.location = '/app/auth/logout';
+        	}
+        });
     },
 
     onSettings: function () {
