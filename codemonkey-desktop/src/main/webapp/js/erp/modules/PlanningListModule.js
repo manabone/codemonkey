@@ -1,6 +1,6 @@
 
 Ext.define('erp.modules.PlanningListModule', {
-    extend: 'erp.modules.ListModule',
+    extend: 'AM.modules.ListModule',
 
     id:'planningListModule',
     

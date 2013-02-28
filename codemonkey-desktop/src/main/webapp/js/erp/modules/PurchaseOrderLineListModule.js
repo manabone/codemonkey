@@ -1,6 +1,6 @@
 
 Ext.define('erp.modules.PurchaseOrderLineListModule', {
-    extend: 'erp.modules.ListModule',
+    extend: 'AM.modules.ListModule',
 
     id:'purchaseOrderLineListModule',
     

@@ -1,6 +1,6 @@
 
 Ext.define('erp.modules.TransactionFormModule', {
-    extend: 'erp.modules.FormModule',
+    extend: 'AM.modules.FormModule',
 
     id:'transactionFormModule',
     
