@@ -2,7 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.cm.erp</groupId>
+	<parent>
+    	<groupId>com.codemonkey</groupId>
+    	<artifactId>codemonkey</artifactId>
+    	<version>1.0.0</version>
+    	<relativePath>../codemonkey/pom.xml</relativePath>
+    </parent>
+    
 	<artifactId>codemonkey-erp</artifactId>
 	<packaging>jar</packaging>
 
@@ -13,13 +19,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<parent>
-		<groupId>com.codemonkey</groupId>
-		<artifactId>codemonkey</artifactId>
-		<version>1.0.0</version>
-	</parent>
-	
 	<build>
+		<defaultGoal>install</defaultGoal>
 		<resources>
             <resource>
                <directory>src/main/resources</directory>

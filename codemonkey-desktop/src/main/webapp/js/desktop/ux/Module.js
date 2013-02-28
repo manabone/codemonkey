@@ -15,8 +15,6 @@ Ext.define('Ext.ux.desktop.Module', {
         this.init();
     },
 
-    init: Ext.emptyFn,
-    
     afterWindowCreate : Ext.emptyFn,
     
     init : function(){
