@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import org.json.JSONObject;
 
+import com.codemonkey.annotation.SkipBuild;
 import com.codemonkey.utils.SysUtils;
 
 @Entity
@@ -43,6 +44,9 @@ public class Foo extends AbsEE{
 	
 	@ManyToOne
 	private AppUserGroup appUserGroup;
+	
+	@SkipBuild
+	private String skipBuild;
 
 	@Override
 	public JSONObject listJson() {
@@ -130,6 +134,14 @@ public class Foo extends AbsEE{
 
 	public void setAppUserGroup(AppUserGroup appUserGroup) {
 		this.appUserGroup = appUserGroup;
+	}
+
+	public String getSkipBuild() {
+		return skipBuild;
+	}
+
+	public void setSkipBuild(String skipBuild) {
+		this.skipBuild = skipBuild;
 	}
 	
 }

@@ -35,6 +35,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import com.codemonkey.domain.AbsEntity;
+import com.codemonkey.domain.AppUser;
 
 @Component
 public class SysUtils {
@@ -243,7 +244,8 @@ public class SysUtils {
 	}
 
 	public static String getCurrentUsername() {
-		return (String) getAttribute(SysUtils.CURRENCT_USER);
+		AppUser user = (AppUser) SysUtils.getAttribute(CURRENCT_USER);
+		return user.getUsername();
 	}
 
 }

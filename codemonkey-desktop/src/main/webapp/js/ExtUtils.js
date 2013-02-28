@@ -146,17 +146,18 @@ var ExtUtils = {
         };
 	},
 	
-	mask : function(flag , msg){
-		var cmp = Ext.getCmp('viewport');
+	mask : function(cmp , msg){
+		cmp = cmp || Ext.getCmp('viewport');
 		msg = msg || 'processing';
-        if(cmp){
-        	if(flag){
-        		cmp.getEl().mask(msg);
-        	}else{
-        		cmp.getEl().unmask();
-        	}
-        }
+		cmp.getEl().mask(msg);
 	},
+	
+	unmask : function(cmp){
+		cmp = cmp || Ext.getCmp('viewport');
+		cmp.getEl().unmask();
+	},
+	
+	
 	msg : function(key){
 		
 		if(PAGE_DATA.labels[key]){
@@ -347,12 +348,15 @@ var ExtUtils = {
     	var values = ExtUtils.formValues(module.formId);
     	if(values){
     		var model = module.Model.create(values);
+    		ExtUtils.mask(Ext.getCmp(module.winId));
         	model.save({
-        		success: function(model) {
-        			Ext.getCmp(module.formId).getForm().loadRecord(model);
+        		success: function(model , res) {
+        			Ext.getCmp(module.formId).getForm().loadRecord(res.resultSet.records[0]);
         			if(callback){
         			     callback(module , model);
         			}
+        			
+        			ExtUtils.unmask(Ext.getCmp(module.winId));
         		},
         		
         		failure: function(rec, op) {
@@ -364,8 +368,11 @@ var ExtUtils = {
         			if(errorKey == "ValidationError" && errors){
         				ExtUtils.markInvalidFields(module.formId , errors);
         			}else if(errorKey == "BadObjVersionError" && data){
+        				debugger;
         				Ext.getCmp(module.formId).getForm().loadRecord(data);
         			}
+        			
+        			ExtUtils.unmask(Ext.getCmp(module.winId));
     			}
         	});
     	}

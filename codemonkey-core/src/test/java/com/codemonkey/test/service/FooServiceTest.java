@@ -1,6 +1,7 @@
 package com.codemonkey.test.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -14,11 +15,46 @@ import com.codemonkey.domain.Foo;
 import com.codemonkey.domain.Status;
 import com.codemonkey.service.AppRoleService;
 import com.codemonkey.service.FooService;
+import com.codemonkey.utils.ClassHelper;
+import com.codemonkey.web.converter.CustomConversionService;
 
 public class FooServiceTest extends GenericServiceTest<Foo> {
 
 	@Autowired private FooService fooService;
 	@Autowired private AppRoleService appRoleService;
+	@Autowired private CustomConversionService ccService;
+	
+	@Test
+	public void testVersion(){
+		Foo foo = new Foo();
+		foo.setFstring("test");
+		foo.setFnumber(3d);
+		fooService.doSave(foo);
+		
+		assertEquals(new Integer(0) , foo.getVersion());
+		assertEquals(new Integer(0) , foo.getOriginVersion());
+		
+//		foo.setFstring("test1");
+//		fooService.doSave(foo);
+//		
+//		Foo foo2 = fooService.get(foo.getId());
+//		assertEquals(new Integer(1) , foo2.getVersion());
+//		assertEquals(new Integer(1) , foo2.getOriginVersion());
+		
+	}
+	
+	@Test
+	public void testSkipBuild(){
+		
+		Foo foo = new Foo();
+		
+		JSONObject params = new JSONObject();
+		params.put("skipBuild", "test");
+		
+		ClassHelper.bulid(params, foo , ccService);
+	
+		assertNull(foo.getSkipBuild());
+	}
 	
 	@Test
 	public void testQueryInfo(){

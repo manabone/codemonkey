@@ -24,4 +24,8 @@ public interface IEntity {
 	
 	boolean isOptimisticLockingFailure();
 	
+	void setOriginVersion(Integer originVersion);
+	
+	Integer getVersion();
+	
 }

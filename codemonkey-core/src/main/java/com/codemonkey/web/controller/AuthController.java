@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.codemonkey.domain.AppUser;
 import com.codemonkey.service.AppUserService;
 import com.codemonkey.utils.SysUtils;
 
@@ -63,6 +64,10 @@ public class AuthController {
     	if(!flag){
     		 return SIGNUP;
     	}
+    	
+    	AppUser user = appUserService.findBy("username", username);
+    	req.getSession().setAttribute(SysUtils.CURRENCT_USER, user);
+    	
 		return "redirect:home";
 	}
 	

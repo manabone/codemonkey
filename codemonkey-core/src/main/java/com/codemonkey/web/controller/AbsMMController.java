@@ -93,7 +93,7 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 		try{
 			MM t = createEntity();
 			JSONObject params = new JSONObject(body);
-			ClassHelper.bulid(params, t , binder);
+			ClassHelper.build(params, t , binder);
 			getMMService().saveAndFlush(t);
 			result.put(ExtConstant.DATA, t.listJson());
 			result.put(ExtConstant.SUCCESS, true);
@@ -143,7 +143,7 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 			JSONObject params = new JSONObject(body);
 			MM t = getMMService().get(params.getLong(ExtConstant.ID));
 			if(t != null){
-				ClassHelper.bulid(params, t , binder);
+				ClassHelper.build(params, t , binder);
 				getMMService().saveAndFlush(t);
 				result.put(ExtConstant.SUCCESS, true);
 			}

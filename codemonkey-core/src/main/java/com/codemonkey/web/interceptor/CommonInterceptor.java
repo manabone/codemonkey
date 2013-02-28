@@ -27,7 +27,13 @@ public class CommonInterceptor implements HandlerInterceptor {
 		
 		setLocale(request);
 		
+		setCurrencyUser(request);
+		
 		return true;
+	}
+
+	private void setCurrencyUser(HttpServletRequest request) {
+		SysUtils.putAttribute(SysUtils.CURRENCT_USER, request.getSession().getAttribute(SysUtils.CURRENCT_USER));
 	}
 
 	private void setLocale(HttpServletRequest request) {

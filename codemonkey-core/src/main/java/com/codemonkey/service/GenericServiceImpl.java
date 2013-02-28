@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codemonkey.dao.GenericDao;
 import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.domain.EE;
-import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.ValidationError;
 import com.codemonkey.utils.ClassHelper;
@@ -74,13 +73,9 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 			return errorSet;
 		}
 		
-		if(entity.isOptimisticLockingFailure()){
-			throw new BadObjVersionError(entity);
-		}
-		
 //		Set<ConstraintViolation<T>> set = validator.validate(entity, javax.validation.groups.Default.class);
 		
-		if(StringUtils.isNotBlank(entity.getCode())){
+		if(StringUtils.isNotBlank(entity.getCode()) && entity.getId() == null){
 			long count = getDao().countBy("code" , entity.getCode());
 			if(count > 0){
 				errorSet.add(new FieldValidation("code" , "code must be unique"));

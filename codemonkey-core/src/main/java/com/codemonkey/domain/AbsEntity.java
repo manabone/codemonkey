@@ -14,6 +14,7 @@ import org.hibernate.annotations.Index;
 import org.json.JSONObject;
 
 import com.codemonkey.annotation.Label;
+import com.codemonkey.annotation.SkipBuild;
 import com.codemonkey.utils.OgnlUtils;
 
 @MappedSuperclass
@@ -28,6 +29,7 @@ public class AbsEntity implements Serializable{
     @GeneratedValue(generator="pkgenerator") 
     @GenericGenerator(name="pkgenerator", strategy = "increment") 
     @Label("自动编号")
+    @SkipBuild
     private Long id;
 	
     @Label("编码")
@@ -42,23 +44,27 @@ public class AbsEntity implements Serializable{
 	private String description;
 	
 	@Version
+	@SkipBuild
 	private Integer version;
 	
 	@Transient
 	private Integer originVersion;
 	
 	@Label("创建时间")
+	@SkipBuild
 	private Date creationDate;
 	
 	@Label("创建人")
+	@SkipBuild
 	private String createdBy;
 	
 	@Label("修改时间")
+	@SkipBuild
 	private Date modificationDate;
 	
 	@Label("修改人")
+	@SkipBuild
 	private String modifiedBy;
-	
 	
 	JSONObject json() {
 		JSONObject jo = new JSONObject();
@@ -68,7 +74,7 @@ public class AbsEntity implements Serializable{
 		jo.put("name", OgnlUtils.stringValue("name", this));
 		jo.put("description", OgnlUtils.stringValue("description", this));
 		jo.put("creationDate", OgnlUtils.stringValue("creationDate", this));
-		jo.put("creationDate", OgnlUtils.stringValue("creationDate", this));
+		jo.put("modificationDate", OgnlUtils.stringValue("modificationDate", this));
 		jo.put("createdBy", OgnlUtils.stringValue("createdBy", this));
 		jo.put("modifiedBy", OgnlUtils.stringValue("modifiedBy", this));
 		

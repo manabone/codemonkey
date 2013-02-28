@@ -23,6 +23,7 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.WebDataBinder;
 
+import com.codemonkey.annotation.SkipBuild;
 import com.codemonkey.domain.AbsEntity;
 import com.codemonkey.service.MMService;
 import com.codemonkey.service.MMServiceHolderImpl;
@@ -164,7 +165,7 @@ public final class ClassHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void bulid(JSONObject params, Object model ,  WebDataBinder binder) {
+	public static void build(JSONObject params, Object model ,  WebDataBinder binder) {
 		Iterator<String> it = params.keys();
 		while(it.hasNext()){
 			String key = it.next();
@@ -173,7 +174,7 @@ public final class ClassHelper {
 			}
 			
 			Field field = ReflectionUtils.findField(model.getClass(), key);
-			if(field != null && !ExtConstant.ID.equals(key)){
+			if(field != null && field.getAnnotation(SkipBuild.class) == null){
 				Object value = getValueFromJson(field , key , params, binder);
 				ClassHelper.callSetter(model, field, value);
 			}
@@ -190,7 +191,7 @@ public final class ClassHelper {
 			}
 			
 			Field field = ReflectionUtils.findField(model.getClass(), key);
-			if(field != null && !ExtConstant.ID.equals(key)){
+			if(field != null && field.getAnnotation(SkipBuild.class) == null){
 				Object value = getValueFromJson(field , key , params, ccService);
 				ClassHelper.callSetter(model, field, value);
 			}
