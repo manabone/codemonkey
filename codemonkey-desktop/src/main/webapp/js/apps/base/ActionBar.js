@@ -12,8 +12,6 @@ Ext.define('AM.base.ActionBar' ,{
 	
 	moduel : null,
 	
-	module : null,
-	
 	create : function(){
 		var me = this;
 		return {
