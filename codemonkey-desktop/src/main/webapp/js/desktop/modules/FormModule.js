@@ -40,31 +40,29 @@ Ext.define('AM.modules.FormModule', {
     	};
     },
     
-    getActionBar : function(config){
-    	return Ext.create('AM.base.FormActionBar', config);
-    },
-    
-    doSave : function(){
-    	var me = this;
-    	ExtUtils.moduleDoSave(me);
-    },
-    
-    doCancel : function(){
-    	var me = this;
-    	ExtUtils.moduleDoCancel(me);
-    	var store = Ext.getCmp(this.gridId).getStore();
-    	ExtUtils.storeReload(store);
-    },
+//    getActionBar : function(config){
+//    	return Ext.create('AM.base.FormActionBar', config);
+//    },
+//    
+//    doSave : function(){
+//    	var me = this;
+//    	ExtUtils.moduleDoSave(me);
+//    },
+//    
+//    doCancel : function(){
+//    	var me = this;
+//    	ExtUtils.moduleDoCancel(me);
+//    	var store = Ext.getCmp(this.gridId).getStore();
+//    	ExtUtils.storeReload(store);
+//    },
 	
     createWindowItem : function(){
     	var me = this;
     	
     	me.formId = me.winId + '_form';
     	var formConfig = {
-			id : me.formId,
-			buttons : me.getActionBar({module : me}).createActionBar()
+			id : me.formId
     	};
-    	
     	var form2 = Ext.apply(formConfig , this.form);
     	
     	return form2;
@@ -86,6 +84,69 @@ Ext.define('AM.modules.FormModule', {
     	}else{
     		 Ext.getCmp(me.formId).getForm().reset();
     	}
+    },
+    
+ // actions 
+    saveAction : {
+		action : 'save', text: 'save', iconCls : 'icon-update'
+	},
+	
+	cancelAction : {
+		action : 'cancel' , text:'cancel', iconCls:'icon-back-to-list'
+    },
+    
+    //end actions
+    
+    //actions handler
+	save : function(){
+		var me = this;
+		var values = ExtUtils.formValues(this.formId);
+		if(values){
+			var model = this.Model.create(values);
+			ExtUtils.mask(Ext.getCmp(this.winId));
+	    	model.save({
+	    		success: function(model , res) {
+	    			Ext.getCmp(me.formId).getForm().loadRecord(res.resultSet.records[0]);
+	    			if(me.save_callback){
+	    				me.save_callback(model);
+	    			}
+	    			
+	    			ExtUtils.unmask(Ext.getCmp(me.winId));
+	    		},
+	    		
+	    		failure: function(rec, op) {
+	    			Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
+	    			var errors = op.request.scope.reader.jsonData["errorFields"];
+	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
+	    			var data = op.request.scope.reader.jsonData["data"];
+	    			
+	    			if(errorKey == "ValidationError" && errors){
+	    				ExtUtils.markInvalidFields(me.formId , errors);
+	    			}else if(errorKey == "BadObjVersionError" && data){
+	    				Ext.getCmp(me.formId).getForm().loadRecord(data);
+	    			}
+	    			
+	    			ExtUtils.unmask(Ext.getCmp(me.winId));
+				}
+	    	});
+		}
+	},
+	
+	cancel : function(){
+		var win = this.app.desktop.getWindow(this.winId);
+		win.doClose();
+	},
+
+	//end action handler
+    
+    createBbar : function(){
+    	
+    	var actions = [
+			this.createModuleAction(this.saveAction),
+			this.createModuleAction(this.cancelAction)
+		];
+    	
+    	return this.createToolbar(actions);
     }
     
 });

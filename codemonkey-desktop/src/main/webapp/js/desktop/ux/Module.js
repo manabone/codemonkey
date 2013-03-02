@@ -17,6 +17,8 @@ Ext.define('Ext.ux.desktop.Module', {
 
     afterWindowCreate : Ext.emptyFn,
     
+    createBbar : Ext.emptyFn,
+    
     init : function(){
         this.launcher = {
             text : this.iconText ,
@@ -33,10 +35,14 @@ Ext.define('Ext.ux.desktop.Module', {
         
         var win = desktop.getWindow(me.winId);
         if(!win){
+        	
+        	var bbar = this.createBbar();
+        	
             win = desktop.createWindow({
                 id: me.winId,
                 title: me.winTitle ,
-                items: this.createWindowItem() || []
+                items: this.createWindowItem() || [],
+            	bbar : bbar
             });
         }else{
         	 win.taskButton = desktop.taskbar.addTaskButton(win);
@@ -45,5 +51,34 @@ Ext.define('Ext.ux.desktop.Module', {
         win.show();
         this.afterWindowCreate();
         return win;
-    }
+    },
+    
+    createModuleAction : function(cfg){
+		var me = this;
+    	Ext.apply(cfg , {
+			handler: function(){
+				if(cfg.action){
+					me[cfg.action]();
+				}
+	        }
+		});
+		
+		return  Ext.create('Ext.Action', cfg);
+	},
+	
+	createMenu : function(module , actions){
+		return {
+            xtype: 'menu',
+            plain: true,
+            items : actions
+		};
+	},
+	
+	createToolbar : function(actions){
+		return {
+            xtype: 'toolbar',
+            items: actions
+            
+        };
+	}
 });
