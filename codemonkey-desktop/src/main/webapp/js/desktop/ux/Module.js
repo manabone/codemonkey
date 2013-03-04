@@ -80,5 +80,14 @@ Ext.define('Ext.ux.desktop.Module', {
             items: actions
             
         };
+	},
+	
+	createButtons : function(actions){
+		var buttons = [];
+		
+		for(var i = 0 ; i < actions.length ; i++){
+			buttons.push(Ext.create('Ext.button.Button', actions[i]));
+		}
+		return buttons;
 	}
 });

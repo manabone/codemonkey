@@ -1,5 +1,5 @@
 
-Ext.define('AM.modules.BarModule', {
+Ext.define('test.modules.BarModule', {
     extend: 'AM.modules.MModule',
 
     id:'barModule',

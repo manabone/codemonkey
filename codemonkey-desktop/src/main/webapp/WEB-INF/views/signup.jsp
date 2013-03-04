@@ -32,15 +32,17 @@
 	            	editable: false,
 	                fieldLabel: 'Module',
 	                value: 'erp',
+	                name : 'module',
 	                xtype: 'combo',
 	                store: [
-	                    ['erp', 'erp']
+	                    ['erp', 'erp'],
+	                    ['test', 'test']
 	                ]
 	            }],
 		 
 		        buttons:[{ 
 	                text:'Login',
-	                formBind: true,	 
+	                formBind: true,
 	                // Function that fires when user clicks the button 
 	                handler:function(){ 
 	                    login.getForm().submit(); 

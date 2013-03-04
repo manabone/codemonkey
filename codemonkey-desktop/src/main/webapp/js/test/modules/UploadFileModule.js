@@ -1,4 +1,4 @@
-Ext.define('AM.modules.UploadFileModule', {
+Ext.define('test.modules.UploadFileModule', {
 	
 	extend: 'Ext.ux.desktop.Module',
 	

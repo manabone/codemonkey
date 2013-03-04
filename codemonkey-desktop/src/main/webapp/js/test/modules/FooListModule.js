@@ -1,10 +1,10 @@
 
-Ext.define('AM.modules.FooListModule', {
+Ext.define('test.modules.FooListModule', {
     extend: 'AM.modules.ListModule',
 
     id:'fooListModule',
     
-    requires : ['AM.modules.FooFormModule'],
+    requires : ['test.modules.FooFormModule'],
     
     hidden : true,
     

@@ -149,7 +149,11 @@ var ExtUtils = {
 	mask : function(cmp , msg){
 		cmp = cmp || Ext.getCmp('viewport');
 		msg = msg || 'processing';
-		cmp.getEl().mask(msg);
+		
+		if(cmp){
+			cmp.getEl().mask(msg);
+		}
+		
 	},
 	
 	unmask : function(cmp){

@@ -1,4 +1,4 @@
-Ext.define('AM.modules.TreeGridModule', {
+Ext.define('test.modules.TreeGridModule', {
 	
 	extend: 'Ext.ux.desktop.Module',
 	

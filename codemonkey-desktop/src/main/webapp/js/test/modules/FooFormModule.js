@@ -1,5 +1,5 @@
 
-Ext.define('AM.modules.FooFormModule', {
+Ext.define('test.modules.FooFormModule', {
     extend: 'AM.modules.FormModule',
 
     id:'fooFormModule',

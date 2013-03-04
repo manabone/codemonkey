@@ -1,4 +1,4 @@
-Ext.define('AM.modules.TreeModule', {
+Ext.define('test.modules.TreeModule', {
 	
 	extend: 'Ext.ux.desktop.Module',
 	

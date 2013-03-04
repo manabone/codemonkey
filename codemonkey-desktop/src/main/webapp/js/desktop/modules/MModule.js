@@ -34,27 +34,62 @@ Ext.define('AM.modules.MModule', {
     	me.store = ExtUtils.ajaxStore({ model : me.modelName});
     },
     
-    doCreate : function(){
+    
+    // actions 
+    createAction : {
+		action : 'create', text: 'add', iconCls : 'add'
+	},
+	
+	editAction : {
+		action : 'edit' , text:'Edit', iconCls:'option'
+    },
+    
+    destroyAction : {
+		action : 'destroy', text: 'destroy', iconCls : 'remove'
+	},
+	
+	searchAction : {
+		action : 'search', text: 'search', iconCls : 'icon-search'
+	},
+	
+	resetAction : {
+		action : 'reset', text: 'reset', iconCls : 'icon-reset'
+	},
+	
+	 saveAction : {
+		action : 'save', text: 'save', iconCls : 'icon-update'
+	},
+	
+	cancelAction : {
+		action : 'cancel' , text:'cancel', iconCls:'icon-back-to-list'
+    },
+    
+	//end actions
+    
+	//actions handler
+    create : function(){
     	this.createDetailWindow({entityId : null});
     },
     
-    doEdit : function(id){
+    edit : function(id){
     	var me = this;
-    	me.createDetailWindow({entityId : id});
+    	var record = ExtUtils.getSelected(me.gridId);
+    	me.createDetailWindow({entityId : record.get('id')});
     },
     
-    doSearch : function(){
+    search : function(){
     	var store = Ext.getCmp(this.gridId).getStore();
     	ExtUtils.gridSearch(store , this.searchFormId);
     },
     
-    doReset : function(){
+    reset : function(){
     	var store = Ext.getCmp(this.gridId).getStore();
     	ExtUtils.gridReset(store , this.searchFormId);
     },
     
-    doDestroy : function(record){
+    destroy : function(record){
     	var me = this;
+    	var record = ExtUtils.getSelected(me.gridId);
     	if(record){
     		var model = me.Model.create(record.data);
     		model.destroy({
@@ -65,14 +100,37 @@ Ext.define('AM.modules.MModule', {
     	}
     },
     
-    doSave : function(){
+    save : function(){
     	var me = this;
-    	ExtUtils.moduleDoSave(me , function(module , model){
-    	   module.doSearch();
-    	});
+		var values = ExtUtils.formValues(this.formId);
+		if(values){
+			var model = this.Model.create(values);
+			ExtUtils.mask(Ext.getCmp(this.winId));
+	    	model.save({
+	    		success: function(model , res) {
+    				me.search();
+	    			ExtUtils.unmask(Ext.getCmp(me.winId));
+	    		},
+	    		
+	    		failure: function(rec, op) {
+	    			Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
+	    			var errors = op.request.scope.reader.jsonData["errorFields"];
+	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
+	    			var data = op.request.scope.reader.jsonData["data"];
+	    			
+	    			if(errorKey == "ValidationError" && errors){
+	    				ExtUtils.markInvalidFields(me.formId , errors);
+	    			}else if(errorKey == "BadObjVersionError" && data){
+	    				Ext.getCmp(me.formId).getForm().loadRecord(data);
+	    			}
+	    			
+	    			ExtUtils.unmask(Ext.getCmp(me.winId));
+				}
+	    	});
+		}
     },
     
-    doCancel : function(){
+    cancel : function(){
     	var me = this;
     	var detailForm = Ext.getCmp(me.formId);
         if(detailForm){
@@ -80,12 +138,25 @@ Ext.define('AM.modules.MModule', {
         }
     },
     
-    getActionBar : function(config){
-    	return Ext.create('AM.base.ListActionBar',config);
+  //end action handler
+    
+    getActionBar : function(){
+    	var actions = [
+   			this.createModuleAction(this.createAction),
+   			this.createModuleAction(this.editAction),
+   			this.createModuleAction(this.destroyAction)
+   		];
+       	
+       	return this.createToolbar(actions);
     },
     
-    getDetailFormActionBar : function(config){
-    	return Ext.create('AM.base.FormActionBar',config);
+    getDetailFormActionBar : function(){
+    	var actions = [
+   			this.createModuleAction(this.saveAction),
+   			this.createModuleAction(this.cancelAction)
+   		];
+       	
+       	return this.createToolbar(actions);
     },
     
     createDetailWindow : function (config){
@@ -110,7 +181,6 @@ Ext.define('AM.modules.MModule', {
     createWindowItem : function(){
     	var me = this;
     	 //grid
-    	 var actionBar = me.getActionBar({module : me , gridId : me.gridId});
          var gridConfig = {
      		xtype : 'grid',	
      		flex : 3,	
@@ -118,11 +188,11 @@ Ext.define('AM.modules.MModule', {
      		columns : me.gridCols || ExtUtils.defaultGridCols,
      		listeners: {
  				'itemdblclick' : function( /*Ext.view.View*/ view, /* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts){
- 					me.doEdit(record.get('id'));
+ 					me.edit();
  			    }
  			 },
  			 
- 			 tbar: actionBar.createActionBar(),
+ 			 tbar: me.getActionBar(),
  			 
  			 store : me.store
          };
@@ -134,17 +204,9 @@ Ext.define('AM.modules.MModule', {
          	items : [
        				{name  : "name_Ilike"   , xtype : 'textfield' , fieldLabel : "name" }
        			],
-          	buttons : [{
-  	        	   xtype : 'button' , iconCls: 'icon-search', text : 'search' ,
-  	        	   handler : function(){
-  	        		   me.doSearch();
-  	        	   }
-  	           },{
-  	        	   xtype : 'button' , iconCls: 'icon-reset', text : 'reset' , 
-  	        	   handler : function(){
-  	        		   me.doReset();
-  	        	   }
-  	           }
+          	buttons : [
+				this.createModuleAction(this.searchAction),
+				this.createModuleAction(this.resetAction)
             ]
           };
          
@@ -153,7 +215,6 @@ Ext.define('AM.modules.MModule', {
          var searchForm = ExtUtils.searchingForm(searchFormConfig);
          
          //detail form
-         var detailFormActionBar = me.getDetailFormActionBar({module : me , gridId : me.gridId});
          me.formId = me.id + '_detailForm';
          var formConfig = {
 			id : me.formId,
@@ -163,7 +224,7 @@ Ext.define('AM.modules.MModule', {
 	    	flex : 2,
 	    	bodyPadding: 20,
 			items : me.formItems || ExtUtils.defaultFormItems,
-			buttons : detailFormActionBar.createActionBar()
+			buttons : me.getDetailFormActionBar()
     	};
     	var detailFrom = Ext.apply(formConfig , this.form);
          
