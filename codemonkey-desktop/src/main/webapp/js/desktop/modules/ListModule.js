@@ -48,13 +48,24 @@ Ext.define('AM.modules.ListModule', {
     
     createWindowItem : function(){
     	var me = this;
-         var gridConfig = {
+    	var contextMenu = this.getLineContextMenu();
+        var gridConfig = {
      		id : this.gridId,
      		listeners: {
  				'itemdblclick' : function( /*Ext.view.View*/ view, /* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts){
  					me.edit();
  			    }
- 			 }
+ 			},
+ 			viewConfig: {
+ 	             stripeRows: true,
+ 	             listeners: {
+ 	                 itemcontextmenu: function(view, rec, node, index, e) {
+ 	                     e.stopEvent();
+ 	                     contextMenu.showAt(e.getXY());
+ 	                     return false;
+ 	                 }
+ 	             }
+ 	         },
          };
          var grid2 = Ext.apply(gridConfig , this.grid);
          var searchFormDefaultConfig = {
@@ -166,5 +177,15 @@ Ext.define('AM.modules.ListModule', {
     	};
     	
     	return this.createToolbar(menu);
-    }
+    },
+    
+
+	getLineContextMenu : function(){
+		 return Ext.create('Ext.menu.Menu', {
+	        items: [
+	            this.editAction,
+	            this.destroyAction
+	        ]
+	    });
+	}
 });
