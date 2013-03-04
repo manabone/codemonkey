@@ -71,7 +71,7 @@ Ext.define('AM.modules.MModule', {
     	this.createDetailWindow({entityId : null});
     },
     
-    edit : function(id){
+    edit : function(){
     	var me = this;
     	var record = ExtUtils.getSelected(me.gridId);
     	me.createDetailWindow({entityId : record.get('id')});
