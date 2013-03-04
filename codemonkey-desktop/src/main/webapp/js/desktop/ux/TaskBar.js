@@ -177,7 +177,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
         cmp.toggle(true);
         return cmp;
     },
-
+    
     removeTaskButton: function (btn) {
         var found, me = this;
         me.windowBar.items.each(function (item) {
@@ -188,7 +188,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
         });
         if (found) {
         	found.hide();
-//            me.windowBar.remove(found);
+            me.windowBar.remove(found);
         }
         return found;
     },
