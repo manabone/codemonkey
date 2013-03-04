@@ -640,6 +640,15 @@ var ExtUtils = {
 		 return Ext.apply(layout , {items : array});
 	},
 	
+	fitLayout : function(array){
+		 var layout = {
+			layout:'fit',
+			xtype:'container',
+			items: []
+		 };
+		 return Ext.apply(layout , {items : array});
+	},
+	
 	tableLayout : function(columns , arrays){
 		var panel = {
 			xtype:'container',
@@ -659,6 +668,27 @@ var ExtUtils = {
 		 
 		 return panel;
 		
+	},
+	
+	creationInfoPanel : function(){
+		var col1 = [
+			{"xtype":"textfield","name":"id","fieldLabel":"自动编号 " , readOnly : true},
+			{"xtype":"textfield","name":"createdBy","fieldLabel":"创建人" , readOnly : true},
+			{"xtype":"textfield","name":"modifiedBy","fieldLabel":"修改人" , readOnly : true},
+        ];
+    	
+    	var col2 = [
+			{"xtype":"textfield","name":"originVersion","fieldLabel":"origin version" , readOnly : true},
+			{"xtype":"textfield","name":"creationDate","format":"Y-m-d","fieldLabel":"创建时间" , readOnly : true},
+			{"xtype":"textfield","name":"modificationDate","format":"Y-m-d","fieldLabel":"修改时间" , readOnly : true}
+    	];
+    	
+    	var p2 = {
+    		title : "creation info",
+    		items : ExtUtils.columnLayout([col1 , col2])
+    	};
+    	
+    	return p2;
 	}
 	
 };
