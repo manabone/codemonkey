@@ -46,38 +46,8 @@ Ext.define('AM.modules.ListModule', {
 	    };
     },
     
-//    doCreate : function(){
-//    	var me = this;
-//    	ExtUtils.moduleDoCreate(me);
-//    },
-//    
-//    doEdit : function(id){
-//    	var me = this;
-//    	ExtUtils.moduleDoEdit(me , id);
-//    },
-//    
-//    doSearch : function(){
-//    	var me = this;
-//    	ExtUtils.moduleDoSearch(me);
-//    },
-//    
-//    doReset : function(){
-//    	var me = this;
-//    	ExtUtils.moduleDoReset(me);
-//    },
-//    
-//    doDestroy : function(record){
-//    	var me = this;
-//    	ExtUtils.moduleDoDestroy(me , record);
-//    },
-//    
-//    getActionBar : function(config){
-//    	return Ext.create('AM.base.ListActionBar',config);
-//    },
-    
     createWindowItem : function(){
     	var me = this;
-//    	 var actionBar = me.getActionBar({module : me , gridId : me.gridId});
          var gridConfig = {
      		id : this.gridId,
      		listeners: {
@@ -85,7 +55,6 @@ Ext.define('AM.modules.ListModule', {
  					me.edit();
  			    }
  			 }
-//            ,tbar: actionBar.createActionBar()
          };
          var grid2 = Ext.apply(gridConfig , this.grid);
          var searchFormDefaultConfig = {
@@ -183,5 +152,19 @@ Ext.define('AM.modules.ListModule', {
 		];
     	
     	return this.createToolbar(actions);
+    },
+    
+    createTbar : function(){
+    	
+    	var menu =  {
+            text: 'Actions',
+            menu : [
+				this.createModuleAction(this.createAction),
+				this.createModuleAction(this.editAction),
+				this.createModuleAction(this.destroyAction)
+    		]
+    	};
+    	
+    	return this.createToolbar(menu);
     }
 });

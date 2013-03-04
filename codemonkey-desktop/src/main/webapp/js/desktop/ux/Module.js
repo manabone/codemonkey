@@ -19,6 +19,8 @@ Ext.define('Ext.ux.desktop.Module', {
     
     createBbar : Ext.emptyFn,
     
+    createTbar : Ext.emptyFn,
+    
     init : function(){
         this.launcher = {
             text : this.iconText ,
@@ -37,12 +39,14 @@ Ext.define('Ext.ux.desktop.Module', {
         if(!win){
         	
         	var bbar = this.createBbar();
+        	var tbar = this.createTbar();
         	
             win = desktop.createWindow({
                 id: me.winId,
                 title: me.winTitle ,
                 items: this.createWindowItem() || [],
-            	bbar : bbar
+            	tbar : tbar,
+                bbar : bbar
             });
         }else{
         	 win.taskButton = desktop.taskbar.addTaskButton(win);
