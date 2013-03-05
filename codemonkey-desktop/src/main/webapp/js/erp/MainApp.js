@@ -20,13 +20,16 @@ Ext.define('erp.MainApp', {
         'AM.modules.AppUserListModule',
         'AM.modules.AppUserFormModule',
         'erp.modules.ItemListModule',
-        'erp.modules.ItemFormModule'
+        'erp.modules.ItemFormModule',
+        'erp.modules.CustomerListModule',
+        'erp.modules.CustomerFormModule'
     ],
     
     shortcutItems : [
         { name: 'roles', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
 		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
-		{ name: 'items', iconCls: 'grid-shortcut', module: 'itemListModule'}
+		{ name: 'items', iconCls: 'grid-shortcut', module: 'itemListModule'},
+		{ name: 'customers', iconCls: 'grid-shortcut', module: 'customerListModule'}
     ],
     
     quickStartItems : [
@@ -41,7 +44,9 @@ Ext.define('erp.MainApp', {
 			new AM.modules.AppUserListModule(),
 			new AM.modules.AppUserFormModule(),
 			new erp.modules.ItemListModule(),
-			new erp.modules.ItemFormModule()
-        ];
+			new erp.modules.ItemFormModule(),
+			new erp.modules.CustomerListModule(),
+	        new erp.modules.CustomerFormModule()
+		];
     }
 });

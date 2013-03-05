@@ -1,10 +1,10 @@
 
-Ext.define('AM.modules.CustomerListModule', {
+Ext.define('erp.modules.CustomerListModule', {
     extend: 'AM.modules.ListModule',
 
     id:'customerListModule',
     
-    requires : ['AM.modules.CustomerFormModule'],
+    requires : ['erp.modules.CustomerFormModule'],
     
     hidden : true,
     
