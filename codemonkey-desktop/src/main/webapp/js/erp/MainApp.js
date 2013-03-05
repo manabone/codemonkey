@@ -15,21 +15,23 @@ Ext.define('erp.MainApp', {
 
     requires: [
         'AM.modules.AppRoleListModule',
-        'AM.modules.AppRoleFormModule'
-        ,
+        'AM.modules.AppRoleFormModule',
         'AM.modules.AppUserListModule',
         'AM.modules.AppUserFormModule',
         'erp.modules.ItemListModule',
         'erp.modules.ItemFormModule',
         'erp.modules.CustomerListModule',
-        'erp.modules.CustomerFormModule'
+        'erp.modules.CustomerFormModule',
+        'erp.modules.VendorListModule',
+        'erp.modules.VendorFormModule'
     ],
     
     shortcutItems : [
         { name: 'roles', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
 		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
 		{ name: 'items', iconCls: 'grid-shortcut', module: 'itemListModule'},
-		{ name: 'customers', iconCls: 'grid-shortcut', module: 'customerListModule'}
+		{ name: 'customers', iconCls: 'grid-shortcut', module: 'customerListModule'},
+		{ name: 'vendors', iconCls: 'grid-shortcut', module: 'vendorListModule'}
     ],
     
     quickStartItems : [
@@ -46,7 +48,9 @@ Ext.define('erp.MainApp', {
 			new erp.modules.ItemListModule(),
 			new erp.modules.ItemFormModule(),
 			new erp.modules.CustomerListModule(),
-	        new erp.modules.CustomerFormModule()
+	        new erp.modules.CustomerFormModule(),
+	        new erp.modules.VendorListModule(),
+	        new erp.modules.VendorFormModule()
 		];
     }
 });
