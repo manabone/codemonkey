@@ -35,7 +35,7 @@ Ext.define('AM.modules.FormModule', {
 	    	},
 	    	defaultType: 'textfield',
 	    	flex : 2,
-	    	bodyPadding: 20,
+//	    	bodyPadding: 20,
 	    	items : this.formItems() || ExtUtils.defaultFormItems
     	};
     },
