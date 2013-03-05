@@ -35,7 +35,7 @@ Ext.define('AM.modules.ListModule', {
     	me.grid = {
     		xtype : 'grid',	
     		flex : 3,
-	     	columns :  me.gridCols || ExtUtils.defaultGridCols,
+	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(me.gridCols) || ExtUtils.defaultGridCols,
 	     	store : me.store,
 	     	bbar:{
 				xtype : 'pagingtoolbar',

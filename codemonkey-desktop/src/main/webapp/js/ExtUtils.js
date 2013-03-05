@@ -29,6 +29,7 @@ var ExtUtils = {
 	defaultModelFields : ['id','name','description'],
 	
 	defaultGridCols : [	
+	    Ext.create('Ext.grid.RowNumberer'),               
        	{header: 'id'          ,  dataIndex: 'id'         ,  flex: 1 , hidden : true},
 		{header: 'name'        ,  dataIndex: 'name'       ,  flex: 1},
 		{header: 'description' ,  dataIndex: 'description',  flex: 1}
@@ -450,7 +451,8 @@ var ExtUtils = {
 	    // create the grid
 	    var grid = Ext.create('Ext.grid.Panel', {
 	        store: store,
-	        columns: columns,
+	        columns: [Ext.create('Ext.grid.RowNumberer')].concat(columns),
+	        columnLines: true,
 	        id : config.gridId
 	    });
 		
