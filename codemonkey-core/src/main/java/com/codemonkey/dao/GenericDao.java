@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.domain.IEntity;
-import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.utils.HqlHelper;
 import com.codemonkey.utils.SysUtils;
 
@@ -55,12 +54,6 @@ public class GenericDao<T extends IEntity> {
 	}
 
     public void save(T t){
-    	
-    	if(t.isOptimisticLockingFailure()){
-			throw new BadObjVersionError(get(t.getId()));
-		}
-    	
-    	t.setOriginVersion(null);
     	
     	if(t.getId() == null){
     		t.setCreationDate(new Date());

@@ -245,7 +245,8 @@ public class SysUtils {
 
 	public static String getCurrentUsername() {
 		AppUser user = (AppUser) SysUtils.getAttribute(CURRENCT_USER);
-		return user.getUsername();
+		
+		return user !=null ? user.getUsername() : null;
 	}
 
 }

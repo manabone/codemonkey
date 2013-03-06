@@ -6,7 +6,10 @@ import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.json.JSONObject;
+
 import com.codemonkey.domain.AbsEE;
+import com.codemonkey.utils.OgnlUtils;
 
 @MappedSuperclass
 public abstract class DocumentLine extends AbsEE {
@@ -36,6 +39,17 @@ public abstract class DocumentLine extends AbsEE {
 	public abstract List<Transaction> createCurrencyTransactions();
 
 	//customized methods
+	
+	@Override
+	public JSONObject listJson(){
+		JSONObject jo = super.listJson();
+		jo.put("item", OgnlUtils.stringValue("item.id", this));
+		jo.put("item_text", OgnlUtils.stringValue("item.code", this));
+		jo.put("qty", OgnlUtils.stringValue("qty", this));
+		jo.put("requiredDate", OgnlUtils.stringValue("requiredDate", this));
+		return jo;
+	}
+	
 	public Warehouse getWarehouse(){
 		return getHeader().getWarehouse();
 	}

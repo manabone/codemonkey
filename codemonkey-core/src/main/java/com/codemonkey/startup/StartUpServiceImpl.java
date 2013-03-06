@@ -50,7 +50,6 @@ public class StartUpServiceImpl implements StartUpService {
 		enumHolder.addEnum(Status.class);
 	}
 	
-	@PostConstruct
 	public void doInitUsers(){
 		AppUser admin = appUserService.findBy("username", "admin");
 		if(admin == null){
@@ -70,13 +69,16 @@ public class StartUpServiceImpl implements StartUpService {
 		logger.info("jdbc.username = " + dbUnitdatasource.getUsername());
 		logger.info("jdbc.password = " + dbUnitdatasource.getPassword());
 		SysUtils.loadDataToDB(dbUnitdatasource, "default-data.xml" , DatabaseOperation.UPDATE);
+	
+		SysUtils.putAttribute(SysUtils.CURRENCT_USER, new AppUser());
+		doInitUsers();
+		doInitAppPermissions();
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.codemonkey.startup.StartUpService#initAppPermissions()
 	 */
-	@PostConstruct
-	public void doInitAppPermissions() throws Exception {
+	public void doInitAppPermissions(){
 		List<AppPermission> appPermissions = new ArrayList<AppPermission>();
 		
 		if(CollectionUtils.isNotEmpty(securityControllers)){

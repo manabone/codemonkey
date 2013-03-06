@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codemonkey.dao.GenericDao;
 import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.domain.EE;
+import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.ValidationError;
 import com.codemonkey.utils.ClassHelper;
@@ -53,6 +54,13 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
+		
+		if(entity.isOptimisticLockingFailure()){
+			throw new BadObjVersionError(get(entity.getId()));
+		}
+    	
+		entity.setOriginVersion(null);
+    	
 		
 		Set<FieldValidation> set = validate(entity);
 		if(CollectionUtils.isNotEmpty(set)){

@@ -1,10 +1,15 @@
 package com.codemonkey.erp.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.codemonkey.utils.OgnlUtils;
@@ -21,6 +26,9 @@ public class SalesOrder extends DocumentAdapter {
 	private Customer customer;
 	
 	private Date paymentDate;
+	
+	@OneToMany(mappedBy="salesOrder",cascade=CascadeType.ALL)
+	private List<SalesOrderLine> lines;
 
 	public Customer getCustomer() {
 		return customer;
@@ -44,13 +52,29 @@ public class SalesOrder extends DocumentAdapter {
 		json.put("paymentDate", OgnlUtils.stringValue("paymentDate", this));
 		json.put("customer", OgnlUtils.stringValue("customer.id", this));
 		json.put("customer_text", OgnlUtils.stringValue("customer.code", this));
+		
 		return json;
 	}
 	
+	@Override
+	public JSONObject detailJson() {
+		JSONObject jo = super.detailJson();
+		
+		JSONArray ja = new JSONArray();
+		if(CollectionUtils.isNotEmpty(lines)){
+			for(SalesOrderLine line : lines){
+				ja.put(line.listJson());
+			}
+		}
+		jo.put("lines", ja);
+		return jo;
+	}
 	
-	public static void main(String[] args){
-		SalesOrder so  = new SalesOrder();
-		so.setPaymentDate(new Date());
-		System.out.println(so.detailJson());
+	public List<SalesOrderLine> getLines() {
+		return lines;
+	}
+
+	public void setLines(List<SalesOrderLine> lines) {
+		this.lines = lines;
 	} 
 }

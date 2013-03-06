@@ -1,6 +1,6 @@
 
 Ext.define('erp.modules.SalesOrderFormModule', {
-    extend: 'AM.modules.FormModule',
+    extend: 'erp.modules.DocumentFormModule',
 
     id:'salesOrderFormModule',
     
@@ -10,7 +10,8 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     
     modelName : 'SalesOrder',
     
-    modelFields : ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' ,'id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
+    modelFields : ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' , 'lines',
+                   'id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
     
     formItems : function(){
     	var p1 = ExtUtils.panel({
@@ -25,6 +26,19 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	
     	var p2 = ExtUtils.creationInfoPanel();
     	
-    	return ExtUtils.fitLayout([p1,p2]);
+    	var lineGrid = ExtUtils.arrayGrid({
+			columns :  [
+   	            {header: 'id',  dataIndex: 'id',  flex: 1},
+	 	  		{header: 'item' ,  dataIndex: 'item',  flex: 1 , hidden : true},
+	 	  		{header: 'item' ,  dataIndex: 'item_text',  flex: 1},
+	 	  		{header: 'price' ,  dataIndex: 'description',  flex: 1},
+	 	  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
+	 	  		{header: 'qty' ,  dataIndex: 'qty',  flex: 1},
+	 	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1},
+	 	  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
+	 	  	]
+		});
+    	
+    	return ExtUtils.fitLayout([p1,p2 , lineGrid]);
     }
 });
