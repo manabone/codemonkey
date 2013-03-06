@@ -14,6 +14,8 @@ Ext.define('Ext.ux.desktop.Module', {
         this.mixins.observable.constructor.call(this, config);
         this.init();
     },
+    
+    spacer : {xtype : 'tbspacer',flex : 1},
 
     afterWindowCreate : Ext.emptyFn,
     

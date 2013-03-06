@@ -479,6 +479,72 @@ var ExtUtils = {
 		
 		this.storeReload(store);
 	},
+	
+	addLine: function(grid, data, index){
+		data = data || {};
+		if(grid){
+			var data2 = {};
+			var cols = grid.columns;
+			for(var i=0; i<cols.length;i++ ) {
+				var fn = cols[i].dataIndex;
+				switch(cols[i].fieldType){
+					case "text" :
+						data2[fn] = '';
+						break;
+					case "integer" :
+//						data2[fn] = 0;
+						break;
+//					case "number" : 
+//						data2[fn] = 0;
+//						break;
+					case "date" : 
+						data2[fn] = '';
+						break;
+					case "checkbox" : 
+						data2[fn] = false;
+						break;
+					default :
+						data2[fn] = '';
+						break;
+				}
+			}
+			Ext.apply(data2,data);
+			var store = grid.getStore();
+			var r = Ext.ModelManager.create(data2, store.model.modelName);
+			if(grid.plugins[0]) grid.plugins[0].cancelEdit();
+			var count = store.getCount();
+			if(typeof(index) == 'number' && index <=count) {
+				count = index;
+			}
+			store.insert(count, r);
+            if(grid.plugins[0]) grid.plugins[0].startEditByPosition({row: count, column: 0});
+            grid.getView().getSelectionModel().select(count,false,false);
+            var record = grid.getView().getSelectionModel().getSelection()[0];
+            return record;
+		}
+	},
+	
+	removeLine: function(grid , recordToDel) {
+		var selection;
+		if(recordToDel) {
+			selection = recordToDel;
+		} else {
+			selection = this.getSelected(grid.id);
+		}
+	   if(selection) {
+	   		if(grid.plugins[0]) {
+				grid.plugins[0].cancelEdit();
+			}
+			var selectionIndex = grid.getStore().indexOf(selection);
+        	grid.getStore().remove(selection);
+        	if(grid.getStore().getCount() > 0) {
+        		if(selectionIndex <= 0) {
+        			selectionIndex = 1;
+        		}
+        		grid.getView().getSelectionModel().select(selectionIndex-1, false, false);
+        	}
+        }
+	},
 	//-------------------------------------------------------
 	//           STORE UTILs
 	//-------------------------------------------------------	

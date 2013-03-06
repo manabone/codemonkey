@@ -4,11 +4,11 @@ Ext.define('erp.modules.SalesOrderFormModule', {
 
     id:'salesOrderFormModule',
     
-    hidden : true,
-    
     winTitle : 'SalesOrder',
     
     modelName : 'SalesOrder',
+    
+    lineGridId : 'salesOrderLineGrid',
     
     modelFields : ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' , 'lines',
                    'id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
@@ -27,6 +27,10 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	var p2 = ExtUtils.creationInfoPanel();
     	
     	var lineGrid = ExtUtils.arrayGrid({
+    		id : this.lineGridId,
+    		plugins : [
+		           Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})
+            ],
 			columns :  [
    	            {header: 'id',  dataIndex: 'id',  flex: 1},
 	 	  		{header: 'item' ,  dataIndex: 'item',  flex: 1 , hidden : true},
@@ -39,6 +43,11 @@ Ext.define('erp.modules.SalesOrderFormModule', {
 	 	  	]
 		});
     	
-    	return ExtUtils.fitLayout([p1,p2 , lineGrid]);
+    	var p3 = ExtUtils.panel({
+    		title : 'Lines',
+    		items : lineGrid	
+    	});
+    	
+    	return ExtUtils.fitLayout([p1,p2 , p3]);
     }
 });
