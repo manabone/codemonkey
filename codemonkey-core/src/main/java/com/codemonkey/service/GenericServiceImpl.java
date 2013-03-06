@@ -73,18 +73,11 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 			return errorSet;
 		}
 		
-//		Set<ConstraintViolation<T>> set = validator.validate(entity, javax.validation.groups.Default.class);
-		
 		long count = getDao().countBy("code" , entity.getCode());
 		if(count > 1){
 			errorSet.add(new FieldValidation("code" , "code must be unique"));
 		}
 		
-//		if(CollectionUtils.isNotEmpty(set)){
-//			for(ConstraintViolation<T> c : set){
-//				errorSet.add(new FieldValidation(c));
-//			}
-//		}
 		return errorSet;
 	}
 
