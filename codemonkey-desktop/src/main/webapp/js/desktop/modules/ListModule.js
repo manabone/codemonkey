@@ -5,8 +5,6 @@ Ext.define('AM.modules.ListModule', {
     hidden : true,
     
     Model : null,
-	store : null,
-	grid : null,
 	
 	formModuleId : null,
 	
@@ -15,6 +13,9 @@ Ext.define('AM.modules.ListModule', {
 	
 	gridId : null,
 	searchFormId : null,
+	
+    modelFields : null,
+	gridCols : null,
 	
     init : function(){
     	var me = this;
@@ -29,21 +30,29 @@ Ext.define('AM.modules.ListModule', {
 	        fields: me.modelFields || ExtUtils.defaultModelFields,
 	        proxy: ExtUtils.proxy(me.modelName)
 		});
-    	    
-    	me.store = ExtUtils.ajaxStore({model : me.modelName});
-		
-    	me.grid = {
-    		xtype : 'grid',	
-    		flex : 3,
-	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(me.gridCols) || ExtUtils.defaultGridCols,
-	     	store : me.store,
-	     	bbar:{
-				xtype : 'pagingtoolbar',
-				store : me.store,
-				displayInfo: true,
-				emptyMsg: "No records to display"
-			}
-	    };
+    	
+       me.grid = ExtUtils.ajaxGrid({
+        	gridId:me.gridId , 
+        	model : me.modelName , 
+        	modelFields : me.modelFields , 
+        	columns : me.gridCols 
+        });
+        
+//    	me.store = ExtUtils.ajaxStore({model : me.modelName});
+//		
+//    	me.grid = {
+//    		id : me.gridId,
+//    		xtype : 'grid',	
+//    		flex : 3,
+//	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(me.gridCols) || ExtUtils.defaultGridCols,
+//	     	store : me.store,
+//	     	bbar:{
+//				xtype : 'pagingtoolbar',
+//				store : me.store,
+//				displayInfo: true,
+//				emptyMsg: "No records to display"
+//			}
+//	    };
     },
     
     createWindowItem : function(){
@@ -87,7 +96,7 @@ Ext.define('AM.modules.ListModule', {
     },
     
     afterWindowCreate : function(){
-    	this.store.load();
+    	Ext.getCmp(this.gridId).getStore().load();
     },
     
     // actions 

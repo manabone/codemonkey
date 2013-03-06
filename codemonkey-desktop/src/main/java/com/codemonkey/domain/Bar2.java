@@ -21,8 +21,9 @@ public class Bar2 extends AbsMM{
 	@ManyToOne
 	private Bar2 bar;
 	
-	public JSONObject json() {
-		JSONObject jo = super.json();
+	@Override
+	public JSONObject listJson() {
+		JSONObject jo = super.listJson();
 		jo.put("foo",  getFoo() != null ? getFoo().getId() : "");
 		jo.put("bar",  getBar() != null ? getBar().getId() : "");
 		return jo;

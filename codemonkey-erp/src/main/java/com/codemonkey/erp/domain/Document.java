@@ -7,7 +7,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.json.JSONObject;
+
 import com.codemonkey.domain.AbsEE;
+import com.codemonkey.utils.OgnlUtils;
 
 @MappedSuperclass
 public abstract class Document extends AbsEE {
@@ -51,6 +54,18 @@ public abstract class Document extends AbsEE {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
+	}
+	
+	@Override
+	public JSONObject listJson() {
+		JSONObject json = super.listJson();
+		
+		json.put("warehouse", OgnlUtils.stringValue("warehouse.id", this));
+		json.put("warehouse_text", OgnlUtils.stringValue("warehouse.code", this));
+		json.put("currency", OgnlUtils.stringValue("currency", this));
+		json.put("totalAmount", OgnlUtils.stringValue("totalAmount", this));
+		
+		return json;
 	}
 
 }

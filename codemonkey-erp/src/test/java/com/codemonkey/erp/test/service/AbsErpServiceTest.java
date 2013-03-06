@@ -2,6 +2,7 @@ package com.codemonkey.erp.test.service;
 
 import java.util.Date;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.codemonkey.domain.AppUser;
 import com.codemonkey.erp.domain.Currency;
 import com.codemonkey.erp.domain.Customer;
 import com.codemonkey.erp.domain.Document;
@@ -36,6 +38,7 @@ import com.codemonkey.erp.service.CustomerService;
 import com.codemonkey.erp.service.ItemService;
 import com.codemonkey.erp.service.VendorService;
 import com.codemonkey.erp.service.WarehouseService;
+import com.codemonkey.utils.SysUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/erp-test.xml" })
@@ -60,6 +63,11 @@ public class AbsErpServiceTest {
 	@Autowired private CustomerService customerService;
 	
 	@Autowired private VendorService vendorService;
+	
+	@Before
+	public void initSysUtils(){
+		SysUtils.putAttribute(SysUtils.CURRENCT_USER, new AppUser());
+	}
 	
 	@Test
 	public void test(){

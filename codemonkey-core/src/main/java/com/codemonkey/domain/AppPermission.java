@@ -34,8 +34,8 @@ public class AppPermission extends AbsMM{
 		this.url = url;
 	}
 	
-	public JSONObject json() {
-		JSONObject jo = super.json();
+	public JSONObject listJson() {
+		JSONObject jo = super.listJson();
 		jo.put("permission", getPermission());
 		jo.put("url", getUrl());
 		return jo;

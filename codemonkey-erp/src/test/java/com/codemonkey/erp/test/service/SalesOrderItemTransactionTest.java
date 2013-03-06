@@ -19,7 +19,7 @@ import com.codemonkey.erp.domain.Transaction;
 public class SalesOrderItemTransactionTest extends ItemTransactionTest {
 	
 	@Test
-	public void test4SalesOrderLine(){
+	public void test(){
 		
 		SalesOrderLine line = buildSalesOrderLine();
 		

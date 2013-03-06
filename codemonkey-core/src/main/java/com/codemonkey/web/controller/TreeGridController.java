@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.Foo;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.tree.ChildNode;
 import com.codemonkey.tree.ParentNode;
@@ -17,14 +18,14 @@ import com.codemonkey.tree.TreeNode;
 
 @Controller
 @RequestMapping("/ext/treeGrid/**")
-public class TreeGridController extends AbsExtController{
+public class TreeGridController extends AbsExtController<Foo>{
 
 	@RequestMapping("read")
     @ResponseBody 
     public String read(@RequestParam(required=false) String node) {
 		JSONArray data = new JSONArray();
 		
-if("root".equals(node)){
+		if("root".equals(node)){
 			
 			TreeNode note1 = new ParentNode();
 			note1.setId("window");
@@ -82,7 +83,7 @@ if("root".equals(node)){
 	}
 
 	@Override
-	protected GenericService service() {
+	protected GenericService<Foo> service() {
 		return null;
 	}
 

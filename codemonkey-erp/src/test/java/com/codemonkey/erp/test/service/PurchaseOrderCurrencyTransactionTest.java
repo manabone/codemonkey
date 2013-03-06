@@ -19,7 +19,7 @@ import com.codemonkey.erp.domain.Transaction;
 public class PurchaseOrderCurrencyTransactionTest extends CurrencyTransactionTest {
 	
 	@Test
-	public void test4PurchaseOrderLine(){
+	public void test(){
 		
 		PurchaseOrderLine line = buildPurchaseOrderLine();
 		

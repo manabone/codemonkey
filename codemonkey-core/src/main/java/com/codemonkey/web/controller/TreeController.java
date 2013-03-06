@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.Foo;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.tree.ChildNode;
 import com.codemonkey.tree.ParentNode;
@@ -17,7 +18,7 @@ import com.codemonkey.tree.TreeNode;
 
 @Controller
 @RequestMapping("/ext/tree/**")
-public class TreeController extends AbsExtController{
+public class TreeController extends AbsExtController<Foo>{
 
 	@RequestMapping("read")
     @ResponseBody 
@@ -82,7 +83,7 @@ public class TreeController extends AbsExtController{
 	}
 
 	@Override
-	protected GenericService service() {
+	protected GenericService<Foo> service() {
 		return null;
 	}
 

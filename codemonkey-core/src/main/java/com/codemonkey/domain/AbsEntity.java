@@ -66,7 +66,7 @@ public class AbsEntity implements Serializable{
 	@SkipBuild
 	private String modifiedBy;
 	
-	JSONObject json() {
+	public JSONObject listJson() {
 		JSONObject jo = new JSONObject();
 		jo.put("id", OgnlUtils.stringValue("id", this));
 		jo.put("originVersion", OgnlUtils.stringValue("originVersion", this));
@@ -79,6 +79,10 @@ public class AbsEntity implements Serializable{
 		jo.put("modifiedBy", OgnlUtils.stringValue("modifiedBy", this));
 		
 		return jo;
+	}
+	
+	public JSONObject detailJson(){
+		return listJson();
 	}
 	
 	public boolean isOptimisticLockingFailure() {

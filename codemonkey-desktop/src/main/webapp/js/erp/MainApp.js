@@ -23,7 +23,13 @@ Ext.define('erp.MainApp', {
         'erp.modules.CustomerListModule',
         'erp.modules.CustomerFormModule',
         'erp.modules.VendorListModule',
-        'erp.modules.VendorFormModule'
+        'erp.modules.VendorFormModule',
+
+        'erp.modules.WarehouseListModule',
+        'erp.modules.WarehouseFormModule',
+        
+        'erp.modules.SalesOrderListModule',
+        'erp.modules.SalesOrderFormModule'
     ],
     
     shortcutItems : [
@@ -31,7 +37,9 @@ Ext.define('erp.MainApp', {
 		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
 		{ name: 'items', iconCls: 'grid-shortcut', module: 'itemListModule'},
 		{ name: 'customers', iconCls: 'grid-shortcut', module: 'customerListModule'},
-		{ name: 'vendors', iconCls: 'grid-shortcut', module: 'vendorListModule'}
+		{ name: 'vendors', iconCls: 'grid-shortcut', module: 'vendorListModule'},
+		{ name: 'salesOrders', iconCls: 'grid-shortcut', module: 'salesOrderListModule'},
+		{ name: 'warehouses', iconCls: 'grid-shortcut', module: 'warehouseListModule'}
     ],
     
     quickStartItems : [
@@ -50,7 +58,12 @@ Ext.define('erp.MainApp', {
 			new erp.modules.CustomerListModule(),
 	        new erp.modules.CustomerFormModule(),
 	        new erp.modules.VendorListModule(),
-	        new erp.modules.VendorFormModule()
+	        new erp.modules.VendorFormModule(),
+	        new erp.modules.WarehouseListModule(),
+	        new erp.modules.WarehouseFormModule(),
+	        
+	        new erp.modules.SalesOrderListModule(),
+	        new erp.modules.SalesOrderFormModule()
 		];
     }
 });

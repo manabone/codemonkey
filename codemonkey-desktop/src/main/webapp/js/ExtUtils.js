@@ -349,74 +349,6 @@ var ExtUtils = {
 	    }
 	},
 	
-//	moduleDoSave : function(module , callback){
-//    	var values = ExtUtils.formValues(module.formId);
-//    	if(values){
-//    		var model = module.Model.create(values);
-//    		ExtUtils.mask(Ext.getCmp(module.winId));
-//        	model.save({
-//        		success: function(model , res) {
-//        			Ext.getCmp(module.formId).getForm().loadRecord(res.resultSet.records[0]);
-//        			if(callback){
-//        			     callback(module , model);
-//        			}
-//        			
-//        			ExtUtils.unmask(Ext.getCmp(module.winId));
-//        		},
-//        		
-//        		failure: function(rec, op) {
-//        			Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
-//        			var errors = op.request.scope.reader.jsonData["errorFields"];
-//        			var errorKey = op.request.scope.reader.jsonData["errorKey"];
-//        			var data = op.request.scope.reader.jsonData["data"];
-//        			
-//        			if(errorKey == "ValidationError" && errors){
-//        				ExtUtils.markInvalidFields(module.formId , errors);
-//        			}else if(errorKey == "BadObjVersionError" && data){
-//        				Ext.getCmp(module.formId).getForm().loadRecord(data);
-//        			}
-//        			
-//        			ExtUtils.unmask(Ext.getCmp(module.winId));
-//    			}
-//        	});
-//    	}
-//	},
-//	
-//	moduleDoCancel : function(module){
-//		var win = module.app.desktop.getWindow(module.winId);
-//		win.doClose();
-//	},
-//	
-//	moduleDoCreate : function(module){
-//	 	var formModule = module.app.getModule(module.formModuleId);
-//	 	formModule.createWindow({entityId : null , gridId : module.gridId});
-//	},
-//    
-//    moduleDoEdit : function(module , id){
-//    	var formModule = module.app.getModule(module.formModuleId);
-//    	formModule.createWindow({entityId : id , gridId : module.gridId});
-//    },
-//    
-//    moduleDoSearch : function(module){
-//    	var store = Ext.getCmp(module.gridId).getStore();
-//    	ExtUtils.gridSearch(store , module.searchFormId);
-//    },
-//    
-//    moduleDoReset : function(module){
-//    	var store = Ext.getCmp(module.gridId).getStore();
-//    	ExtUtils.gridReset(store , module.searchFormId);
-//    },
-//    
-//    moduleDoDestroy : function(module , record){
-//    	if(record){
-//    		var model = module.Model.create(record.data);
-//    		model.destroy({
-//    			success: function(model) {
-//	      	        Ext.getCmp(module.gridId).getStore().load();
-//	      	    }
-//    		});
-//    	}
-//    },
 	//-------------------------------------------------------
 	//           GRID UTILs
 	//-------------------------------------------------------	
@@ -436,7 +368,7 @@ var ExtUtils = {
 	
 	ajaxGrid : function(config){
 		var columns = config.columns || this.defaultGridCols;
-		var fields = this.fieldsFromCols(columns);
+		var fields = config.modelFields || this.fieldsFromCols(columns);
 		
 		var modelName = config.model || config.modelName;
 		
@@ -449,12 +381,19 @@ var ExtUtils = {
 	    var store = this.ajaxStore(config);
 	    
 	    // create the grid
-	    var grid = Ext.create('Ext.grid.Panel', {
-	        store: store,
-	        columns: [Ext.create('Ext.grid.RowNumberer')].concat(columns),
-	        columnLines: true,
-	        id : config.gridId
-	    });
+	    var grid = {
+    		id : config.gridId,
+    		xtype : 'grid',	
+    		flex : 3,
+	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(config.columns),
+	     	store : store,
+	     	bbar:{
+				xtype : 'pagingtoolbar',
+				store : store,
+				displayInfo: true,
+				emptyMsg: "No records to display"
+			}
+	    };
 		
 		return grid;
 	},

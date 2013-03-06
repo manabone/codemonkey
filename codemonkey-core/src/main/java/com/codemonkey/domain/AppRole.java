@@ -34,7 +34,7 @@ public class AppRole extends AbsEE {
 		JSONArray ja = new JSONArray();
 		if(CollectionUtils.isNotEmpty(appPermissions)){
 			for(AppPermission p : appPermissions){
-				ja.put(p.json());
+				ja.put(p.detailJson());
 			}
 		}
 		jo.put("appPermissions", ja);
