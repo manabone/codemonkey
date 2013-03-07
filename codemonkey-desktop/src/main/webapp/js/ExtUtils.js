@@ -366,6 +366,18 @@ var ExtUtils = {
 		return fields;
 	},
 	
+	getData : function(grid){
+		var data = [];
+		
+		var records = grid.getStore().getRange();
+		
+		for(var i = 0 ; i < records.length ; i++){
+			data.push(records[i].data);
+		}
+		
+		return data;
+	},
+	
 	ajaxGrid : function(config){
 		var columns = config.columns || this.defaultGridCols;
 		var fields = config.modelFields || this.fieldsFromCols(columns);

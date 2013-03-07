@@ -15,7 +15,7 @@ public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooServic
 	@Override
 	protected Set<FieldValidation> validate(Foo foo) {
 		Set<FieldValidation> set = super.validate(foo);
-		if(foo.getFnumber() == null || foo.getFnumber() > 5){
+		if(foo.getFnumber() == null || foo.getFnumber() > 10){
 			set.add(new FieldValidation("fnumber" , "invalid number greater than 5"));
 		}
 		return set;

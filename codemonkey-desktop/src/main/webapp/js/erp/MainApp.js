@@ -33,12 +33,12 @@ Ext.define('erp.MainApp', {
     ],
     
     shortcutItems : [
+        { name: 'salesOrders', iconCls: 'grid-shortcut', module: 'salesOrderListModule'},
         { name: 'roles', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
 		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
 		{ name: 'items', iconCls: 'grid-shortcut', module: 'itemListModule'},
 		{ name: 'customers', iconCls: 'grid-shortcut', module: 'customerListModule'},
 		{ name: 'vendors', iconCls: 'grid-shortcut', module: 'vendorListModule'},
-		{ name: 'salesOrders', iconCls: 'grid-shortcut', module: 'salesOrderListModule'},
 		{ name: 'warehouses', iconCls: 'grid-shortcut', module: 'warehouseListModule'}
     ],
     

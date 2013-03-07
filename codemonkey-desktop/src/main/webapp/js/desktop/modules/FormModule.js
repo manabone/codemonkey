@@ -35,26 +35,9 @@ Ext.define('AM.modules.FormModule', {
 	    	},
 	    	defaultType: 'textfield',
 	    	flex : 2,
-//	    	bodyPadding: 20,
 	    	items : this.formItems() || ExtUtils.defaultFormItems
     	};
     },
-    
-//    getActionBar : function(config){
-//    	return Ext.create('AM.base.FormActionBar', config);
-//    },
-//    
-//    doSave : function(){
-//    	var me = this;
-//    	ExtUtils.moduleDoSave(me);
-//    },
-//    
-//    doCancel : function(){
-//    	var me = this;
-//    	ExtUtils.moduleDoCancel(me);
-//    	var store = Ext.getCmp(this.gridId).getStore();
-//    	ExtUtils.storeReload(store);
-//    },
 	
     createWindowItem : function(){
     	var me = this;
@@ -98,10 +81,17 @@ Ext.define('AM.modules.FormModule', {
     //end actions
     
     //actions handler
+    
+    //handle the submit values before submit
+    beforeSave : function(values){
+    	
+    },
+    
 	save : function(){
 		var me = this;
 		var values = ExtUtils.formValues(this.formId);
 		if(values){
+			this.beforeSave(values);
 			var model = this.Model.create(values);
 			ExtUtils.mask(Ext.getCmp(this.winId));
 	    	model.save({

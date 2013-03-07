@@ -81,9 +81,11 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 			return errorSet;
 		}
 		
-		long count = getDao().countBy("code" , entity.getCode());
-		if(count > 1){
-			errorSet.add(new FieldValidation("code" , "code must be unique"));
+		if(StringUtils.isNotBlank(entity.getCode())){
+			long count = getDao().countBy("code" , entity.getCode());
+			if(count > 1){
+				errorSet.add(new FieldValidation("code" , "code must be unique"));
+			}
 		}
 		
 		return errorSet;

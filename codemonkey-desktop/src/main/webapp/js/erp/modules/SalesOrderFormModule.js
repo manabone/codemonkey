@@ -17,10 +17,10 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	var p1 = ExtUtils.panel({
     		title : 'basic info',
 			items:[
-    			{"xtype":"textfield","name":"code","fieldLabel":"编码"},
-    			{xtype :"searchingselect",name :"customer",config :{model :"CustomerList"},fieldLabel :"Cuustomer" , allowBlank : false},
+    			{xtype:"textfield",name:"code",fieldLabel:"编码"},
+    			{xtype :"searchingselect",name :"customer",config :{model :"CustomerList"},fieldLabel :"Customer" , allowBlank : false},
     			{xtype :"datefield",name :"paymentDate",format :"Y-m-d",fieldLabel :"paymentDate"},
-    			{"xtype":"textfield","name":"description","fieldLabel":"描述"}
+    			{xtype:"textfield",name:"description",fieldLabel:"描述"}
 			]
     	});
     	
@@ -34,10 +34,16 @@ Ext.define('erp.modules.SalesOrderFormModule', {
 			columns :  [
    	            {header: 'id',  dataIndex: 'id',  flex: 1},
 	 	  		{header: 'item' ,  dataIndex: 'item',  flex: 1 , hidden : true},
-	 	  		{header: 'item' ,  dataIndex: 'item_text',  flex: 1},
-	 	  		{header: 'price' ,  dataIndex: 'description',  flex: 1},
+	 	  		{header: 'item' ,  dataIndex: 'item_text',  flex: 1 , 
+	 	  			editor: {xtype :"searchingselect" , config :{model :"ItemList"} }
+	 	  		},
+	 	  		{header: 'price' ,  dataIndex: 'price',  flex: 1,
+	 	  			editor: {xtype: 'numberfield'}
+	 	  		},
 	 	  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
-	 	  		{header: 'qty' ,  dataIndex: 'qty',  flex: 1},
+	 	  		{header: 'qty' ,  dataIndex: 'qty', flex: 1,
+	 	  			editor: {xtype: 'numberfield'} 
+	 	  		},
 	 	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1},
 	 	  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
 	 	  	]
@@ -49,5 +55,10 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	});
     	
     	return ExtUtils.fitLayout([p1,p2 , p3]);
-    }
+    },
+    
+    beforeSave : function(values){
+    	var lines = ExtUtils.getData(this.getLineGrid());
+    	Ext.apply(values , {lines : lines});
+    },
 });
