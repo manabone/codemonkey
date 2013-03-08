@@ -25,17 +25,23 @@ public class SalesOrderServiceImpl extends DocumentServiceImpl<SalesOrder , Sale
 	public JSONObject doSave(JSONObject params , CustomConversionService ccService){
 		JSONObject result = super.doSave(params , ccService);
 		
-		JSONArray toModifyLines = params.getJSONArray(ExtConstant.TO_MODIFY_LINES);
-		if(toModifyLines != null){
-			for(int i = 0 ; i < toModifyLines.length() ; i++){
-				salesOrderLineService.doSave(toModifyLines.getJSONObject(i) , ccService);
+		if(params.has(ExtConstant.TO_MODIFY_LINES)){
+			JSONArray toModifyLines = params.getJSONArray(ExtConstant.TO_MODIFY_LINES);
+			if(toModifyLines != null){
+				for(int i = 0 ; i < toModifyLines.length() ; i++){
+					JSONObject lineJo = toModifyLines.getJSONObject(i);
+					lineJo.put("salesOrder", params.get(ExtConstant.ID));
+					salesOrderLineService.doSave(lineJo , ccService);
+				}
 			}
 		}
 		
-		JSONArray toDeleteLines = params.getJSONArray(ExtConstant.TO_DELETE_LINES);
-		if(toDeleteLines != null){
-			for(int i = 0 ; i < toDeleteLines.length() ; i++){
-				salesOrderLineService.delete(toDeleteLines.getJSONObject(i).getLong(ExtConstant.ID));
+		if(params.has(ExtConstant.TO_DELETE_LINES)){
+			JSONArray toDeleteLines = params.getJSONArray(ExtConstant.TO_DELETE_LINES);
+			if(toDeleteLines != null){
+				for(int i = 0 ; i < toDeleteLines.length() ; i++){
+					salesOrderLineService.delete(toDeleteLines.getJSONObject(i).getLong(ExtConstant.ID));
+				}
 			}
 		}
 		

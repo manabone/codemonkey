@@ -1,5 +1,6 @@
 package com.codemonkey.web.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,8 +39,14 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
     //----------------------
     @RequestMapping("create")
     @ResponseBody
-    public String create(@RequestBody JSONObject body) {
-    	return service().doSave(body , getCcService()).toString();
+    public String create(@RequestBody String body) {
+    	JSONObject params = new JSONObject();
+		try {
+			params = new JSONObject(body);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	return service().doSave(params , getCcService()).toString();
     }
     
     //----------------------
@@ -67,8 +74,15 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
     //----------------------
 	@RequestMapping("update")
     @ResponseBody
-	public String update(@RequestBody JSONObject body){
-		return service().doSave(body , getCcService()).toString();
+	public String update(@RequestBody String body){
+		
+		JSONObject params = new JSONObject();
+		try {
+			params = new JSONObject(body);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return service().doSave(params , getCcService()).toString();
 	}
 
 	public List<AppPermission> regAppPermission(){

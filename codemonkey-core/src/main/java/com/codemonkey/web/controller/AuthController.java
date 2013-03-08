@@ -83,13 +83,4 @@ public class AuthController {
     	return StringUtils.isNotEmpty(module) ? module : "erp";
     }
 	
-	@ModelAttribute("TO_MODIFY_LINES")
-    public String toModifyLines() {
-    	return ExtConstant.TO_MODIFY_LINES;
-    }
-	
-	@ModelAttribute("TO_DELETE_LINES")
-    public String toDeleteLines() {
-		return ExtConstant.TO_DELETE_LINES;
-    }
 }
