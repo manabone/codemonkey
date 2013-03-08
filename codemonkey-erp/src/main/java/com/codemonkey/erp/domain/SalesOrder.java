@@ -27,7 +27,7 @@ public class SalesOrder extends DocumentAdapter {
 	
 	private Date paymentDate;
 	
-	@OneToMany(mappedBy="salesOrder",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="header",cascade=CascadeType.ALL)
 	private List<SalesOrderLine> lines;
 
 	public Customer getCustomer() {

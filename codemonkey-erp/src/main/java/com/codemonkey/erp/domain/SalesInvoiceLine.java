@@ -17,7 +17,7 @@ public class SalesInvoiceLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne 
-	private SalesInvoice salesInvoice;
+	private SalesInvoice header;
 	
 	@ManyToOne 
 	private SalesOrderLine salesOrderLine;
@@ -28,7 +28,11 @@ public class SalesInvoiceLine extends DocumentLineAdapter {
 	
 	@Override
 	public SalesInvoice getHeader() {
-		return getSalesInvoice();
+		return header;
+	}
+
+	public void setHeader(SalesInvoice header) {
+		this.header = header;
 	}
 	
 	public List<Transaction> createCurrencyTransactions() {
@@ -55,14 +59,6 @@ public class SalesInvoiceLine extends DocumentLineAdapter {
 
 	public void setTaxRate(Double taxRate) {
 		this.taxRate = taxRate;
-	}
-
-	public SalesInvoice getSalesInvoice() {
-		return salesInvoice;
-	}
-
-	public void setSalesInvoice(SalesInvoice salesInvoice) {
-		this.salesInvoice = salesInvoice;
 	}
 
 	public SalesOrderLine getSalesOrderLine() {

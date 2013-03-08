@@ -14,7 +14,7 @@ import com.codemonkey.web.converter.CustomConversionService;
 public class AppRoleServiceImpl extends GenericServiceImpl<AppRole> implements AppRoleService{
 
 	@Override
-	protected AppRole buildEntity(JSONObject params , CustomConversionService ccService){
+	public AppRole buildEntity(JSONObject params , CustomConversionService ccService){
 		AppRole appRole = super.buildEntity(params , ccService);
 		
 		appRole.clearAppPermissions();

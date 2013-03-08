@@ -17,13 +17,17 @@ public class PurchaseOrderLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private PurchaseOrder purchaseOrder;
+	private PurchaseOrder header;
 	
 	private Double price;
 	
 	@Override
 	public PurchaseOrder getHeader() {
-		return getPurchaseOrder();
+		return header;
+	}
+	
+	public void setHeader(PurchaseOrder header) {
+		this.header = header;
 	}
 
 	@Override
@@ -44,14 +48,6 @@ public class PurchaseOrderLine extends DocumentLineAdapter {
 		return Calc.mul(getPrice() , getQty());
 	}
 
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
-	}
-
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
-	}
-	
 	public Double getPrice() {
 		return price;
 	}

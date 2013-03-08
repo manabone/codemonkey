@@ -17,6 +17,8 @@ import com.codemonkey.web.converter.CustomConversionService;
 @Service
 public abstract class DocumentServiceImpl<T extends Document , E extends DocumentLine> extends GenericServiceImpl<T> implements DocumentService<T , E>{
 
+	private static final String HEADER = "header";
+
 	@Autowired private ItemTransactionFactory itemTransactionFactory;
 	
 	@Autowired private CurrencyTransactionFactory currencyTransactionFactory;
@@ -48,15 +50,15 @@ public abstract class DocumentServiceImpl<T extends Document , E extends Documen
 	}
 	
 	@Override
-	public JSONObject doSave(JSONObject params , CustomConversionService ccService){
-		JSONObject result = super.doSave(params , ccService);
+	public T doSave(JSONObject params , CustomConversionService ccService){
+		T t = super.doSave(params , ccService);
 		
 		if(params.has(ExtConstant.TO_MODIFY_LINES)){
 			JSONArray toModifyLines = params.getJSONArray(ExtConstant.TO_MODIFY_LINES);
 			if(toModifyLines != null){
 				for(int i = 0 ; i < toModifyLines.length() ; i++){
 					JSONObject lineJo = toModifyLines.getJSONObject(i);
-					lineJo.put("salesOrder", params.get(ExtConstant.ID));
+					lineJo.put(HEADER, t.getId());
 					getDocumentLineService().doSave(lineJo , ccService);
 				}
 			}
@@ -66,12 +68,14 @@ public abstract class DocumentServiceImpl<T extends Document , E extends Documen
 			JSONArray toDeleteLines = params.getJSONArray(ExtConstant.TO_DELETE_LINES);
 			if(toDeleteLines != null){
 				for(int i = 0 ; i < toDeleteLines.length() ; i++){
-					getDocumentLineService().delete(toDeleteLines.getJSONObject(i).getLong(ExtConstant.ID));
+					if(toDeleteLines.getJSONObject(i).has(ExtConstant.ID)){
+						getDocumentLineService().delete(toDeleteLines.getJSONObject(i).getLong(ExtConstant.ID));
+					}
 				}
 			}
 		}
 		
-		return result;
+		return t;
 	}
 
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codemonkey.domain.AppUser;
 import com.codemonkey.service.AppUserService;
-import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 
 @Controller

@@ -15,14 +15,18 @@ public class ReceiptLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private Receipt receipt;
+	private Receipt header;
 	
 	@ManyToOne 
 	private PurchaseOrderLine purchaseOrderLine;
 
 	@Override
 	public Receipt getHeader() {
-		return getReceipt();
+		return header;
+	}
+	
+	public void setHeader(Receipt header) {
+		this.header = header;
 	}
 
 	@Override
@@ -39,12 +43,5 @@ public class ReceiptLine extends DocumentLineAdapter {
 	public void setPurchaseOrderLine(PurchaseOrderLine purchaseOrderLine) {
 		this.purchaseOrderLine = purchaseOrderLine;
 	}
-
-	public Receipt getReceipt() {
-		return receipt;
-	}
-
-	public void setReceipt(Receipt receipt) {
-		this.receipt = receipt;
-	}
+	
 }

@@ -36,7 +36,7 @@ public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements A
 	}
 	
 	@Override
-	protected AppUser buildEntity(JSONObject params , CustomConversionService ccService){
+	public AppUser buildEntity(JSONObject params , CustomConversionService ccService){
 		AppUser appUser = super.buildEntity(params , ccService);
 		
 		appUser.clearAppRoles();

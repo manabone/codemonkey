@@ -18,6 +18,8 @@ Ext.define('AM.modules.FormModule', {
 	
 	afterModelLoad : function(model){},
 	
+	create : Ext.emptyFn,
+	
 	init : function(){
 		this.callParent();
         this.Model = Ext.define(this.modelName , {
@@ -65,7 +67,11 @@ Ext.define('AM.modules.FormModule', {
         	    }
         	});
     	}else{
-    		 Ext.getCmp(me.formId).getForm().reset();
+    		Ext.getCmp(me.formId).getForm().reset();
+    		Ext.each(Ext.ComponentQuery.query('searchingselect') , function(name , index , array){
+    			this.onTrigger1Click();
+    		});
+    		this.create();
     	}
     },
     

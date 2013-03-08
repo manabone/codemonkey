@@ -103,7 +103,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setReceipt(rp);
+		line.setHeader(rp);
 		line.setPurchaseOrderLine(buildPurchaseOrderLine());
 		
 		return line;
@@ -126,7 +126,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setShipment(sp);
+		line.setHeader(sp);
 		line.setSalesOrderLine(buildSalesOrderLine());
 		
 		return line;
@@ -138,7 +138,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setPurchaseOrder(po);
+		line.setHeader(po);
 		line.setPrice(PRICE);
 		return line;
 	}
@@ -162,7 +162,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setPurchasePayment(pp);
+		line.setHeader(pp);
 		line.setPrice(PRICE);
 		return line;
 	}
@@ -196,7 +196,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setSalesOrder(so);
+		line.setHeader(so);
 		line.setPrice(PRICE);
 		
 		return line;
@@ -227,7 +227,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setSalesInvoice(si);
+		line.setHeader(si);
 		line.setPrice(PRICE);
 		
 		return line;
@@ -252,7 +252,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setSalesCashReceipt(scr);
+		line.setHeader(scr);
 		line.setPrice(PRICE);
 		
 		return line;
@@ -277,7 +277,7 @@ public class AbsErpServiceTest {
 		
 		setDocumentLineAttr(line);
 		
-		line.setPurchaseInvoice(pi);
+		line.setHeader(pi);
 		line.setPrice(PRICE);
 		
 		return line;

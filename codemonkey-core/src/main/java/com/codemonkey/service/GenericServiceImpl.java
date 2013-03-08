@@ -276,22 +276,13 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		
 	}
 	
-	public JSONObject doSave(JSONObject body , CustomConversionService ccService){
-		JSONObject result = new JSONObject();
-		try{
-			T t = buildEntity(body , ccService);
-			save(t);
-			result.put(ExtConstant.DATA, t.detailJson());
-			result.put(ExtConstant.SUCCESS, true);
-		}catch(Exception e){
-			result.put(ExtConstant.SUCCESS, false);
-			result.put(ExtConstant.ERROR_MSG, e.getMessage());
-			e.printStackTrace();
-		}
-		return result;
+	public T doSave(JSONObject body , CustomConversionService ccService){
+		T t = buildEntity(body , ccService);
+		save(t);
+		return t;
 	}
 	
-	protected T buildEntity(JSONObject params , CustomConversionService ccService){
+	public T buildEntity(JSONObject params , CustomConversionService ccService){
 		T t = null;
 		Long id = extractId(params);
 		

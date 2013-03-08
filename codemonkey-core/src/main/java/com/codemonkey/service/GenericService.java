@@ -41,8 +41,10 @@ public interface GenericService<T> extends Converter<String, T> {
 
 	long countByQueryInfo(JSONObject queryInfo);
 
-	JSONObject doSave(JSONObject body , CustomConversionService ccService);
+	T doSave(JSONObject body , CustomConversionService ccService);
+	
+	T buildEntity(JSONObject params , CustomConversionService ccService);
 	
 	T createEntity();
-
+	
 }

@@ -40,13 +40,7 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody String body) {
-    	JSONObject params = new JSONObject();
-		try {
-			params = new JSONObject(body);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	return service().doSave(params , getCcService()).toString();
+    	return update(body);
     }
     
     //----------------------
@@ -75,14 +69,19 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
 	@RequestMapping("update")
     @ResponseBody
 	public String update(@RequestBody String body){
-		
+		JSONObject result = new JSONObject();
 		JSONObject params = new JSONObject();
 		try {
 			params = new JSONObject(body);
+			T t = service().doSave(params , getCcService());
+			result.put(ExtConstant.DATA, t.detailJson());
+			result.put(ExtConstant.SUCCESS, true);
 		} catch (ParseException e) {
+			result.put(ExtConstant.SUCCESS, false);
+			result.put(ExtConstant.ERROR_MSG, e.getMessage());
 			e.printStackTrace();
 		}
-		return service().doSave(params , getCcService()).toString();
+		return result.toString();
 	}
 
 	public List<AppPermission> regAppPermission(){

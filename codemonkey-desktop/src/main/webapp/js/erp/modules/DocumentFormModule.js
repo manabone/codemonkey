@@ -14,6 +14,10 @@ Ext.define('erp.modules.DocumentFormModule', {
 		action : 'removeLine', text: 'remove', iconCls : 'remove'
 	},
 	
+	create : function(){
+		this.getLineGridStore().removeAll();
+	},
+	
 	addLine : function(){
 		ExtUtils.addLine(this.getLineGrid());
 	},

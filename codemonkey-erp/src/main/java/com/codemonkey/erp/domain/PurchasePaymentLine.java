@@ -17,7 +17,7 @@ public class PurchasePaymentLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private PurchasePayment purchasePayment;
+	private PurchasePayment header;
 	
 	@ManyToOne 
 	private PurchaseInvoiceLine purchaseInvoiceLine;
@@ -26,7 +26,11 @@ public class PurchasePaymentLine extends DocumentLineAdapter {
 	
 	@Override
 	public PurchasePayment getHeader() {
-		return getPurchasePayment();
+		return header;
+	}
+	
+	public void setHeader(PurchasePayment header) {
+		this.header = header;
 	}
 
 	@Override
@@ -54,14 +58,6 @@ public class PurchasePaymentLine extends DocumentLineAdapter {
 
 	public void setPurchaseInvoiceLine(PurchaseInvoiceLine purchaseInvoiceLine) {
 		this.purchaseInvoiceLine = purchaseInvoiceLine;
-	}
-
-	public PurchasePayment getPurchasePayment() {
-		return purchasePayment;
-	}
-
-	public void setPurchasePayment(PurchasePayment purchasePayment) {
-		this.purchasePayment = purchasePayment;
 	}
 
 }

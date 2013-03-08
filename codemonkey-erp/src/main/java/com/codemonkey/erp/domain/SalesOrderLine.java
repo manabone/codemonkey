@@ -20,7 +20,7 @@ public class SalesOrderLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne 
-	private SalesOrder salesOrder;
+	private SalesOrder header;
 	
 	private Double price;
 
@@ -28,7 +28,11 @@ public class SalesOrderLine extends DocumentLineAdapter {
 	
 	@Override
 	public SalesOrder getHeader() {
-		return getSalesOrder();
+		return header;
+	}
+	
+	public void setHeader(SalesOrder header) {
+		this.header = header;
 	}
 	
 	@Override
@@ -76,14 +80,6 @@ public class SalesOrderLine extends DocumentLineAdapter {
 
 	public void setTaxRate(Double taxRate) {
 		this.taxRate = taxRate;
-	}
-
-	public SalesOrder getSalesOrder() {
-		return salesOrder;
-	}
-
-	public void setSalesOrder(SalesOrder salesOrder) {
-		this.salesOrder = salesOrder;
 	}
 
 }

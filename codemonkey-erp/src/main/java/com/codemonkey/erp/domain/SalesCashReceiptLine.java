@@ -17,7 +17,7 @@ public class SalesCashReceiptLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne 
-	private SalesCashReceipt salesCashReceipt;
+	private SalesCashReceipt header;
 	
 	private Double price;
 
@@ -25,7 +25,11 @@ public class SalesCashReceiptLine extends DocumentLineAdapter {
 	
 	@Override
 	public SalesCashReceipt getHeader() {
-		return getSalesCashReceipt();
+		return header;
+	}
+	
+	public void setHeader(SalesCashReceipt header) {
+		this.header = header;
 	}
 	
 	public List<Transaction> createCurrencyTransactions() {
@@ -52,14 +56,6 @@ public class SalesCashReceiptLine extends DocumentLineAdapter {
 
 	public void setTaxRate(Double taxRate) {
 		this.taxRate = taxRate;
-	}
-
-	public SalesCashReceipt getSalesCashReceipt() {
-		return salesCashReceipt;
-	}
-
-	public void setSalesCashReceipt(SalesCashReceipt salesCashReceipt) {
-		this.salesCashReceipt = salesCashReceipt;
 	}
 
 }

@@ -72,6 +72,11 @@ public class GenericDao<T extends IEntity> {
     }
 
     public void delete(Long id){
+    	
+    	if(id == null){
+    		return;
+    	}
+    	
     	T t = get(id);
     	
     	if(t == null){

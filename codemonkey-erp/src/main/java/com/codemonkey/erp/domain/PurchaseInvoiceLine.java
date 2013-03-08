@@ -17,14 +17,19 @@ public class PurchaseInvoiceLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private PurchaseInvoice purchaseInvoice;
+	private PurchaseInvoice header;
 	
 	private Double price;
 	
 	@Override
 	public PurchaseInvoice getHeader() {
-		return getPurchaseInvoice();
+		return header;
 	}
+	
+	public void setHeader(PurchaseInvoice header) {
+		this.header = header;
+	}
+
 
 	@Override
 	public List<Transaction> createCurrencyTransactions() {
@@ -44,13 +49,5 @@ public class PurchaseInvoiceLine extends DocumentLineAdapter {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
-	public PurchaseInvoice getPurchaseInvoice() {
-		return purchaseInvoice;
-	}
-
-	public void setPurchaseInvoice(PurchaseInvoice purchaseInvoice) {
-		this.purchaseInvoice = purchaseInvoice;
-	}
-
+	
 }

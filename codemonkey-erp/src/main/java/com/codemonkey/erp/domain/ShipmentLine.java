@@ -15,14 +15,18 @@ public class ShipmentLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private Shipment shipment;
+	private Shipment header;
 	
 	@ManyToOne 
 	private SalesOrderLine salesOrderLine;
 	
 	@Override
 	public Shipment getHeader() {
-		return getShipment();
+		return header;
+	}
+	
+	public void setHeader(Shipment header) {
+		this.header = header;
 	}
 
 	@Override
@@ -30,14 +34,6 @@ public class ShipmentLine extends DocumentLineAdapter {
 		List<Transaction> trans = new ArrayList<Transaction>();
 		trans.add(new ShipmentItemTransaction(this));
 		return trans;
-	}
-
-	public Shipment getShipment() {
-		return shipment;
-	}
-
-	public void setShipment(Shipment shipment) {
-		this.shipment = shipment;
 	}
 
 	public SalesOrderLine getSalesOrderLine() {
