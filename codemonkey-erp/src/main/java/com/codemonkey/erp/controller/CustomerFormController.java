@@ -19,9 +19,4 @@ public class CustomerFormController extends AbsFormExtController<Customer>{
 	protected CustomerService service() {
 		return customerService;
 	}
-
-	@Override
-	protected Customer createEntity() {
-		return new Customer();
-	}
 }

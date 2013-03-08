@@ -9,10 +9,9 @@ import com.codemonkey.erp.domain.DocumentLine;
 import com.codemonkey.service.GenericServiceImpl;
 
 @Service
-public class DocumentLineServiceImpl extends GenericServiceImpl<DocumentLine> implements DocumentLineService{
+public abstract class DocumentLineServiceImpl<T extends DocumentLine > extends GenericServiceImpl<T> implements DocumentLineService<T>{
 
-	public List<DocumentLine> getLinesByHeader(Document doc) {
+	public List<T> getLinesByHeader(Document doc) {
 		return findAllBy("header.id" , doc.getId());
 	}
-
 }

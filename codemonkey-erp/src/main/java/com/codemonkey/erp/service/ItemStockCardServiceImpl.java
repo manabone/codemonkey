@@ -14,9 +14,14 @@ public class ItemStockCardServiceImpl extends GenericServiceImpl<ItemStockCard> 
 		ItemStockCard stockCard = findBy("item.idAndwarehouse.id", item.getId() , warehouse.getId());
 		if(stockCard == null){
 			stockCard = new ItemStockCard(item , warehouse);
-			doSave(stockCard);
+			save(stockCard);
 		}
 		return stockCard;
+	}
+	
+	@Override
+	public ItemStockCard createEntity() {
+		return null;
 	}
 
 }

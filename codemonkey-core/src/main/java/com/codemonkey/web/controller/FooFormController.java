@@ -28,11 +28,6 @@ public class FooFormController extends AbsFormExtController<Foo>{
 	}
 
 	@Override
-	protected Foo createEntity() {
-		return new Foo();
-	}
-	
-	@Override
 	protected JSONObject buildJson(Foo foo) {
 		JSONObject data = super.buildJson(foo);
 		

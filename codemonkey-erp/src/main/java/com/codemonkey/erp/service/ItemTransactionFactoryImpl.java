@@ -22,6 +22,6 @@ public class ItemTransactionFactoryImpl extends TransactionFactory implements It
 	@Override
 	public void saveTransaction(Transaction t) {
 		ItemTransaction tran = (ItemTransaction) t;
-		transactionService.doSave(tran);
+		transactionService.save(tran);
 	}
 }

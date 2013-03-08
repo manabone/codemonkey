@@ -8,4 +8,9 @@ import com.codemonkey.service.GenericServiceImpl;
 @Service
 public class VendorServiceImpl extends GenericServiceImpl<Vendor> implements VendorService{
 
+	@Override
+	public Vendor createEntity() {
+		return new Vendor();
+	}
+	
 }

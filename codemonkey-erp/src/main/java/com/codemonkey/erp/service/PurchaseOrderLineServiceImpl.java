@@ -8,4 +8,9 @@ import com.codemonkey.service.GenericServiceImpl;
 @Service
 public class PurchaseOrderLineServiceImpl extends GenericServiceImpl<PurchaseOrderLine> implements PurchaseOrderLineService{
 
+	@Override
+	public PurchaseOrderLine createEntity() {
+		return new PurchaseOrderLine();
+	}
+	
 }

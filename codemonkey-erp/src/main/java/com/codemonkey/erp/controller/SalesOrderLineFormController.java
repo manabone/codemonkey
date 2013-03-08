@@ -20,8 +20,4 @@ public class SalesOrderLineFormController extends AbsFormExtController<SalesOrde
 		return salesOrderLineService;
 	}
 
-	@Override
-	protected SalesOrderLine createEntity() {
-		return new SalesOrderLine();
-	}
 }

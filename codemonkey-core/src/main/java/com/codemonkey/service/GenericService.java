@@ -7,14 +7,15 @@ import org.json.JSONObject;
 import org.springframework.core.convert.converter.Converter;
 
 import com.codemonkey.dao.searchingInfo.SearchingInfo;
+import com.codemonkey.web.converter.CustomConversionService;
 
 public interface GenericService<T> extends Converter<String, T> {
 
 	T get(Long id);
 
-    void doSave(T entity);
+    void save(T entity);
 
-    void doDelete(Long id);
+    void delete(Long id);
     
     long count(Criterion... criterions);
     
@@ -39,5 +40,9 @@ public interface GenericService<T> extends Converter<String, T> {
 	List<T> findByQueryInfo(JSONObject queryInfo);
 
 	long countByQueryInfo(JSONObject queryInfo);
+
+	JSONObject doSave(JSONObject body , CustomConversionService ccService);
+	
+	T createEntity();
 
 }

@@ -18,11 +18,11 @@ public abstract class TransactionFactory {
 	public abstract void saveTransaction(Transaction tran);
 
 	
-	public List<Transaction> createTransactions(Document doc , DocumentLineService docLineService ){
+	public List<Transaction> createTransactions(Document doc , List<?> lines){
 		List<Transaction> list = new ArrayList<Transaction>();
-		List<DocumentLine> lines =  docLineService.getLinesByHeader(doc);
 		if(CollectionUtils.isNotEmpty(lines)){
-			for(DocumentLine line : lines){
+			for(Object obj : lines){
+				DocumentLine line = (DocumentLine) obj;
 				List<Transaction> itemTrans = createTransactions(line);
 				if(CollectionUtils.isNotEmpty(itemTrans)){
 					list.addAll(itemTrans);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codemonkey.domain.AppUser;
 import com.codemonkey.service.AppUserService;
+import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 
 @Controller
@@ -80,5 +81,15 @@ public class AuthController {
 	@ModelAttribute("module")
     public String getFromURI(@RequestParam(value="module", required=false) String module, HttpServletRequest request) {
     	return StringUtils.isNotEmpty(module) ? module : "erp";
+    }
+	
+	@ModelAttribute("TO_MODIFY_LINES")
+    public String toModifyLines() {
+    	return ExtConstant.TO_MODIFY_LINES;
+    }
+	
+	@ModelAttribute("TO_DELETE_LINES")
+    public String toDeleteLines() {
+		return ExtConstant.TO_DELETE_LINES;
     }
 }

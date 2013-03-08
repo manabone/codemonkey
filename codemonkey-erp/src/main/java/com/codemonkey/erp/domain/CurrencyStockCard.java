@@ -28,10 +28,6 @@ public class CurrencyStockCard  extends AbsEE {
 	
 	private Double amountOnPurchaseOrder = 0d;
 	
-	public CurrencyStockCard(Currency currency) {
-		this.currency = currency;
-	}
-
 	public Currency getCurrency() {
 		return currency;
 	}

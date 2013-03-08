@@ -8,4 +8,9 @@ import com.codemonkey.service.GenericServiceImpl;
 @Service
 public class CurrencyPlanningServiceImpl extends GenericServiceImpl<CurrencyPlanning> implements CurrencyPlanningService{
 
+	@Override
+	public CurrencyPlanning createEntity() {
+		return new CurrencyPlanning();
+	}
+
 }

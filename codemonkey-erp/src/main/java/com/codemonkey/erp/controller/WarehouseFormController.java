@@ -20,8 +20,4 @@ public class WarehouseFormController extends AbsFormExtController<Warehouse>{
 		return warehouseService;
 	}
 
-	@Override
-	protected Warehouse createEntity() {
-		return new Warehouse();
-	}
 }

@@ -37,7 +37,7 @@ public class JsonArrayConverterTest extends AbsServiceTest{
 		Status fstatus = Status.ACTIVE;
 		
 		AppRole appRole = new AppRole();
-		appRoleService.doSave(appRole);
+		appRoleService.save(appRole);
 		
 		JSONObject data = new JSONObject();
 		JSONArray foos = new JSONArray();
@@ -62,7 +62,7 @@ public class JsonArrayConverterTest extends AbsServiceTest{
 		foo2.setFstring("dump");
 		foo2.setCode("foo2");
 		
-		fooService.doSave(foo2);
+		fooService.save(foo2);
 		
 		JSONObject fooJo2 = new JSONObject();
 		fooJo2.put("id", foo2.getId());

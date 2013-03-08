@@ -12,6 +12,6 @@ public interface ItemTransactionFactory {
 
 	void saveTransaction(Transaction t);
 
-	List<Transaction> createTransactions(Document doc, DocumentLineService documentLineService);
+	List<Transaction> createTransactions(Document doc, List<?> lines);
 	
 }

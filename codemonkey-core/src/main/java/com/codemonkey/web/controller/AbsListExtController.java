@@ -66,7 +66,7 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
 			JSONObject params = new JSONObject(body);
 			T t = service().get(params.getLong(ExtConstant.ID));
 			if(t != null){
-				service().doDelete(params.getLong(ExtConstant.ID));
+				service().delete(params.getLong(ExtConstant.ID));
 			}
 			result.put(ExtConstant.SUCCESS, true);
 		}catch(Exception e){

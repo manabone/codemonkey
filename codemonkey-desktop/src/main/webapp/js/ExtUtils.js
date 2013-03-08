@@ -366,10 +366,22 @@ var ExtUtils = {
 		return fields;
 	},
 	
-	getData : function(grid){
+	getDeletedData : function(grid){
 		var data = [];
 		
-		var records = grid.getStore().getRange();
+		var records = grid.getStore().getRemovedRecords();
+		
+		for(var i = 0 ; i < records.length ; i++){
+			data.push(records[i].data);
+		}
+		
+		return data;
+	},
+	
+	getModifedData : function(grid){
+		var data = [];
+		
+		var records = grid.getStore().getModifiedRecords();
 		
 		for(var i = 0 ; i < records.length ; i++){
 			data.push(records[i].data);
@@ -419,6 +431,8 @@ var ExtUtils = {
 		    extend: 'Ext.data.Model',
 		    fields: fields
 		});
+		
+		config.columns = [Ext.create('Ext.grid.RowNumberer')].concat(config.columns);
 		
 		var modelConfig = {
 	        model: 'Model',

@@ -38,9 +38,9 @@ public class AppUserServiceTest extends GenericServiceTest<AppUser>{
 		user3.setPassword("user3");
 		
 		//test saving
-		appUserService.doSave(user1);
-		appUserService.doSave(user2);
-		appUserService.doSave(user3);
+		appUserService.save(user1);
+		appUserService.save(user2);
+		appUserService.save(user3);
 		
 		assertNotNull(user1.getId());
 		assertEquals("user1" , user1.getUsername());
@@ -52,7 +52,7 @@ public class AppUserServiceTest extends GenericServiceTest<AppUser>{
 		assertEquals(count + 3 , appUserService.count());
 		
 		//test deleting
-		appUserService.doDelete(user2.getId());
+		appUserService.delete(user2.getId());
 		
 		assertEquals(count + 2 , appUserService.findAll().size());
 		

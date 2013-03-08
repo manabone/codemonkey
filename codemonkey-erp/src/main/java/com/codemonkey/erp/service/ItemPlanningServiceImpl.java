@@ -8,4 +8,9 @@ import com.codemonkey.service.GenericServiceImpl;
 @Service
 public class ItemPlanningServiceImpl extends GenericServiceImpl<ItemPlanning> implements ItemPlanningService{
 
+	@Override
+	public ItemPlanning createEntity() {
+		return new ItemPlanning();
+	}
+
 }

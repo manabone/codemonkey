@@ -29,7 +29,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		Foo foo = new Foo();
 		foo.setFstring("test");
 		foo.setFnumber(3d);
-		fooService.doSave(foo);
+		fooService.save(foo);
 		
 		assertEquals(new Integer(0) , foo.getVersion());
 		assertEquals(new Integer(0) , foo.getOriginVersion());
@@ -61,7 +61,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		
 		AppRole role = new AppRole();
 		role.setName("role1");
-		appRoleService.doSave(role);
+		appRoleService.save(role);
 		
 		Foo foo1 = new Foo();
 		foo1.setFbool(true);
@@ -86,9 +86,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		foo3.setFstring("333");
 		
 		//test saving
-		fooService.doSave(foo1);
-		fooService.doSave(foo2);
-		fooService.doSave(foo3);
+		fooService.save(foo1);
+		fooService.save(foo2);
+		fooService.save(foo3);
 		
 		JSONObject queryInfo = new JSONObject();
 		List<Foo> foos = fooService.findByQueryInfo(queryInfo);

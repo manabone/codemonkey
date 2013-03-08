@@ -12,10 +12,17 @@ public class CurrencyStockCardServiceImpl extends GenericServiceImpl<CurrencySto
 	public CurrencyStockCard getStockCard(Currency currency) {
 		CurrencyStockCard stockCard = findBy("currency", currency);
 		if(stockCard == null){
-			stockCard = new CurrencyStockCard(currency);
-			doSave(stockCard);
+			stockCard = new CurrencyStockCard();
+			stockCard.setCurrency(currency);
+			save(stockCard);
 		}
 		return stockCard;
 	}
+	
+	@Override
+	public CurrencyStockCard createEntity() {
+		return new CurrencyStockCard();
+	}
+
 
 }

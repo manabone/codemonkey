@@ -6,8 +6,8 @@ import com.codemonkey.erp.domain.Document;
 import com.codemonkey.erp.domain.DocumentLine;
 import com.codemonkey.service.GenericService;
 
-public interface DocumentLineService extends GenericService<DocumentLine>{
+public interface DocumentLineService<T extends DocumentLine> extends GenericService<T>{
 
-	List<DocumentLine> getLinesByHeader(Document doc);
+	List<T> getLinesByHeader(Document doc);
 
 }

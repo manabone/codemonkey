@@ -20,8 +20,4 @@ public class VendorFormController extends AbsFormExtController<Vendor>{
 		return vendorService;
 	}
 
-	@Override
-	protected Vendor createEntity() {
-		return new Vendor();
-	}
 }

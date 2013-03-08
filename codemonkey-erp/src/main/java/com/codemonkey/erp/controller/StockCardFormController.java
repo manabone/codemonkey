@@ -20,8 +20,4 @@ public class StockCardFormController extends AbsFormExtController<ItemStockCard>
 		return stockCardService;
 	}
 
-	@Override
-	protected ItemStockCard createEntity() {
-		return null;
-	}
 }

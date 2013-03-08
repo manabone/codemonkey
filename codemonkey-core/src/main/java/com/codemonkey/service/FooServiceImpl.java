@@ -12,6 +12,12 @@ import com.codemonkey.error.FieldValidation;
 public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooService{
 
 	@Autowired private AppRoleService appRoleService;
+	
+	@Override
+	public Foo createEntity() {
+		return new Foo();
+	}
+	
 	@Override
 	protected Set<FieldValidation> validate(Foo foo) {
 		Set<FieldValidation> set = super.validate(foo);

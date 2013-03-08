@@ -44,6 +44,15 @@ Ext.define('erp.modules.DocumentFormModule', {
 		];
     	
     	return this.createToolbar(actions);
+    },
+    
+    beforeSave : function(values){
+    	var toModifyLines = ExtUtils.getModifedData(this.getLineGrid());
+    	var toDeleteLines = ExtUtils.getDeletedData(this.getLineGrid());
+    	Ext.apply(values , {
+    		TO_MODIFY_LINES : toModifyLines,
+    		TO_DELETE_LINES : toDeleteLines	
+    	});
     }
         
 });

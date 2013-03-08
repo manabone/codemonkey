@@ -20,6 +20,8 @@ import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.ValidationError;
 import com.codemonkey.utils.ClassHelper;
+import com.codemonkey.utils.ExtConstant;
+import com.codemonkey.web.converter.CustomConversionService;
 
 @Transactional
 public abstract class GenericServiceImpl<T extends EE> extends AbsService implements GenericService<T> {
@@ -31,6 +33,9 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 	public GenericServiceImpl(){
 		this.type = ClassHelper.getSuperClassGenricType(getClass());
 	}
+	
+	@Override
+	public abstract T createEntity();
 	
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -50,7 +55,7 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		return t;
 	}
 
-	public void doSave(T entity) {
+	public void save(T entity) {
 		
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -91,7 +96,7 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		return errorSet;
 	}
 
-	public void doDelete(Long id) {
+	public void delete(Long id) {
 		
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -270,4 +275,44 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		return count;
 		
 	}
+	
+	public JSONObject doSave(JSONObject body , CustomConversionService ccService){
+		JSONObject result = new JSONObject();
+		try{
+			T t = buildEntity(body , ccService);
+			save(t);
+			result.put(ExtConstant.DATA, t.detailJson());
+			result.put(ExtConstant.SUCCESS, true);
+		}catch(Exception e){
+			result.put(ExtConstant.SUCCESS, false);
+			result.put(ExtConstant.ERROR_MSG, e.getMessage());
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	protected T buildEntity(JSONObject params , CustomConversionService ccService){
+		T t = null;
+		Long id = extractId(params);
+		
+		if(id == null){
+			t = createEntity();
+			ClassHelper.bulid(params, t , ccService);
+		}else{
+			t = get(id);
+			if(t != null){
+				ClassHelper.bulid(params, t , ccService);
+			}
+		}
+		return t;
+	}
+	
+	private Long extractId(JSONObject params) {
+		Long id = null;
+		if(params.has(ExtConstant.ID) && StringUtils.isNotBlank(params.getString(ExtConstant.ID)) && !"null".equals(params.getString(ExtConstant.ID))){
+			id = params.getLong(ExtConstant.ID);
+		}
+		return id;
+	}
+
 }

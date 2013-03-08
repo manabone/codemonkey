@@ -35,7 +35,7 @@ public class ItemTransactionServiceImpl extends GenericServiceImpl<Transaction> 
 			//update stock card
 			ItemStockCard stockCard = itemStockCardService.getStockCard(tran.getItem() , tran.getWarehouse());
 			tran.updateStockCard(stockCard);
-			itemStockCardService.doSave(stockCard);
+			itemStockCardService.save(stockCard);
 			
 			//create planning
 			if(CollectionUtils.isNotEmpty(tran.createPlanning())){
@@ -46,8 +46,13 @@ public class ItemTransactionServiceImpl extends GenericServiceImpl<Transaction> 
 		//saving planning
 		if(CollectionUtils.isNotEmpty(planningList)){
 			for(ItemPlanning plan : planningList){
-				itemPlanningService.doSave(plan);
+				itemPlanningService.save(plan);
 			}
 		}
+	}
+
+	@Override
+	public Transaction createEntity() {
+		return null;
 	}
 }

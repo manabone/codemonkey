@@ -33,7 +33,7 @@ public class CurrencyTransactionServiceImpl extends GenericServiceImpl<Transacti
 			//update stock card
 			CurrencyStockCard stockCard = currencyStockCardService.getStockCard(tran.getCurrency());
 			tran.updateStockCard(stockCard);
-			currencyStockCardService.doSave(stockCard);
+			currencyStockCardService.save(stockCard);
 			
 			//create planning
 			if(CollectionUtils.isNotEmpty(tran.createPlanning())){
@@ -44,8 +44,13 @@ public class CurrencyTransactionServiceImpl extends GenericServiceImpl<Transacti
 		//saving planning
 		if(CollectionUtils.isNotEmpty(planningList)){
 			for(CurrencyPlanning plan : planningList){
-				currencyPlanningService.doSave(plan);
+				currencyPlanningService.save(plan);
 			}
 		}
+	}
+
+	@Override
+	public Transaction createEntity() {
+		return null;
 	}
 }

@@ -7,4 +7,9 @@ import com.codemonkey.domain.State;
 @Service
 public class StateServiceImpl extends GenericServiceImpl<State> implements StateService {
 
+	@Override
+	public State createEntity() {
+		return new State();
+	}
+
 }

@@ -76,13 +76,13 @@ public class AbsErpServiceTest {
 	
 	Item buildItem(){
 		Item item = new Item();
-		itemService.doSave(item);
+		itemService.save(item);
 		return item;
 	}
 	
 	Warehouse buildWarehouse(){
 		Warehouse warehouse = new Warehouse();
-		warehouseService.doSave(warehouse);
+		warehouseService.save(warehouse);
 		return warehouse;
 	}
 	
@@ -186,7 +186,7 @@ public class AbsErpServiceTest {
 
 	Vendor buildVendor() {
 		Vendor vendor = new Vendor();
-		vendorService.doSave(vendor);
+		vendorService.save(vendor);
 		return vendor;
 	}
 
@@ -297,7 +297,7 @@ public class AbsErpServiceTest {
 
 	Customer buildCustomer() {
 		Customer customer = new Customer();
-		customerService.doSave(customer);
+		customerService.save(customer);
 		return customer;
 	}
 	

@@ -10,7 +10,8 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     
     lineGridId : 'salesOrderLineGrid',
     
-    modelFields : ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' , 'lines',
+    modelFields : ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' ,
+                   TO_MODIFY_LINES , TO_DELETE_LINES ,
                    'id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
     
     formItems : function(){
@@ -51,14 +52,10 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	
     	var p3 = ExtUtils.panel({
     		title : 'Lines',
-    		items : lineGrid	
+    		items : lineGrid
     	});
     	
-    	return ExtUtils.fitLayout([p1,p2 , p3]);
-    },
+    	return ExtUtils.fitLayout([p1, p3 ,p2 ]);
+    }
     
-    beforeSave : function(values){
-    	var lines = ExtUtils.getData(this.getLineGrid());
-    	Ext.apply(values , {lines : lines});
-    },
 });

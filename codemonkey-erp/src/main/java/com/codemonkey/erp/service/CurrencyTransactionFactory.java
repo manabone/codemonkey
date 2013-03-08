@@ -22,7 +22,7 @@ public class CurrencyTransactionFactory extends TransactionFactory{
 	@Override
 	public void saveTransaction(Transaction t) {
 		CurrencyTransaction tran = (CurrencyTransaction) t;
-		transactionService.doSave(tran);
+		transactionService.save(tran);
 	}
 	
 }

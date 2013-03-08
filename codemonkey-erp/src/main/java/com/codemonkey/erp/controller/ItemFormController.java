@@ -19,9 +19,4 @@ public class ItemFormController extends AbsFormExtController<Item>{
 	protected ItemService service() {
 		return itemService;
 	}
-
-	@Override
-	protected Item createEntity() {
-		return new Item();
-	}
 }

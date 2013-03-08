@@ -8,4 +8,9 @@ import com.codemonkey.service.GenericServiceImpl;
 @Service
 public class WarehouseServiceImpl extends GenericServiceImpl<Warehouse> implements WarehouseService{
 
+	@Override
+	public Warehouse createEntity() {
+		return new Warehouse();
+	}
+	
 }

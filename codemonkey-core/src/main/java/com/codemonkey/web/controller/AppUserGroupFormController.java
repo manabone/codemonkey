@@ -17,20 +17,4 @@ public class AppUserGroupFormController extends AbsFormExtController<AppUserGrou
 	protected AppUserGroupService service() {
 		return appUserGroupService;
 	}
-
-	@Override
-	protected AppUserGroup createEntity() {
-		return new AppUserGroup();
-	}
-
-	@Override
-	String getControllers() {
-		return "AppUserGroupFormController";
-	}
-
-	@Override
-	String getIndexView() {
-		return "appusergroupedit";
-	}
-
 }

@@ -19,9 +19,4 @@ public class PurchaseOrderFormController extends AbsFormExtController<PurchaseOr
 	protected PurchaseOrderService service() {
 		return purchaseOrderService;
 	}
-
-	@Override
-	protected PurchaseOrder createEntity() {
-		return new PurchaseOrder();
-	}
 }

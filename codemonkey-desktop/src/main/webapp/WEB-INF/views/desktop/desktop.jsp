@@ -5,6 +5,10 @@
 	<script type="text/javascript" src="${ctx}/js/${module}/MainApp.js"></script>
 	
 	<script type="text/javascript">
+		
+		var TO_MODIFY_LINES = "${TO_MODIFY_LINES}";
+		var TO_DELETE_LINES = "${TO_DELETE_LINES}";
+	
 		Ext.define('OverrideConnection', {
 		    override: 'Ext.data.Connection',
 		    onStateChange : function(request) {

@@ -31,6 +31,10 @@ public final class ExtConstant {
 	public static final String DEFAULT_THEME = "classic";
 	
 	public static final String APP_ROOT = "/app/ext/";
+	
+	public static final String TO_MODIFY_LINES = "toModifyLines";
+	
+	public static final String TO_DELETE_LINES = "toDeleteLines";
 
 	private ExtConstant(){}
 }
