@@ -30,14 +30,22 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	var lineGrid = ExtUtils.arrayGrid({
     		id : this.lineGridId,
     		plugins : [
-		           Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})
+		           Ext.create('Ext.grid.plugin.CellEditing', {
+		        	   clicksToEdit: 1
+		           })
             ],
 			columns :  [
    	            {header: 'id',  dataIndex: 'id',  flex: 1},
-	 	  		{header: 'item' ,  dataIndex: 'item',  flex: 1 , hidden : true},
-	 	  		{header: 'item' ,  dataIndex: 'item_text',  flex: 1 , 
-	 	  			editor: {xtype :"searchingselect" , config :{model :"ItemList"} }
-	 	  		},
+   	            {header: 'item_text' ,  dataIndex: 'item_text'},
+   	            
+   	            ExtUtils.searchingColumn({
+   	            	header : 'item' ,  
+   	            	dataIndex : 'item',
+   	            	textDataIndex : 'item_text',
+   	            	listModel : 'ItemList',
+   	            	lineGridId : this.lineGridId
+   	            }),
+	 	  		
 	 	  		{header: 'price' ,  dataIndex: 'price',  flex: 1,
 	 	  			editor: {xtype: 'numberfield'}
 	 	  		},

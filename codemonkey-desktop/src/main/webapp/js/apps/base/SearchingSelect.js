@@ -35,7 +35,10 @@ Ext.define('AM.base.SearchingSelect', {
     
     setValue: function(v) {
     	
-    	if(!v) return;
+    	if(!v){
+    		this.clearValue();
+    		return;
+    	}
     	
     	var me = this;
     	
@@ -98,6 +101,10 @@ Ext.define('AM.base.SearchingSelect', {
     	
     	me.store = store;
     	
+    	if(this.config.initData){
+    		this.config.initData(cmp);
+    	}
+    	
     	me.on('afterrender' , function( /*Ext.Component*/ cmp , /*Object*/ eOpts ){
     		cmp.triggerCell.item(0).setDisplayed(false);
     	});
@@ -108,16 +115,20 @@ Ext.define('AM.base.SearchingSelect', {
     	
     },
     
-    onTrigger1Click : function(){
-        var me = this;
+    clearValue : function(){
+    	 var me = this;
 
-        if (me.getValue()) {
-            me.setValue('');
-            me.setRawValue('');
-            me.hValue = '';
-            me.triggerCell.item(0).setDisplayed(false);
-            me.updateLayout();
-        }
+         if (me.getValue()) {
+//             me.setValue('');
+             me.setRawValue('');
+             me.hValue = '';
+             me.triggerCell.item(0).setDisplayed(false);
+             me.updateLayout();
+         }
+    },
+    
+    onTrigger1Click : function(){
+       this.clearValue();
     },
     
     onTrigger2Click : function(/* Ext.EventObject */ e){

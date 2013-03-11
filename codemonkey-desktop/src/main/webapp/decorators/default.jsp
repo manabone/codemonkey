@@ -14,21 +14,14 @@
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/resources/css/ext-all-${theme}.css" />
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/resources/css/icon.css" />
 
-		<script type="text/javascript" src="${ctx}/js/apps/base/ModelExt.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/RestExt.js"></script>
+
 		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingSelect.js"></script>
+		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingColumn.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/TreeCombo.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingSelectButton.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/GridDeleteButton.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/SelectField.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/ActionBar.js"></script>
 		<script type="text/javascript" src="${ctx}/js/ExtUtils.js"></script>
 		<script type="text/javascript" src="${ctx}/js/NamingStrategy.js"></script>
 		
-		<script type="text/javascript" src="${ctx}/js/apps/base/Portlet.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/PortalColumn.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/PortalDropZone.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/PortalPanel.js"></script>
 	    <decorator:head/>
 	</head>
 	<body>

@@ -34,9 +34,10 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     		@RequestParam(required=false) JSONObject queryInfo) {
     	
     	List<T> list = new ArrayList<T>();
-    	long total = service().count();
+    	long total = 0;
     	if(StringUtils.isNotBlank(id)){
     		T t = service().get(Long.valueOf(id));
+    		total = 1;
     		list.add(t);
     	}else if(StringUtils.isNotBlank(query)){
     		Criterion[] criterions = {

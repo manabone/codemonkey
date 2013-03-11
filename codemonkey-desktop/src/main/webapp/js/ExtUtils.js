@@ -352,6 +352,36 @@ var ExtUtils = {
 	//-------------------------------------------------------
 	//           GRID UTILs
 	//-------------------------------------------------------	
+	searchingColumn : function(cfg){
+		var col = {
+			header: cfg.header ,  
+			dataIndex: cfg.dataIndex,
+			flex: 1 ,
+			
+			renderer : function(value  , metaData , record , rowIndex , colIndex , store , view ){
+				return record.get(cfg.textDataIndex); 
+			},
+			
+  			editor: {
+  				xtype :"searchingselect" , 
+  				config :{
+  					model : cfg.listModel , 
+  					gridId : cfg.lineGridId ,
+  					dataIndex: cfg.dataIndex,
+  					hiddenDataIndex: cfg.textDataIndex,
+  					success : function(record , cmp){
+  						var r = ExtUtils.getSelected(cmp.config.gridId);
+  						if(r){
+  							r.set(cfg.dataIndex , record.get('id'));
+  							r.set(cfg.textDataIndex , record.get('name'));
+  						}
+  					}
+  				}
+  			}
+  		};
+		
+		return col;
+	},
 		
 	getSelected : function(gridId){
 		var grid = Ext.getCmp(gridId);
