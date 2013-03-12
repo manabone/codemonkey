@@ -26,19 +26,30 @@ var ExtUtils = {
 	//           DEFAULT CONSTANTS
 	//-------------------------------------------------------
 	
-	defaultModelFields : ['id','name','description'],
+	defaultModelFields : ['id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
 	
 	defaultGridCols : [	
-	    Ext.create('Ext.grid.RowNumberer'),               
        	{header: 'id'          ,  dataIndex: 'id'         ,  flex: 1 , hidden : true},
-		{header: 'name'        ,  dataIndex: 'name'       ,  flex: 1},
-		{header: 'description' ,  dataIndex: 'description',  flex: 1}
+       	{dataIndex:"code",flex:1,header:"code"},
+		{dataIndex:"name",flex:1,header:"name"},
+		{dataIndex:"description",flex:1,header:"description"},
+		{dataIndex:"originVersion",flex:1,header:"origin version"},
+		{dataIndex:"creationDate",flex:1,header:"creationDate"},
+		{dataIndex:"createdBy",flex:1,header:"createdBy"},
+		{dataIndex:"modificationDate",flex:1,header:"modificationDate"},
+		{dataIndex:"modifiedBy",flex:1,header:"modifiedBy"}
 	],
 	
 	defaultFormItems : [
-		{xtype:"textfield"  , name:"name"        , fieldLabel:"name"},
-		{xtype:"textfield"  , name:"description" , fieldLabel:"description"},
-		{xtype:"numberfield", name:"id"          , fieldLabel:"id" , hidden : true}
+		 {dataIndex:"id",flex:1,header:"id"},
+		 {dataIndex:"code",flex:1,header:"code"},
+		 {dataIndex:"name",flex:1,header:"name"},
+		 {dataIndex:"description",flex:1,header:"description"},
+		 {dataIndex:"originVersion",flex:1,header:"origin version"},
+		 {dataIndex:"creationDate",flex:1,header:"creationDate"},
+		 {dataIndex:"createdBy",flex:1,header:"createdBy"},
+		 {dataIndex:"modificationDate",flex:1,header:"modificationDate"},
+		 {dataIndex:"modifiedBy",flex:1,header:"modifiedBy"}
 	],
 	
 	defaultFormButtons : [{

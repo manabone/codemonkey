@@ -14,8 +14,8 @@ Ext.define('AM.modules.ListModule', {
 	gridId : null,
 	searchFormId : null,
 	
-    modelFields : null,
-	gridCols : null,
+    modelFields : Ext.emptyFn,
+	gridCols : Ext.emptyFn,
 	
     init : function(){
     	var me = this;
@@ -27,15 +27,15 @@ Ext.define('AM.modules.ListModule', {
         
         me.Model = Ext.define(me.modelName , {
 	        extend: 'Ext.data.Model',
-	        fields: me.modelFields || ExtUtils.defaultModelFields,
+	        fields: me.modelFields() || ExtUtils.defaultModelFields,
 	        proxy: ExtUtils.proxy(me.modelName)
 		});
     	
        me.grid = ExtUtils.ajaxGrid({
         	gridId:me.gridId , 
         	model : me.modelName , 
-        	modelFields : me.modelFields , 
-        	columns : me.gridCols 
+        	modelFields : me.modelFields() , 
+        	columns : me.gridCols() 
         });
         
 //    	me.store = ExtUtils.ajaxStore({model : me.modelName});

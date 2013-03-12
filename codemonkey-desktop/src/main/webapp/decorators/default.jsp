@@ -16,7 +16,6 @@
 
 
 		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingSelect.js"></script>
-		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingColumn.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/TreeCombo.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/SelectField.js"></script>
 		<script type="text/javascript" src="${ctx}/js/ExtUtils.js"></script>

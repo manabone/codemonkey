@@ -18,10 +18,11 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	var p1 = ExtUtils.panel({
     		title : 'basic info',
 			items:[
-    			{xtype:"textfield",name:"code",fieldLabel:"编码"},
+    			{xtype:"textfield",name:"code",fieldLabel:"code"},
     			{xtype :"searchingselect",name :"customer",config :{model :"CustomerList"},fieldLabel :"Customer" , allowBlank : false},
+    			{xtype :"searchingselect",name :"warehouse",config :{model :"WarehouseList"},fieldLabel :"warehouse" , allowBlank : false},
     			{xtype :"datefield",name :"paymentDate",format :"Y-m-d",fieldLabel :"paymentDate"},
-    			{xtype:"textfield",name:"description",fieldLabel:"描述"}
+    			{xtype:"textfield",name:"description",fieldLabel:"description"}
 			]
     	});
     	
@@ -35,8 +36,8 @@ Ext.define('erp.modules.SalesOrderFormModule', {
 		           })
             ],
 			columns :  [
-   	            {header: 'id',  dataIndex: 'id',  flex: 1},
-   	            {header: 'item_text' ,  dataIndex: 'item_text'},
+   	            {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
+   	            {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
    	            
    	            ExtUtils.searchingColumn({
    	            	header : 'item' ,  
