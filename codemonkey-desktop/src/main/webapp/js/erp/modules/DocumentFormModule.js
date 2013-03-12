@@ -6,6 +6,10 @@ Ext.define('erp.modules.DocumentFormModule', {
     
     lineGridId : null,
     
+    postAction : {
+		action : 'post', text: 'post', iconCls : 'add'
+	},
+    
     addLineAction : {
 		action : 'addLine', text: 'add', iconCls : 'add'
 	},
@@ -40,6 +44,7 @@ Ext.define('erp.modules.DocumentFormModule', {
     
     createBbar : function(){
     	var actions = [
+    	    this.createModuleAction(this.postAction),          
 			this.createModuleAction(this.addLineAction),
 			this.createModuleAction(this.removeLineAction),
 			this.spacer,
@@ -57,6 +62,10 @@ Ext.define('erp.modules.DocumentFormModule', {
     		toModifyLines : toModifyLines || [],
     		toDeleteLines : toDeleteLines || []	
     	});
+    },
+    
+    post : function(){
+    	this.doAction('post');
     }
         
 });

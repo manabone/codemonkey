@@ -111,20 +111,26 @@ Ext.define('AM.modules.FormModule', {
 	    		},
 	    		
 	    		failure: function(rec, op) {
-	    			Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
-	    			var errors = op.request.scope.reader.jsonData["errorFields"];
-	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
-	    			var data = op.request.scope.reader.jsonData["data"];
 	    			
-	    			if(errorKey == "ValidationError" && errors){
-	    				ExtUtils.markInvalidFields(me.formId , errors);
-	    			}else if(errorKey == "BadObjVersionError" && data){
-	    				Ext.getCmp(me.formId).getForm().loadRecord(data);
-	    			}
+	    			this.handleError(rec , op);
 	    			
 	    			ExtUtils.unmask(Ext.getCmp(me.winId));
 				}
 	    	});
+		}
+	},
+	
+	handleError : function(rec , op){
+		var me = this;
+		Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
+		var errors = op.request.scope.reader.jsonData["errorFields"];
+		var errorKey = op.request.scope.reader.jsonData["errorKey"];
+		var data = op.request.scope.reader.jsonData["data"];
+		
+		if(errorKey == "ValidationError" && errors){
+			ExtUtils.markInvalidFields(me.formId , errors);
+		}else if(errorKey == "BadObjVersionError" && data){
+			Ext.getCmp(me.formId).getForm().loadRecord(data);
 		}
 	},
 	
@@ -143,6 +149,34 @@ Ext.define('AM.modules.FormModule', {
 		];
     	
     	return this.createToolbar(actions);
-    }
+    },
+	
+	doAction : function(action , fn){
+		var me = this;
+		var values = ExtUtils.formValues(me.formId);
+		if(values){
+			this.beforeSave(values);
+			ExtUtils.mask(Ext.getCmp(me.winId));
+			var url = NS.url(me.modelName , action);
+			Ext.Ajax.request({
+			    url: url,
+			    method: 'post',
+			    params: Ext.encode(values),
+			    success: function(response){
+			    	if(fn){
+			    		fn(response);
+			    	}
+			    	
+			    	ExtUtils.unmask(Ext.getCmp(me.winId));
+			    },
+			    failure: function(rec, op) {
+			    	
+			    	me.handleError(rec , op);
+			    	
+			    	ExtUtils.unmask(Ext.getCmp(me.winId));
+			    }
+			});
+		}
+	}
     
 });

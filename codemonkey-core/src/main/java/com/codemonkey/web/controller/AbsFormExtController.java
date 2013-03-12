@@ -49,9 +49,10 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
     @RequestMapping("read")
     @ResponseBody 
     public String read(@RequestParam Long id) {
-    	JSONObject result = new JSONObject();
+    	
     	T t = service().get(id);
     	
+    	JSONObject result = new JSONObject();
     	if(t != null){
     		result.put(ExtConstant.DATA, buildJson(t));
 			result.put(ExtConstant.SUCCESS, true);
@@ -69,19 +70,36 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
 	@RequestMapping("update")
     @ResponseBody
 	public String update(@RequestBody String body){
+		
+		JSONObject params = parseJson(body);
+		
+		T t = service().doSave(params , getCcService());
+		
+		return result(t);
+	}
+	
+	public String result(T t) {
 		JSONObject result = new JSONObject();
+		result.put(ExtConstant.DATA, t.detailJson());
+		result.put(ExtConstant.SUCCESS, true);
+		return result.toString();
+	}
+	
+	protected JSONObject parseJson(String body){
 		JSONObject params = new JSONObject();
 		try {
 			params = new JSONObject(body);
-			T t = service().doSave(params , getCcService());
-			result.put(ExtConstant.DATA, t.detailJson());
-			result.put(ExtConstant.SUCCESS, true);
 		} catch (ParseException e) {
-			result.put(ExtConstant.SUCCESS, false);
-			result.put(ExtConstant.ERROR_MSG, e.getMessage());
+			errorResult(e);
 			e.printStackTrace();
 		}
-		return result.toString();
+		return params;
+	}
+
+	public void errorResult(Exception e) {
+		JSONObject result = new JSONObject();
+		result.put(ExtConstant.SUCCESS, false);
+		result.put(ExtConstant.ERROR_MSG, e.getMessage());
 	}
 
 	public List<AppPermission> regAppPermission(){
