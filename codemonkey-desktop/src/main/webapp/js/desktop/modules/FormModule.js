@@ -10,7 +10,6 @@ Ext.define('AM.modules.FormModule', {
 	entityId : null,
 	winId : null,
 	
-	model : null,
 	gridId : null,
 	
 	iconText : null,
@@ -24,7 +23,7 @@ Ext.define('AM.modules.FormModule', {
 		this.callParent();
         this.Model = Ext.define(this.modelName , {
 	        extend: 'Ext.data.Model',
-	        fields: this.modelFields || ExtUtils.defaultModelFields,
+	        fields: this.modelFields() || ExtUtils.defaultModelFields,
 	        proxy: ExtUtils.proxy(this.modelName)
 		});
     	    

@@ -10,7 +10,10 @@ Ext.define('AM.modules.${EntityName}FormModule', {
     
     modelName : '${EntityName}',
     
-    modelFields : [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>],
+    modelFields : : function(){
+    
+    	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>];
+    },
     
     formItems : function(){
 		return ${fieldsJson};

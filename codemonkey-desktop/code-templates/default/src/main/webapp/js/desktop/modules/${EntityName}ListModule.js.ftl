@@ -17,8 +17,12 @@ Ext.define('AM.modules.${EntityName}ListModule', {
 	iconText : '${EntityName}',
 	iconCls : 'icon-grid',
     
-    modelFields : [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>],
+    modelFields : function(){
+    	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>];
+    },
 	
-	gridCols : ${columnsJson}
+	gridCols  : function() {
+		return ${columnsJson};
+	}
 	
 });
