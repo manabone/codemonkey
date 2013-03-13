@@ -25,12 +25,27 @@ public abstract class Document extends AbsEE {
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
 	
+	@Enumerated(EnumType.STRING)
+	private DocumentStatus status;
+	
 	@ManyToOne
 	private Warehouse warehouse;
 
 	public abstract List<ItemTransaction> createItemTransactions();
 
 	public abstract List<CurrencyTransaction> createCurrencyTransactions();
+	
+	@Override
+	public JSONObject listJson() {
+		JSONObject json = super.listJson();
+		
+		json.put("warehouse", OgnlUtils.stringValue("warehouse.id", this));
+		json.put("warehouse_text", OgnlUtils.stringValue("warehouse.code", this));
+		json.put("currency", OgnlUtils.stringValue("currency", this));
+		json.put("totalAmount", OgnlUtils.stringValue("totalAmount", this));
+		
+		return json;
+	}
 	
 	public Double getTotalAmount() {
 		return totalAmount;
@@ -56,16 +71,12 @@ public abstract class Document extends AbsEE {
 		this.currency = currency;
 	}
 	
-	@Override
-	public JSONObject listJson() {
-		JSONObject json = super.listJson();
-		
-		json.put("warehouse", OgnlUtils.stringValue("warehouse.id", this));
-		json.put("warehouse_text", OgnlUtils.stringValue("warehouse.code", this));
-		json.put("currency", OgnlUtils.stringValue("currency", this));
-		json.put("totalAmount", OgnlUtils.stringValue("totalAmount", this));
-		
-		return json;
+	public DocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(DocumentStatus status) {
+		this.status = status;
 	}
 
 }

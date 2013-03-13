@@ -28,12 +28,13 @@ var ExtUtils = {
 	
 	defaultModelFields : ['id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
 	
-	defaultGridCols : [	
-       	{header: 'id'          ,  dataIndex: 'id'         ,  flex: 1 , hidden : true},
+	defaultGridCols1 : [	
+       	{header: 'id', dataIndex: 'id' ,  flex: 1 , hidden : true},
        	{dataIndex:"code",flex:1,header:"code"},
-		{dataIndex:"name",flex:1,header:"name"},
-		{dataIndex:"description",flex:1,header:"description"},
-		{dataIndex:"originVersion",flex:1,header:"origin version"},
+		{dataIndex:"name",flex:1,header:"name"}
+	],
+	
+	defaultGridCols2 : [	
 		{dataIndex:"creationDate",flex:1,header:"creationDate"},
 		{dataIndex:"createdBy",flex:1,header:"createdBy"},
 		{dataIndex:"modificationDate",flex:1,header:"modificationDate"},
@@ -432,7 +433,7 @@ var ExtUtils = {
 	},
 	
 	ajaxGrid : function(config){
-		var columns = config.columns || this.defaultGridCols;
+		var columns = config.columns || this.defaultGridCols1.concat(this.defaultGridCols2);
 		var fields = config.modelFields || this.fieldsFromCols(columns);
 		
 		var modelName = config.model || config.modelName;

@@ -18,14 +18,16 @@ Ext.define('erp.modules.SalesOrderListModule', {
 	iconCls : 'icon-grid',
     
     modelFields : function(){
-    	return ['customer','totalAmount','warehouse'].concat(ExtUtils.defaultModelFields);
+    	return ['customer' , 'customer_text' , 'totalAmount' , 'warehouse' , 'warehouse_text'].concat(ExtUtils.defaultModelFields);
     },
 	gridCols : function() {
-		 return [
-          {"dataIndex":"customer","flex":1,"header":"customer"},
-          {"dataIndex":"totalAmount","flex":1,"header":"total amount"},
-          {"dataIndex":"warehouse","flex":1,"header":"warehouse"},
-         ].concat(ExtUtils.defaultFormItems);
+		 return ExtUtils.defaultGridCols1.concat([
+          {dataIndex : "customer", hidden : true},
+          {dataIndex : "customer_text",flex : 1 , header : "customer"},
+          {dataIndex : "warehouse", hidden : true},
+          {dataIndex : "warehouse_text" , flex : 1 , header : "warehouse"},
+          {dataIndex : "totalAmount",flex : 1 , header : "total amount"},
+         ]).concat(ExtUtils.defaultGridCols2);
 	} 
 	
 });

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.codemonkey.erp.domain.Document;
 import com.codemonkey.erp.domain.DocumentLine;
+import com.codemonkey.erp.domain.DocumentStatus;
 import com.codemonkey.erp.domain.Transaction;
 import com.codemonkey.service.GenericServiceImpl;
 import com.codemonkey.utils.ExtConstant;
@@ -33,9 +34,11 @@ public abstract class DocumentServiceImpl<T extends Document , E extends Documen
 	
 	public void post(T doc) {
 		
-		save(doc);
-		
 		validate4post(doc);
+		
+		doc.setStatus(DocumentStatus.Posted);
+		
+		save(doc);
 		
 		List<?> lines = getDocumentLineService().getLinesByHeader(doc);
 		
