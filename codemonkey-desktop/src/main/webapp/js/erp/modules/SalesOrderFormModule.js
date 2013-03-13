@@ -10,9 +10,9 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     
     lineGridId : 'salesOrderLineGrid',
     
-    modelFields : ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' ,
-                   'lines' ,  'toModifyLines' , 'toDeleteLines' ,
-                   'id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
+    modelFields : function() {
+    	return ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' , 'lines' ,  'toModifyLines' , 'toDeleteLines' ].concat(ExtUtils.defaultModelFields);
+    },
     
     formItems : function(){
     	var p1 = ExtUtils.panel({

@@ -10,8 +10,6 @@ Ext.define('erp.modules.WarehouseFormModule', {
     
     modelName : 'Warehouse',
     
-    modelFields : ['id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
-    
     formItems : function(){
     	var p1 = ExtUtils.panel({
     		title : 'basic info',

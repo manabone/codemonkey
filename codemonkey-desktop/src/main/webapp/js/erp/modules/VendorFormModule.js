@@ -10,8 +10,6 @@ Ext.define('erp.modules.VendorFormModule', {
     
     modelName : 'Vendor',
     
-    modelFields : ['id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
-    
     formItems : function(){
     	var p1 = ExtUtils.panel({
     		title : 'basic info',

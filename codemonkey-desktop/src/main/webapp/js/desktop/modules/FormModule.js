@@ -19,6 +19,10 @@ Ext.define('AM.modules.FormModule', {
 	
 	create : Ext.emptyFn,
 	
+	modelFields : function(){ 
+    	return ExtUtils.defaultModelFields;
+    },
+	
 	init : function(){
 		this.callParent();
         this.Model = Ext.define(this.modelName , {
