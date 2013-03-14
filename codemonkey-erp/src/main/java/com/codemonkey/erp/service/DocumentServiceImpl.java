@@ -1,7 +1,9 @@
 package com.codemonkey.erp.service;
 
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import com.codemonkey.erp.domain.Document;
 import com.codemonkey.erp.domain.DocumentLine;
 import com.codemonkey.erp.domain.DocumentStatus;
 import com.codemonkey.erp.domain.Transaction;
+import com.codemonkey.error.FieldValidation;
+import com.codemonkey.error.ValidationError;
 import com.codemonkey.service.GenericServiceImpl;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.web.converter.CustomConversionService;
@@ -30,11 +34,15 @@ public abstract class DocumentServiceImpl<T extends Document , E extends Documen
 	
 	abstract DocumentLineService<E> getDocumentLineService();
 	
-	abstract void validate4post(Document doc);
+	abstract Set<FieldValidation> validate4post(T doc);
 	
 	public void post(T doc) {
 		
-		validate4post(doc);
+		Set<FieldValidation> set = validate4post(doc);
+		
+		if(CollectionUtils.isNotEmpty(set)){
+			throw new ValidationError(set);
+		}
 		
 		doc.setStatus(DocumentStatus.Posted);
 		

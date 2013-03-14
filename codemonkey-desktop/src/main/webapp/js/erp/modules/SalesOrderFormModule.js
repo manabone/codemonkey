@@ -11,7 +11,7 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     lineGridId : 'salesOrderLineGrid',
     
     modelFields : function() {
-    	return ['customer' ,'customer_text', 'paymentDate','totalAmount','warehouse' ,'warehouse_text' , 'lines' ,  'toModifyLines' , 'toDeleteLines' ].concat(ExtUtils.defaultModelFields);
+    	return ['customer' ,'customer_text', 'paymentDate', 'status' ,'totalAmount','warehouse' ,'warehouse_text' , 'lines' ,  'toModifyLines' , 'toDeleteLines' ].concat(ExtUtils.defaultModelFields);
     },
     
     formItems : function(){
@@ -19,6 +19,7 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     		title : 'basic info',
 			items:[
     			{xtype:"textfield",name:"code",fieldLabel:"code"},
+    			{xtype:"textfield",name:"status",fieldLabel:"status" , disabled : true},
     			{xtype :"searchingselect",name :"customer",config :{model :"CustomerList"},fieldLabel :"Customer" , allowBlank : false},
     			{xtype :"searchingselect",name :"warehouse",config :{model :"WarehouseList"},fieldLabel :"warehouse" , allowBlank : false},
     			{xtype :"datefield",name :"paymentDate",format :"Y-m-d",fieldLabel :"paymentDate"},

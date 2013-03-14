@@ -29,11 +29,17 @@ public final class HqlHelper {
 
 	private static final String IS_NOT_NULL = "_isNotNull";
 
-	private static final String EQUAL = "_equal";
+	private static final String EQUAL = "_EQ";
 
-	private static final String NOT_EQUAL = "_notEqual";
+	private static final String NOT_EQUAL = "_notEQ";
 
-	private static final String FROM = "from ";
+	private static final String SELECT_FROM = "SELECT E FROM ";
+	
+	private static final String SELECT_COUNT_FROM = "SELECT COUNT(*) FROM ";
+	
+	private static final String LEFT = "_LEFT";
+	
+	private static final String LEFT_JOIN = " LEFT JOIN ";
 	
 	private HqlHelper(){}
 	
@@ -45,17 +51,50 @@ public final class HqlHelper {
 	 * @return
 	 */
 	public static String findyBy(Class<?> type , String findbyQuery){
+		return findyBy(type , findbyQuery , null);
+	}
+	
+	public static String findyBy(Class<?> type, String query, String[] joins) {
+
 		String entityName =  type.getName();
 		
-		if (findbyQuery == null || findbyQuery.trim().length() == 0) {
-            return FROM + entityName;
+		StringBuffer buffer = new StringBuffer(SELECT_FROM).append(entityName).append(" E ");
+		
+		if (query == null || query.trim().length() == 0) {
+            return buffer.toString();
         }
-        return FROM + entityName + " where 1=1 " + findByToJPQL(findbyQuery);
+		
+		if(joins != null){
+			for(int i = 0 ; i < joins.length ; i++){
+				
+				 if (joins[i].endsWith(LEFT)) {
+					 
+					 String prop = extractProp(joins[i], LEFT);
+					 
+					 buffer.append(LEFT_JOIN);
+					 buffer.append(" E.");
+					 buffer.append(prop);
+					 buffer.append(" as ");
+					 buffer.append(prop);
+				 }	 
+					 
+			}
+		}
+		
+		buffer.append(" where 1=1  ");
+		buffer.append(findByToJPQL(query));
+		
+        return buffer.toString();
+		
 	}
 	
 	public static String countBy(Class<?> type , String findbyQuery){
-		String hql = findyBy(type , findbyQuery);
-		return "SELECT COUNT(*) " + hql;
+		return findyBy(type , findbyQuery , null);
+	}
+	
+	public static String countBy(Class<?> type , String findbyQuery, String[] joins){
+		String hql = findyBy(type , findbyQuery , joins);
+		return hql.replace(SELECT_FROM , SELECT_COUNT_FROM);
 	}
 	
 	public static String findByQueryInfo(Class<?> type , JSONObject queryInfo){

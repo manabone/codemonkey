@@ -184,6 +184,15 @@ public class GenericDao<T extends IEntity> {
 		
 		return hqlQuery.list();
 	}
+	
+	public List<T> findAllBy(String query, String[] joins , Object... params) {
+		
+		String hql = HqlHelper.findyBy(type, query , joins);
+		
+		Query hqlQuery = builHqlQuery(hql, params);
+		
+		return hqlQuery.list();
+	}
 
 	public T findBy(String query, Object... params) {
 		
@@ -193,8 +202,20 @@ public class GenericDao<T extends IEntity> {
 	
 	}
 	
+	public T findBy(String query, String[] joins , Object... params) {
+		
+		String hql = HqlHelper.findyBy(type, query , joins);
+		Query hqlQuery = builHqlQuery(hql, params);
+		return (T) hqlQuery.uniqueResult();
+	
+	}
+	
 	public long countBy(String query, Object... params) {
-		String hql = HqlHelper.countBy(type, query);
+		return countBy(query , null , params);
+	}
+	
+	public long countBy(String query, String[] joins , Object... params) {
+		String hql = HqlHelper.countBy(type, query , joins);
 		Query hqlQuery = builHqlQuery(hql, params);
 		return countResult((Long) hqlQuery.uniqueResult());
 	}

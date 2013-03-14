@@ -28,7 +28,7 @@ public abstract class DocumentLine extends AbsEE {
 	private Double qty;
 	
 	private Date requiredDate;
-
+	
 	//constructors
 
 	//abstract methods

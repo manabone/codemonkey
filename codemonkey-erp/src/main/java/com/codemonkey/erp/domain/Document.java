@@ -26,7 +26,7 @@ public abstract class Document extends AbsEE {
 	private Currency currency;
 	
 	@Enumerated(EnumType.STRING)
-	private DocumentStatus status;
+	private DocumentStatus status = DocumentStatus.Draft;
 	
 	@ManyToOne
 	private Warehouse warehouse;
@@ -42,6 +42,7 @@ public abstract class Document extends AbsEE {
 		json.put("warehouse", OgnlUtils.stringValue("warehouse.id", this));
 		json.put("warehouse_text", OgnlUtils.stringValue("warehouse.code", this));
 		json.put("currency", OgnlUtils.stringValue("currency", this));
+		json.put("status", OgnlUtils.stringValue("status", this));
 		json.put("totalAmount", OgnlUtils.stringValue("totalAmount", this));
 		
 		return json;

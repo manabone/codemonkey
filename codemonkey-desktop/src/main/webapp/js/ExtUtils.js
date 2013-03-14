@@ -188,9 +188,11 @@ var ExtUtils = {
 		var formPanel = Ext.getCmp(formId);
 		var form = formPanel.getForm();
 		for(var p in errors){
-			var field = form.findField(p);
-			if(field){
-				field.markInvalid(errors[p]);
+			if(!p.rowId){
+				var field = form.findField(p.fieldName);
+				if(field){
+					field.markInvalid(p.message);
+				}
 			}
 		}
 	},
@@ -426,7 +428,9 @@ var ExtUtils = {
 		var records = grid.getStore().getModifiedRecords();
 		
 		for(var i = 0 ; i < records.length ; i++){
-			data.push(records[i].data);
+			var row = {rowId : records[i].id};
+			Ext.apply(row , records[i].data);
+			data.push(row);
 		}
 		
 		return data;

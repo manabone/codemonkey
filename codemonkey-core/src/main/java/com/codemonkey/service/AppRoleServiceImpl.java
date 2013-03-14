@@ -30,4 +30,5 @@ public class AppRoleServiceImpl extends GenericServiceImpl<AppRole> implements A
 	public AppRole createEntity() {
 		return new AppRole();
 	}
+
 }

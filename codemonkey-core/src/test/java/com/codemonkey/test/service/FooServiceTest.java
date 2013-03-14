@@ -1,6 +1,7 @@
 package com.codemonkey.test.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.List;
@@ -11,10 +12,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.codemonkey.domain.AppRole;
+import com.codemonkey.domain.Bar;
 import com.codemonkey.domain.Foo;
 import com.codemonkey.domain.Status;
 import com.codemonkey.service.AppRoleService;
 import com.codemonkey.service.FooService;
+import com.codemonkey.service.MMService;
+import com.codemonkey.service.MMServiceHolder;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.web.converter.CustomConversionService;
 
@@ -23,6 +27,41 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 	@Autowired private FooService fooService;
 	@Autowired private AppRoleService appRoleService;
 	@Autowired private CustomConversionService ccService;
+	@Autowired MMServiceHolder mmServiceHolder;
+	
+	
+	@Test
+	public void testLeftJoin(){
+		Foo foo = new Foo();
+		foo.setFstring("test");
+		foo.setFnumber(3d);
+		fooService.save(foo);
+		
+		Bar bar1 = new Bar();
+		bar1.setName("bar1");
+		bar1.setFoo(foo);
+		
+		Bar bar2 = new Bar();
+		bar2.setName("bar2");
+		bar2.setFoo(foo);
+		
+		MMService mmService = mmServiceHolder.get(Bar.class);
+		mmService.saveAndFlush(bar1);
+		mmService.saveAndFlush(bar2);
+		
+		String[] joins = {"bars_LEFT"};
+		List<Foo> list = fooService.findAllBy("bars.name", joins , "bar1");
+		
+		assertEquals(1 , list.size());
+		
+		long count = fooService.countBy("bars.name", joins , "bar1");
+		
+		assertEquals(1 , count);
+		
+		Foo foo2 = fooService.findBy("bars.name", joins , "bar1");
+		
+		assertNotNull(foo2);
+	}
 	
 	@Test
 	public void testVersion(){

@@ -186,6 +186,37 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		return t;
 	}
 	
+	public T findBy(String query , String[] joins , Object... params){
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		T t = getDao().findBy(query , joins , params);
+		
+		stopWatch.stop();
+		getLog().info(stopWatch);
+		
+		return t;
+	}
+	
+	@Override
+	public long countBy(String query, Object... params) {
+		return countBy(query , null , params);
+	}
+
+	@Override
+	public long countBy(String query, String[] joins, Object... params) {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		long count = getDao().countBy(query, joins , params);
+		
+		stopWatch.stop();
+		getLog().info(stopWatch);
+		
+		return count;
+	}
+	
 	public List<T> findAllBy(String query , Object... params){
 		
 		StopWatch stopWatch = new StopWatch();
@@ -198,6 +229,20 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		
 		return list;
 	}
+	
+	@Override
+	public List<T> findAllBy(String query, String[] joins, Object... params) {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		List<T> list = getDao().findAllBy(query , joins , params);
+		
+		stopWatch.stop();
+		getLog().info(stopWatch);
+		
+		return list;
+	}
+	
 	
 	public long count(SearchingInfo searchingInfo){
 		

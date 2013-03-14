@@ -18,7 +18,7 @@ Ext.define('erp.modules.SalesOrderListModule', {
 	iconCls : 'icon-grid',
     
     modelFields : function(){
-    	return ['customer' , 'customer_text' , 'totalAmount' , 'warehouse' , 'warehouse_text'].concat(ExtUtils.defaultModelFields);
+    	return ['customer' , 'customer_text' , 'totalAmount' , 'warehouse' , 'warehouse_text' , 'status'].concat(ExtUtils.defaultModelFields);
     },
 	gridCols : function() {
 		 return ExtUtils.defaultGridCols1.concat([
@@ -26,6 +26,7 @@ Ext.define('erp.modules.SalesOrderListModule', {
           {dataIndex : "customer_text",flex : 1 , header : "customer"},
           {dataIndex : "warehouse", hidden : true},
           {dataIndex : "warehouse_text" , flex : 1 , header : "warehouse"},
+          {dataIndex : "status",flex : 1 , header : "status"},
           {dataIndex : "totalAmount",flex : 1 , header : "total amount"},
          ]).concat(ExtUtils.defaultGridCols2);
 	} 

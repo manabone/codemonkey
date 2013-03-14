@@ -115,7 +115,7 @@ Ext.define('AM.modules.FormModule', {
 	    		
 	    		failure: function(rec, op) {
 	    			
-	    			this.handleError(rec , op);
+	    			me.handleError(rec , op);
 	    			
 	    			ExtUtils.unmask(Ext.getCmp(me.winId));
 				}

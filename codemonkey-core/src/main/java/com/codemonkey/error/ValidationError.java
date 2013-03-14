@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.codemonkey.utils.ExtConstant;
@@ -32,9 +33,9 @@ public class ValidationError extends SysError{
 	public JSONObject json(){
 		JSONObject jo = super.json();
 		if(CollectionUtils.isNotEmpty(errorSet)){
-			JSONObject errors = new JSONObject();
+			JSONArray errors = new JSONArray();
 			for(FieldValidation fv : errorSet){
-				errors.put(fv.getFieldName() , fv.getMessage());
+				errors.put(fv.json());
 			}
 			jo.put(ExtConstant.ERROR_FIELDS , errors);
 		}

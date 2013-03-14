@@ -31,9 +31,17 @@ public interface GenericService<T> extends Converter<String, T> {
     
     long count(SearchingInfo searchingInfo);
     
+    long countBy(String query , Object... params);
+    
+    long countBy(String query , String[] joins  , Object... params);
+    
     T findBy(String query , Object... params);
+    
+    T findBy(String query , String[] joins  , Object... params);
 	
 	List<T> findAllBy(String query , Object... params);
+	
+	List<T> findAllBy(String query , String[] joins , Object... params);
 
 	List<T> findByQueryInfo(JSONObject queryInfo, Integer start, Integer limit);
 	

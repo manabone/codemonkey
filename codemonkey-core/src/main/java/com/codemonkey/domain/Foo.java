@@ -1,11 +1,13 @@
 package com.codemonkey.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -47,6 +49,9 @@ public class Foo extends AbsEE{
 	
 	@SkipBuild
 	private String skipBuild;
+	
+	@OneToMany(mappedBy="foo")
+	private List<Bar> bars;
 
 	@Override
 	public JSONObject listJson() {
@@ -142,6 +147,14 @@ public class Foo extends AbsEE{
 
 	public void setSkipBuild(String skipBuild) {
 		this.skipBuild = skipBuild;
+	}
+
+	public List<Bar> getBars() {
+		return bars;
+	}
+
+	public void setBars(List<Bar> bars) {
+		this.bars = bars;
 	}
 	
 }
