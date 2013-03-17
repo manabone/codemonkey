@@ -16,6 +16,7 @@ Ext.define('AM.modules.ListModule', {
 	
     modelFields : Ext.emptyFn,
 	gridCols : Ext.emptyFn,
+	searchForm : Ext.emptyFn,
 	
     init : function(){
     	var me = this;
@@ -88,9 +89,7 @@ Ext.define('AM.modules.ListModule', {
             ]
           };
          
-         debugger;
-         
-         var searchFormConfig = Ext.apply(searchFormDefaultConfig , this.searchForm());
+         var searchFormConfig = Ext.apply({} , this.searchForm() , searchFormDefaultConfig);
          
          var searchForm = ExtUtils.searchingForm(searchFormConfig);
          

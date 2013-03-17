@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Shipment extends DocumentAdapter {
+public class SalesShipment extends DocumentAdapter {
 
 	/**
 	 * 

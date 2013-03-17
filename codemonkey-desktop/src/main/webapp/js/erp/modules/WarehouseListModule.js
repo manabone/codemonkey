@@ -22,6 +22,6 @@ Ext.define('erp.modules.WarehouseListModule', {
     },
 	
 	gridCols : function(){
-		return ExtUtils.defaultGridCols;
+		return ExtUtils.defaultGridCols1.concat(ExtUtils.defaultGridCols2);
 	} 
 });

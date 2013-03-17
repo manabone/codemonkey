@@ -1,20 +1,20 @@
 
-Ext.define('erp.modules.SalesOrderListModule', {
+Ext.define('erp.modules.SalesShipmentListModule', {
     extend: 'erp.modules.DocumentListModule',
 
-    id:'salesOrderListModule',
+    id:'salesShipmentListModule',
     
-    requires : ['erp.modules.SalesOrderFormModule'],
+    requires : ['erp.modules.SalesShipmentFormModule'],
     
     hidden : true,
     
-    winTitle : 'SalesOrder',
+    winTitle : 'SalesShipment',
     
-    modelName : 'SalesOrderList',
+    modelName : 'SalesShipmentList',
     
-    formModuleId : 'salesOrderFormModule',
+    formModuleId : 'salesShipmentFormModule',
 	
-	iconText : 'SalesOrder',
+	iconText : 'SalesShipment',
 	iconCls : 'icon-grid',
     
     modelFields : function(){

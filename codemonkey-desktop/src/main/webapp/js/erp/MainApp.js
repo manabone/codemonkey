@@ -29,10 +29,14 @@ Ext.define('erp.MainApp', {
         'erp.modules.WarehouseFormModule',
         
         'erp.modules.SalesOrderListModule',
-        'erp.modules.SalesOrderFormModule'
+        'erp.modules.SalesOrderFormModule',
+        
+        'erp.modules.SalesShipmentListModule',
+        'erp.modules.SalesShipmentFormModule'
     ],
     
     shortcutItems : [
+        { name: 'salesShipments', iconCls: 'grid-shortcut', module: 'salesShipmentListModule'},
         { name: 'salesOrders', iconCls: 'grid-shortcut', module: 'salesOrderListModule'},
         { name: 'roles', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
 		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
@@ -63,7 +67,10 @@ Ext.define('erp.MainApp', {
 	        new erp.modules.WarehouseFormModule(),
 	        
 	        new erp.modules.SalesOrderListModule(),
-	        new erp.modules.SalesOrderFormModule()
+	        new erp.modules.SalesOrderFormModule(),
+	        
+	        new erp.modules.SalesShipmentListModule(),
+	        new erp.modules.SalesShipmentFormModule()
 		];
     }
 });

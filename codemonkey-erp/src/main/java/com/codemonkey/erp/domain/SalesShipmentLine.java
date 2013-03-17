@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ShipmentLine extends DocumentLineAdapter {
+public class SalesShipmentLine extends DocumentLineAdapter {
 
 	/**
 	 * 
@@ -15,17 +15,17 @@ public class ShipmentLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private Shipment header;
+	private SalesShipment header;
 	
 	@ManyToOne 
 	private SalesOrderLine salesOrderLine;
 	
 	@Override
-	public Shipment getHeader() {
+	public SalesShipment getHeader() {
 		return header;
 	}
 	
-	public void setHeader(Shipment header) {
+	public void setHeader(SalesShipment header) {
 		this.header = header;
 	}
 

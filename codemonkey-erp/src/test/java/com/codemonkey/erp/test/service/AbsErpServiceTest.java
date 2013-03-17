@@ -30,8 +30,8 @@ import com.codemonkey.erp.domain.SalesInvoice;
 import com.codemonkey.erp.domain.SalesInvoiceLine;
 import com.codemonkey.erp.domain.SalesOrder;
 import com.codemonkey.erp.domain.SalesOrderLine;
-import com.codemonkey.erp.domain.Shipment;
-import com.codemonkey.erp.domain.ShipmentLine;
+import com.codemonkey.erp.domain.SalesShipment;
+import com.codemonkey.erp.domain.SalesShipmentLine;
 import com.codemonkey.erp.domain.Vendor;
 import com.codemonkey.erp.domain.Warehouse;
 import com.codemonkey.erp.service.CustomerService;
@@ -109,9 +109,9 @@ public class AbsErpServiceTest {
 		return line;
 	}
 	
-	Shipment buildShipment(){
+	SalesShipment buildShipment(){
 		
-		Shipment sp = new Shipment();
+		SalesShipment sp = new SalesShipment();
 		
 		setDocumentAttr(sp);
 		
@@ -119,10 +119,10 @@ public class AbsErpServiceTest {
 	}
 	
 	
-	ShipmentLine buildShipmentLine() {
+	SalesShipmentLine buildShipmentLine() {
 		
-		Shipment sp = buildShipment();
-		ShipmentLine line = new ShipmentLine();
+		SalesShipment sp = buildShipment();
+		SalesShipmentLine line = new SalesShipmentLine();
 		
 		setDocumentLineAttr(line);
 		

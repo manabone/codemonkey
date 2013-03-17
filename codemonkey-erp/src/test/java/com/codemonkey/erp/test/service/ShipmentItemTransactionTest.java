@@ -13,7 +13,7 @@ import com.codemonkey.erp.domain.ItemOrderDemand;
 import com.codemonkey.erp.domain.ItemPlanning;
 import com.codemonkey.erp.domain.ItemStockCard;
 import com.codemonkey.erp.domain.ShipmentItemTransaction;
-import com.codemonkey.erp.domain.ShipmentLine;
+import com.codemonkey.erp.domain.SalesShipmentLine;
 import com.codemonkey.erp.domain.Transaction;
 
 
@@ -23,7 +23,7 @@ public class ShipmentItemTransactionTest extends ItemTransactionTest {
 	public void test(){
 		
 		//1-test transactions
-		ShipmentLine line = buildShipmentLine();
+		SalesShipmentLine line = buildShipmentLine();
 		
 		List<Transaction> trans = createTransactions(line);
 		

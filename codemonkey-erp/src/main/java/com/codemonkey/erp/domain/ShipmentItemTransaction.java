@@ -21,9 +21,9 @@ public class ShipmentItemTransaction extends ItemTransaction {
 	private Customer customer;
 	
 	@ManyToOne
-	private ShipmentLine spLine;
+	private SalesShipmentLine spLine;
 	
-	public ShipmentItemTransaction(ShipmentLine spLine) {
+	public ShipmentItemTransaction(SalesShipmentLine spLine) {
 		super(spLine);
 		this.customer = spLine.getSalesOrderLine().getHeader().getCustomer();
 		this.setSpLine(spLine);
@@ -67,11 +67,11 @@ public class ShipmentItemTransaction extends ItemTransaction {
 		this.customer = customer;
 	}
 
-	public ShipmentLine getSpLine() {
+	public SalesShipmentLine getSpLine() {
 		return spLine;
 	}
 
-	public void setSpLine(ShipmentLine spLine) {
+	public void setSpLine(SalesShipmentLine spLine) {
 		this.spLine = spLine;
 	}
 
