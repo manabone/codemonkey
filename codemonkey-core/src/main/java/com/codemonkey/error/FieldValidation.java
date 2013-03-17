@@ -1,11 +1,9 @@
 package com.codemonkey.error;
 
-import javax.validation.ConstraintViolation;
-
 import org.json.JSONObject;
 
 
-public class FieldValidation{
+public abstract class FieldValidation{
 
 	public static final String NOT_DRAFT = " is not draft ";
 
@@ -17,13 +15,14 @@ public class FieldValidation{
 	
 	private String message;
 	
-	public FieldValidation(String fieldName , String message){
-		this.setFieldName(fieldName);
-		this.setMessage(message);
-	}
+	abstract String getType();
 
-	public FieldValidation(ConstraintViolation<?> c) {
-		this(c.getPropertyPath().toString() , c.getMessage());
+	public JSONObject json() {
+		JSONObject jo = new JSONObject();
+		jo.put("type", getType());
+		jo.put("fieldName" , getFieldName());
+		jo.put("message" , getMessage());
+		return jo;
 	}
 
 	public String getFieldName() {
@@ -41,13 +40,7 @@ public class FieldValidation{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	public JSONObject json() {
-		JSONObject jo = new JSONObject();
-		jo.put(getFieldName(), getMessage());
-		jo.put("fieldName" , getFieldName());
-		jo.put("message" , getMessage());
-		return jo;
-	}
+	
+	
 	
 }

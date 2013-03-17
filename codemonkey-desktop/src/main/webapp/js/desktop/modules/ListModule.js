@@ -88,7 +88,9 @@ Ext.define('AM.modules.ListModule', {
             ]
           };
          
-         var searchFormConfig = Ext.applyIf(searchFormDefaultConfig , this.searchForm);
+         debugger;
+         
+         var searchFormConfig = Ext.apply(searchFormDefaultConfig , this.searchForm());
          
          var searchForm = ExtUtils.searchingForm(searchFormConfig);
          

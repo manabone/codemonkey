@@ -125,14 +125,32 @@ Ext.define('AM.modules.FormModule', {
 	
 	handleError : function(rec , op){
 		var me = this;
-		Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
 		var errors = op.request.scope.reader.jsonData["errorFields"];
 		var errorKey = op.request.scope.reader.jsonData["errorKey"];
 		var data = op.request.scope.reader.jsonData["data"];
 		
 		if(errorKey == "ValidationError" && errors){
-			ExtUtils.markInvalidFields(me.formId , errors);
+			
+			var formErrors = errors.filter(function(element, index, array){
+				return (element.type == 'FormField');
+			});
+			
+			ExtUtils.markInvalidFields(me.formId , formErrors);
+			
+			var rowErrors = errors.filter(function(element, index, array){
+    			return (element.type == 'RowField');
+			});
+			
+			if(rowErrors){
+				var msg = "";
+				Ext.each(rowErrors , function(){
+					msg += this.fieldName + ' ' + this.message + '<br>';
+				});
+				Ext.Msg.alert("Failed",msg);
+			}
+			
 		}else if(errorKey == "BadObjVersionError" && data){
+			Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
 			Ext.getCmp(me.formId).getForm().loadRecord(data);
 		}
 	},

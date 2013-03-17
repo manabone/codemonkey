@@ -18,6 +18,7 @@ import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.domain.EE;
 import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
+import com.codemonkey.error.FormFieldValidation;
 import com.codemonkey.error.ValidationError;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
@@ -89,7 +90,7 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		if(StringUtils.isNotBlank(entity.getCode())){
 			long count = getDao().countBy("code" , entity.getCode());
 			if(count > 1){
-				errorSet.add(new FieldValidation("code" , "code must be unique"));
+				errorSet.add(new FormFieldValidation("code" , "code must be unique"));
 			}
 		}
 		

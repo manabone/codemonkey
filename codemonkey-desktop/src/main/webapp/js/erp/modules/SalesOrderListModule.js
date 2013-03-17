@@ -20,6 +20,16 @@ Ext.define('erp.modules.SalesOrderListModule', {
     modelFields : function(){
     	return ['customer' , 'customer_text' , 'totalAmount' , 'warehouse' , 'warehouse_text' , 'status'].concat(ExtUtils.defaultModelFields);
     },
+    
+    searchForm : function() {
+    	return {
+    		items : [
+				{name  : "JOINS"   , xtype : 'textfield' , fieldLabel : "JOINS"  , value : 'lines_LEFT'},
+				{xtype :"searchingselect",name :"lines.item.id",config :{model :"ItemList"},fieldLabel :"item" }
+    		]
+    	};
+    },
+    
 	gridCols : function() {
 		 return ExtUtils.defaultGridCols1.concat([
           {dataIndex : "customer", hidden : true},

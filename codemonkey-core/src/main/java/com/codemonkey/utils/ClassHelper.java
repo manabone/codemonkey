@@ -283,4 +283,13 @@ public final class ClassHelper {
 		}
 		return null;
 	}
+
+	public static Class<?> getGenricType4Collection(Class<?> clazz) {
+		
+		Type[] genType = clazz.getGenericInterfaces();
+
+
+		return (Class<?>) genType[0];
+		
+	}
 }

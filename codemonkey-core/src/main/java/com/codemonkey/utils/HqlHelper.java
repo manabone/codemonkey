@@ -1,10 +1,12 @@
 package com.codemonkey.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
@@ -40,6 +42,10 @@ public final class HqlHelper {
 	private static final String LEFT = "_LEFT";
 	
 	private static final String LEFT_JOIN = " LEFT JOIN ";
+	
+	private static final String JOINS = "JOINS";
+	
+	
 	
 	private HqlHelper(){}
 	
@@ -89,7 +95,7 @@ public final class HqlHelper {
 	}
 	
 	public static String countBy(Class<?> type , String findbyQuery){
-		return findyBy(type , findbyQuery , null);
+		return countBy(type , findbyQuery , null);
 	}
 	
 	public static String countBy(Class<?> type , String findbyQuery, String[] joins){
@@ -99,11 +105,21 @@ public final class HqlHelper {
 	
 	public static String findByQueryInfo(Class<?> type , JSONObject queryInfo){
 		String findBy = queryInfoToFindBy(type , queryInfo);
+		
+		if(queryInfo.has(JOINS)){
+			return findyBy(type , findBy , queryInfo.getString(JOINS).split(","));
+		}
+		
 		return findyBy(type , findBy);
 	}
 	
 	public static String countByQueryInfo(Class<?> type , JSONObject queryInfo){
 		String findBy = queryInfoToFindBy(type , queryInfo);
+		
+		if(queryInfo.has(JOINS)){
+			return countBy(type , findBy , queryInfo.getString(JOINS).split(","));
+		}
+		
 		return countBy(type , findBy);
 	}
 	
@@ -123,6 +139,10 @@ public final class HqlHelper {
 				prop = key.split("_")[0];
 			}
 			
+			if(key.equals(JOINS)){
+				continue;
+			}
+			
 			String value = queryInfo.getString(key);
 			if(StringUtils.isNotBlank(value) && !"null".equalsIgnoreCase(value)){
 
@@ -131,8 +151,25 @@ public final class HqlHelper {
 				if(prop.indexOf('.') < 0){
 					field = ClassHelper.getFieldFromClazz(type , prop);
 				}else{
-					field = ClassHelper.getFieldFromClazz(type , prop.substring(0 , prop.indexOf('.')));
-					field = ClassHelper.getFieldFromClazz(field.getType() , prop.substring(prop.indexOf('.')+1));
+					Class<?> type2 = type;
+					while(prop.indexOf('.') > 0){
+						
+						String[] p = prop.split("\\.");
+						
+						field = ClassHelper.getFieldFromClazz(type2 , p[0]);
+						
+						if(field.getType().equals(List.class) || field.getType().equals(Set.class)){
+							
+							ParameterizedType integerListType = (ParameterizedType) field.getGenericType();
+						    Class<?> clazz = (Class<?>) integerListType.getActualTypeArguments()[0];
+							
+						    field = ClassHelper.getFieldFromClazz(clazz , p[1]);
+						    type2 = clazz;
+						}else{
+							field = ClassHelper.getFieldFromClazz(field.getType() , p[1]);
+						}
+						prop = prop.substring(prop.indexOf('.')+1);
+					}
 				}
 				
 				if(field.getType().equals(String.class)){
@@ -182,6 +219,11 @@ public final class HqlHelper {
 		
 		while(it.hasNext()){
 			String key = it.next();
+			
+			if(key.equals(JOINS)){
+				continue;
+			}
+			
 			String value = queryInfo.getString(key);
 			if(StringUtils.isNotBlank(value) && !"null".equalsIgnoreCase(value)){
 				buffer.append(key);

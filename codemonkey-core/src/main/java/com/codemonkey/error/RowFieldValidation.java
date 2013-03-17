@@ -6,25 +6,31 @@ import org.json.JSONObject;
 
 public class RowFieldValidation extends FieldValidation{
 
-	private Integer rowId;
+	private String rowType;
 	
-	public RowFieldValidation(String fieldName, String message , Integer rowId) {
-		super(fieldName, message);
-		this.rowId = rowId;
+	public RowFieldValidation(String fieldName, String message , String rowType) {
+		this.setFieldName(fieldName);
+		this.setMessage(message);
+		this.rowType = rowType;
 	}
 
-	public Integer getRowId() {
-		return rowId;
+	@Override
+	String getType() {
+		return "RowField";
 	}
 
-	public void setRowId(Integer rowId) {
-		this.rowId = rowId;
-	}
-	
 	public JSONObject json() {
 		JSONObject jo = super.json();
-		jo.put("rowId", getRowId());
+		jo.put("rowType", getRowType());
 		return jo;
+	}
+
+	public String getRowType() {
+		return rowType;
+	}
+
+	public void setRowType(String rowType) {
+		this.rowType = rowType;
 	}
 	
 }

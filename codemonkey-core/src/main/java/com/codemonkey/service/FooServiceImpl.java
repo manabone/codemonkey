@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.codemonkey.domain.Foo;
 import com.codemonkey.error.FieldValidation;
+import com.codemonkey.error.FormFieldValidation;
 
 @Service
 public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooService{
@@ -22,7 +23,7 @@ public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooServic
 	protected Set<FieldValidation> validate(Foo foo) {
 		Set<FieldValidation> set = super.validate(foo);
 		if(foo.getFnumber() == null || foo.getFnumber() > 10){
-			set.add(new FieldValidation("fnumber" , "invalid number greater than 10"));
+			set.add(new FormFieldValidation("fnumber" , "invalid number greater than 10"));
 		}
 		return set;
 	}

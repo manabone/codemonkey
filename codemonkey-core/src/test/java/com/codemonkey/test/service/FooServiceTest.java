@@ -29,7 +29,6 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 	@Autowired private CustomConversionService ccService;
 	@Autowired MMServiceHolder mmServiceHolder;
 	
-	
 	@Test
 	public void testLeftJoin(){
 		Foo foo = new Foo();
@@ -61,6 +60,16 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		Foo foo2 = fooService.findBy("bars.name", joins , "bar1");
 		
 		assertNotNull(foo2);
+		
+		
+		JSONObject queryInfo = new JSONObject();
+		queryInfo.put("JOINS", "bars_LEFT");
+		queryInfo.put("bars.code_Like", "bar");
+		
+		list = fooService.findByQueryInfo(queryInfo);
+		
+		assertEquals(1 , count);
+		
 	}
 	
 	@Test
