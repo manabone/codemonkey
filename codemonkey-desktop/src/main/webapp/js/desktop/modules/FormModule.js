@@ -115,7 +115,13 @@ Ext.define('AM.modules.FormModule', {
 	    		
 	    		failure: function(rec, op) {
 	    			
-	    			me.handleError(rec , op);
+	    			var me = this;
+	    			var errors = op.request.scope.reader.jsonData["errorFields"];
+	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
+	    			var data = op.request.scope.reader.jsonData["data"];
+	    			var errorMsg = op.request.scope.reader.jsonData["errorMsg"];
+	    			
+	    			me.handleError(errorKey , errorMsg , errors , data);
 	    			
 	    			ExtUtils.unmask(Ext.getCmp(me.winId));
 				}
@@ -123,11 +129,9 @@ Ext.define('AM.modules.FormModule', {
 		}
 	},
 	
-	handleError : function(rec , op){
+	handleError : function(errorKey , errorMsg , errors , data){
+		
 		var me = this;
-		var errors = op.request.scope.reader.jsonData["errorFields"];
-		var errorKey = op.request.scope.reader.jsonData["errorKey"];
-		var data = op.request.scope.reader.jsonData["data"];
 		
 		if(errorKey == "ValidationError" && errors){
 			
@@ -141,17 +145,20 @@ Ext.define('AM.modules.FormModule', {
     			return (element.type == 'RowField');
 			});
 			
-			if(rowErrors){
-				var msg = "";
+			if(rowErrors.length > 0){
 				Ext.each(rowErrors , function(){
-					msg += this.fieldName + ' ' + this.message + '<br>';
+					errorMsg += this.fieldName + ' ' + this.message + '<br>';
 				});
-				Ext.Msg.alert("Failed",msg);
+			}
+			if(errorMsg){
+				Ext.Msg.alert("Failed", errorMsg);
 			}
 			
 		}else if(errorKey == "BadObjVersionError" && data){
-			Ext.Msg.alert("Failed",op.request.scope.reader.jsonData["errorMsg"]);
+			Ext.Msg.alert("Failed", errorMsg);
 			Ext.getCmp(me.formId).getForm().loadRecord(data);
+		}else{
+			Ext.Msg.alert("Failed", errorMsg);
 		}
 	},
 	
@@ -184,16 +191,18 @@ Ext.define('AM.modules.FormModule', {
 			    method: 'post',
 			    params: Ext.encode(values),
 			    success: function(response){
-			    	if(fn){
+			    	
+			    	var result = Ext.decode(response.responseText);
+			    	if(result.success === false){
+			    		me.handleError(result.errorKey , result.errorMsg , result.errorFields , result.data);
+			    	}else if(fn){
 			    		fn(response);
 			    	}
 			    	
 			    	ExtUtils.unmask(Ext.getCmp(me.winId));
 			    },
-			    failure: function(rec, op) {
-			    	
-			    	me.handleError(rec , op);
-			    	
+			    failure: function(response, opts) {
+			    	Ext.Msg.alert("Failed","error occured");
 			    	ExtUtils.unmask(Ext.getCmp(me.winId));
 			    }
 			});

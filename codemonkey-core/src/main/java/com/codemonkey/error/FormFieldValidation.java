@@ -16,7 +16,7 @@ public class FormFieldValidation extends FieldValidation{
 
 	@Override
 	String getType() {
-		return "formField";
+		return "FormField";
 	}
 	
 }

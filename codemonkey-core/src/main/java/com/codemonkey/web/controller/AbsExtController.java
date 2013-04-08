@@ -31,9 +31,6 @@ import com.codemonkey.web.converter.CustomConversionService;
 
 public abstract class AbsExtController<T extends EE> implements SecurityController{
 	
-	public static final String CONTROLLERS = "controllers";
-	public static final String INDEX_VIEW = "indexView";
-	
 	private Class<?> type;
 	
 	private Logger log;
@@ -70,8 +67,6 @@ public abstract class AbsExtController<T extends EE> implements SecurityControll
 		modelMap.addAttribute("modelFields", MMHelper.getModelFields(type));
     	modelMap.addAttribute("modelName", MMHelper.getModelName(type));
     	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
-    	modelMap.addAttribute(INDEX_VIEW, getIndexView());
-		modelMap.addAttribute(CONTROLLERS, getControllers());
 		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
     	return ExtConstant.INDEX;
     }

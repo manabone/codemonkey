@@ -27,8 +27,6 @@ public abstract class AbsFormExtController<T extends EE> extends AbsExtControlle
 	// ----------------------
 	@RequestMapping("edit/{id}")
 	public String edit(@PathVariable(ExtConstant.ID) Long id, ModelMap modelMap , HttpSession session) {
-		modelMap.addAttribute(INDEX_VIEW, getIndexView());
-		modelMap.addAttribute(CONTROLLERS, getControllers());
 		modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
 		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session).put(ExtConstant.ID, id));
 		return ExtConstant.INDEX;
