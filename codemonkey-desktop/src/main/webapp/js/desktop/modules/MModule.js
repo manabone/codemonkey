@@ -185,7 +185,7 @@ Ext.define('AM.modules.MModule', {
      		xtype : 'grid',	
      		flex : 3,	
      		id : this.gridId,
-     		columns : me.gridCols || ExtUtils.defaultGridCols,
+     		columns : me.gridCols || ExtUtils.defaultGridCols1.concat(ExtUtils.defaultGridCols2),
      		listeners: {
  				'itemdblclick' : function( /*Ext.view.View*/ view, /* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts){
  					me.edit();

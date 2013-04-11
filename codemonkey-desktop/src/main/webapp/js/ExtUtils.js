@@ -42,15 +42,10 @@ var ExtUtils = {
 	],
 	
 	defaultFormItems : [
-		 {dataIndex:"id",flex:1,header:"id"},
-		 {dataIndex:"code",flex:1,header:"code"},
-		 {dataIndex:"name",flex:1,header:"name"},
-		 {dataIndex:"description",flex:1,header:"description"},
-		 {dataIndex:"originVersion",flex:1,header:"origin version"},
-		 {dataIndex:"creationDate",flex:1,header:"creationDate"},
-		 {dataIndex:"createdBy",flex:1,header:"createdBy"},
-		 {dataIndex:"modificationDate",flex:1,header:"modificationDate"},
-		 {dataIndex:"modifiedBy",flex:1,header:"modifiedBy"}
+	    {xtype:"textfield"  , name:"code"        , fieldLabel:"code"},
+		{xtype:"textfield"  , name:"name"        , fieldLabel:"name"},
+		{xtype:"textfield"  , name:"description" , fieldLabel:"description"},
+		{xtype:"numberfield", name:"id"          , fieldLabel:"id" , hidden : true}
 	],
 	
 	defaultFormButtons : [{

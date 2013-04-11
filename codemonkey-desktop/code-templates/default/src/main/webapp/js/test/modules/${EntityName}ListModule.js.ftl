@@ -1,10 +1,10 @@
 
-Ext.define('AM.modules.${EntityName}ListModule', {
+Ext.define('test.modules.${EntityName}ListModule', {
     extend: 'AM.modules.ListModule',
 
     id:'${entityName}ListModule',
     
-    requires : ['AM.modules.${EntityName}FormModule'],
+    requires : ['test.modules.${EntityName}FormModule'],
     
     hidden : true,
     

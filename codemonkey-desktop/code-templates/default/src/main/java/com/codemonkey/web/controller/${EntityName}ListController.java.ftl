@@ -1,4 +1,4 @@
-package ${groupId}.controller;
+package ${groupId}.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ${groupId}.domain.${EntityName};
 import ${groupId}.service.${EntityName}Service;
+import com.codemonkey.web.controller.AbsListExtController;
 
 @Controller
-@RequestMapping("/ext/${entityName}/**")
-public class ${EntityName}FormController extends AbsFormExtController<${EntityName}>{
+@RequestMapping("/ext/${entityName}List/**")
+public class ${EntityName}ListController extends AbsListExtController<${EntityName}>{
 
 	@Autowired private ${EntityName}Service ${entityName}Service;
 	
@@ -18,8 +19,4 @@ public class ${EntityName}FormController extends AbsFormExtController<${EntityNa
 		return ${entityName}Service;
 	}
 
-	@Override
-	protected ${EntityName} createEntity() {
-		return new ${EntityName}();
-	}
 }

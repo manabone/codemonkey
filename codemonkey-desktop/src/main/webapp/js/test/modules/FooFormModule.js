@@ -10,7 +10,9 @@ Ext.define('test.modules.FooFormModule', {
     
     modelName : 'Foo',
     
-    modelFields : ['fstring','fnumber','fbool','fstatus','fdate','appRole','appUserGroup','id','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy' , 'appRoles'],
+    modelFields : function(){
+    	return ['fstring','fnumber','fbool','fstatus','fdate','appRole','appUserGroup','id','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy' , 'appRoles'];
+    },
     
     afterModelLoad : function(model){
     	this.appRolesGrid.getStore().loadData(model.data.appRoles);

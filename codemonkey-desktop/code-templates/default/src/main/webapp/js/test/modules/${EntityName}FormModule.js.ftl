@@ -1,5 +1,5 @@
 
-Ext.define('AM.modules.${EntityName}FormModule', {
+Ext.define('test.modules.${EntityName}FormModule', {
     extend: 'AM.modules.FormModule',
 
     id:'${entityName}FormModule',
@@ -10,7 +10,7 @@ Ext.define('AM.modules.${EntityName}FormModule', {
     
     modelName : '${EntityName}',
     
-    modelFields : : function(){
+    modelFields : function(){
     
     	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>];
     },

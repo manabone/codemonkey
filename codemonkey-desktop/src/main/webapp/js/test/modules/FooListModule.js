@@ -17,9 +17,12 @@ Ext.define('test.modules.FooListModule', {
 	iconText : 'Foo',
 	iconCls : 'icon-grid',
     
-    modelFields : ['fstring','fnumber','fbool','fstatus','fdate','appRole','appUserGroup','id','name','description','version','creationDate','createdBy','modificationDate','modifiedBy'],
+    modelFields : function(){
+    	return ['fstring','fnumber','fbool','fstatus','fdate','appRole','appUserGroup','id','name','description','version','creationDate','createdBy','modificationDate','modifiedBy'];
+    },
 	
-	gridCols : [
+	gridCols : function() {
+		return [
 			{header: 'fstring',  dataIndex: 'fstring',  flex: 1},
 			{header: 'fnumber',  dataIndex: 'fnumber',  flex: 1},
 			{header: 'fbool',  dataIndex: 'fbool',  flex: 1},
@@ -35,5 +38,6 @@ Ext.define('test.modules.FooListModule', {
 			{header: 'createdBy',  dataIndex: 'createdBy',  flex: 1},
 			{header: 'modificationDate',  dataIndex: 'modificationDate',  flex: 1},
 			{header: 'modifiedBy',  dataIndex: 'modifiedBy',  flex: 1}
-	]
+			];
+	}
 });

@@ -16,6 +16,10 @@ Ext.define('test.MainApp', {
     requires: [
         'test.modules.FooListModule',
         'test.modules.FooFormModule',
+        
+        'test.modules.Foo2ListModule',
+        'test.modules.Foo2FormModule',
+        
         'test.modules.BarModule',
         'test.modules.TreeModule',
         'test.modules.TreeGridModule',
@@ -23,6 +27,8 @@ Ext.define('test.MainApp', {
     ],
     
     shortcutItems : [
+        { name: 'Foo2 List', iconCls: 'grid-shortcut', module: 'foo2ListModule'},
+        
 		{ name: 'Foo List', iconCls: 'grid-shortcut', module: 'fooListModule'},
 		{ name: 'Bar', iconCls: 'grid-shortcut', module: 'barModule'},
 		{ name: 'Tree grid' , iconCls: 'grid-shortcut', module: 'treeModule'},
@@ -37,6 +43,9 @@ Ext.define('test.MainApp', {
     
     getModules : function(){
         return [
+			new test.modules.Foo2ListModule(),
+			new test.modules.Foo2FormModule(),
+			
 			new test.modules.FooListModule(),
 			new test.modules.FooFormModule(),
 			new test.modules.BarModule(),
