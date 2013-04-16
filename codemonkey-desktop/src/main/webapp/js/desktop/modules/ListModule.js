@@ -125,11 +125,16 @@ Ext.define('AM.modules.ListModule', {
 	
 	//actions handler
 	create : function(){
-		var formModule = this.app.getModule(this.formModuleId);
-	 	formModule.createWindow({entityId : null , gridId : this.gridId});	
+		if(this.formModuleId){
+			var formModule = this.app.getModule(this.formModuleId);
+		 	formModule.createWindow({entityId : null , gridId : this.gridId});	
+		}
 	},
 	
 	edit : function(){
+		
+		if(!this.formModuleId) return;
+		
 		var formModule = this.app.getModule(this.formModuleId);
 		
 		var record = ExtUtils.getSelected(this.gridId);

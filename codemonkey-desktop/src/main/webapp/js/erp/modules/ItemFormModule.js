@@ -4,7 +4,7 @@ Ext.define('erp.modules.ItemFormModule', {
 
     id:'itemFormModule',
     
-    requires : ['erp.modules.ItemStockCardListModule'],
+    requires : ['erp.modules.ItemStockCardListModule' , 'erp.modules.ItemTransactionListModule'],
     
     hidden : true,
     
@@ -30,10 +30,15 @@ Ext.define('erp.modules.ItemFormModule', {
     stockCardListAction : {
 		action : 'stockCardList', text: 'StockCard', iconCls : 'icon-update'
 	},
+	
+	transactionListAction : {
+			action : 'transactionList', text: 'TransactionList', iconCls : 'icon-update'
+		},
     
 	createBbar : function(){
     	var actions = [
-    	    this.createModuleAction(this.stockCardListAction),          
+    	    this.createModuleAction(this.stockCardListAction),   
+    	    this.createModuleAction(this.transactionListAction),   
 			this.spacer,
 			this.createModuleAction(this.saveAction),
 			this.createModuleAction(this.cancelAction)
@@ -45,5 +50,10 @@ Ext.define('erp.modules.ItemFormModule', {
     stockCardList : function(){
     	var stockCardListModule = this.app.getModule('itemStockCardListModule');
     	stockCardListModule.createWindow({itemId : this.entityId});
+    },
+    
+    transactionList : function(){
+    	var itemTransactionListModule = this.app.getModule('itemTransactionListModule');
+    	itemTransactionListModule.createWindow({itemId : this.entityId});
     }
 });
