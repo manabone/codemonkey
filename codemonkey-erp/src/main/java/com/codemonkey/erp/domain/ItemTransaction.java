@@ -8,7 +8,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+import org.json.JSONObject;
+
 import com.codemonkey.utils.Calc;
+import com.codemonkey.utils.OgnlUtils;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -35,11 +38,28 @@ public abstract class ItemTransaction  extends Transaction {
 	
 	private Date requiredDate;
 	
+	ItemTransaction(){}
+	
 	ItemTransaction(DocumentLine docLine) {
 		this.qty = docLine.getQty();
 		this.item = docLine.getItem();
 		this.warehouse = docLine.getWarehouse();
 		this.requiredDate = docLine.getRequiredDate();
+	}
+	
+	@Override
+	public JSONObject listJson() {
+		JSONObject jo = super.listJson();
+		
+		jo.put("item", OgnlUtils.stringValue("item.id", this));
+		jo.put("item_text", OgnlUtils.stringValue("item.code", this));
+		
+		jo.put("warehouse", OgnlUtils.stringValue("warehouse.id", this));
+		jo.put("warehouse_text", OgnlUtils.stringValue("warehouse.code", this));
+		
+		jo.put("qty", OgnlUtils.stringValue("qty", this));
+		
+		return jo;
 	}
 	
 	public void updateStockCard(ItemStockCard stockCard){

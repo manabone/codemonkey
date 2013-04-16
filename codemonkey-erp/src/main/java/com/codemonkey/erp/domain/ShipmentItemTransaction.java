@@ -23,6 +23,8 @@ public class ShipmentItemTransaction extends ItemTransaction {
 	@ManyToOne
 	private SalesShipmentLine spLine;
 	
+	ShipmentItemTransaction(){}
+	
 	public ShipmentItemTransaction(SalesShipmentLine spLine) {
 		super(spLine);
 		this.customer = spLine.getSalesOrderLine().getHeader().getCustomer();

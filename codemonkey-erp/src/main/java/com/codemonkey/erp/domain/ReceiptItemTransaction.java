@@ -23,6 +23,8 @@ public class ReceiptItemTransaction extends ItemTransaction {
 	@ManyToOne
 	private ReceiptLine rpLine;
 	
+	ReceiptItemTransaction(){}
+	
 	public ReceiptItemTransaction(ReceiptLine rpLine) {
 		super(rpLine);
 		this.vendor = rpLine.getPurchaseOrderLine().getHeader().getVendor();

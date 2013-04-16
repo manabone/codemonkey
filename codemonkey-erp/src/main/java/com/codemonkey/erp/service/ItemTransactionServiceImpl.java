@@ -14,7 +14,7 @@ import com.codemonkey.erp.domain.Transaction;
 import com.codemonkey.service.GenericServiceImpl;
 
 @Service
-public class ItemTransactionServiceImpl extends GenericServiceImpl<Transaction> implements ItemTransactionService{
+public class ItemTransactionServiceImpl extends GenericServiceImpl<ItemTransaction> implements ItemTransactionService{
 
 	@Autowired private ItemStockCardService itemStockCardService;
 
@@ -52,7 +52,7 @@ public class ItemTransactionServiceImpl extends GenericServiceImpl<Transaction> 
 	}
 
 	@Override
-	public Transaction createEntity() {
+	public ItemTransaction createEntity() {
 		return null;
 	}
 }

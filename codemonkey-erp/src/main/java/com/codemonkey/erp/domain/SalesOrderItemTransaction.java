@@ -21,6 +21,10 @@ public class SalesOrderItemTransaction extends ItemTransaction {
 	@ManyToOne
 	private SalesOrderLine soLine;
 	
+	SalesOrderItemTransaction(){
+		super();
+	}
+	
 	public SalesOrderItemTransaction(SalesOrderLine soLine) {
 		super(soLine);
 		this.customer = soLine.getHeader().getCustomer();

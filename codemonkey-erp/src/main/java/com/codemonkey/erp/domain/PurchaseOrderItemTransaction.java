@@ -21,6 +21,8 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 	@ManyToOne
 	private PurchaseOrderLine poLine;
 	
+	PurchaseOrderItemTransaction(){}
+	
 	public PurchaseOrderItemTransaction(PurchaseOrderLine poLine) {
 		super(poLine);
 		this.vendor = poLine.getHeader().getVendor();
