@@ -37,5 +37,9 @@ Ext.define('erp.modules.ItemStockCardListModule', {
 		ExtUtils.record2form({itemId : this.itemId} , this.searchFormId);
 		var store = Ext.getCmp(this.gridId).getStore();
 		ExtUtils.gridSearch(store , this.searchFormId);
-	}
+	},
+	
+	createBbar : function(){
+    	return null;
+    }
 });
