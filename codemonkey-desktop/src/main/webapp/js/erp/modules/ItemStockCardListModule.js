@@ -18,7 +18,7 @@ Ext.define('erp.modules.ItemStockCardListModule', {
 	iconCls : 'icon-grid',
     
     modelFields : function(){
-    	return ['item' , 'item_text' , 'warehouse' , 'warehouse_text' ,'qtyOnHand'].concat(ExtUtils.defaultModelFields);
+    	return ['item' , 'item_text' , 'warehouse' , 'warehouse_text' ,'qtyOnHand' , 'qtyOnSalesOrder' , 'qtyOnPurchaseOrder'].concat(ExtUtils.defaultModelFields);
     
     },
 	gridCols :  function(){
@@ -28,7 +28,9 @@ Ext.define('erp.modules.ItemStockCardListModule', {
 	          {"dataIndex":"item_text","flex":1,"header":"item"},
 	          {"dataIndex":"warehouse",hidden:true,"header":"warehouse"},
 	          {"dataIndex":"warehouse_text","flex":1,"header":"warehouse"},
-	          {"dataIndex":"qtyOnHand","flex":1,"header":"qty on hand"}
+	          {"dataIndex":"qtyOnHand","flex":1,"header":"qty on hand"},
+	          {"dataIndex":"qtyOnSalesOrder","flex":1,"header":"qtyOnSalesOrder"},
+	          {"dataIndex":"qtyOnPurchaseOrder","flex":1,"header":"qtyOnPurchaseOrder"}
          ].concat(ExtUtils.defaultGridCols2);
 	},
 	
