@@ -37,14 +37,14 @@ Ext.define('erp.modules.ItemStockCardListModule', {
 	searchForm : function() {
     	return {
     		items : [
-				{name  : "item.id"   , xtype : 'hiddenfield' , fieldLabel : "item"  , value : ''},
-				{xtype :"searchingselect",name :"warehouse.id",config :{model :"WarehouseList"},fieldLabel :"Warehouse" }
+				{name  : "item.id"   , xtype : 'hiddenfield' , fieldLabel : "item"},
+				{name :"warehouse.id" , xtype :"searchingselect", config :{model :"WarehouseList"},fieldLabel :"Warehouse" }
     		]
     	};
     },
 	    
 	afterWindowCreate : function(){
-		ExtUtils.record2form({itemId : this.itemId} , this.searchFormId);
+		ExtUtils.record2form({ 'item.id' : this.itemId}  , this.searchFormId);
 		var store = Ext.getCmp(this.gridId).getStore();
 		ExtUtils.gridSearch(store , this.searchFormId);
 	},

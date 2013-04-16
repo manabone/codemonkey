@@ -44,7 +44,6 @@ Ext.define('erp.modules.ItemFormModule', {
     
     stockCardList : function(){
     	var stockCardListModule = this.app.getModule('itemStockCardListModule');
-    	var itemId = 1;
-    	stockCardListModule.createWindow({itemId : itemId});	
+    	stockCardListModule.createWindow({itemId : this.entityId});
     }
 });

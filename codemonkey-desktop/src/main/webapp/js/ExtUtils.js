@@ -299,8 +299,14 @@ var ExtUtils = {
 		return record;
 	},
 	
-	record2form : function(record , formId){
-		Ext.getCmp(formId).getForm().loadRecord(record);
+	record2form : function(data , formId){
+		
+		if(!data) return;
+		var form = Ext.getCmp(formId).getForm();
+		for(var p in data){
+			form.findField(p).setValue(data[p]);
+		}
+		
 	},
 	
 	formValues : function(formId){
