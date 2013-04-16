@@ -4,7 +4,7 @@ Ext.define('erp.modules.ItemFormModule', {
 
     id:'itemFormModule',
     
-    requires : ['erp.modules.StockCardListModule'],
+    requires : ['erp.modules.ItemStockCardListModule'],
     
     hidden : true,
     
@@ -43,7 +43,7 @@ Ext.define('erp.modules.ItemFormModule', {
     },
     
     stockCardList : function(){
-    	var stockCardListModule = this.app.getModule('stockCardListModule');
+    	var stockCardListModule = this.app.getModule('itemStockCardListModule');
     	var itemId = 1;
     	stockCardListModule.createWindow({itemId : itemId});	
     }
