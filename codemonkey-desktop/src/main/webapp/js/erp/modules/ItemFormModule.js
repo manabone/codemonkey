@@ -4,6 +4,8 @@ Ext.define('erp.modules.ItemFormModule', {
 
     id:'itemFormModule',
     
+    requires : ['erp.modules.StockCardListModule'],
+    
     hidden : true,
     
     winTitle : 'Item',
@@ -23,5 +25,26 @@ Ext.define('erp.modules.ItemFormModule', {
     	var p2 = ExtUtils.creationInfoPanel();
     	
     	return ExtUtils.fitLayout([p1,p2]);
+    },
+    
+    stockCardListAction : {
+		action : 'stockCardList', text: 'StockCard', iconCls : 'icon-update'
+	},
+    
+	createBbar : function(){
+    	var actions = [
+    	    this.createModuleAction(this.stockCardListAction),          
+			this.spacer,
+			this.createModuleAction(this.saveAction),
+			this.createModuleAction(this.cancelAction)
+		];
+    	
+    	return this.createToolbar(actions);
+    },
+    
+    stockCardList : function(){
+    	var stockCardListModule = this.app.getModule('stockCardListModule');
+    	var itemId = 1;
+    	stockCardListModule.createWindow({itemId : itemId});	
     }
 });

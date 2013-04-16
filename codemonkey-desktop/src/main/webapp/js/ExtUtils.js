@@ -300,8 +300,7 @@ var ExtUtils = {
 	},
 	
 	record2form : function(record , formId){
-		var formPanel = Ext.getCmp(formId);
-		formPanel.down('form').loadRecord(record);
+		Ext.getCmp(formId).getForm().loadRecord(record);
 	},
 	
 	formValues : function(formId){

@@ -2,7 +2,9 @@ var NamingStrategy = {
 	
 	url : function(modelName , actionName){
 		var ctxElm = document.getElementById("ctx");
-		return ctxElm.value + '/app/ext/' + Ext.String.uncapitalize(modelName) + '/' + actionName;
+		actionName = actionName || 'index';
+		var root = ctxElm && ctxElm.value ?  ctxElm.value : ''; 
+		return root + '/app/ext/' + Ext.String.uncapitalize(modelName) + '/' + actionName;
 	},
 	
 	store : function(modelName){

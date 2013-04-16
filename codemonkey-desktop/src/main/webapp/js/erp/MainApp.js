@@ -32,7 +32,10 @@ Ext.define('erp.MainApp', {
         'erp.modules.SalesOrderFormModule',
         
         'erp.modules.SalesShipmentListModule',
-        'erp.modules.SalesShipmentFormModule'
+        'erp.modules.SalesShipmentFormModule',
+        
+        'erp.modules.StockCardListModule',
+        'erp.modules.StockCardFormModule'
     ],
     
     shortcutItems : [
@@ -70,7 +73,10 @@ Ext.define('erp.MainApp', {
 	        new erp.modules.SalesOrderFormModule(),
 	        
 	        new erp.modules.SalesShipmentListModule(),
-	        new erp.modules.SalesShipmentFormModule()
+	        new erp.modules.SalesShipmentFormModule(),
+			
+			new erp.modules.StockCardListModule(),
+		    new erp.modules.StockCardFormModule()
 		];
     }
 });

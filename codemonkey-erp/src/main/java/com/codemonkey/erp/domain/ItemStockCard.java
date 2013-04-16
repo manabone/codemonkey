@@ -26,6 +26,8 @@ public class ItemStockCard  extends AbsEE {
 	
 	private Double qtyOnPurchaseOrder = 0d;
 	
+	ItemStockCard(){}
+	
 	public ItemStockCard(Item item, Warehouse warehouse) {
 		this.item = item;
 		this.warehouse = warehouse;
