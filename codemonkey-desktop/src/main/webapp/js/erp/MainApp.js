@@ -34,8 +34,8 @@ Ext.define('erp.MainApp', {
         'erp.modules.SalesShipmentListModule',
         'erp.modules.SalesShipmentFormModule',
         
-        'erp.modules.StockCardListModule',
-        'erp.modules.StockCardFormModule'
+        'erp.modules.ItemStockCardListModule',
+        'erp.modules.ItemStockCardFormModule'
     ],
     
     shortcutItems : [
@@ -75,8 +75,8 @@ Ext.define('erp.MainApp', {
 	        new erp.modules.SalesShipmentListModule(),
 	        new erp.modules.SalesShipmentFormModule(),
 			
-			new erp.modules.StockCardListModule(),
-		    new erp.modules.StockCardFormModule()
+			new erp.modules.ItemStockCardListModule(),
+		    new erp.modules.ItemStockCardFormModule()
 		];
     }
 });
