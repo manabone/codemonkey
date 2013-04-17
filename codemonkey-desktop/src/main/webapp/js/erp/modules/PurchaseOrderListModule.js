@@ -1,6 +1,6 @@
 
 Ext.define('erp.modules.PurchaseOrderListModule', {
-    extend: 'AM.modules.ListModule',
+    extend: 'erp.modules.DocumentListModule',
 
     id:'purchaseOrderListModule',
     
@@ -17,8 +17,28 @@ Ext.define('erp.modules.PurchaseOrderListModule', {
 	iconText : 'PurchaseOrder',
 	iconCls : 'icon-grid',
     
-    modelFields : ['vendor','totalAmount','warehouse','id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
-	
-	gridCols : [{"dataIndex":"vendor","flex":1,"header":"vendor"},{"dataIndex":"totalAmount","flex":1,"header":"total amount"},{"dataIndex":"warehouse","flex":1,"header":"warehouse"},{"dataIndex":"id","flex":1,"header":"自动编号"},{"dataIndex":"code","flex":1,"header":"编码"},{"dataIndex":"name","flex":1,"header":"名称"},{"dataIndex":"description","flex":1,"header":"描述"},{"dataIndex":"originVersion","flex":1,"header":"origin version"},{"dataIndex":"creationDate","flex":1,"header":"创建时间"},{"dataIndex":"createdBy","flex":1,"header":"创建人"},{"dataIndex":"modificationDate","flex":1,"header":"修改时间"},{"dataIndex":"modifiedBy","flex":1,"header":"修改人"}]
+    modelFields : function(){
+    	return ['vendor' , 'vendor_text' , 'totalAmount' , 'warehouse' , 'warehouse_text' , 'status'].concat(ExtUtils.defaultModelFields);
+    },
+    
+    searchForm : function() {
+    	return {
+    		items : [
+				{name  : "JOINS"   , xtype : 'hiddenfield' , fieldLabel : "JOINS"  , value : 'lines_LEFT'},
+				{xtype :"searchingselect",name :"lines.item.id",config :{model :"ItemList"},fieldLabel :"item" }
+    		]
+    	};
+    },
+    
+	gridCols : function() {
+		 return ExtUtils.defaultGridCols1.concat([
+          {dataIndex : "vendor", hidden : true},
+          {dataIndex : "vendor_text",flex : 1 , header : "vendor"},
+          {dataIndex : "warehouse", hidden : true},
+          {dataIndex : "warehouse_text" , flex : 1 , header : "warehouse"},
+          {dataIndex : "status",flex : 1 , header : "status"},
+          {dataIndex : "totalAmount",flex : 1 , header : "total amount"},
+         ]).concat(ExtUtils.defaultGridCols2);
+	}
 	
 });

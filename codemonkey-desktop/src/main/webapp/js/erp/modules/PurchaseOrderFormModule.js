@@ -1,18 +1,71 @@
 
 Ext.define('erp.modules.PurchaseOrderFormModule', {
-    extend: 'AM.modules.FormModule',
+    extend: 'erp.modules.DocumentFormModule',
 
     id:'purchaseOrderFormModule',
-    
-    hidden : true,
     
     winTitle : 'PurchaseOrder',
     
     modelName : 'PurchaseOrder',
     
-    modelFields : ['vendor','totalAmount','warehouse','id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
+    lineGridId : 'purchaseOrderLineGrid',
+    
+    modelFields : function() {
+    	return ['vendor' ,'vendor_text', 'paymentDate', 'status' ,'totalAmount','warehouse' ,'warehouse_text' , 'lines' ,  'toModifyLines' , 'toDeleteLines' ].concat(ExtUtils.defaultModelFields);
+    },
     
     formItems : function(){
-		return [{"xtype":"textfield","name":"code","fieldLabel":"编码"},{"xtype":"textfield","name":"name","fieldLabel":"名称"},{"xtype":"textfield","name":"description","fieldLabel":"描述"},{"xtype":"textfield","name":"createdBy","fieldLabel":"创建人"},{"xtype":"textfield","name":"modifiedBy","fieldLabel":"修改人"},{"xtype":"numberfield","name":"totalAmount","fieldLabel":"total amount"},{"xtype":"numberfield","name":"id","fieldLabel":"自动编号"},{"xtype":"numberfield","name":"originVersion","fieldLabel":"origin version"},{"xtype":"datefield","name":"creationDate","format":"Y-m-d","fieldLabel":"创建时间"},{"xtype":"datefield","name":"modificationDate","format":"Y-m-d","fieldLabel":"修改时间"},{"xtype":"searchingselect","name":"vendor","config":{"model":"VendorList"},"fieldLabel":"vendor"},{"xtype":"searchingselect","name":"warehouse","config":{"model":"WarehouseList"},"fieldLabel":"warehouse"}]
+    	var p1 = ExtUtils.panel({
+    		title : 'basic info',
+			items:[
+    			{xtype:"textfield",name:"code",fieldLabel:"code"},
+    			{xtype:"textfield",name:"status",fieldLabel:"status" , disabled : true},
+    			{xtype :"searchingselect",name :"vendor",config :{model :"VendorList"},fieldLabel :"vendor" , allowBlank : false},
+    			{xtype :"searchingselect",name :"warehouse",config :{model :"WarehouseList"},fieldLabel :"warehouse" , allowBlank : false},
+    			{xtype :"datefield",name :"paymentDate",format :"Y-m-d",fieldLabel :"paymentDate"},
+    			{xtype:"textfield",name:"description",fieldLabel:"description"}
+			]
+    	});
+    	
+    	var p2 = ExtUtils.creationInfoPanel();
+    	
+    	var lineGrid = ExtUtils.arrayGrid({
+    		id : this.lineGridId,
+    		plugins : [
+		           Ext.create('Ext.grid.plugin.CellEditing', {
+		        	   clicksToEdit: 1
+		           })
+            ],
+			columns :  [
+   	            {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
+   	            {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
+   	            
+   	            ExtUtils.searchingColumn({
+   	            	header : 'item' ,  
+   	            	dataIndex : 'item',
+   	            	textDataIndex : 'item_text',
+   	            	listModel : 'ItemList',
+   	            	lineGridId : this.lineGridId
+   	            }),
+	 	  		
+	 	  		{header: 'price' ,  dataIndex: 'price',  flex: 1,
+	 	  			editor: {xtype: 'numberfield'}
+	 	  		},
+	 	  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
+	 	  		{header: 'qty' ,  dataIndex: 'qty', flex: 1,
+	 	  			editor: {xtype: 'numberfield'} 
+	 	  		},
+	 	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1},
+	 	  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
+	 	  	]
+		});
+    	
+    	var p3 = ExtUtils.panel({
+    		title : 'Lines',
+    		items : lineGrid
+    	});
+    	
+    	return ExtUtils.fitLayout([p1, p3 ,p2 ]);
     }
+    
 });

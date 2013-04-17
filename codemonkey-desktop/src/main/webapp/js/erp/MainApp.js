@@ -31,6 +31,9 @@ Ext.define('erp.MainApp', {
         'erp.modules.SalesOrderListModule',
         'erp.modules.SalesOrderFormModule',
         
+        'erp.modules.PurchaseOrderListModule',
+        'erp.modules.PurchaseOrderFormModule',
+        
         'erp.modules.SalesShipmentListModule',
         'erp.modules.SalesShipmentFormModule',
         
@@ -43,6 +46,7 @@ Ext.define('erp.MainApp', {
     shortcutItems : [
         { name: 'salesShipments', iconCls: 'grid-shortcut', module: 'salesShipmentListModule'},
         { name: 'salesOrders', iconCls: 'grid-shortcut', module: 'salesOrderListModule'},
+        { name: 'purchaseOrders', iconCls: 'grid-shortcut', module: 'purchaseOrderListModule'},
         { name: 'roles', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
 		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
 		{ name: 'items', iconCls: 'grid-shortcut', module: 'itemListModule'},
@@ -73,6 +77,9 @@ Ext.define('erp.MainApp', {
 	        
 	        new erp.modules.SalesOrderListModule(),
 	        new erp.modules.SalesOrderFormModule(),
+	        
+	        new erp.modules.PurchaseOrderListModule(),
+	        new erp.modules.PurchaseOrderFormModule(),
 	        
 	        new erp.modules.SalesShipmentListModule(),
 	        new erp.modules.SalesShipmentFormModule(),
