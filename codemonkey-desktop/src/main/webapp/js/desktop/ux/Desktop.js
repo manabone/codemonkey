@@ -115,6 +115,8 @@ Ext.define('Ext.ux.desktop.Desktop', {
         var me = this;
         me.callParent();
         me.el.on('contextmenu', me.onDesktopMenu, me);
+        
+        Ext.Function.defer(me.initShortcut,1);
     },
 
     //------------------------------------------------------
@@ -128,13 +130,43 @@ Ext.define('Ext.ux.desktop.Desktop', {
             trackOver: true,
             itemSelector: me.shortcutItemSelector,
             store: me.shortcuts,
-            style: {
-                position: 'absolute'
-            },
-            x: 0, y: 0,
+//            style: {
+//                position: 'absolute'
+//            },
+//            x: 0, y: 0,
+            
+            listeners:{    
+                resize:me.initShortcut    
+            },  
             tpl: new Ext.XTemplate(me.shortcutTpl)
         };
     },
+    
+    initShortcut : function() {    
+        var btnHeight = 64;    
+        var btnWidth = 64;    
+        var btnPadding = 30;    
+        var col = {index : 1,x : btnPadding};    
+        var row = {index : 1,y : btnPadding};    
+        var bottom;    
+        var numberOfItems = 0;    
+        var taskBarHeight = Ext.query(".ux-taskbar")[0].clientHeight + 40;    
+        var bodyHeight = Ext.getBody().getHeight() - taskBarHeight;    
+        var items = Ext.query(".ux-desktop-shortcut");    
+      
+        for (var i = 0, len = items.length; i < len; i++) {    
+            numberOfItems += 1;    
+            bottom = row.y + btnHeight;    
+            if (((bodyHeight < bottom) ? true : false) && bottom > (btnHeight + btnPadding)) {    
+                numberOfItems = 0;    
+                col = {index : col.index++,x : col.x + btnWidth + btnPadding};    
+                row = {index : 1,y : btnPadding};    
+            }    
+            Ext.fly(items[i]).setXY([col.x, row.y]);    
+            row.index++;    
+            row.y = row.y + btnHeight + btnPadding;    
+        }    
+    },  
 
     createDesktopMenu: function () {
         var me = this, ret = {
