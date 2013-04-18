@@ -26,10 +26,14 @@ public abstract class Document extends AbsEE {
 	private Currency currency;
 	
 	@Enumerated(EnumType.STRING)
-	private DocumentStatus status = DocumentStatus.Draft;
+	private DocumentStatus status;
 	
 	@ManyToOne
 	private Warehouse warehouse;
+	
+	Document(){
+		this.status = DocumentStatus.Draft;
+	}
 
 	public abstract List<ItemTransaction> createItemTransactions();
 

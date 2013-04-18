@@ -115,7 +115,6 @@ Ext.define('AM.modules.FormModule', {
 	    		
 	    		failure: function(rec, op) {
 	    			
-	    			var me = this;
 	    			var errors = op.request.scope.reader.jsonData["errorFields"];
 	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
 	    			var data = op.request.scope.reader.jsonData["data"];

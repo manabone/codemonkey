@@ -182,11 +182,11 @@ var ExtUtils = {
 	markInvalidFields : function(formId , errors){
 		var formPanel = Ext.getCmp(formId);
 		var form = formPanel.getForm();
-		for(var p in errors){
-			if(!p.rowId){
-				var field = form.findField(p.fieldName);
+		for(var i = 0 ; i < errors.length ; i++){
+			if(!errors[i].rowId){
+				var field = form.findField(errors[i].fieldName);
 				if(field){
-					field.markInvalid(p.message);
+					field.markInvalid(errors[i].message);
 				}
 			}
 		}

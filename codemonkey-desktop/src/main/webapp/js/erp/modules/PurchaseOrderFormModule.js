@@ -19,7 +19,7 @@ Ext.define('erp.modules.PurchaseOrderFormModule', {
     		title : 'basic info',
 			items:[
     			{xtype:"textfield",name:"code",fieldLabel:"code"},
-    			{xtype:"textfield",name:"status",fieldLabel:"status" , disabled : true},
+    			{xtype:"textfield",name:"status",fieldLabel:"status" , readOnly : true},
     			{xtype :"searchingselect",name :"vendor",config :{model :"VendorList"},fieldLabel :"vendor" , allowBlank : false},
     			{xtype :"searchingselect",name :"warehouse",config :{model :"WarehouseList"},fieldLabel :"warehouse" , allowBlank : false},
     			{xtype :"datefield",name :"paymentDate",format :"Y-m-d",fieldLabel :"paymentDate"},

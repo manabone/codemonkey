@@ -3,10 +3,12 @@ package com.codemonkey.erp.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
+@DiscriminatorValue("PURCHASE_ORDER")
 public class PurchaseOrderItemTransaction extends ItemTransaction {
 
 	
