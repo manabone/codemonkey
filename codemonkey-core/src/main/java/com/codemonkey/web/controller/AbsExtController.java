@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.codemonkey.domain.EE;
+import com.codemonkey.domain.IEntity;
 import com.codemonkey.error.AuthError;
 import com.codemonkey.error.BadObjVersionError;
+import com.codemonkey.error.SessionTimeoutError;
 import com.codemonkey.error.SysError;
 import com.codemonkey.error.ValidationError;
 import com.codemonkey.service.GenericService;
@@ -29,7 +30,7 @@ import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
 
-public abstract class AbsExtController<T extends EE> implements SecurityController{
+public abstract class AbsExtController<T extends IEntity> implements SecurityController{
 	
 	private Class<?> type;
 	
@@ -91,7 +92,7 @@ public abstract class AbsExtController<T extends EE> implements SecurityControll
 		return labels;
 	}
 	
-    protected String buildJson(List<T> list) {
+    private String buildJson(List<T> list) {
     	JSONObject jo = buildResult(list);
 		return jo.toString();
 	}
@@ -136,6 +137,12 @@ public abstract class AbsExtController<T extends EE> implements SecurityControll
 	@ExceptionHandler(BadObjVersionError.class)
 	@ResponseBody
 	public String handleBadVersionException(BadObjVersionError ex, HttpServletRequest request) {
+		return ex.json().toString();
+	}
+	
+	@ExceptionHandler(SessionTimeoutError.class)
+	@ResponseBody
+	public String handleSessionTimeout(SessionTimeoutError ex, HttpServletRequest request) {
 		return ex.json().toString();
 	}
     

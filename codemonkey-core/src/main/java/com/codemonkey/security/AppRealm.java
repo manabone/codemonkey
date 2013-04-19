@@ -18,15 +18,14 @@ import org.springframework.util.StringUtils;
 
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppUser;
-import com.codemonkey.domain.MM;
+import com.codemonkey.service.AppPermissionService;
 import com.codemonkey.service.AppUserService;
-import com.codemonkey.service.MMServiceHolder;
 
 @Component
 public class AppRealm extends AuthorizingRealm {
   
     @Autowired private AppUserService appUserService;
-    @Autowired private MMServiceHolder mmServiceHolder;
+    @Autowired private AppPermissionService appPermissionService;
   
     /** 
      * 授权信息 
@@ -41,10 +40,9 @@ public class AppRealm extends AuthorizingRealm {
             if( user != null && user.getRoles() != null ){  
                 SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();  
                 if(user.isAdmin()){
-                	List<MM> ps = mmServiceHolder.findAll(AppPermission.class);
+                	List<AppPermission> ps = appPermissionService.findAll();
                 	if(CollectionUtils.isNotEmpty(ps)){
-                		for(MM mm : ps){
-                			AppPermission p = (AppPermission) mm;
+                		for(AppPermission p : ps){
                 			info.addStringPermission(p.getPermission());
                 		}
                 	}

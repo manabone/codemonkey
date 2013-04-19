@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.AppPermission;
-import com.codemonkey.domain.EE;
+import com.codemonkey.domain.IEntity;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 
 
-public abstract class AbsFormExtController<T extends EE> extends AbsExtController<T>{
+public abstract class AbsFormExtController<T extends IEntity> extends AbsExtController<T>{
 
 	// ----------------------
 	// edit

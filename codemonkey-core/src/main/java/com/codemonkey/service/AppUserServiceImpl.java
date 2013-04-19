@@ -23,7 +23,7 @@ import com.codemonkey.web.converter.CustomConversionService;
 @Service
 public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements AppUserService{
 
-	@Autowired private MMServiceHolder mmServiceHolder;
+	@Autowired private AppPermissionService appPermissionService;
 	
 	@Override
 	public void save(AppUser user) {
@@ -69,8 +69,7 @@ public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements A
 	}
 
 	public void isAuth(String url) {
-		MMService service = mmServiceHolder.get(AppPermission.class);
-		AppPermission permission = (AppPermission) service.findBy("url_Like", url + "%");
+		AppPermission permission = appPermissionService.findBy("url_Like", url + "%");
 		
 		Subject subject = SecurityUtils.getSubject();
 		

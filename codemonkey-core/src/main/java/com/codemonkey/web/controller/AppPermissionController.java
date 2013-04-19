@@ -9,16 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.extcmp.ExtCol;
 import com.codemonkey.extcmp.ExtFormField;
+import com.codemonkey.service.GenericService;
 
 @Controller
 @RequestMapping("/ext/appPermission/**")
 public class AppPermissionController extends AbsMMController<AppPermission>{
 
-	@Override
-	protected AppPermission createEntity() {
-		return new AppPermission(null,null);
-	}
-	
 	@Override
 	protected List<ExtFormField> getFormFields(){
 		return null;
@@ -34,5 +30,10 @@ public class AppPermissionController extends AbsMMController<AppPermission>{
   		items.add(new ExtCol("url"));
   		return items;
   	}
+
+	@Override
+	protected GenericService<AppPermission> service() {
+		return null;
+	}
 
 }

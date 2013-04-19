@@ -13,11 +13,8 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,8 +27,7 @@ import com.codemonkey.extcmp.ExtFormField;
 import com.codemonkey.extcmp.ExtHidden;
 import com.codemonkey.extcmp.ExtText;
 import com.codemonkey.security.AppResourceHelper;
-import com.codemonkey.service.MMService;
-import com.codemonkey.service.MMServiceHolder;
+import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.MMHelper;
@@ -39,25 +35,15 @@ import com.codemonkey.utils.SysUtils;
 
 
 @Controller
-public abstract class AbsMMController<T extends MM> implements SecurityController{
+public abstract class AbsMMController<T extends MM> extends AbsExtController<T> implements SecurityController{
 	
 	private Class<?> type;
 	
 	private Logger log;
 	
-	private WebDataBinder binder;
-	
-	@Autowired private MMServiceHolder mmServiceHolder;
-	
-	protected abstract T createEntity();
-	
 	AbsMMController(){
 		this.type = ClassHelper.getSuperClassGenricType(getClass());
 		log = SysUtils.getLog(getClass());
-	}
-	
-	private MMService getMMService() {
-		return mmServiceHolder.get(type);
 	}
 	
 	//----------------------
@@ -91,10 +77,10 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
     public String create(@RequestBody String body) {
     	JSONObject result = new JSONObject();
 		try{
-			MM t = createEntity();
+			T t = service().createEntity();
 			JSONObject params = new JSONObject(body);
-			ClassHelper.build(params, t , binder);
-			getMMService().saveAndFlush(t);
+			ClassHelper.build(params, t , getCcService());
+			service().save(t);
 			result.put(ExtConstant.DATA, t.listJson());
 			result.put(ExtConstant.SUCCESS, true);
 		}catch(Exception e){
@@ -113,20 +99,20 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
     public String read(@RequestParam(required=false) String id,
     		@RequestParam(required=false) String query,
     		@RequestParam(required=false) JSONObject queryInfo) {
-    	List<MM> list = new ArrayList<MM>();
+    	List<T> list = new ArrayList<T>();
     	
     	if(StringUtils.isNotBlank(id)){
-    		MM t = getMMService().get(Long.valueOf(id));
+    		T t = service().get(Long.valueOf(id));
     		list.add(t);
     	}else if(StringUtils.isNotBlank(query)){
     		Criterion[] criterions = {
 				Restrictions.like("name", query, MatchMode.ANYWHERE)	
     		};
-    		list = getMMService().find(criterions);
+    		list = service().find(criterions);
     	}else if(queryInfo != null){
-    		list = getMMService().findByQueryInfo(queryInfo);
+    		list = service().findByQueryInfo(queryInfo);
     	}else{
-    		list = getMMService().findAll();
+    		list = service().findAll();
     	}
     	return buildJson(list);
     }
@@ -141,10 +127,10 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 		JSONObject result = new JSONObject();
 		try{
 			JSONObject params = new JSONObject(body);
-			MM t = getMMService().get(params.getLong(ExtConstant.ID));
+			T t = service().get(params.getLong(ExtConstant.ID));
 			if(t != null){
-				ClassHelper.build(params, t , binder);
-				getMMService().saveAndFlush(t);
+				ClassHelper.build(params, t , getCcService());
+				service().save(t);
 				result.put(ExtConstant.SUCCESS, true);
 			}
 		}catch(Exception e){
@@ -164,9 +150,9 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 		JSONObject result = new JSONObject();
 		try{
 			JSONObject params = new JSONObject(body);
-			MM t = getMMService().get(params.getLong(ExtConstant.ID));
+			MM t = service().get(params.getLong(ExtConstant.ID));
 			if(t != null){
-				getMMService().deleteAndFlush(params.getLong(ExtConstant.ID));
+				service().delete(params.getLong(ExtConstant.ID));
 			}
 			result.put(ExtConstant.SUCCESS, true);
 		}catch(Exception e){
@@ -217,7 +203,7 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 		return cols;
 	}
     
-    private String buildJson(List<MM> list) {
+    private String buildJson(List<T> list) {
     	JSONObject jo = new JSONObject();
     	if(list != null){
     		JSONArray data = new JSONArray();
@@ -231,11 +217,6 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 		return jo.toString();
 	}
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		this.binder = binder;
-	}
-	
 	public List<AppPermission> regAppPermission(){
 		return AppResourceHelper.mmPermissions(getType());
 	}
@@ -256,20 +237,4 @@ public abstract class AbsMMController<T extends MM> implements SecurityControlle
 		this.log = log;
 	}
 
-	public WebDataBinder getBinder() {
-		return binder;
-	}
-
-	public void setBinder(WebDataBinder binder) {
-		this.binder = binder;
-	}
-
-	public MMServiceHolder getMmServiceHolder() {
-		return mmServiceHolder;
-	}
-
-	public void setMmServiceHolder(MMServiceHolder mmServiceHolder) {
-		this.mmServiceHolder = mmServiceHolder;
-	}
-	
 }

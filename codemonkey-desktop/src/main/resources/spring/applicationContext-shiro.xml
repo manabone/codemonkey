@@ -50,7 +50,10 @@
         <property name="filters">
             <util:map>
                 <entry key="authc">
-                    <bean class="org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter"/>
+                	<bean class="com.codemonkey.web.interceptor.AuthFilterServiceImpl"/>
+                	<!-- 
+                	<bean class="org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter"/>
+                	-->
                 </entry>
             </util:map>
         </property>

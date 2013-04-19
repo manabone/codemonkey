@@ -12,8 +12,8 @@ import com.codemonkey.erp.domain.ItemOnhandSupply;
 import com.codemonkey.erp.domain.ItemOrderDemand;
 import com.codemonkey.erp.domain.ItemPlanning;
 import com.codemonkey.erp.domain.ItemStockCard;
-import com.codemonkey.erp.domain.ShipmentItemTransaction;
 import com.codemonkey.erp.domain.SalesShipmentLine;
+import com.codemonkey.erp.domain.ShipmentItemTransaction;
 import com.codemonkey.erp.domain.Transaction;
 
 

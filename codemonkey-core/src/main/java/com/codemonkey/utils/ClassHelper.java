@@ -21,12 +21,9 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.WebDataBinder;
 
 import com.codemonkey.annotation.SkipBuild;
 import com.codemonkey.domain.AbsEntity;
-import com.codemonkey.service.MMService;
-import com.codemonkey.service.MMServiceHolderImpl;
 import com.codemonkey.web.converter.CustomConversionService;
 
 @Component
@@ -165,24 +162,7 @@ public final class ClassHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void build(JSONObject params, Object model ,  WebDataBinder binder) {
-		Iterator<String> it = params.keys();
-		while(it.hasNext()){
-			String key = it.next();
-			if(key.endsWith("_text")){
-				continue;
-			}
-			
-			Field field = ReflectionUtils.findField(model.getClass(), key);
-			if(field != null && field.getAnnotation(SkipBuild.class) == null){
-				Object value = getValueFromJson(field , key , params, binder);
-				ClassHelper.callSetter(model, field, value);
-			}
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static void bulid(JSONObject params, Object model ,  CustomConversionService ccService) {
+	public static void build(JSONObject params, Object model ,  CustomConversionService ccService) {
 		Iterator<String> it = params.keys();
 		while(it.hasNext()){
 			String key = it.next();
@@ -211,35 +191,8 @@ public final class ClassHelper {
 		return convert(params.getString(name) , field.getType() , ccService);
 	}
 	
-	private static Object getValueFromJson(Field field, String name, JSONObject params, WebDataBinder binder) {
-		
-		if(StringUtils.isBlank(params.getString(name)) || params.getString(name).equals("null") || params.getString(name).equals("undefined")){
-			return null;
-		}
-		
-		if(field == null || field.getType().equals(List.class) || field.getType().equals(Set.class)){
-			return null;
-		}
-		
-		return convert(params.getString(name) , field.getType() , binder);
-	}
-	
 	public static Object convert(String id , Class<?> clazz , CustomConversionService ccService){
-	
-		MMService service = MMServiceHolderImpl.getHolder().get(clazz);
-		if(service != null){
-			return service.get(Long.valueOf(id));
-		}
 		return ccService.getObject().convert(id, clazz);
-	}
-	
-	public static Object convert(String id , Class<?> clazz , WebDataBinder binder){
-		
-		MMService service = MMServiceHolderImpl.getHolder().get(clazz);
-		if(service != null){
-			return service.get(Long.valueOf(id));
-		}
-		return binder.convertIfNecessary(id, clazz);
 	}
 	
 	public static Class<?> getSuperClassGenricType(Class<?> clazz) {

@@ -58,6 +58,8 @@
     <!-- 
     	transaction config
      -->
+    <tx:annotation-driven/>
+    
     <aop:config proxy-target-class="true" >
         <aop:advisor pointcut="execution(* com.*..*.*Service*.*(..))" advice-ref="txServiceAdvice"/>
     </aop:config>

@@ -655,6 +655,14 @@ var ExtUtils = {
 		config = Ext.apply({} , config , defaults);
 		
 		var store = Ext.create(storeClass , config );
+		
+		store.on('load' , function ( store , records, successful, eOpts ){
+			debugger;
+			if(!successful){
+				Ext.Msg.alert('error',eOpts.request.scope.reader.jsonData["errorMsg"]);
+			}
+		});
+		
 		return store;
 	},
 	
@@ -678,13 +686,13 @@ var ExtUtils = {
 		
 		var proxy = store.getProxy();
 		proxy.extraParams = params || {};
-		store.load({
-			callback : function(records, operation, success){
-				if(!success){
-					Ext.Msg.alert('error',operation.request.scope.reader.jsonData["errorMsg"]);
-				}
-			}
-		});
+//		store.load({
+//			callback : function(records, operation, success){
+//				if(!success){
+//					Ext.Msg.alert('error',operation.request.scope.reader.jsonData["errorMsg"]);
+//				}
+//			}
+//		});
 	},
 	
 	buildQueryInfo : function(obj){

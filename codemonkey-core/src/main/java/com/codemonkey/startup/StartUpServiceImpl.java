@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.dbunit.operation.DatabaseOperation;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -23,10 +22,9 @@ import com.codemonkey.dbMigration.migration.DriverManagerMigrationManager;
 import com.codemonkey.dbMigration.migration.MigrationManager;
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppUser;
-import com.codemonkey.domain.MM;
 import com.codemonkey.domain.Status;
+import com.codemonkey.service.AppPermissionService;
 import com.codemonkey.service.AppUserService;
-import com.codemonkey.service.MMServiceHolder;
 import com.codemonkey.utils.EnumHolder;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.controller.SecurityController;
@@ -36,7 +34,7 @@ import com.codemonkey.web.controller.SecurityController;
 @Transactional(propagation=Propagation.REQUIRED)
 public class StartUpServiceImpl implements StartUpService {
 
-	@Autowired private MMServiceHolder mmServiceHolder;
+	@Autowired private AppPermissionService appPermissionService;
 	@Autowired private List<SecurityController> securityControllers;
 	@Autowired private DriverManagerDataSource dbUnitdatasource;
 	@Autowired private AppUserService appUserService;
@@ -91,9 +89,9 @@ public class StartUpServiceImpl implements StartUpService {
 		
 		if(CollectionUtils.isNotEmpty(securityControllers)){
 			for(AppPermission p : appPermissions){
-				List<MM> pp = mmServiceHolder.find(AppPermission.class , Restrictions.eq("permission", p.getPermission()));
+				List<AppPermission> pp = appPermissionService.findAllBy("permission", p.getPermission());
 				if(CollectionUtils.isEmpty(pp)){
-					mmServiceHolder.saveAndFlush(AppPermission.class , p);
+					appPermissionService.save(p);
 				}
 			}
 		}

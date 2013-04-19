@@ -16,9 +16,8 @@ import com.codemonkey.domain.Bar;
 import com.codemonkey.domain.Foo;
 import com.codemonkey.domain.Status;
 import com.codemonkey.service.AppRoleService;
+import com.codemonkey.service.BarService;
 import com.codemonkey.service.FooService;
-import com.codemonkey.service.MMService;
-import com.codemonkey.service.MMServiceHolder;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.web.converter.CustomConversionService;
 
@@ -27,8 +26,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 	@Autowired private FooService fooService;
 	@Autowired private AppRoleService appRoleService;
 	@Autowired private CustomConversionService ccService;
-	@Autowired MMServiceHolder mmServiceHolder;
-	
+	@Autowired private BarService barService;
 	@Test
 	public void testLeftJoin(){
 		Foo foo = new Foo();
@@ -44,9 +42,8 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		bar2.setName("bar2");
 		bar2.setFoo(foo);
 		
-		MMService mmService = mmServiceHolder.get(Bar.class);
-		mmService.saveAndFlush(bar1);
-		mmService.saveAndFlush(bar2);
+		barService.save(bar1);
+		barService.save(bar2);
 		
 		String[] joins = {"bars_LEFT"};
 		List<Foo> list = fooService.findAllBy("bars.name", joins , "bar1");
@@ -99,7 +96,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		JSONObject params = new JSONObject();
 		params.put("skipBuild", "test");
 		
-		ClassHelper.bulid(params, foo , ccService);
+		ClassHelper.build(params, foo , ccService);
 	
 		assertNull(foo.getSkipBuild());
 	}

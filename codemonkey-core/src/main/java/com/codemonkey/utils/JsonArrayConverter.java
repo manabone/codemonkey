@@ -23,7 +23,7 @@ public class JsonArrayConverter<T> {
 				if(t == null){
 					t = createNewInstance(clazz);
 				}
-				ClassHelper.bulid(jo, t , ccService);
+				ClassHelper.build(jo, t , ccService);
 				list.add(t);
 			}
 		}

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.codemonkey.dao.GenericDao;
 import com.codemonkey.dao.searchingInfo.SearchingInfo;
-import com.codemonkey.domain.EE;
+import com.codemonkey.domain.IEntity;
 import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.FormFieldValidation;
@@ -25,7 +25,7 @@ import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.web.converter.CustomConversionService;
 
 @Transactional
-public abstract class GenericServiceImpl<T extends EE> extends AbsService implements GenericService<T> {
+public abstract class GenericServiceImpl<T extends IEntity> extends AbsService implements GenericService<T> {
 
 	private GenericDao<T> dao;
 	
@@ -334,11 +334,11 @@ public abstract class GenericServiceImpl<T extends EE> extends AbsService implem
 		
 		if(id == null){
 			t = createEntity();
-			ClassHelper.bulid(params, t , ccService);
+			ClassHelper.build(params, t , ccService);
 		}else{
 			t = get(id);
 			if(t != null){
-				ClassHelper.bulid(params, t , ccService);
+				ClassHelper.build(params, t , ccService);
 			}
 		}
 		return t;
