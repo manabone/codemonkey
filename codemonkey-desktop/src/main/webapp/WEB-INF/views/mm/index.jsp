@@ -180,7 +180,7 @@
 					var r = grid.getSelectionModel().getSelection();
 					if (r && r[0]) {
 						this.getStore('MMStore').remove(r[0]);
-						ExtUtils.mask(true);
+						ExtUtils.mask();
 						this.getStore('MMStore').sync({
 							callback : function() {
 								me.syncCallback();
@@ -218,7 +218,7 @@
 						store.add(mm);
 					}
 					win.close();
-					ExtUtils.mask(true);
+					ExtUtils.mask();
 					store.sync({
 						callback : function() {
 							me.syncCallback();
@@ -227,7 +227,7 @@
 				},
 
 				syncCallback : function(options) {
-					ExtUtils.mask(false);
+					ExtUtils.mask();
 					this.getStore('MMStore').load();
 				}
 			});

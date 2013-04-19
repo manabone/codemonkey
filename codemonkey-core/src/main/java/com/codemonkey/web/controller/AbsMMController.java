@@ -27,7 +27,6 @@ import com.codemonkey.extcmp.ExtFormField;
 import com.codemonkey.extcmp.ExtHidden;
 import com.codemonkey.extcmp.ExtText;
 import com.codemonkey.security.AppResourceHelper;
-import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.MMHelper;
@@ -203,20 +202,6 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
 		return cols;
 	}
     
-    private String buildJson(List<T> list) {
-    	JSONObject jo = new JSONObject();
-    	if(list != null){
-    		JSONArray data = new JSONArray();
-    		for(MM t : list){
-    			data.put(t.listJson());
-    		}
-			jo.put(ExtConstant.TOTAL_COUNT, list.size());	
-    		jo.put(ExtConstant.SUCCESS, true);
-			jo.put(ExtConstant.DATA, data);
-    	}
-		return jo.toString();
-	}
-
 	public List<AppPermission> regAppPermission(){
 		return AppResourceHelper.mmPermissions(getType());
 	}

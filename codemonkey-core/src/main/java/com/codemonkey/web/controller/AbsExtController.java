@@ -92,7 +92,7 @@ public abstract class AbsExtController<T extends IEntity> implements SecurityCon
 		return labels;
 	}
 	
-    private String buildJson(List<T> list) {
+    protected String buildJson(List<T> list) {
     	JSONObject jo = buildResult(list);
 		return jo.toString();
 	}

@@ -657,7 +657,6 @@ var ExtUtils = {
 		var store = Ext.create(storeClass , config );
 		
 		store.on('load' , function ( store , records, successful, eOpts ){
-			debugger;
 			if(!successful){
 				Ext.Msg.alert('error',eOpts.request.scope.reader.jsonData["errorMsg"]);
 			}
