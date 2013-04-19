@@ -50,21 +50,20 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
     //----------------------
     @RequestMapping
     public String index(ModelMap modelMap , HttpSession session) {
-    	modelMap.addAttribute("modelFields", MMHelper.getModelFields(type));
-    	modelMap.addAttribute("modelName", MMHelper.getModelName(type));
+    	
     	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
     	modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData());
-    	modelMap.addAttribute("formItems", getFormItems());
-    	modelMap.addAttribute("cols", getCols());
     	
     	return ExtConstant.MM_INDEX;
     }
     
     protected JSONObject getPageData() {
 		JSONObject pageData = new JSONObject();
-//		List<String> fieldNames = ClassHelper.getAllFields(type);
 		pageData.put(ExtConstant.THEME, SysUtils.getAttribute(ExtConstant.THEME));
-//		pageData.put("labels", labels(fieldNames));
+		pageData.put("modelFields", MMHelper.getModelFields(type));
+		pageData.put("modelName", MMHelper.getModelName(type));
+		pageData.put("formItems", getFormItems());
+		pageData.put("cols", getCols());
 		return pageData;
 	}
 

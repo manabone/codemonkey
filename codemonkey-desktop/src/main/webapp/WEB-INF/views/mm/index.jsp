@@ -4,13 +4,11 @@
 		var PAGE_DATA = ${pageData};
 		Ext.onReady(function(){
 	
-			var modelFields = ${modelFields};
-			var modelName =  "${modelName}";
+			var modelFields = PAGE_DATA.modelFields;
+			var modelName =  PAGE_DATA.modelName;
 			var proxy = ExtUtils.proxy(modelName);
-			
-			var formItems = ${formItems};
-			
-			var cols =  ${cols};
+			var formItems = PAGE_DATA.formItems;
+			var cols =  PAGE_DATA.cols;
 			
 			//model
 			Ext.define('AM.model.MM', {
