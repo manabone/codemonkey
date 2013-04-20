@@ -87,14 +87,4 @@ public class TreeGridController extends AbsExtController<Foo>{
 		return null;
 	}
 
-	@Override
-	String getControllers() {
-		return null;
-	}
-
-	@Override
-	String getIndexView() {
-		return null;
-	}
-
 }

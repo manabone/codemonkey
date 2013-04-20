@@ -18,14 +18,4 @@ public class AppUserGroupListController extends AbsListExtController<AppUserGrou
 		return appUserGroupService;
 	}
 
-	@Override
-	String getControllers() {
-		return "AppUserGroupListController";
-	}
-
-	@Override
-	String getIndexView() {
-		return "appusergrouplist";
-	}
-
 }

@@ -18,14 +18,4 @@ public class FooListController extends AbsListExtController<Foo>{
 		return fooService;
 	}
 
-	@Override
-	String getControllers() {
-		return "FooListController";
-	}
-
-	@Override
-	String getIndexView() {
-		return "foolist";
-	}
-
 }

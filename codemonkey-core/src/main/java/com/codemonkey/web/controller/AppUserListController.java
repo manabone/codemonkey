@@ -18,14 +18,4 @@ public class AppUserListController extends AbsListExtController<AppUser>{
 		return appUserService;
 	}
 
-	@Override
-	String getControllers() {
-		return "AppUserListController";
-	}
-
-	@Override
-	String getIndexView() {
-		return "appuserlist";
-	}
-
 }

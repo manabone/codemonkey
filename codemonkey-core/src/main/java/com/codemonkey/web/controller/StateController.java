@@ -24,15 +24,4 @@ public class StateController extends AbsExtController<State>{
 	public List<AppPermission> regAppPermission() {
 		return null;
 	}
-	
-	@Override
-	String getControllers() {
-		return null;
-	}
-
-	@Override
-	String getIndexView() {
-		return null;
-	}
-
 }

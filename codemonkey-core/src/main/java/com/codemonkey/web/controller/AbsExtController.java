@@ -51,15 +51,6 @@ public abstract class AbsExtController<T extends IEntity> implements SecurityCon
 		
 	}
 	
-	
-	String getControllers() {
-		return null;
-	}
-
-	String getIndexView() {
-		return null;
-	}
-	
 	//----------------------
 	// index
 	//----------------------

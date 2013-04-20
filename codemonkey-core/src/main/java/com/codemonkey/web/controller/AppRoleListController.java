@@ -18,14 +18,4 @@ public class AppRoleListController extends AbsListExtController<AppRole>{
 		return appRoleService;
 	}
 
-	@Override
-	String getControllers() {
-		return "AppRoleListController";
-	}
-
-	@Override
-	String getIndexView() {
-		return "approlelist";
-	}
-
 }
