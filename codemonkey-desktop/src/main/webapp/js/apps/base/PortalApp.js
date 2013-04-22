@@ -18,6 +18,51 @@ Ext.define('AM.base.PortalApp', {
             }
         }];
     },
+    
+    layoutItems : function(){
+    	return [{
+                id: 'col-1',
+                items: [{
+                    id: 'portlet-1',
+                    title: 'Grid Portlet',
+                    tools: this.getTools(),
+                    items: Ext.create('test.portlets.GridPortlet'),
+                    listeners: {
+                        'close': Ext.bind(this.onPortletClose, this)
+                    }
+                },{
+                    id: 'portlet-2',
+                    title: 'Portlet 2',
+                    tools: this.getTools(),
+                    html: content,
+                    listeners: {
+                        'close': Ext.bind(this.onPortletClose, this)
+                    }
+                }]
+            },{
+                id: 'col-2',
+                items: [{
+                    id: 'portlet-3',
+                    title: 'Portlet 3',
+                    tools: this.getTools(),
+                    html: '<div class="portlet-content">portlet-3</div>',
+                    listeners: {
+                        'close': Ext.bind(this.onPortletClose, this)
+                    }
+                }]
+            },{
+                id: 'col-3',
+                items: [{
+                    id: 'portlet-4',
+                    title: 'Stock Portlet',
+                    tools: this.getTools(),
+                    items: Ext.create('test.portlets.ChartPortlet'),
+                    listeners: {
+                        'close': Ext.bind(this.onPortletClose, this)
+                    }
+                }]
+            }];
+    },
 
     initComponent: function(){
         var content = '<div class="portlet-content"></div>';
@@ -38,54 +83,8 @@ Ext.define('AM.base.PortalApp', {
                 xtype: 'container',
                 region: 'center',
                 layout: 'border',
-                items: [{
-                    id: 'app-portal',
-                    xtype: 'portalpanel',
-                    region: 'center',
-                    items: [{
-                        id: 'col-1',
-                        items: [{
-                            id: 'portlet-1',
-                            title: 'Grid Portlet',
-                            tools: this.getTools(),
-                            items: Ext.create('test.portlets.GridPortlet'),
-                            listeners: {
-                                'close': Ext.bind(this.onPortletClose, this)
-                            }
-                        },{
-                            id: 'portlet-2',
-                            title: 'Portlet 2',
-                            tools: this.getTools(),
-                            html: content,
-                            listeners: {
-                                'close': Ext.bind(this.onPortletClose, this)
-                            }
-                        }]
-                    },{
-                        id: 'col-2',
-                        items: [{
-                            id: 'portlet-3',
-                            title: 'Portlet 3',
-                            tools: this.getTools(),
-                            html: '<div class="portlet-content">portlet-3</div>',
-                            listeners: {
-                                'close': Ext.bind(this.onPortletClose, this)
-                            }
-                        }]
-                    },{
-                        id: 'col-3',
-                        items: [{
-                            id: 'portlet-4',
-                            title: 'Stock Portlet',
-                            tools: this.getTools(),
-                            items: Ext.create('test.portlets.ChartPortlet'),
-                            listeners: {
-                                'close': Ext.bind(this.onPortletClose, this)
-                            }
-                        }]
-                    }]
-                }]
-            }]
+                items:this.layoutItems()
+            }]    
         });
         this.callParent(arguments);
     },

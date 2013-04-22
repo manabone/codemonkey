@@ -1,87 +1,114 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.codemonkey</groupId>
-  <artifactId>codemonkey</artifactId>
-  <version>1.0.0</version>
-  <packaging>pom</packaging>
-  <modules>
-  	<module>../codemonkey-maven-plugin</module>
-  	<module>../codemonkey-dbMigration</module>
-  	<module>../codemonkey-core</module>
-  	<module>../codemonkey-erp</module>
-  </modules>
-  <build>
-  	
-  	<plugins>
-  		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<configuration>
-				<source>1.6</source>
-				<target>1.6</target>
-				<encoding>UTF-8</encoding> 
-			</configuration>
-		</plugin>
-		
-		<plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>sql-maven-plugin</artifactId>
-			<version>1.5</version>
-	
-			<dependencies>
-				<!-- specify the dependent JDBC driver here -->
-				<dependency>
-					<groupId>${jdbc.groupId}</groupId>
-					<artifactId>${jdbc.artifactId}</artifactId>
-					<version>${jdbc.version}</version>
-				</dependency>
-			</dependencies>
-	
-			<!-- common configuration shared by all executions -->
-			<configuration>
-				<driver>${jdbc.driverClassName}</driver>
-				<url>${db.default.url}</url>
-				<username>${jdbc.username}</username>
-				<password>${jdbc.password}</password>
-			</configuration>
-	
-			<executions>
-				<execution>
-					<id>create-db-before-test</id>
-					<phase>test</phase>
-					<goals>
-						<goal>execute</goal>
-					</goals>
-					<!-- specific configuration for this execution -->
-					<configuration>
-						  <autocommit>true</autocommit>  
-					      <sqlCommand>create database ${test.db.name}</sqlCommand>  
-					      <!-- ignore error when database is not avaiable -->
-					      <onError>continue</onError>
-					</configuration>
-				</execution>
-				
-				<execution>
-					<id>create-db-before-run</id>
-					<phase>install</phase>
-					<goals>
-						<goal>execute</goal>
-					</goals>
-					<!-- specific configuration for this execution -->
-					<configuration>
-						  <autocommit>true</autocommit>  
-					      <sqlCommand>create database ${db.name}</sqlCommand>
-					      <onError>continue</onError>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
-	</plugins>
-  </build>
-  
-  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <!--					  REPOSITORIES						 -->
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.codemonkey</groupId>
+	<artifactId>codemonkey</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>../codemonkey-maven-plugin</module>
+		<module>../codemonkey-dbMigration</module>
+		<module>../codemonkey-core</module>
+		<module>../codemonkey-erp</module>
+		<module>../codemonkey-activiti</module>
+		<module>../codemonkey-drools</module>
+		<module>../codemonkey-jasper</module>
+	</modules>
+	<build>
+
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- RESOURCES -->
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+
+				<dependencies>
+					<!-- specify the dependent JDBC driver here -->
+					<dependency>
+						<groupId>${jdbc.groupId}</groupId>
+						<artifactId>${jdbc.artifactId}</artifactId>
+						<version>${jdbc.version}</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>${jdbc.driverClassName}</driver>
+					<url>${db.default.url}</url>
+					<username>${jdbc.username}</username>
+					<password>${jdbc.password}</password>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>create-db-before-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<!-- specific configuration for this execution -->
+						<configuration>
+							<autocommit>true</autocommit>
+							<sqlCommand>create database ${test.db.name}</sqlCommand>
+							<!-- ignore error when database is not avaiable -->
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-db-before-run</id>
+						<phase>install</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<!-- specific configuration for this execution -->
+						<configuration>
+							<autocommit>true</autocommit>
+							<sqlCommand>create database ${db.name}</sqlCommand>
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- REPOSITORIES -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<repositories>
 		<repository>
 			<id>jasperreports</id>
@@ -100,7 +127,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<name>oss.sonatype.org</name>
@@ -108,10 +135,10 @@
 			<url>http://oss.sonatype.org/content/groups/public</url>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <!--					  PROPERTIES						 -->
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- PROPERTIES -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<properties>
 		<jetty.version>6.1.26</jetty.version>
 		<junit.version>4.8.2</junit.version>
@@ -133,35 +160,72 @@
 		<groovy.version>1.8.3</groovy.version>
 		<mybatis.version>3.0.6</mybatis.version>
 		<spring.integration.version>2.0.5.RELEASE</spring.integration.version>
-		
+
 		<hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
 		<hibernate-commons-annotations.version>4.0.1.Final</hibernate-commons-annotations.version>
 		<hibernate.version>4.1.6.Final</hibernate.version>
 		<hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
-		
+
 		<commons-lang.version>2.6</commons-lang.version>
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<commons-fileupload.version>1.2.2</commons-fileupload.version>
 		<commons-io.version>2.0.1</commons-io.version>
 		<commons-beanutils.version>1.8.3</commons-beanutils.version>
-		
+
 		<log4j.version>1.2.14</log4j.version>
 		<json-rpc.version>1.0</json-rpc.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<cglib-nodep.version>2.1_3</cglib-nodep.version>
-		
+
 		<validation-api.version>1.0.0.GA</validation-api.version>
 		<hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
-		
+
 		<dbunit.version>2.2</dbunit.version>
 		<db.name>codemonkey_springmvc</db.name>
 		<test.db.name>${db.name}_test</test.db.name>
 		<basePackage>${groupId}</basePackage>
-	</properties>	
-	
+	</properties>
+
+
+	<dependencies>
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- TEST -->
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- UTILS -->
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons-lang.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${commons-collections.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda-time.version}</version>
+		</dependency>
+	</dependencies>
+
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <!--					  PROFILES      					 -->
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- PROFILES -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<profiles>
 		<profile>
 			<id>postgresql</id>
@@ -181,7 +245,7 @@
 				<db.default.url>jdbc:postgresql://localhost:5432/postgres</db.default.url>
 			</properties>
 		</profile>
-		
+
 		<profile>
 			<id>mysql</id>
 			<activation>
@@ -191,33 +255,33 @@
 				<!-- hibernate config -->
 				<hibernate.default_schema></hibernate.default_schema>
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
-				
+
 				<hibernate.show_sql>false</hibernate.show_sql>
 				<hibernate.cache.provider_class>net.sf.ehcache.hibernate.SingletonEhCacheProvider</hibernate.cache.provider_class>
 				<hibernate.format_sql>false</hibernate.format_sql>
-				<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>						
+				<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
 				<hibernate.cache.use_query_cache>false</hibernate.cache.use_query_cache>
 				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
 				<hibernate.validator.autoregister_listeners>false</hibernate.validator.autoregister_listeners>
 				<hibernate.cache.use_structured_entries>false</hibernate.cache.use_structured_entries>
-				<!-- hibernate.query.substitutions=true 'T', false 'F', yes 'Y', no 'N' -->			
+				<!-- hibernate.query.substitutions=true 'T', false 'F', yes 'Y', no 'N' -->
 				<hibernate.bytecode.use_reflection_optimizer>false</hibernate.bytecode.use_reflection_optimizer>
-				<hibernate.generate_statistics>false</hibernate.generate_statistics>	
-				<hibernate.transaction.flush_before_completion>true</hibernate.transaction.flush_before_completion>		
+				<hibernate.generate_statistics>false</hibernate.generate_statistics>
+				<hibernate.transaction.flush_before_completion>true</hibernate.transaction.flush_before_completion>
 				<hibernate.transaction.auto_close_session>false</hibernate.transaction.auto_close_session>
-				<hibernate.order_updates>true</hibernate.order_updates> 				
+				<hibernate.order_updates>true</hibernate.order_updates>
 				<hibernate.order_inserts>true</hibernate.order_inserts>
 				<hibernate.jdbc.batch_versioned_data>true</hibernate.jdbc.batch_versioned_data>
-				<hibernate.jdbc.batch_size>60</hibernate.jdbc.batch_size>				 				
+				<hibernate.jdbc.batch_size>60</hibernate.jdbc.batch_size>
 				<hibernate.max_fetch_depth>3</hibernate.max_fetch_depth>
 				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
-				
+
 				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
 				<jdbc.url>jdbc:mysql://localhost:3306/${db.name}?characterEncoding=UTF-8</jdbc.url>
 				<jdbc.url.test>jdbc:mysql://localhost:3306/${test.db.name}?characterEncoding=UTF-8</jdbc.url.test>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>root</jdbc.password>
-				
+
 				<dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
 				<dbunit.schema></dbunit.schema>
 				<jdbc.groupId>mysql</jdbc.groupId>

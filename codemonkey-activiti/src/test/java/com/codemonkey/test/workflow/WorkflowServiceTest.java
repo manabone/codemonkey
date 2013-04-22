@@ -7,13 +7,26 @@ import java.util.List;
 
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.codemonkey.test.service.AbsServiceTest;
+import com.codemonkey.utils.SysUtils;
 import com.codemonkey.workflow.WorkflowService;
 
-public class WorkflowServiceTest extends AbsServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { 
+		"classpath*:spring/applicationContext-datasource.xml", 
+		"classpath*:spring/applicationContext-dao.xml",
+		"classpath*:spring/applicationContext-globle.xml", 
+		"classpath*:spring/applicationContext-activiti.xml"
+})
+@Transactional
+public class WorkflowServiceTest {
 
 	@Autowired WorkflowService workflowService;
 	
@@ -59,5 +72,9 @@ public class WorkflowServiceTest extends AbsServiceTest {
 		}
 		getLog().info("============ end ===================================");
 		assertEquals(0 , tasks.size());
+	}
+
+	private Logger getLog() {
+		return SysUtils.getLog(getClass());
 	}
 }

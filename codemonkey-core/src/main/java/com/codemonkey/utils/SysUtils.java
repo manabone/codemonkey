@@ -137,13 +137,15 @@ public class SysUtils {
 			
 			Resource resource = patternResolver.getResource(filePath);
 			
-			// initialize your database connection here
-            connection = new DatabaseConnection(datasource.getConnection() , null);
-            
-            // initialize your dataset here
-            IDataSet dataSet = createDataSet(resource);
-            
-            op.execute(connection,dataSet);
+			if(resource.exists()){
+				// initialize your database connection here
+	            connection = new DatabaseConnection(datasource.getConnection() , null);
+	            
+	            // initialize your dataset here
+	            IDataSet dataSet = createDataSet(resource);
+	            
+	            op.execute(connection,dataSet);
+			}
             
 		} catch(Exception e){
         	e.printStackTrace();

@@ -86,7 +86,7 @@ Ext.define('test.portlets.GridPortlet', {
                 //width: 120,
                 flex: 1,
                 sortable : true,
-                dataIndex: 'company'
+                dataIndex: 'company' 
             },{
                 text   : 'Change',
                 width    : 75,
