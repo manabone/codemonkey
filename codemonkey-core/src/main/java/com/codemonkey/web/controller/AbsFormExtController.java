@@ -29,7 +29,7 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
 	public String edit(@PathVariable(ExtConstant.ID) Long id, ModelMap modelMap , HttpSession session) {
 		modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
 		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session).put(ExtConstant.ID, id));
-		return ExtConstant.INDEX;
+		return ExtConstant.EE_INDEX;
 	}
 	
 	//----------------------

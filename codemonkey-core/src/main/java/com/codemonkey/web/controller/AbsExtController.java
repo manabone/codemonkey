@@ -54,14 +54,14 @@ public abstract class AbsExtController<T extends IEntity> implements SecurityCon
 	//----------------------
 	// index
 	//----------------------
-	@RequestMapping("index")
-    public String index(ModelMap modelMap , HttpSession session) {
-		modelMap.addAttribute("modelFields", MMHelper.getModelFields(type));
-    	modelMap.addAttribute("modelName", MMHelper.getModelName(type));
-    	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
-		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
-    	return ExtConstant.INDEX;
-    }
+//	@RequestMapping("index")
+//    public String index(ModelMap modelMap , HttpSession session) {
+//		modelMap.addAttribute("modelFields", MMHelper.getModelFields(type));
+//    	modelMap.addAttribute("modelName", MMHelper.getModelName(type));
+//    	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
+//		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
+//    	return ExtConstant.INDEX;
+//    }
 
 	protected JSONObject getPageData(HttpSession session) {
 		JSONObject pageData = new JSONObject();

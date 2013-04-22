@@ -26,6 +26,7 @@ public final class AppResourceHelper {
 		permissions.add(listPermission(clazz , Operation.READ));
 		permissions.add(listPermission(clazz , Operation.DESTROY));
 		permissions.add(listPermission(clazz , Operation.LIST));
+		permissions.add(listPermission(clazz , Operation.NEW));
 		return permissions;
 	}
 	

@@ -14,7 +14,7 @@ public final class ExtConstant {
 	
 	public static final String ERROR_FIELDS = "errorFields";
 	
-	public static final String INDEX = "index";
+	public static final String EE_INDEX = "ee/index";
 	
 	public static final String ERROR_KEY = "errorKey";
 	

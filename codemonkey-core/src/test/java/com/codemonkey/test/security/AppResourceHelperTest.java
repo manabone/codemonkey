@@ -36,7 +36,7 @@ public class AppResourceHelperTest {
 		
 		list = AppResourceHelper.listPermissions(Foo.class);
 		
-		assertEquals(3 , list.size());
+		assertEquals(4 , list.size());
 	
 		assertEquals("/app/ext/fooList/read" , list.get(0).getUrl());
 		assertEquals("fooList:read" , list.get(0).getPermission());
@@ -49,5 +49,10 @@ public class AppResourceHelperTest {
 		assertEquals("/app/ext/fooList/index" , list.get(2).getUrl());
 		assertEquals("fooList:list" , list.get(2).getPermission());
 		assertEquals(RequestType.HTML , list.get(2).getRequestType());
+		
+		assertEquals("/app/ext/fooList/new" , list.get(3).getUrl());
+		assertEquals("fooList:new" , list.get(3).getPermission());
+		assertEquals(RequestType.HTML , list.get(3).getRequestType());
+	
 	}
 }

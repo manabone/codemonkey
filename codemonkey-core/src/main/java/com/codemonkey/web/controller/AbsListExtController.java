@@ -3,11 +3,14 @@ package com.codemonkey.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.json.JSONObject;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +20,33 @@ import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.EE;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.utils.ExtConstant;
+import com.codemonkey.utils.SysUtils;
 
 
 public abstract class AbsListExtController<T extends EE> extends AbsExtController<T>{
 
+	
+	//----------------------
+	// create
+	//----------------------
+	@RequestMapping("new")
+    public String createNew(ModelMap modelMap , HttpSession session) {
+    	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
+		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
+    	return ExtConstant.EE_INDEX;
+    }
+	
+	//----------------------
+	// list
+	//----------------------
+	@RequestMapping("list")
+    public String list(ModelMap modelMap , HttpSession session) {
+    	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
+		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
+    	return ExtConstant.EE_INDEX;
+    }
+
+	
 	//----------------------
     // read
     //----------------------

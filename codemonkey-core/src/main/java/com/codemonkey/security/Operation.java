@@ -19,6 +19,12 @@ public enum Operation implements IEnum{
 		public RequestType getRequestType(){
 			return RequestType.HTML;
 		}
+	},
+	NEW{
+		@Override
+		public RequestType getRequestType(){
+			return RequestType.HTML;
+		}
 	};
 
 	public RequestType getRequestType(){
@@ -34,6 +40,5 @@ public enum Operation implements IEnum{
 	public String getName() {
 		return name();
 	}
-	
 	
 }
