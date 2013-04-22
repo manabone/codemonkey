@@ -36,7 +36,6 @@ Ext.define('AM.base.PortalPanel', {
             beforedrop: true,
             drop: true
         });
-        this.on('drop', this.doLayout, this);
     },
 
     // Set columnWidth, and set first and last column classes to allow exact CSS targeting.

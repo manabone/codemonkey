@@ -23,7 +23,7 @@ Ext.define('AM.base.PortalDropZone', {
     createEvent: function(dd, e, data, col, c, pos) {
         return {
             portal: this.portal,
-            panel: data,
+            panel: data.panel,
             columnIndex: col,
             column: c,
             position: pos,
@@ -79,14 +79,14 @@ Ext.define('AM.base.PortalDropZone', {
         var overPortlet, pos = 0,
             h = 0,
             match = false,
-            overColumn = portal,
-            portlets = overColumn.ownerCt.items,
+            overColumn = portal.items.getAt(colIndex),
+            portlets = overColumn.items.items,
             overSelf = false;
 
         len = portlets.length;
 
         for (len; pos < len; pos++) {
-            overPortlet = portlets.items[pos];
+            overPortlet = portlets[pos];
             h = overPortlet.el.getHeight();
             if (h === 0) {
                 overSelf = true;
@@ -137,7 +137,7 @@ Ext.define('AM.base.PortalDropZone', {
             col = this.lastPos.col,
             pos = this.lastPos.p,
             panel = dd.panel,
-            dropEvent = this.createEvent(dd, e, data.ownerCt, col, c.ownerCt, pos !== false ? pos : c.ownerCt.items.getCount());
+            dropEvent = this.createEvent(dd, e, data, col, c, pos !== false ? pos : c.items.getCount());
 
         if (this.portal.fireEvent('validatedrop', dropEvent) !== false && 
             this.portal.fireEvent('beforedrop', dropEvent) !== false) {
