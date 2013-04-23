@@ -29,7 +29,7 @@ public class UploadFileController {
 	private static final int TEN_THOUSAND = 10000;
 	private static final String UPLOAD_FILE = "uploadfile";
 	private String uploadFolderPath;
-	ServletConfig config;
+	private ServletConfig config;
 
 	public String getUploadFolderPath() {
 		return uploadFolderPath;
@@ -96,6 +96,14 @@ public class UploadFileController {
 			e.printStackTrace();
 		}
 		return result.toString();
+	}
+
+	public ServletConfig getConfig() {
+		return config;
+	}
+
+	public void setConfig(ServletConfig config) {
+		this.config = config;
 	}
 
 }

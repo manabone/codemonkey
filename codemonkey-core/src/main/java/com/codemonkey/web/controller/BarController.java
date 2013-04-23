@@ -15,7 +15,7 @@ import com.codemonkey.service.BarService;
 @RequestMapping("/ext/bar/**")
 public class BarController extends AbsMMController<Bar>{
 
-	@Autowired BarService barService;
+	@Autowired private BarService barService;
 	
 	@Override
 	protected List<ExtFormField> getFormFields(){

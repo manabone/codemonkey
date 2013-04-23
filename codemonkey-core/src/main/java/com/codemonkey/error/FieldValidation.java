@@ -9,7 +9,7 @@ public abstract class FieldValidation{
 
 	public static final String LESS_THAN_ZERO = " is less than 0 ";
 
-	public static String EMPTY = " is empty ";
+	public static final String EMPTY = " is empty ";
 	
 	private String fieldName;
 	

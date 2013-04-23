@@ -15,7 +15,7 @@ import com.codemonkey.service.AppUserService;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 	
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired private AppUserService appUserService;
 	
@@ -42,6 +42,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 
 }
