@@ -19,6 +19,8 @@ Ext.define('AM.modules.FormModule', {
 	
 	create : Ext.emptyFn,
 	
+	manageControl : Ext.emptyFn,
+	
 	modelFields : function(){ 
     	return ExtUtils.defaultModelFields;
     },
@@ -58,6 +60,7 @@ Ext.define('AM.modules.FormModule', {
     
     afterWindowCreate : function(){
     	this.loadEntityToForm();
+    	this.manageControl();
     },
     
     loadEntityToForm : function(){
@@ -146,7 +149,8 @@ Ext.define('AM.modules.FormModule', {
 			
 		}else if(errorKey == "BadObjVersionError" && data){
 			Ext.Msg.alert("Failed", errorMsg);
-			Ext.getCmp(me.formId).getForm().loadRecord(data);
+			var model = me.Model.create(data);
+    		Ext.getCmp(me.formId).getForm().loadRecord(model);
 		}else{
 			Ext.Msg.alert("Failed", errorMsg);
 		}

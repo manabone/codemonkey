@@ -67,9 +67,12 @@ Ext.define('erp.modules.DocumentFormModule', {
     post : function(){
     	var me = this;
     	this.doAction('post' , function(result){
-    		
+    		me.getLineGridStore().loadData(result.data.lines);
     	});
-    }
+    },
     
+    manageControl : function(){
+    	
+    }
         
 });

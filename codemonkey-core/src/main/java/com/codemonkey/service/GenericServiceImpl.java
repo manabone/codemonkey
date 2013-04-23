@@ -61,7 +61,9 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		stopWatch.start();
 		
 		if(entity.isOptimisticLockingFailure()){
-			throw new BadObjVersionError(get(entity.getId()).detailJson());
+			T t = get(entity.getId());
+			t.setOriginVersion(null);
+			throw new BadObjVersionError(t.detailJson());
 		}
     	
 		entity.setOriginVersion(null);
