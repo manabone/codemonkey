@@ -5,7 +5,7 @@
     <artifactId>codemonkey-maven-plugin</artifactId>
     <version>1.0</version>
     <packaging>maven-plugin</packaging>
-    <name>codemonkey Maven Plugin</name>
+    <name>codemonkey-maven-plugin</name>
 
 	<parent>
     	<groupId>com.codemonkey</groupId>

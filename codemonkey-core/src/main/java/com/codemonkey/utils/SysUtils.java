@@ -1,7 +1,6 @@
 package com.codemonkey.utils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
@@ -159,7 +158,7 @@ public class SysUtils {
 	}
 	
 	
-	protected static IDataSet createDataSet(Resource resource) throws DataSetException, FileNotFoundException, IOException {
+	protected static IDataSet createDataSet(Resource resource) throws DataSetException, IOException {
 		IDataSet dataSet = null;
 		if(resource.getFilename().endsWith(".xml")){
 			dataSet = new XmlDataSet( new FileInputStream(resource.getFile()));

@@ -3,7 +3,6 @@ package com.codemonkey.security;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -62,7 +61,7 @@ public class AppRealm extends AuthorizingRealm {
      * 认证信息 
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken ) throws AuthenticationException {  
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken ){  
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         String userName = token.getUsername();  
         if( StringUtils.hasLength(userName)){  

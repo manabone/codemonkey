@@ -11,7 +11,6 @@
 		<module>../codemonkey-core</module>
 		<module>../codemonkey-erp</module>
 		<module>../codemonkey-activiti</module>
-		<module>../codemonkey-drools</module>
 		<module>../codemonkey-jasper</module>
 	</modules>
 	<build>

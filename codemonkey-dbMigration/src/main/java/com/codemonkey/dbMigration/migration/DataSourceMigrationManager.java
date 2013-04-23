@@ -96,7 +96,7 @@ public class DataSourceMigrationManager implements MigrationManager {
 		try {
 			jdbcTemplate.execute(new ConnectionCallback<Object>() {
 				public Object doInConnection(Connection connection)
-						throws SQLException, DataAccessException {
+						throws SQLException {
 					Migration currentMigration = null;
 
 					final boolean autoCommit = connection.getAutoCommit();
@@ -155,7 +155,7 @@ public class DataSourceMigrationManager implements MigrationManager {
 	protected DBType determineDatabaseType() {
 		return jdbcTemplate.execute(new ConnectionCallback<DBType>() {
 			public DBType doInConnection(Connection connection)
-					throws SQLException, DataAccessException {
+					throws SQLException {
 				return DatabaseUtils.databaseType(connection.getMetaData()
 						.getURL());
 			}
@@ -166,7 +166,7 @@ public class DataSourceMigrationManager implements MigrationManager {
 		try {
 			return jdbcTemplate.execute(new ConnectionCallback<Boolean>() {
 				public Boolean doInConnection(Connection connection)
-						throws SQLException, DataAccessException {
+						throws SQLException {
 					return versionStrategy.isEnabled(dbType, connection);
 				}
 			});
@@ -181,7 +181,7 @@ public class DataSourceMigrationManager implements MigrationManager {
 			
 			jdbcTemplate.execute(new ConnectionCallback<Object>() {
 				public Object doInConnection(Connection connection)
-						throws SQLException, DataAccessException {
+						throws SQLException {
 					versionStrategy.enableVersioning(dbType, connection);
 					return null;
 				}
@@ -197,7 +197,7 @@ public class DataSourceMigrationManager implements MigrationManager {
 	protected Set<String> determineAppliedMigrationVersions() {
 		return jdbcTemplate.execute(new ConnectionCallback<Set<String>>() {
 			public Set<String> doInConnection(Connection connection)
-					throws SQLException, DataAccessException {
+					throws SQLException {
 				return versionStrategy.appliedMigrations(dbType, connection);
 			}
 		});

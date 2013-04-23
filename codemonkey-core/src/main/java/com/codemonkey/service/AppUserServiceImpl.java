@@ -74,7 +74,8 @@ public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements A
 		Subject subject = SecurityUtils.getSubject();
 		
 		if(permission != null && subject != null){
-			if(!subject.isPermitted(permission.getPermission())){
+			boolean notPermitted = !subject.isPermitted(permission.getPermission());
+			if(notPermitted){
 				throw new AuthError(permission.getUrl());
 			}
 		}

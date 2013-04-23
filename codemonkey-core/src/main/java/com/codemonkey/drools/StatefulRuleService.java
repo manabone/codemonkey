@@ -9,7 +9,6 @@ import org.drools.runtime.StatefulKnowledgeSession;
 
 public abstract class StatefulRuleService extends RuleService{
 
-	private KnowledgeBase kbase;
 	
 	private StatefulKnowledgeSession ksession;
 	
@@ -19,7 +18,7 @@ public abstract class StatefulRuleService extends RuleService{
 	
 	public int run(){
 		try {
-			this.kbase = readKnowledgeBase();
+			KnowledgeBase kbase = readKnowledgeBase();
 			this.setKsession(kbase.newStatefulKnowledgeSession());
 			insertDomainObject(getKsession());
 			return executeRules(getKsession());
