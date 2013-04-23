@@ -24,7 +24,7 @@ Ext.define('erp.modules.ItemTransactionListModule', {
 	          {"dataIndex":"item_text","flex":1,"header":"item"},
 	          {"dataIndex":"warehouse",hidden:true,"header":"warehouse"},
 	          {"dataIndex":"warehouse_text","flex":1,"header":"warehouse"},
-	          {"dataIndex":"qty","flex":1,"header":"qty on hand"},
+	          {"dataIndex":"qty","flex":1,"header":"qty"},
          ].concat(ExtUtils.defaultGridCols2);
 	},
 	

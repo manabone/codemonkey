@@ -140,15 +140,6 @@ Ext.define('AM.modules.FormModule', {
 			
 			ExtUtils.markInvalidFields(me.formId , formErrors);
 			
-			var rowErrors = errors.filter(function(element, index, array){
-    			return (element.type == 'RowField');
-			});
-			
-			if(rowErrors.length > 0){
-				Ext.each(rowErrors , function(){
-					errorMsg += this.fieldName + ' ' + this.message + '<br>';
-				});
-			}
 			if(errorMsg){
 				Ext.Msg.alert("Failed", errorMsg);
 			}
@@ -194,8 +185,12 @@ Ext.define('AM.modules.FormModule', {
 			    	var result = Ext.decode(response.responseText);
 			    	if(result.success === false){
 			    		me.handleError(result.errorKey , result.errorMsg , result.errorFields , result.data);
-			    	}else if(fn){
-			    		fn(response);
+			    	}else {
+			    		var model = me.Model.create(result.data);
+			    		Ext.getCmp(me.formId).getForm().loadRecord(model);
+			    		if(fn){
+				    		fn(result);
+				    	}
 			    	}
 			    	
 			    	ExtUtils.unmask(Ext.getCmp(me.winId));

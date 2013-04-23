@@ -22,6 +22,8 @@ import com.codemonkey.utils.SysUtils;
 
 public abstract class AbsFormExtController<T extends IEntity> extends AbsExtController<T>{
 
+	public static final long NEW_ENTITY_ID = -1;
+	
 	// ----------------------
 	// edit
 	// ----------------------
@@ -47,8 +49,12 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
     @RequestMapping("read")
     @ResponseBody 
     public String read(@RequestParam Long id) {
-    	
-    	T t = service().get(id);
+    	T t = null;
+    	if(id == NEW_ENTITY_ID){
+    		t = service().createEntity();
+    	}else{
+    		t = service().get(id);
+    	}
     	
     	JSONObject result = new JSONObject();
     	if(t != null){

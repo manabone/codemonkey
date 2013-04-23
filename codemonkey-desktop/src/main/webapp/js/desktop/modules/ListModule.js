@@ -127,7 +127,7 @@ Ext.define('AM.modules.ListModule', {
 	create : function(){
 		if(this.formModuleId){
 			var formModule = this.app.getModule(this.formModuleId);
-		 	formModule.createWindow({entityId : null , gridId : this.gridId});	
+		 	formModule.createWindow({entityId : -1 , gridId : this.gridId});	
 		}
 	},
 	

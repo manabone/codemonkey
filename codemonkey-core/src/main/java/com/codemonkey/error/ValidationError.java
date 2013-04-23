@@ -25,7 +25,7 @@ public class ValidationError extends SysError{
 	}
 	
 	public ValidationError(Set<FieldValidation> set) {
-		super("validation error");
+		super("");
 		this.errorSet = set;
 	}
 	

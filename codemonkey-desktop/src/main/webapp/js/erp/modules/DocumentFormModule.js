@@ -65,7 +65,10 @@ Ext.define('erp.modules.DocumentFormModule', {
     },
     
     post : function(){
-    	this.doAction('post');
+    	var me = this;
+    	this.doAction('post' , function(result){
+    		
+    	});
     }
     
         
