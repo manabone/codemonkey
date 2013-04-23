@@ -10,7 +10,6 @@ import com.codemonkey.domain.Bar;
 import com.codemonkey.extcmp.ExtFormField;
 import com.codemonkey.extcmp.ExtPopup;
 import com.codemonkey.service.BarService;
-import com.codemonkey.service.GenericService;
 
 @Controller
 @RequestMapping("/ext/bar/**")

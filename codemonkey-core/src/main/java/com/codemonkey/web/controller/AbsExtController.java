@@ -11,9 +11,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.IEntity;
@@ -25,7 +23,6 @@ import com.codemonkey.error.ValidationError;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
-import com.codemonkey.utils.MMHelper;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
