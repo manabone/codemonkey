@@ -2,7 +2,6 @@ package com.codemonkey.error;
 
 import org.json.JSONObject;
 
-import com.codemonkey.domain.IEntity;
 import com.codemonkey.utils.ExtConstant;
 
 
@@ -13,26 +12,26 @@ public class BadObjVersionError extends SysError{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private IEntity entity ;
+	private JSONObject data;
 	
-	public BadObjVersionError(IEntity ee) {
-		super(ee.getClass().getSimpleName() + ee.getId() + " has been modified ");
-		this.setEntity(ee);
+	public BadObjVersionError(JSONObject data) {
+		super("data has been modified ");
+		this.data = data;
 	}
 	
 	@Override
 	public JSONObject json(){
 		JSONObject jo = super.json();
-		jo.put(ExtConstant.DATA , this.getEntity().detailJson());
+		jo.put(ExtConstant.DATA , getData());
 		return jo;
 	}
 
-	public IEntity getEntity() {
-		return entity;
+	public JSONObject getData() {
+		return data;
 	}
 
-	public void setEntity(IEntity entity) {
-		this.entity = entity;
+	public void setData(JSONObject data) {
+		this.data = data;
 	}
 	
 }
