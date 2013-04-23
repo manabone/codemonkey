@@ -26,7 +26,9 @@ public class Calc {
 	public static double add(Double...values) {
 		BigDecimal result = new BigDecimal("0");
 		for (Double v : values) {
-			if(v == null) v = 0.0;
+			if(v == null) {
+				v = 0.0;
+			}
 			BigDecimal vb = new BigDecimal(Double.toString(v));
 			result = result.add(vb);
 		}
@@ -36,7 +38,9 @@ public class Calc {
 	public static double sub(Double...values) {
 		BigDecimal result = null;
 		for (Double v : values) {
-			if(v == null) v = 0.0;
+			if(v == null) {
+				v = 0.0;
+			}
 			BigDecimal vb = new BigDecimal(Double.toString(v));
 			if(result == null) {
 				result = vb;
@@ -50,7 +54,9 @@ public class Calc {
 	public static double mul(Double...values) {
 		BigDecimal result = null;
 		for (Double v : values) {
-			if(v == null) return 0.0;
+			if(v == null) {
+				return 0.0;
+			}
 			BigDecimal vb = new BigDecimal(Double.toString(v));
 			if(result == null) {
 				result = vb;
@@ -64,7 +70,9 @@ public class Calc {
 	public static double mul(int scale , Double...values) {
 		BigDecimal result = null;
 		for (Double v : values) {
-			if(v == null) return 0.0;
+			if(v == null) {
+				return 0.0;
+			}
 			BigDecimal vb = new BigDecimal(Double.toString(v));
 			if(result == null) {
 				result = vb;
@@ -78,7 +86,9 @@ public class Calc {
 	public static double mulNoRound(Double...values) {
 		BigDecimal result = null;
 		for (Double v : values) {
-			if(v == null) return 0.0;
+			if(v == null) {
+				return 0.0;
+			}
 			BigDecimal vb = new BigDecimal(Double.toString(v));
 			if(result == null) {
 				result = vb;
@@ -94,9 +104,15 @@ public class Calc {
 	} 
 
 	public static double div(Double v1, Double v2, int scale) { 
-		if(v1 == null) v1 = 0.0;
-		if(v2 == null || v2 == 0) throw new IllegalArgumentException("The v2 must not be zero");
-		if(scale < 0) throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
+		if(v1 == null) {
+			v1 = 0.0;
+		}
+		if(v2 == null || v2 == 0) {
+			throw new IllegalArgumentException("The v2 must not be zero");
+		}
+		if(scale < 0) {
+			throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
+		}
 		
 		BigDecimal b1 = new BigDecimal(Double.toString(v1)); 
 		BigDecimal b2 = new BigDecimal(Double.toString(v2)); 
@@ -104,13 +120,19 @@ public class Calc {
 	} 
 
 	public static double round(Double v) { 
-		if(v == null) v = 0.0;
+		if(v == null){
+			v = 0.0;
+		}
 		return round(v, DEF_SCALE);
 	}
 	
 	public static double round(Double v, int scale) { 
-		if(v == null) v = 0.0;
-		if(scale < 0) throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
+		if(v == null) {
+			v = 0.0;
+		}
+		if(scale < 0) {
+			throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
+		}
 		
 		BigDecimal b = new BigDecimal(Double.toString(v)); 
 		BigDecimal one = new BigDecimal("1"); 
@@ -120,8 +142,12 @@ public class Calc {
 		return floor(v, 0); 
 	}
 	public static double floor(Double v, int scale) { 
-		if(v == null) v = 0.0;
-		if(scale < 0) throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
+		if(v == null) {
+			v = 0.0;
+		}
+		if(scale < 0) {
+			throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
+		}
 		
 		BigDecimal b = new BigDecimal(Double.toString(v)); 
 		BigDecimal one = new BigDecimal("1"); 
@@ -176,7 +202,9 @@ public class Calc {
 	
 	private static boolean validateRateArray(List<Double> list){
 		double totalRate = 0;
-		if(list == null || list.isEmpty()) return true;
+		if(list == null || list.isEmpty()) {
+			return true;
+		}
 		
 		for(int i = 0 ; i < list.size() ; i++){
 			double rate = list.get(i);

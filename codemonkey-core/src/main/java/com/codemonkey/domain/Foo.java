@@ -8,8 +8,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.json.JSONObject;
@@ -26,12 +24,8 @@ public class Foo extends AbsEE{
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull
-//	@Email
-//	@URL
 	private String fstring;
 	
-	@Min(0)
-	@Max(10)
 	private Double fnumber;
 	
 	private Boolean fbool;
