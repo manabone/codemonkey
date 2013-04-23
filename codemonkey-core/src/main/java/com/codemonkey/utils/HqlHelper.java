@@ -104,7 +104,7 @@ public final class HqlHelper {
 	}
 	
 	public static String findByQueryInfo(Class<?> type , JSONObject queryInfo){
-		String findBy = queryInfoToFindBy(type , queryInfo);
+		String findBy = queryInfoToFindBy(queryInfo);
 		
 		if(queryInfo.has(JOINS)){
 			return findyBy(type , findBy , queryInfo.getString(JOINS).split(","));
@@ -114,7 +114,7 @@ public final class HqlHelper {
 	}
 	
 	public static String countByQueryInfo(Class<?> type , JSONObject queryInfo){
-		String findBy = queryInfoToFindBy(type , queryInfo);
+		String findBy = queryInfoToFindBy(queryInfo);
 		
 		if(queryInfo.has(JOINS)){
 			return countBy(type , findBy , queryInfo.getString(JOINS).split(","));
@@ -209,7 +209,7 @@ public final class HqlHelper {
 	//---------------------------------------//
 	
 	@SuppressWarnings("unchecked")
-	private static String queryInfoToFindBy(Class<?> type , JSONObject queryInfo){
+	private static String queryInfoToFindBy(JSONObject queryInfo){
 		StringBuffer buffer = new StringBuffer();
 		if(queryInfo == null){
 			return null;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Calc {
+public final class Calc {
 
 	private static final int HUNDRED = 100;
 	private static final int DEF_SCALE = 2; 
