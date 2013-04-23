@@ -24,7 +24,7 @@ public final class Calc {
 	}
 
 	public static double add(Double...values) {
-		BigDecimal result = new BigDecimal("0");
+		BigDecimal result = BigDecimal.ZERO;
 		for (Double v : values) {
 			if(v == null) {
 				v = 0.0;
@@ -104,9 +104,7 @@ public final class Calc {
 	} 
 
 	public static double div(Double v1, Double v2, int scale) { 
-		if(v1 == null) {
-			v1 = 0.0;
-		}
+		
 		if(v2 == null || v2 == 0) {
 			throw new IllegalArgumentException("The v2 must not be zero");
 		}
@@ -114,43 +112,34 @@ public final class Calc {
 			throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
 		}
 		
-		BigDecimal b1 = new BigDecimal(Double.toString(v1)); 
+		BigDecimal b1 = v1 == null ? BigDecimal.ZERO : new BigDecimal(Double.toString(v1)); 
 		BigDecimal b2 = new BigDecimal(Double.toString(v2)); 
 		return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 	} 
 
 	public static double round(Double v) { 
-		if(v == null){
-			v = 0.0;
-		}
 		return round(v, DEF_SCALE);
 	}
 	
 	public static double round(Double v, int scale) { 
-		if(v == null) {
-			v = 0.0;
-		}
 		if(scale < 0) {
 			throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
 		}
 		
-		BigDecimal b = new BigDecimal(Double.toString(v)); 
-		BigDecimal one = new BigDecimal("1"); 
+		BigDecimal b = v == 0 ? BigDecimal.ZERO : new BigDecimal(Double.toString(v)); 
+		BigDecimal one = BigDecimal.ONE; 
 		return b.divide(one,scale,BigDecimal.ROUND_HALF_UP).doubleValue(); 
 	}
 	public static double floor(Double v) { 
 		return floor(v, 0); 
 	}
 	public static double floor(Double v, int scale) { 
-		if(v == null) {
-			v = 0.0;
-		}
 		if(scale < 0) {
 			throw new IllegalArgumentException("The scale must be a positive integer or zero"); 
 		}
 		
-		BigDecimal b = new BigDecimal(Double.toString(v)); 
-		BigDecimal one = new BigDecimal("1"); 
+		BigDecimal b = v == 0 ? BigDecimal.ZERO : new BigDecimal(Double.toString(v)); 
+		BigDecimal one = BigDecimal.ONE; 
 		return b.divide(one,scale,BigDecimal.ROUND_FLOOR).doubleValue(); 
 	}
 	
@@ -195,7 +184,7 @@ public final class Calc {
 			amount = Calc.sub(totalAmount , accumulateDocTotal);
 			
 		}else{
-			amount = Calc.mul(totalAmount , rate / 100);
+			amount = Calc.mul(totalAmount , rate / HUNDRED);
 		}
 		return amount;
 	}
@@ -214,7 +203,7 @@ public final class Calc {
 			totalRate = add(totalRate , rate);
 		}
 		
-		if(totalRate != 100){
+		if(totalRate != HUNDRED){
 			return false;
 		}
 		

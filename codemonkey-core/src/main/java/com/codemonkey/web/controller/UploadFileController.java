@@ -82,7 +82,7 @@ public class UploadFileController {
 				outputStream = new FileOutputStream(fileName);
 
 				int readBytes = 0;
-				byte[] buffer = new byte[10000];
+				byte[] buffer = new byte[TEN_THOUSAND];
 				while ((readBytes = inputStream.read(buffer, 0, TEN_THOUSAND)) != -1) {
 					outputStream.write(buffer, 0, readBytes);
 				}

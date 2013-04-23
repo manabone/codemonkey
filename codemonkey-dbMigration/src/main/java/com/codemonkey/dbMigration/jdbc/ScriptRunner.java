@@ -17,58 +17,42 @@ public class ScriptRunner {
 
 	public void execute(Connection connection, Reader reader)
 			throws IOException, SQLException {
+			
+		final boolean originalAutoCommit = connection.getAutoCommit();
+			
 		try {
-			final boolean originalAutoCommit = connection.getAutoCommit();
-			try {
-				if (originalAutoCommit) {
-					connection.setAutoCommit(false);
-				}
-				doExecute(connection, reader);
-			} finally {
-				connection.setAutoCommit(originalAutoCommit);
+			if (originalAutoCommit) {
+				connection.setAutoCommit(false);
 			}
-		} catch (IOException e) {
-			throw e;
-		} catch (SQLException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new RuntimeException("Error running script.  Cause: " + e, e);
+			doExecute(connection, reader);
+		} finally {
+			connection.setAutoCommit(originalAutoCommit);
 		}
 	}
 
 	private void doExecute(Connection connection, Reader reader)
 			throws IOException, SQLException {
 		StringBuffer command = null;
-		try {
-			LineNumberReader lineReader = new LineNumberReader(reader);
-			String line;
-			while ((line = lineReader.readLine()) != null) {
-				if (command == null) {
-					command = new StringBuffer();
-				}
-
-				//line = line.trim(); // Strip extra whitespace too?
-				if (!line.startsWith("--") && !line.startsWith("#")
-						&& !line.startsWith("//")){
-					command.append(line);
-					command.append(" ");
-				}
-				
+		LineNumberReader lineReader = new LineNumberReader(reader);
+		String line;
+		while ((line = lineReader.readLine()) != null) {
+			if (command == null) {
+				command = new StringBuffer();
 			}
 
-			// Check to see if we have an unexecuted statement in command.
-			if (command != null && command.length() > 0) {
+			//line = line.trim(); // Strip extra whitespace too?
+			if (!line.startsWith("--") && !line.startsWith("#")
+					&& !line.startsWith("//")){
+				command.append(line);
+				command.append(" ");
+			}
+			
+		}
+
+		// Check to see if we have an unexecuted statement in command.
+		if (command != null && command.length() > 0) {
 //				logger.info("Last statement in script is missing a terminating delimiter, executing anyway.");
-				executeStatement(connection, command.toString());
-			}
-		} catch (SQLException e) {
-			e.fillInStackTrace();
-			logger.error("Error executing: " + command, e);
-			throw e;
-		} catch (IOException e) {
-			e.fillInStackTrace();
-			logger.error("Error executing: " + command, e);
-			throw e;
+			executeStatement(connection, command.toString());
 		}
 	}
 
