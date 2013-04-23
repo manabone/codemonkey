@@ -44,6 +44,8 @@ import com.codemonkey.utils.ClassHelper;
  */
 public class GenMojo extends AbstractMojo {
 	
+	private static final int OFF_SET = 16;
+
 	/**
 	 * @parameter expression="${project}"
 	 * @required
@@ -178,7 +180,7 @@ public class GenMojo extends AbstractMojo {
         StringBuffer sb=new StringBuffer();
         Matcher matcher = Pattern.compile("\\\\u([0-9a-fA-F]{4})").matcher(str);
         while(matcher.find()){
-            matcher.appendReplacement(sb, (char)Integer.parseInt(matcher.group(1),16)+"");  
+            matcher.appendReplacement(sb, (char)Integer.parseInt(matcher.group(1) , OFF_SET)+"");  
         }
         matcher.appendTail(sb);
         return sb.toString().replace("\\", "");

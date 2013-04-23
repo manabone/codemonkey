@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codemonkey.dao.GenericDao;
-import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.domain.IEntity;
 import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
@@ -161,19 +160,6 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		return list;
 	}
 
-	public List<T> findBySearchingInfo(SearchingInfo searchingInfo){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findBySearchingInfo(searchingInfo);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-	
 	public T findBy(String query , Object... params){
 		
 		StopWatch stopWatch = new StopWatch();
@@ -242,20 +228,6 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		getLog().info(stopWatch);
 		
 		return list;
-	}
-	
-	
-	public long count(SearchingInfo searchingInfo){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		long count = getDao().count(searchingInfo);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return count;
 	}
 	
 	public long count(Criterion... criterions){

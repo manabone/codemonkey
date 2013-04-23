@@ -16,7 +16,6 @@ import org.hibernate.criterion.Projections;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.domain.IEntity;
 import com.codemonkey.utils.HqlHelper;
 import com.codemonkey.utils.SysUtils;
@@ -146,15 +145,6 @@ public class GenericDao<T extends IEntity> {
     	return c.list();
     }
     
-	public List<T> findBySearchingInfo(SearchingInfo searchingInfo){
-		Criteria c = buildCriteria();
-		searchingInfo.addCriterions(c);
-		searchingInfo.addOrders(c);
-		c.setMaxResults(searchingInfo.getMax());
-		c.setFirstResult(searchingInfo.getOffset());
-		return c.list();
-	}
-    
 	public long count(Criterion... criterions){
 		List<Criterion> conditions = new ArrayList<Criterion>();
 		if(criterions != null){
@@ -169,13 +159,6 @@ public class GenericDao<T extends IEntity> {
     	return countResult((Long) c.uniqueResult());
     }
     
-	public long count(SearchingInfo searchingInfo){
-    	Criteria c = buildCriteria();
-    	searchingInfo.addCriterions(c);
-    	c.setProjection(Projections.rowCount());
-    	return countResult((Long) c.uniqueResult());
-    }
-
 	public List<T> findAllBy(String query, Object... params) {
 		
 		String hql = HqlHelper.findyBy(type, query);

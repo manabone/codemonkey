@@ -37,7 +37,6 @@ public class AppUser extends AbsEE{
 	private String email;
 	
 	@NotNull
-	@Size(min=3)
 	private String password;
 	
 	private String salt;

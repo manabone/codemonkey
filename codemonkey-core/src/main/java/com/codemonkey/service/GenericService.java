@@ -6,7 +6,6 @@ import org.hibernate.criterion.Criterion;
 import org.json.JSONObject;
 import org.springframework.core.convert.converter.Converter;
 
-import com.codemonkey.dao.searchingInfo.SearchingInfo;
 import com.codemonkey.web.converter.CustomConversionService;
 
 public interface GenericService<T> extends Converter<String, T> {
@@ -26,10 +25,6 @@ public interface GenericService<T> extends Converter<String, T> {
     List<T> findAll();
     
     List<T> findAll(int start , int limit);
-    
-    List<T> findBySearchingInfo(SearchingInfo searchingInfo);
-    
-    long count(SearchingInfo searchingInfo);
     
     long countBy(String query , Object... params);
     

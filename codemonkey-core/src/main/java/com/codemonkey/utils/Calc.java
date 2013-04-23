@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Calc {
 
+	private static final int HUNDRED = 100;
 	private static final int DEF_SCALE = 2; 
 	private Calc() {} 
 	
@@ -163,7 +164,7 @@ public class Calc {
 		}else if(isLast){
 			double accumulateDocTotal = 0;
 			for(int j = 0 ; j < list.size()-1 ; j++){
-				accumulateDocTotal += Calc.mul(totalAmount , list.get(j) / 100);
+				accumulateDocTotal += Calc.mul(totalAmount , list.get(j) / HUNDRED);
 			}
 			amount = Calc.sub(totalAmount , accumulateDocTotal);
 			

@@ -26,6 +26,7 @@ import com.codemonkey.utils.ExtConstant;
 @Controller
 @RequestMapping(value = "/ext/uploadFile/**")
 public class UploadFileController {
+	private static final int TEN_THOUSAND = 10000;
 	private static final String UPLOAD_FILE = "uploadfile";
 	private String uploadFolderPath;
 	ServletConfig config;
@@ -82,7 +83,7 @@ public class UploadFileController {
 
 				int readBytes = 0;
 				byte[] buffer = new byte[10000];
-				while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+				while ((readBytes = inputStream.read(buffer, 0, TEN_THOUSAND)) != -1) {
 					outputStream.write(buffer, 0, readBytes);
 				}
 				outputStream.close();
