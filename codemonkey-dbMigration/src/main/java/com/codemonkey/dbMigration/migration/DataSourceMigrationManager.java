@@ -97,40 +97,7 @@ public class DataSourceMigrationManager implements MigrationManager {
 			jdbcTemplate.execute(new ConnectionCallback<Object>() {
 				public Object doInConnection(Connection connection)
 						throws SQLException {
-					Migration currentMigration = null;
-
-					final boolean autoCommit = connection.getAutoCommit();
-					connection.setAutoCommit(false);
-
-					try {
-						for (Migration migration : pendingMigrations) {
-							currentMigration = migration;
-							logger.info("Running migration "
-									+ currentMigration.getFilename() + ".");
-
-							final Date startTime = new Date();
-							StopWatch migrationWatch = new StopWatch();
-							migrationWatch.start();
-
-							currentMigration.migrate(dbType, connection);
-							versionStrategy.recordMigration(dbType, connection,
-									currentMigration.getVersion(), startTime,
-									migrationWatch.getTime());
-
-							connection.commit();
-						}
-					} catch (Exception e) {
-						assert currentMigration != null;
-						String message = "Migration for version "
-								+ currentMigration.getVersion()
-								+ " failed, rolling back and terminating migration.";
-						logger.error(message, e);
-						connection.rollback();
-						throw new MigrationException(message, e);
-					} finally {
-						connection.setAutoCommit(autoCommit);
-					}
-					return null;
+					return callback(pendingMigrations, connection);
 				}
 			});
 		} catch (DataAccessException e) {
@@ -142,6 +109,45 @@ public class DataSourceMigrationManager implements MigrationManager {
 
 		logger.info("Migrated database in "
 				+ DurationFormatUtils.formatDurationHMS(watch.getTime()) + ".");
+	}
+	
+	public Object callback(
+			final Collection<Migration> pendingMigrations,
+			Connection connection) throws SQLException {
+		Migration currentMigration = null;
+
+		final boolean autoCommit = connection.getAutoCommit();
+		connection.setAutoCommit(false);
+
+		try {
+			for (Migration migration : pendingMigrations) {
+				currentMigration = migration;
+				logger.info("Running migration "
+						+ currentMigration.getFilename() + ".");
+
+				final Date startTime = new Date();
+				StopWatch migrationWatch = new StopWatch();
+				migrationWatch.start();
+
+				currentMigration.migrate(dbType, connection);
+				versionStrategy.recordMigration(dbType, connection,
+						currentMigration.getVersion(), startTime,
+						migrationWatch.getTime());
+
+				connection.commit();
+			}
+		} catch (Exception e) {
+			assert currentMigration != null;
+			String message = "Migration for version "
+					+ currentMigration.getVersion()
+					+ " failed, rolling back and terminating migration.";
+			logger.error(message, e);
+			connection.rollback();
+			throw new MigrationException(message, e);
+		} finally {
+			connection.setAutoCommit(autoCommit);
+		}
+		return null;
 	}
 
 	public void setDatabaseType(DBType dbType) {

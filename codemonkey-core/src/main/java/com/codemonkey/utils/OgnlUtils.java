@@ -6,8 +6,10 @@ import ognl.Ognl;
 import ognl.OgnlContext;
 import ognl.OgnlException;
 
-public class OgnlUtils {
+public final class OgnlUtils {
 
+	private OgnlUtils(){}
+	
 	public static String stringValue(String expressionString , Object obj){
 		Object value = objectValue(expressionString , obj);
 		if(value != null){

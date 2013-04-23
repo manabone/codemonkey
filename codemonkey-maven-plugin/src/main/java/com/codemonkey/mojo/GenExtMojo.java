@@ -133,8 +133,9 @@ public class GenExtMojo extends GenMojo {
 	}
 
 	private boolean isImplementsOfEE(Class<?> type) {
-		while(!type.equals(Object.class)){
-			Class<?>[] interfaces = type.getInterfaces();
+		Class<?> type1 = type;
+		while(!type1.equals(Object.class)){
+			Class<?>[] interfaces = type1.getInterfaces();
 			if(interfaces != null){
 				for(int i = 0 ; i < interfaces.length ; i++ ){
 					if(interfaces[i].getSimpleName().equals("EE")){
@@ -142,7 +143,7 @@ public class GenExtMojo extends GenMojo {
 					}
 				}
 			}
-			type = type.getSuperclass();
+			type1 = type1.getSuperclass();
 		}
 		return false;
 	}

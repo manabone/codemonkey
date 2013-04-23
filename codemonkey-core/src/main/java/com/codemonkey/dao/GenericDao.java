@@ -241,7 +241,7 @@ public class GenericDao<T extends IEntity> {
 	
 	private long countResult(Long count){
 		if(count == null){
-			count = 0L;
+			return 0;
 		}
 		return count;
 	}

@@ -57,7 +57,9 @@ public class UploadFileController {
 			StringBuffer buffer = new StringBuffer();
 			
 			for (ObjectError error : bindingResult.getAllErrors()) {
-				buffer.append(error.getCode() + " - " + error.getDefaultMessage());
+				buffer.append(error.getCode());
+				buffer.append(" - ");
+				buffer.append(error.getDefaultMessage());
 			}
 			
 			result.put(ExtConstant.SUCCESS, false);

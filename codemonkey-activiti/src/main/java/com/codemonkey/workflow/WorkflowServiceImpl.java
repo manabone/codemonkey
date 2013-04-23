@@ -72,7 +72,7 @@ public class WorkflowServiceImpl implements WorkflowService{
 	
 	private List<Task> getActiveTasksListByUser(ProcessInstance instance, List<Task> list, String userId){
 		if(list == null) {
-			list = new ArrayList<Task>();
+			return new ArrayList<Task>();
 		}
 		
 		if(StringUtils.isNotBlank(userId)){

@@ -113,12 +113,13 @@ public class SimpleVersionStrategy implements VersionStrategy {
 	}
 	
 	public String getVersion(Date date){
-		if(date == null){
-			date = new Date();
+		Date date1 = date;
+		if(date1 == null){
+			date1 = new Date();
 		}
 		String version = FastDateFormat.getInstance(
 				Configure.getStringProperty(PropKeyHolder.VERSION_PATTERN),
-				TimeZone.getTimeZone(Configure.getStringProperty(PropKeyHolder.VERSION_TIME_ZONE))).format(date);
+				TimeZone.getTimeZone(Configure.getStringProperty(PropKeyHolder.VERSION_TIME_ZONE))).format(date1);
 		return version;
 	}
 

@@ -2,7 +2,6 @@ package com.codemonkey.service;
 
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.codemonkey.domain.Foo;
@@ -12,8 +11,6 @@ import com.codemonkey.error.FormFieldValidation;
 @Service
 public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooService{
 
-	@Autowired private AppRoleService appRoleService;
-	
 	@Override
 	public Foo createEntity() {
 		return new Foo();
