@@ -40,8 +40,7 @@ public final class ClassHelper {
 			field = getFieldFromClazz(entity.getClass() , fieldName);
 			return callGetter(entity , field);
 		} catch (Exception e) {
-			logger.info(" call get" + StringUtils.capitalize(field.getName()) + " FAILED!!!!! ");
-			e.printStackTrace();
+			logger.error(" call get" + StringUtils.capitalize(field.getName()) + " FAILED!!!!! ");
 		}
 		return null;
 	}
@@ -61,7 +60,6 @@ public final class ClassHelper {
 				setter = ClassUtils.getMethodIfAvailable(obj.getClass() , setterName , field.getType());
 				
 				if(setter != null && field != null){
-//					logger.info(setter.getName() + " || " + value);
 					setter.invoke(obj, value);
 				}else{
 					logger.info(setterName + " is NOT FOUND !!!");
@@ -69,15 +67,15 @@ public final class ClassHelper {
 			}
 			
 		}catch(Exception e){
-			logger.info("call "+ setter.getName() + " IN " + obj.getClass().getSimpleName() + " FAILED!!!! ");
-			e.printStackTrace();
+			logger.error("call "+ setter.getName() + " IN " + obj.getClass().getSimpleName() + " FAILED!!!! ");
 		}
 	}
 	
 	
 	public static Field getFieldFromClazz(Class<?> clazz , String fieldName) {
-		while(!clazz.equals(Object.class)){
-			Field[] fields = clazz.getDeclaredFields();
+		Class<?> clazz1 = clazz;
+		while(!clazz1.equals(Object.class)){
+			Field[] fields = clazz1.getDeclaredFields();
 			if(fields != null){
 				for(int i = 0 ; i < fields.length ; i++){
 					if(fields[i].getName().equals(fieldName)){
@@ -85,7 +83,7 @@ public final class ClassHelper {
 					}
 				}
 			}
-			clazz = clazz.getSuperclass();
+			clazz1 = clazz1.getSuperclass();
 		}
 		return null;
 	}
@@ -109,8 +107,7 @@ public final class ClassHelper {
 			return value;
 			
 		}catch(Exception e){
-			logger.info("call "+ getter.getName() + " FAILED!!!! ");
-			e.printStackTrace();
+			logger.error("call "+ getter.getName() + " FAILED!!!! ");
 		}
 		return null;
 	}
@@ -124,10 +121,11 @@ public final class ClassHelper {
 	}
 	
 	public static List<String> getAllFieldNames(Class<?> type){
+		Class<?> type1 = type;
 		List<String> list = new ArrayList<String>();
 		try{
-			while(!type.equals(Object.class)){
-				Field[] fields = type.getDeclaredFields();
+			while(!type1.equals(Object.class)){
+				Field[] fields = type1.getDeclaredFields();
 				if(fields != null){
 					for(int i = 0 ; i < fields.length ; i++){
 						String name = fields[i].getName();
@@ -136,18 +134,19 @@ public final class ClassHelper {
 						}
 					}
 				}
-				type = type.getSuperclass();
+				type1 = type1.getSuperclass();
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("call getAllFieldNames "+ type1 + " FAILED!!!! ");
 		}
 		return list;
 	}
 	
 	public static List<Field> getAllFields(Class<?> clazz){
 		List<Field> fields = new ArrayList<Field>();
-		while(!clazz.equals(Object.class)){
-			Field[] fs = clazz.getDeclaredFields();
+		Class<?> clazz1 = clazz;
+		while(!clazz1.equals(Object.class)){
+			Field[] fs = clazz1.getDeclaredFields();
 			if(fs != null){
 				for(int i = 0 ; i < fs.length ; i++){
 					Field f = fs[i];
@@ -156,7 +155,7 @@ public final class ClassHelper {
 					}
 				}
 			}
-			clazz = clazz.getSuperclass();
+			clazz1 = clazz1.getSuperclass();
 		}
 		return fields;
 	}
@@ -204,18 +203,15 @@ public final class ClassHelper {
 		Type genType = clazz.getGenericSuperclass();
 
 		if (!(genType instanceof ParameterizedType)) {
-			//logger.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
 			return Object.class;
 		}
 
 		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
 		if (index >= params.length || index < 0) {
-			//logger.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: " + params.length);
 			return Object.class;
 		}
 		if (!(params[index] instanceof Class)) {
-//			getLog(SysUtils.class).warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
 			return Object.class;
 		}
 		return (Class<?>) params[index];
@@ -240,7 +236,6 @@ public final class ClassHelper {
 	public static Class<?> getGenricType4Collection(Class<?> clazz) {
 		
 		Type[] genType = clazz.getGenericInterfaces();
-
 
 		return (Class<?>) genType[0];
 		
