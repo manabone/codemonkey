@@ -42,8 +42,9 @@ public class AuthFilterServiceImpl extends AuthenticationFilter {
         		jo.put(ExtConstant.ERROR_KEY, "sessionTimeout");
         		jo.put(ExtConstant.ERROR_MSG , "session timeout , please login");
         		response.getWriter().write(jo.toString());
+    		}else{
+    			saveRequestAndRedirectToLogin(request, response);
     		}
-        	
     		return false;
         }
     }

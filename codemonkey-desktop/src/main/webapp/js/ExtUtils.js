@@ -345,6 +345,15 @@ var ExtUtils = {
 
         return Ext.ModelManager.getModel(model);
     },
+    
+    disableAllFields : function(formId){
+    	var formPanel = Ext.getCmp(formId);
+		var form = formPanel.getForm();
+		var fields = form.getFields(); 
+		for(var i = 0 ; i < fields.items.length ; i++){
+			fields.items[i].disable();
+		}
+    },
 	//-------------------------------------------------------
 	//           MODULE UTILs
 	//-------------------------------------------------------	

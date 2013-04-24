@@ -60,7 +60,6 @@ Ext.define('AM.modules.FormModule', {
     
     afterWindowCreate : function(){
     	this.loadEntityToForm();
-    	this.manageControl();
     },
     
     loadEntityToForm : function(){
@@ -70,6 +69,7 @@ Ext.define('AM.modules.FormModule', {
         	    success: function(model) {
         	        Ext.getCmp(me.formId).getForm().loadRecord(model);
         	        me.afterModelLoad(model);
+        	        me.manageControl(model.data);
         	    }
         	});
     	}else{
@@ -192,6 +192,7 @@ Ext.define('AM.modules.FormModule', {
 			    	}else {
 			    		var model = me.Model.create(result.data);
 			    		Ext.getCmp(me.formId).getForm().loadRecord(model);
+			    		me.manageControl(result.data);
 			    		if(fn){
 				    		fn(result);
 				    	}
