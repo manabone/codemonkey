@@ -15,6 +15,8 @@ Ext.define('erp.modules.PurchaseOrderFormModule', {
     },
     
     formItems : function(){
+    	var me = this;
+    	
     	var p1 = ExtUtils.panel({
     		title : 'basic info',
 			items:[
@@ -29,11 +31,21 @@ Ext.define('erp.modules.PurchaseOrderFormModule', {
     	
     	var p2 = ExtUtils.creationInfoPanel();
     	
+    	
     	var lineGrid = ExtUtils.arrayGrid({
     		id : this.lineGridId,
     		plugins : [
 		           Ext.create('Ext.grid.plugin.CellEditing', {
-		        	   clicksToEdit: 1
+		        	   clicksToEdit: 1 ,
+		        	   listeners: {
+		                   'beforeedit': function(e) {
+		                	   var model = ExtUtils.formValues(me.formId);
+		                	   if(model.status != 'Draft'){
+		                		   return false;
+		                	   }
+		                	   return true;
+		                   }
+		        	   }
 		           })
             ],
 			columns : this.orderLineColumns

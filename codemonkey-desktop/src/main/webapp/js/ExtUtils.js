@@ -317,9 +317,22 @@ var ExtUtils = {
 		
 		if(!formPanel) return null;
 		
+		var data = {};
 		var form = formPanel.getForm();
 		if(form.isValid()){
-			return form.getFieldValues();
+			
+			var fields = form.getFields(); 
+			for(var i = 0 ; i < fields.items.length ; i++){
+				if(fields.items[i].disabled){
+					fields.items[i].disabled = false;
+					data[fields.items[i].name] = fields.items[i].getValue();
+					fields.items[i].disabled = true;
+				}else{
+					data[fields.items[i].name] = fields.items[i].getValue();
+				}
+			}
+			
+			return data;
 		}
 		return null;
 	},
@@ -346,12 +359,16 @@ var ExtUtils = {
         return Ext.ModelManager.getModel(model);
     },
     
-    disableAllFields : function(formId){
+    manageFields : function(formId , disabled){
     	var formPanel = Ext.getCmp(formId);
 		var form = formPanel.getForm();
 		var fields = form.getFields(); 
 		for(var i = 0 ; i < fields.items.length ; i++){
-			fields.items[i].disable();
+			if(disabled){
+				fields.items[i].disable();
+			}else{
+				fields.items[i].enable();
+			}
 		}
     },
 	//-------------------------------------------------------

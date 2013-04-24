@@ -102,24 +102,21 @@ Ext.define('erp.modules.DocumentFormModule', {
     
     manageControl : function(model){
     	if(model.status != 'Draft'){
-    		ExtUtils.disableAllFields(this.formId);
+    		ExtUtils.manageFields(this.formId , true);
+    		
+    		var win = Ext.getCmp(this.winId);
+        	var dockedItems = win.getDockedItems('toolbar[dock=bottom]');
+        	if(dockedItems && dockedItems[0].items){
+        		var buttons = dockedItems[0].items.items;
+        		for(var i = 0 ; i < buttons.length ; i++){
+        			if(buttons[i].action != 'cancel'){
+        				buttons[i].disable();
+        			}
+        		}
+        	}
+    	}else{
+    		ExtUtils.manageFields(this.formId , false);
     	}
-//    	var columns = this.getLineGrid().columns;
-//    	for(var i = 0 ; i < columns.length ; i++){
-//    		columns[i].setEditor(null);
-//    	}
-    	
-    	var win = Ext.getCmp(this.winId);
-    	var dockedItems = win.getDockedItems('toolbar[dock=bottom]');
-    	if(dockedItems && dockedItems[0].items){
-    		var buttons = dockedItems[0].items.items;
-    		for(var i = 0 ; i < buttons.length ; i++){
-    			if(buttons[i].action != 'cancel'){
-    				buttons[i].disable();
-    			}
-    		}
-    	}
-    	
     	
     }
         
