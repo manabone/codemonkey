@@ -371,6 +371,23 @@ var ExtUtils = {
 			}
 		}
     },
+    
+    manageButtons : function(winId , disabled){
+    	var win = Ext.getCmp(winId);
+    	var dockedItems = win.getDockedItems('toolbar[dock=bottom]');
+    	if(dockedItems && dockedItems[0].items){
+    		var buttons = dockedItems[0].items.items;
+    		for(var i = 0 ; i < buttons.length ; i++){
+    			if(buttons[i].action != 'cancel'){
+    				if(disabled){
+    					buttons[i].disable();
+    				}else{
+    					buttons[i].enable();
+    				}
+    			}
+    		}
+    	}
+    },
 	//-------------------------------------------------------
 	//           MODULE UTILs
 	//-------------------------------------------------------	
@@ -817,7 +834,8 @@ var ExtUtils = {
 		var p = Ext.apply({} , config , {
 			xtype : 'panel',
 			padding : 5,
-    		bodyPadding : 5});
+    		bodyPadding : 5
+    	});
 		return p;
 	} 
 	
