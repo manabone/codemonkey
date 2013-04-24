@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.codemonkey.erp.domain.DocumentLine;
 import com.codemonkey.erp.domain.DocumentStatus;
 import com.codemonkey.erp.domain.Transaction;
 import com.codemonkey.error.FieldValidation;
+import com.codemonkey.error.FormFieldValidation;
 import com.codemonkey.error.ValidationError;
 import com.codemonkey.service.GenericServiceImpl;
 import com.codemonkey.utils.ExtConstant;
@@ -34,7 +36,44 @@ public abstract class DocumentServiceImpl<T extends Document , E extends Documen
 	
 	abstract DocumentLineService<E> getDocumentLineService();
 	
-	abstract Set<FieldValidation> validate4post(T doc);
+	@Override
+	protected Set<FieldValidation> validate(T doc){
+		Set<FieldValidation> set = super.validate(doc);
+		
+		if(StringUtils.isBlank(doc.getCode())){
+			set.add(new FormFieldValidation("code" , FieldValidation.EMPTY));
+		}
+		
+		if(doc.getWarehouse() == null){
+			set.add(new FormFieldValidation("warehouse" , FieldValidation.EMPTY));
+		}
+		
+		return set;
+	}
+	
+	protected Set<FieldValidation> validate4post(T doc){
+		
+		Set<FieldValidation> set = validate(doc);
+		
+		if(!DocumentStatus.Draft.equals(doc.getStatus())){
+			set.add(new FormFieldValidation("status" , FieldValidation.NOT_DRAFT));
+		}
+		
+		List<E> lines = getDocumentLineService().getLinesByHeader(doc);
+		
+		if(CollectionUtils.isEmpty(lines)){
+			set.add(new FormFieldValidation("lines" , FieldValidation.EMPTY));
+		}
+		
+		for(E line : lines){
+			Set<FieldValidation> lineSet =  getDocumentLineService().validate4post(line);
+			if(CollectionUtils.isNotEmpty(lineSet)){
+				set.addAll(lineSet);
+			}
+		}
+		
+		return set;
+	}
 	
 	public void post(T doc) {
 		

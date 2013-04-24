@@ -30,7 +30,7 @@ public final class AppResourceHelper {
 		return permissions;
 	}
 	
-	private static AppPermission formPermission(Class<?> clazz , Operation op){
+	public static AppPermission formPermission(Class<?> clazz , Operation op){
 		String permission = formPermissionString(clazz, op);
 		String url = formUrl(clazz, op);
 		RequestType requestType = op.getRequestType();

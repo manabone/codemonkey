@@ -8,6 +8,9 @@ public enum Operation implements IEnum{
 	DESTROY,
 	UPDATE,
 	READ,
+	
+	POST,
+	
 	EDIT{
 		@Override
 		public RequestType getRequestType(){

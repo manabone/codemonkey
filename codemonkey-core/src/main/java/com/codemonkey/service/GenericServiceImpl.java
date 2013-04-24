@@ -31,7 +31,7 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 	private Class<?> type;
 	
 	public GenericServiceImpl(){
-		this.type = ClassHelper.getSuperClassGenricType(getClass());
+		this.setType(ClassHelper.getSuperClassGenricType(getClass()));
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 	
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		dao = new GenericDao<T>(sessionFactory , type);
+		dao = new GenericDao<T>(sessionFactory , getType());
 	}
 	
 	protected GenericDao<T> getDao() {
@@ -324,6 +324,14 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 			id = params.getLong(ExtConstant.ID);
 		}
 		return id;
+	}
+
+	public Class<?> getType() {
+		return type;
+	}
+
+	public void setType(Class<?> type) {
+		this.type = type;
 	}
 
 }
