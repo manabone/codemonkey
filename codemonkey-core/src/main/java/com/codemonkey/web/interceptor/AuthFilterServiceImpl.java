@@ -34,14 +34,14 @@ public class AuthFilterServiceImpl extends AuthenticationFilter {
         	
     		AppPermission permission = appPermissionService.findBy("url_Like", url + "%");
         	
-    		if(permission != null && RequestType.JSON.equals(permission.getRequestType())){
+    		if(permission != null && RequestType.HTML.equals(permission.getRequestType())){
+    			 saveRequestAndRedirectToLogin(request, response);
+    		}else if(permission != null && RequestType.JSON.equals(permission.getRequestType())){
     			JSONObject jo = new JSONObject();
         		jo.put(ExtConstant.SUCCESS, false);
         		jo.put(ExtConstant.ERROR_KEY, "sessionTimeout");
         		jo.put(ExtConstant.ERROR_MSG , "session timeout , please login");
         		response.getWriter().write(jo.toString());
-    		}else{
-    			 saveRequestAndRedirectToLogin(request, response);
     		}
         	
     		return false;

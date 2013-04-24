@@ -36,28 +36,7 @@ Ext.define('erp.modules.PurchaseOrderFormModule', {
 		        	   clicksToEdit: 1
 		           })
             ],
-			columns :  [
-   	            {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
-   	            {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
-   	            
-   	            ExtUtils.searchingColumn({
-   	            	header : 'item' ,  
-   	            	dataIndex : 'item',
-   	            	textDataIndex : 'item_text',
-   	            	listModel : 'ItemList',
-   	            	lineGridId : this.lineGridId
-   	            }),
-	 	  		
-	 	  		{header: 'price' ,  dataIndex: 'price',  flex: 1,
-	 	  			editor: {xtype: 'numberfield'}
-	 	  		},
-	 	  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
-	 	  		{header: 'qty' ,  dataIndex: 'qty', flex: 1,
-	 	  			editor: {xtype: 'numberfield'} 
-	 	  		},
-	 	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1},
-	 	  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
-	 	  	]
+			columns : this.orderLineColumns
 		});
     	
     	var p3 = ExtUtils.panel({
