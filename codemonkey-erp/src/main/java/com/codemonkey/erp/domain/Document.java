@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 import org.json.JSONObject;
 
@@ -30,6 +31,12 @@ public abstract class Document extends AbsEE {
 	
 	@ManyToOne
 	private Warehouse warehouse;
+	
+	@OneToOne
+	private DocAddress address;
+	
+	@OneToOne
+	private DocContact contact;
 	
 	Document(){
 		this.status = DocumentStatus.Draft;
@@ -82,6 +89,22 @@ public abstract class Document extends AbsEE {
 
 	public void setStatus(DocumentStatus status) {
 		this.status = status;
+	}
+
+	public DocAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(DocAddress address) {
+		this.address = address;
+	}
+
+	public DocContact getContact() {
+		return contact;
+	}
+
+	public void setContact(DocContact contact) {
+		this.contact = contact;
 	}
 
 }
