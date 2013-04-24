@@ -36,6 +36,11 @@ Ext.define('erp.modules.SalesOrderFormModule', {
 		        	   clicksToEdit: 1
 		           })
             ],
+            
+            features: [{
+            	 ftype: 'summary'
+            }],
+            
 			columns :  [
    	            {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
    	            {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
@@ -52,10 +57,16 @@ Ext.define('erp.modules.SalesOrderFormModule', {
 	 	  			editor: {xtype: 'numberfield'}
 	 	  		},
 	 	  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
-	 	  		{header: 'qty' ,  dataIndex: 'qty', flex: 1,
+	 	  		{header: 'qty' ,  dataIndex: 'qty', flex: 1, 
+	 	  			type : 'float',
+	 	  			summaryType : 'sum',
 	 	  			editor: {xtype: 'numberfield'} 
 	 	  		},
-	 	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1},
+	 	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1 , 
+	 	  			type : 'float',
+	 	  		 summaryRenderer: Ext.util.Format.usMoney,
+	 	  			summaryType : 'sum'
+	 	  		},
 	 	  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
 	 	  	]
 		});

@@ -405,7 +405,7 @@ var ExtUtils = {
 	fieldsFromCols : function (cols){
 		var fields = [];
 		for(var i = 0 ; i < cols.length ; i++){
-			fields.push(cols[i].dataIndex);
+			fields.push({name : cols[i].dataIndex , type : cols[i].type || 'string'});
 		}
 		return fields;
 	},
@@ -438,7 +438,7 @@ var ExtUtils = {
 	
 	ajaxGrid : function(config){
 		var columns = config.columns || this.defaultGridCols1.concat(this.defaultGridCols2);
-		var fields = config.modelFields || this.fieldsFromCols(columns);
+		var fields = this.fieldsFromCols(columns);
 		
 		var modelName = config.model || config.modelName;
 		
@@ -457,6 +457,7 @@ var ExtUtils = {
     		flex : 3,
 	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(config.columns),
 	     	store : store,
+	     	features: config.features,
 	     	bbar:{
 				xtype : 'pagingtoolbar',
 				store : store,
