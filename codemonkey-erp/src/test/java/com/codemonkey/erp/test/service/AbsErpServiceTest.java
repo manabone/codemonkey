@@ -22,8 +22,8 @@ import com.codemonkey.erp.domain.PurchaseOrder;
 import com.codemonkey.erp.domain.PurchaseOrderLine;
 import com.codemonkey.erp.domain.PurchasePayment;
 import com.codemonkey.erp.domain.PurchasePaymentLine;
-import com.codemonkey.erp.domain.Receipt;
-import com.codemonkey.erp.domain.ReceiptLine;
+import com.codemonkey.erp.domain.PurchaseReceipt;
+import com.codemonkey.erp.domain.PurchaseReceiptLine;
 import com.codemonkey.erp.domain.SalesCashReceipt;
 import com.codemonkey.erp.domain.SalesCashReceiptLine;
 import com.codemonkey.erp.domain.SalesInvoice;
@@ -86,20 +86,19 @@ public class AbsErpServiceTest {
 		return warehouse;
 	}
 	
-	Receipt buildReceipt(){
+	PurchaseReceipt buildPurchaseReceipt(){
 		
-		Receipt rp = new Receipt();
+		PurchaseReceipt rp = new PurchaseReceipt();
 		
 		setDocumentAttr(rp);
 		
 		return rp;
 	}
 	
-	
-	ReceiptLine buildReceiptLine() {
+	PurchaseReceiptLine buildPurchaseReceiptLine() {
 		
-		Receipt rp = buildReceipt();
-		ReceiptLine line = new ReceiptLine();
+		PurchaseReceipt rp = buildPurchaseReceipt();
+		PurchaseReceiptLine line = new PurchaseReceiptLine();
 		
 		setDocumentLineAttr(line);
 		

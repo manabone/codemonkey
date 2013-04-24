@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ReceiptLine extends DocumentLineAdapter {
+public class PurchaseReceiptLine extends DocumentLineAdapter {
 
 	/**
 	 * 
@@ -15,24 +15,24 @@ public class ReceiptLine extends DocumentLineAdapter {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne 
-	private Receipt header;
+	private PurchaseReceipt header;
 	
 	@ManyToOne 
 	private PurchaseOrderLine purchaseOrderLine;
 
 	@Override
-	public Receipt getHeader() {
+	public PurchaseReceipt getHeader() {
 		return header;
 	}
 	
-	public void setHeader(Receipt header) {
+	public void setHeader(PurchaseReceipt header) {
 		this.header = header;
 	}
 
 	@Override
 	public List<Transaction> createItemTransactions() {
 		List<Transaction> trans = new ArrayList<Transaction>();
-		trans.add(new ReceiptItemTransaction(this));
+		trans.add(new PurchaseReceiptItemTransaction(this));
 		return trans;
 	}
 

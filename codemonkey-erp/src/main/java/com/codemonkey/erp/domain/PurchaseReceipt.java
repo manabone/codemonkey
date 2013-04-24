@@ -4,24 +4,29 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class SalesShipment extends DocumentAdapter {
+public class PurchaseReceipt extends DocumentAdapter {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	@ManyToOne 
+	private PurchaseOrder purchaseOrder;
+	
 	@OneToMany(mappedBy="header",cascade=CascadeType.ALL)
-	private List<SalesShipmentLine> lines;
+	private List<PurchaseReceiptLine> lines;
 
-	public List<SalesShipmentLine> getLines() {
+	public List<PurchaseReceiptLine> getLines() {
 		return lines;
 	}
 
-	public void setLines(List<SalesShipmentLine> lines) {
+	public void setLines(List<PurchaseReceiptLine> lines) {
 		this.lines = lines;
 	}
+
 }

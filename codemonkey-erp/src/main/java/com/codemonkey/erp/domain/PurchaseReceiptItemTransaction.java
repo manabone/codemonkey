@@ -11,7 +11,7 @@ import com.codemonkey.utils.Calc;
 
 @Entity
 @DiscriminatorValue("PURCHASE_RECEIPT")
-public class ReceiptItemTransaction extends ItemTransaction {
+public class PurchaseReceiptItemTransaction extends ItemTransaction {
 
 	
 	/**
@@ -23,11 +23,11 @@ public class ReceiptItemTransaction extends ItemTransaction {
 	private Vendor vendor;
 	
 	@ManyToOne
-	private ReceiptLine rpLine;
+	private PurchaseReceiptLine rpLine;
 	
-	ReceiptItemTransaction(){}
+	PurchaseReceiptItemTransaction(){}
 	
-	public ReceiptItemTransaction(ReceiptLine rpLine) {
+	public PurchaseReceiptItemTransaction(PurchaseReceiptLine rpLine) {
 		super(rpLine);
 		this.vendor = rpLine.getPurchaseOrderLine().getHeader().getVendor();
 		this.setRpLine(rpLine);
@@ -69,11 +69,11 @@ public class ReceiptItemTransaction extends ItemTransaction {
 		this.vendor = vendor;
 	}
 
-	public ReceiptLine getRpLine() {
+	public PurchaseReceiptLine getRpLine() {
 		return rpLine;
 	}
 
-	public void setRpLine(ReceiptLine rpLine) {
+	public void setRpLine(PurchaseReceiptLine rpLine) {
 		this.rpLine = rpLine;
 	}
 

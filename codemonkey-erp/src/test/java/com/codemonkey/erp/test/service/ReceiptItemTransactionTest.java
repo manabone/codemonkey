@@ -12,8 +12,8 @@ import com.codemonkey.erp.domain.ItemOnhandSupply;
 import com.codemonkey.erp.domain.ItemOrderSupply;
 import com.codemonkey.erp.domain.ItemPlanning;
 import com.codemonkey.erp.domain.ItemStockCard;
-import com.codemonkey.erp.domain.ReceiptItemTransaction;
-import com.codemonkey.erp.domain.ReceiptLine;
+import com.codemonkey.erp.domain.PurchaseReceiptItemTransaction;
+import com.codemonkey.erp.domain.PurchaseReceiptLine;
 import com.codemonkey.erp.domain.Transaction;
 
 
@@ -23,7 +23,7 @@ public class ReceiptItemTransactionTest extends ItemTransactionTest {
 	public void test(){
 		
 		//1-test transactions
-		ReceiptLine line = buildReceiptLine();
+		PurchaseReceiptLine line = buildPurchaseReceiptLine();
 		
 		List<Transaction> trans = createTransactions(line);
 		
@@ -53,7 +53,7 @@ public class ReceiptItemTransactionTest extends ItemTransactionTest {
 			
 			verify(t);
 			
-			ReceiptItemTransaction t1 = (ReceiptItemTransaction) t;
+			PurchaseReceiptItemTransaction t1 = (PurchaseReceiptItemTransaction) t;
 			
 			assertNotNull(t1.getVendor());
 			
