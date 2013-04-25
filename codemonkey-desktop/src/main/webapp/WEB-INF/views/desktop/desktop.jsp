@@ -33,6 +33,9 @@
 			if(this.allowBlank === false && this.fieldLabel){
 				this.fieldLabel += '<font color=red>*</font>';
 			}
+			if(this.readOnly === true && this.fieldLabel){
+				this.fieldLabel += '<font color=blue>*</font>';
+			}
 		};
 		
 		var PAGE_DATA = {labels:[]};
