@@ -15,6 +15,7 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     },
     
     formItems : function(){
+    	var me = this;
     	var p1 = ExtUtils.panel({
     		title : 'basic info',
 			items:[
@@ -31,17 +32,10 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	
     	var lineGrid = ExtUtils.arrayGrid({
     		id : this.lineGridId,
-    		plugins : [
-		           Ext.create('Ext.grid.plugin.CellEditing', {
-		        	   clicksToEdit: 1
-		           })
-            ],
-            
-            features: [{
-            	 ftype: 'summary'
-            }],
-            
-			columns : this.orderLineColumns
+    		ownerModule : me,
+    		plugins : this.orderLineGridPlugins(me),
+            features: this.orderLineGridFeatures,
+			columns : this.orderLineColumns()
 		});
     	
     	var p3 = ExtUtils.panel({

@@ -319,22 +319,19 @@ var ExtUtils = {
 		
 		var data = {};
 		var form = formPanel.getForm();
-		if(form.isValid()){
 			
-			var fields = form.getFields(); 
-			for(var i = 0 ; i < fields.items.length ; i++){
-				if(fields.items[i].disabled){
-					fields.items[i].disabled = false;
-					data[fields.items[i].name] = fields.items[i].getValue();
-					fields.items[i].disabled = true;
-				}else{
-					data[fields.items[i].name] = fields.items[i].getValue();
-				}
+		var fields = form.getFields(); 
+		for(var i = 0 ; i < fields.items.length ; i++){
+			if(fields.items[i].disabled){
+				fields.items[i].disabled = false;
+				data[fields.items[i].name] = fields.items[i].getValue();
+				fields.items[i].disabled = true;
+			}else{
+				data[fields.items[i].name] = fields.items[i].getValue();
 			}
-			
-			return data;
 		}
-		return null;
+		
+		return data;
 	},
 	
 	openUrl : function(url){
@@ -496,6 +493,7 @@ var ExtUtils = {
 	    // create the grid
 	    var grid = {
     		id : config.gridId,
+    		ownerModule : config.ownerModule,
     		xtype : 'grid',	
     		flex : 3,
 	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(config.columns),

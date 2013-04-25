@@ -34,21 +34,10 @@ Ext.define('erp.modules.PurchaseOrderFormModule', {
     	
     	var lineGrid = ExtUtils.arrayGrid({
     		id : this.lineGridId,
-    		plugins : [
-		           Ext.create('Ext.grid.plugin.CellEditing', {
-		        	   clicksToEdit: 1 ,
-		        	   listeners: {
-		                   'beforeedit': function(e) {
-		                	   var model = ExtUtils.formValues(me.formId);
-		                	   if(model.status != 'Draft'){
-		                		   return false;
-		                	   }
-		                	   return true;
-		                   }
-		        	   }
-		           })
-            ],
-			columns : this.orderLineColumns
+    		ownerModule : me,
+    		plugins : this.orderLineGridPlugins(),
+            features: this.orderLineGridFeatures,
+			columns : this.orderLineColumns()
 		});
     	
     	var p3 = ExtUtils.panel({

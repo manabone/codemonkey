@@ -5,35 +5,59 @@ Ext.define('erp.modules.DocumentFormModule', {
     id:'documentFormModule',
     
     lineGridId : null,
-    
-    orderLineColumns : [
-        {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
-        {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
-        
-        ExtUtils.searchingColumn({
-        	header : 'item' ,  
-        	dataIndex : 'item',
-        	textDataIndex : 'item_text',
-        	listModel : 'ItemList',
-        	lineGridId : this.lineGridId
-        }),
-  		
-  		{header: 'price' ,  dataIndex: 'price',  flex: 1,
-  			editor: {xtype: 'numberfield'}
-  		},
-  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
-  		{header: 'qty' ,  dataIndex: 'qty', flex: 1, 
-  			type : 'float',
-  			summaryType : 'sum',
-  			editor: {xtype: 'numberfield'} 
-  		},
-  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1 , 
-  			type : 'float',
-  			summaryRenderer: Ext.util.Format.usMoney,
-  			summaryType : 'sum'
-  		},
-  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
-  	],
+
+	orderLineGridFeatures : [{
+		ftype : 'summary'
+	}],
+	
+	orderLineGridPlugins : function(me){
+		return [
+		       Ext.create('Ext.grid.plugin.CellEditing', {
+	     	   clicksToEdit: 1 ,
+	    	   listeners: {
+	               'beforeedit': function(e) {
+	            	   var ownerModule = e.grid.ownerModule;
+	            	   var model = ExtUtils.formValues(ownerModule.formId);
+	            	   if(model.status != 'Draft'){
+	            		   return false;
+	            	   }
+	            	   return true;
+	               }
+	    	   }
+	       })
+       ];
+	},
+   
+    orderLineColumns : function(){ 
+    	return [
+    	        {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
+    	        {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
+    	        
+    	        ExtUtils.searchingColumn({
+    	        	header : 'item' ,  
+    	        	dataIndex : 'item',
+    	        	textDataIndex : 'item_text',
+    	        	listModel : 'ItemList',
+    	        	lineGridId : this.lineGridId
+    	        }),
+    	  		
+    	  		{header: 'price' ,  dataIndex: 'price',  flex: 1,
+    	  			editor: {xtype: 'numberfield'}
+    	  		},
+    	  		{header: 'taxRate' ,  dataIndex: 'taxRate',  flex: 1},
+    	  		{header: 'qty' ,  dataIndex: 'qty', flex: 1, 
+    	  			type : 'float',
+    	  			summaryType : 'sum',
+    	  			editor: {xtype: 'numberfield'} 
+    	  		},
+    	  		{header: 'amount' ,  dataIndex: 'amount',  flex: 1 , 
+    	  			type : 'float',
+    	  			summaryRenderer: Ext.util.Format.usMoney,
+    	  			summaryType : 'sum'
+    	  		},
+    	  		{header: 'tax' ,  dataIndex: 'tax',  flex: 1}
+    	  	];
+    },
     
     postAction : {
 		action : 'post', text: 'post', iconCls : 'add'
