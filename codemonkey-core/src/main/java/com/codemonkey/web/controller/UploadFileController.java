@@ -74,7 +74,7 @@ public class UploadFileController {
 			if (file.getSize() > 0) {
 				inputStream = file.getInputStream();
 				
-				String uploadPath =  request.getRealPath("") + "/upload";
+				String uploadPath = session.getServletContext().getRealPath("") + "/upload";
 				File uploadDir = new File(uploadPath);
 				if(!uploadDir.exists()){
 					FileUtils.forceMkdir(uploadDir);

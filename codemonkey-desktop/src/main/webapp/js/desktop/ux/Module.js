@@ -57,6 +57,9 @@ Ext.define('Ext.ux.desktop.Module', {
         }
         win.show();
         this.afterWindowCreate();
+        if(config && config.callback){
+        	config.callback(me);
+        }
         return win;
     },
     

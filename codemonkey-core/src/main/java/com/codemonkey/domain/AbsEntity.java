@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import com.codemonkey.annotation.Label;
 import com.codemonkey.annotation.SkipBuild;
+import com.codemonkey.domain.seq.SequenceCreator;
 import com.codemonkey.utils.OgnlUtils;
 
 @MappedSuperclass
@@ -65,6 +66,10 @@ public class AbsEntity implements Serializable{
 	@Label("修改人")
 	@SkipBuild
 	private String modifiedBy;
+	
+	public SequenceCreator getSequenceCreator() {
+		return null;
+	}
 	
 	public JSONObject listJson() {
 		JSONObject jo = new JSONObject();

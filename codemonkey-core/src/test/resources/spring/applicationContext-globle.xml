@@ -24,6 +24,7 @@
 		Main entry point for spring configuration
 	]]></description>
 
+	<context:component-scan base-package="com.codemonkey"/>
     <!-- Activates scanning of @Repository and @Service -->
     <context:component-scan base-package="${basePackage}"/>
 
@@ -56,6 +57,5 @@
 	
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	
-	<context:component-scan base-package="com.codemonkey"/>
 	<!-- scheduler -->
 </beans>

@@ -4,11 +4,15 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+import com.codemonkey.domain.seq.SequenceCreator;
+
 public interface IEntity {
 
 	Long getId();
 	
 	String getCode();
+	
+	void setCode(String code);
 	
 	void setModificationDate(Date modificationDate);
 	
@@ -27,5 +31,7 @@ public interface IEntity {
 	void setOriginVersion(Integer originVersion);
 	
 	Integer getVersion();
+	
+	SequenceCreator getSequenceCreator();
 	
 }

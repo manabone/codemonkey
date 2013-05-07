@@ -102,46 +102,6 @@
 			<version>${xstream.version}</version>
 		</dependency>
 		
-		<!-- 
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-spring</artifactId>
-			<version>${drools.version}</version>
-			<exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                </exclusion>
-                 <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-            </exclusions>
-		</dependency>
-		 -->
-		 
-		<!-- JBPM5 -->
-		<!-- 
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-bpmn2</artifactId>
-			<version>${jbpm.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-human-task</artifactId>
-			<version>${jbpm.version}</version>
-		</dependency>
-		 -->
-		
 		<!-- jdbc -->
 		<dependency>
 			<groupId>${jdbc.groupId}</groupId>

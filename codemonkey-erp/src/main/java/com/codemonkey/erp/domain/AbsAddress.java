@@ -55,5 +55,4 @@ public class AbsAddress extends AbsEE{
 	public void setStreet(String street) {
 		this.street = street;
 	}
-
 }

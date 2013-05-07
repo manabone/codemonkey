@@ -30,16 +30,15 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 	
 	private Class<?> type;
 	
-	public GenericServiceImpl(){
-		this.setType(ClassHelper.getSuperClassGenricType(getClass()));
-	}
-	
 	@Override
 	public abstract T createEntity();
 	
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		dao = new GenericDao<T>(sessionFactory , getType());
+		this.type = ClassHelper.getSuperClassGenricType(getClass());
+		dao = new GenericDao<T>();
+		dao.setSessionFactory(sessionFactory);
+		dao.setType(getType());
 	}
 	
 	protected GenericDao<T> getDao() {
@@ -73,6 +72,7 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		if(CollectionUtils.isNotEmpty(set)){
 			throw new ValidationError(set);
 		}
+		
 		getDao().save(entity);
 		
 		stopWatch.stop();

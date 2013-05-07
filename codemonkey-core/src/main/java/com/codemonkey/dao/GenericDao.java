@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.codemonkey.domain.IEntity;
+import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.HqlHelper;
 import com.codemonkey.utils.SysUtils;
 
@@ -28,12 +29,12 @@ public class GenericDao<T extends IEntity> {
 	private Logger logger = SysUtils.getLog(getClass());
     
 	private SessionFactory sessionFactory;
-    
-    public GenericDao(SessionFactory sessionFactory , Class<?> type) {
-    	this.sessionFactory = sessionFactory;
-        this.type = type;
-    }
-    
+	
+	@Autowired
+	public GenericDao(){
+		this.type = ClassHelper.getSuperClassGenricType(getClass());
+	}
+	
     @Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
     	this.sessionFactory = sessionFactory;
@@ -44,7 +45,7 @@ public class GenericDao<T extends IEntity> {
     }
     
 	public T get(Long id){
-    	return (T) getSession().get(type, id);
+    	return (T) getSession().get(getType(), id);
     }
 	
 	public void saveAndFlush(T t){
@@ -57,6 +58,13 @@ public class GenericDao<T extends IEntity> {
     	if(t.getId() == null){
     		t.setCreationDate(new Date());
     		t.setCreatedBy(SysUtils.getCurrentUsername());
+    		
+//    		SequenceCreator sc = t.getSequenceCreator();
+//    		if(sc != null){
+//    			String code = sequenceCreatorDao.fetch(sc);
+//    			t.setCode(code);
+//    		}
+    		
     	}else{
     		t.setModificationDate(new Date());
     		t.setModifiedBy(SysUtils.getCurrentUsername());
@@ -97,7 +105,7 @@ public class GenericDao<T extends IEntity> {
 	}
 
 	private Criteria buildCriteria() {
-		return getSession().createCriteria(type);
+		return getSession().createCriteria(getType());
 	}
     
     private Criteria buildCriteria(List<Criterion> criterions) {
@@ -161,7 +169,7 @@ public class GenericDao<T extends IEntity> {
     
 	public List<T> findAllBy(String query, Object... params) {
 		
-		String hql = HqlHelper.findyBy(type, query);
+		String hql = HqlHelper.findyBy(getType(), query);
 		
 		Query hqlQuery = builHqlQuery(hql, params);
 		
@@ -170,7 +178,7 @@ public class GenericDao<T extends IEntity> {
 	
 	public List<T> findAllBy(String query, String[] joins , Object... params) {
 		
-		String hql = HqlHelper.findyBy(type, query , joins);
+		String hql = HqlHelper.findyBy(getType(), query , joins);
 		
 		Query hqlQuery = builHqlQuery(hql, params);
 		
@@ -179,7 +187,7 @@ public class GenericDao<T extends IEntity> {
 
 	public T findBy(String query, Object... params) {
 		
-		String hql = HqlHelper.findyBy(type, query);
+		String hql = HqlHelper.findyBy(getType(), query);
 		Query hqlQuery = builHqlQuery(hql, params);
 		return (T) hqlQuery.uniqueResult();
 	
@@ -187,7 +195,7 @@ public class GenericDao<T extends IEntity> {
 	
 	public T findBy(String query, String[] joins , Object... params) {
 		
-		String hql = HqlHelper.findyBy(type, query , joins);
+		String hql = HqlHelper.findyBy(getType(), query , joins);
 		Query hqlQuery = builHqlQuery(hql, params);
 		return (T) hqlQuery.uniqueResult();
 	
@@ -198,7 +206,7 @@ public class GenericDao<T extends IEntity> {
 	}
 	
 	public long countBy(String query, String[] joins , Object... params) {
-		String hql = HqlHelper.countBy(type, query , joins);
+		String hql = HqlHelper.countBy(getType(), query , joins);
 		Query hqlQuery = builHqlQuery(hql, params);
 		return countResult((Long) hqlQuery.uniqueResult());
 	}
@@ -219,22 +227,22 @@ public class GenericDao<T extends IEntity> {
 	
 	public List<T> findByQueryInfo(JSONObject queryInfo, Integer start, Integer limit) {
 		
-		String hql = HqlHelper.findByQueryInfo(type, queryInfo);
-		List<Object> params = HqlHelper.extractParamsFromQueryInfo(type, queryInfo);
+		String hql = HqlHelper.findByQueryInfo(getType(), queryInfo);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryInfo);
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return hqlQuery.setMaxResults(limit).setFirstResult(start).list();
 	}
 
 	public List<T> findByQueryInfo(JSONObject queryInfo) {
-		String hql = HqlHelper.findByQueryInfo(type, queryInfo);
-		List<Object> params = HqlHelper.extractParamsFromQueryInfo(type, queryInfo);
+		String hql = HqlHelper.findByQueryInfo(getType(), queryInfo);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryInfo);
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return hqlQuery.list();
 	}
 
 	public long countByQueryInfo(JSONObject queryInfo) {
-		String hql = HqlHelper.countByQueryInfo(type, queryInfo);
-		List<Object> params = HqlHelper.extractParamsFromQueryInfo(type, queryInfo);
+		String hql = HqlHelper.countByQueryInfo(getType(), queryInfo);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryInfo);
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return countResult((Long) hqlQuery.uniqueResult());
 	}
@@ -244,5 +252,13 @@ public class GenericDao<T extends IEntity> {
 			return 0;
 		}
 		return count;
+	}
+
+	public Class<?> getType() {
+		return type;
+	}
+
+	public void setType(Class<?> type) {
+		this.type = type;
 	}
 }

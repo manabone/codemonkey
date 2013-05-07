@@ -173,7 +173,7 @@ Ext.define('AM.modules.FormModule', {
     	return this.createToolbar(actions);
     },
 	
-	doAction : function(action , fn){
+	doAction : function(action , fn , params){
 		var me = this;
 		var values = ExtUtils.formValues(me.formId);
 		if(values){
@@ -183,7 +183,7 @@ Ext.define('AM.modules.FormModule', {
 			Ext.Ajax.request({
 			    url: url,
 			    method: 'post',
-			    params: Ext.encode(values),
+			    params: params || Ext.encode(values),
 			    success: function(response){
 			    	
 			    	var result = Ext.decode(response.responseText);

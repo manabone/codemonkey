@@ -7,6 +7,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @DiscriminatorValue("PURCHASE_ORDER")
 public class PurchaseOrderItemTransaction extends ItemTransaction {
@@ -21,6 +24,7 @@ public class PurchaseOrderItemTransaction extends ItemTransaction {
 	private Vendor vendor;
 	
 	@ManyToOne
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private PurchaseOrderLine poLine;
 	
 	PurchaseOrderItemTransaction(){}

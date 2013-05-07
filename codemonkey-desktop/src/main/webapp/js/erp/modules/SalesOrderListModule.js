@@ -17,6 +17,36 @@ Ext.define('erp.modules.SalesOrderListModule', {
 	iconText : 'SalesOrder',
 	iconCls : 'icon-grid',
     
+	//actions
+	createShipmentAction : {
+		action : 'createShipment', text: 'createShipment', iconCls : 'icon-reset'
+	},
+	//end actions
+	
+	createShipment : function(){
+		var record = ExtUtils.getSelected(this.gridId);
+		if(record && record.get('id')){
+			var shipmentFormModule = this.app.getModule('salesShipmentFormModule');
+			shipmentFormModule.createWindow({salesOrder : record.get('id') , callback : function(module){
+				module.doAction('createShipment' , function(){
+					
+					
+					
+				} , {salesOrder : record.get('id')});
+			}});	
+		}
+	},
+	
+	createBbar : function(){
+    	var actions = [
+			this.createModuleAction(this.createAction),
+			this.createModuleAction(this.editAction),
+			this.createModuleAction(this.destroyAction),
+			this.createModuleAction(this.createShipmentAction)
+		];
+    	return this.createToolbar(actions);
+    },
+	
     modelFields : function(){
     	return ['customer' , 'customer_text' , 'totalAmount' , 'warehouse' , 'warehouse_text' , 'status'].concat(ExtUtils.defaultModelFields);
     },
