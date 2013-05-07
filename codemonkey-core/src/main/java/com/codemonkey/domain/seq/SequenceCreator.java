@@ -28,8 +28,8 @@ public class SequenceCreator extends AbsEE{
 		return "prefix";
 	}
 
-	public Object getQueryParams() {
-		return getPrefix();
+	public Object[] getQueryParams() {
+		return new Object[]{ getPrefix() };
 	}
 
 	public String getSequence() {

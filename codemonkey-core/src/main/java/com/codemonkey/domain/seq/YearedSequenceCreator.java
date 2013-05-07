@@ -17,6 +17,20 @@ public class YearedSequenceCreator extends SequenceCreator{
 	
 	private Integer year;
 
+	@Override
+	public String getQuery() {
+		return "prefixAndYear";
+	}
+
+	@Override
+	public Object[] getQueryParams() {
+		return new Object[]{getPrefix() , getYear()};
+	}
+
+	public String getSequence() {
+		return getPrefix() + "-" + getYear() + "-" + getCurrent();
+	}
+	
 	public Integer getYear() {
 		return year;
 	}

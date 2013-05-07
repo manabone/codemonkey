@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.codemonkey.dao.GenericDao;
 import com.codemonkey.dao.SequenceCreatorDao;
 import com.codemonkey.domain.seq.SequenceCreator;
+import com.codemonkey.domain.seq.YearedSequenceCreator;
 
 public class SequenceCreatorDaoTest extends AbsEntityDaoTest<SequenceCreator>{
 
@@ -17,6 +18,16 @@ public class SequenceCreatorDaoTest extends AbsEntityDaoTest<SequenceCreator>{
 	public void test(){
 		String seq = sequenceCreatorDao.fetch(new SequenceCreator("TEST"));
 		assertEquals("TEST-1" , seq);
+		
+		seq = sequenceCreatorDao.fetch(new SequenceCreator("TEST"));
+		assertEquals("TEST-2" , seq);
+		
+		seq = sequenceCreatorDao.fetch(new YearedSequenceCreator("TEST" , 2011));
+		assertEquals("TEST-2011-1" , seq);
+		
+		seq = sequenceCreatorDao.fetch(new YearedSequenceCreator("TEST" , 2011));
+		assertEquals("TEST-2011-2" , seq);
+		
 	}
 
 	@Override
