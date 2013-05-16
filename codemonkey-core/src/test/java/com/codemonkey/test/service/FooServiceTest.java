@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -148,48 +149,85 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		fooService.save(foo2);
 		fooService.save(foo3);
 		
+		//from Foo where 1 = 1
 		JSONObject queryInfo = new JSONObject();
 		List<Foo> foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(3 , foos.size());
 		
+		foos = fooService.findAll();
+		assertEquals(3 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.fbool = ? [true]
 		queryInfo.put("fbool", "true");
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(1 , foos.size());
 		
+		foos = fooService.findAllBy("fbool", true);
+		assertEquals(1 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.fnumber >= ? [2]
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_GE", "2");
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(2 , foos.size());
 		
+		foos = fooService.findAllBy("fnumber_GE", 2d);
+		assertEquals(2 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.fstatus = ? ['ACTIVE']
 		queryInfo = new JSONObject();
 		queryInfo.put("fstatus", "ACTIVE");
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(2 , foos.size());
 		
+		foos = fooService.findAllBy("fstatus", Status.ACTIVE);
+		assertEquals(2 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.fdate >=  ? ['2011-12-07']
 		queryInfo = new JSONObject();
 		queryInfo.put("fdate_GE", "2011-12-07");
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(2 , foos.size());
 		
+		Date date = new DateTime("2011-12-07").toDate();
+		foos = fooService.findAllBy("fdate_GE", date);
+		assertEquals(2 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.fstring like ? ['%3%']
 		queryInfo = new JSONObject();
 		queryInfo.put("fstring_Like", "3");
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(1 , foos.size());
 		
+		foos = fooService.findAllBy("fstring_Like" , "%3%");
+		assertEquals(1 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.appRole.id = ? [1]
 		queryInfo = new JSONObject();
 		queryInfo.put("appRole.id", role.getId());
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(1 , foos.size());
 		
+		foos = fooService.findAllBy("appRole.id" , role.getId());
+		assertEquals(1 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.appRole.name = ? ['role1']
 		queryInfo = new JSONObject();
 		queryInfo.put("appRole.name", "role1");
 		foos = fooService.findByQueryInfo(queryInfo);
 		assertEquals(1 , foos.size());
 		
+		foos = fooService.findAllBy("appRole.name" , "role1");
+		assertEquals(1 , foos.size());
+		
+		//from Foo E where 1 = 1 and E.fbool = ? and E.fnumber >= ? [false , 2]
 		queryInfo = new JSONObject();
 		queryInfo.put("fbool", "false");
 		queryInfo.put("fnumber_LE", "2");
 		foos = fooService.findByQueryInfo(queryInfo);
+		assertEquals(1 , foos.size());
+		
+		foos = fooService.findAllBy("fboolAndfnumber_LE" , false , 2d);
 		assertEquals(1 , foos.size());
 		
 	}
