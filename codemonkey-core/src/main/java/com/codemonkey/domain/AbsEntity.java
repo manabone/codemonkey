@@ -29,19 +29,19 @@ public class AbsEntity implements Serializable{
     @Id
     @GeneratedValue(generator="pkgenerator") 
     @GenericGenerator(name="pkgenerator", strategy = "increment") 
-    @Label("自动编号")
+    @Label("id")
     @SkipBuild
     private Long id;
 	
-    @Label("编码")
+    @Label("code")
     @Index(name = "code_index")
     private String code;
     
-    @Label("名称")
+    @Label("name")
     @Index(name = "name_index")
 	private String name;
 	
-    @Label("描述")
+    @Label("description")
 	private String description;
 	
 	@Version
@@ -51,19 +51,19 @@ public class AbsEntity implements Serializable{
 	@Transient
 	private Integer originVersion;
 	
-	@Label("创建时间")
+	@Label("creation date")
 	@SkipBuild
 	private Date creationDate;
 	
-	@Label("创建人")
+	@Label("created by")
 	@SkipBuild
 	private String createdBy;
 	
-	@Label("修改时间")
+	@Label("modified date")
 	@SkipBuild
 	private Date modificationDate;
 	
-	@Label("修改人")
+	@Label("modified by")
 	@SkipBuild
 	private String modifiedBy;
 	
