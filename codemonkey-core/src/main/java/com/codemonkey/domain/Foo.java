@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import org.json.JSONObject;
 
 import com.codemonkey.annotation.SkipBuild;
+import com.codemonkey.utils.OgnlUtils;
 import com.codemonkey.utils.SysUtils;
 
 @Entity
@@ -50,13 +51,14 @@ public class Foo extends AbsEE{
 	@Override
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
-		jo.put("fstring", fstring);
-		jo.put("fnumber", fnumber);
-		jo.put("fbool", fbool);
-		jo.put("fstatus", fstatus != null ? fstatus.name() : null);
-		jo.put("fdate", SysUtils.formatDate(fdate));
-		jo.put("appRole", appRole != null ? appRole.getId() : "");
-		jo.put("appUserGroup", appUserGroup != null ? appUserGroup.getId() : "");
+		jo.put("fstring", OgnlUtils.stringValue("fstring", this));
+		jo.put("fnumber",  OgnlUtils.stringValue("fnumber", this));
+		jo.put("fbool", OgnlUtils.stringValue("fbool", this));
+		jo.put("fstatus", OgnlUtils.stringValue("fstatus", this));
+		jo.put("fdate", OgnlUtils.stringValue("fdate", this));
+		jo.put("appRole", OgnlUtils.stringValue("appRole.id", this));
+		jo.put("appRole_text", OgnlUtils.stringValue("appRole.name", this));
+		jo.put("appUserGroup", OgnlUtils.stringValue("appUserGroup.code", this));
 		return jo;
 	}
 	
