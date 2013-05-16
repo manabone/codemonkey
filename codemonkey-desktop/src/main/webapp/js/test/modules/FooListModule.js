@@ -20,6 +20,18 @@ Ext.define('test.modules.FooListModule', {
     modelFields : function(){
     	return ['fstring','fnumber','fbool','fstatus','fdate','appRole','appUserGroup','id','name','description','version','creationDate','createdBy','modificationDate','modifiedBy'];
     },
+    
+    searchForm : function() {
+    	return {
+    		items : [
+				{xtype :"searchingselect",name :"appRole.id",config :{model :"AppRoleList"},fieldLabel :"app role" },
+				{id : 'fstring'  , name  : 'fstring'   , xtype : 'textfield' , fieldLabel : 'fstring' },
+				{id : 'name'  , name  : 'name_Like'   , xtype : 'textfield' , fieldLabel : 'name_Like' },
+				{id : 'fnumber'  , name  : 'fnumber_LE'   , xtype : 'textfield' , fieldLabel : 'fnumber_LE' },
+				{xtype :"selectfield",name :"fstatus",data :[["ACTIVE","ACTIVE"],["INACTIVE","INACTIVE"]],fieldLabel :"fstatus"}
+    		]
+    	};
+    },
 	
 	gridCols : function() {
 		return [

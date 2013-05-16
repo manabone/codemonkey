@@ -67,6 +67,19 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		
 		assertEquals(1 , count);
 		
+		
+		queryInfo = new JSONObject();
+		queryInfo.put("fnumber_LE", 3);
+		list = fooService.findByQueryInfo(queryInfo);
+		
+		assertEquals(1 , list.size());
+		
+		queryInfo = new JSONObject();
+		queryInfo.put("fnumber_LE", 2);
+		list = fooService.findByQueryInfo(queryInfo);
+		
+		assertEquals(0 , list.size());
+		
 	}
 	
 	@Test

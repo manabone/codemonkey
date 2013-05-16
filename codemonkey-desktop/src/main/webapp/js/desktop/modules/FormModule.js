@@ -194,7 +194,7 @@ Ext.define('AM.modules.FormModule', {
 			    		Ext.getCmp(me.formId).getForm().loadRecord(model);
 			    		me.manageControl(result.data);
 			    		if(fn){
-				    		fn(result);
+				    		fn(me , result);
 				    	}
 			    	}
 			    	

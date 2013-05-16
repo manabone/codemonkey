@@ -806,17 +806,17 @@ var ExtUtils = {
 	creationInfoPanel : function(){
 		var col1 = this.panel({
 			items:[
-				{"xtype":"textfield","name":"id","fieldLabel":"自动编号 " , readOnly : true},
-				{"xtype":"textfield","name":"createdBy","fieldLabel":"创建人" , readOnly : true},
-				{"xtype":"textfield","name":"modifiedBy","fieldLabel":"修改人" , readOnly : true}
+				{"xtype":"textfield","name":"id","fieldLabel":"id" , readOnly : true},
+				{"xtype":"textfield","name":"createdBy","fieldLabel":"created by" , readOnly : true},
+				{"xtype":"textfield","name":"modifiedBy","fieldLabel":"modified by" , readOnly : true}
 			]
 		});
     	
     	var col2 =  this.panel({
     		items:[
 				{"xtype":"textfield","name":"originVersion","fieldLabel":"origin version" , readOnly : true},
-				{"xtype":"textfield","name":"creationDate","format":"Y-m-d","fieldLabel":"创建时间" , readOnly : true},
-				{"xtype":"textfield","name":"modificationDate","format":"Y-m-d","fieldLabel":"修改时间" , readOnly : true}
+				{"xtype":"textfield","name":"creationDate","format":"Y-m-d","fieldLabel":"creation date" , readOnly : true},
+				{"xtype":"textfield","name":"modificationDate","format":"Y-m-d","fieldLabel":"modifed date" , readOnly : true}
 			]
     	});
     	
