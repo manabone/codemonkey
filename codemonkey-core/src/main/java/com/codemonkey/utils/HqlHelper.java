@@ -4,12 +4,18 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
+
+import com.codemonkey.error.FieldValidation;
+import com.codemonkey.error.FormFieldValidation;
+import com.codemonkey.error.ValidationError;
 
 public final class HqlHelper {
 
@@ -172,31 +178,40 @@ public final class HqlHelper {
 					}
 				}
 				
-				if(field.getType().equals(String.class)){
-					if(key.endsWith(LIKE) || key.endsWith(ILIKE)){
-						params.add('%' + value + '%');
+				try{
+					
+					if(field.getType().equals(String.class)){
+						if(key.endsWith(LIKE) || key.endsWith(ILIKE)){
+							params.add('%' + value + '%');
+						}else{
+							params.add(value);
+						}
+					}else if(field.getType().equals(Boolean.class)){
+						params.add(Boolean.valueOf(value));
+					}else if(field.getType().equals(Date.class)){
+						params.add(SysUtils.toDate(value));
+					}else if(field.getType().equals(Integer.class)){
+						params.add(Integer.valueOf((value)));
+					}else if(field.getType().equals(Double.class)){
+						params.add(Double.valueOf((value)));
+					}else if(field.getType().equals(Float.class)){
+						params.add(Float.valueOf((value)));
+					}else if(field.getType().equals(Long.class)){
+						params.add(Long.valueOf((value)));
+					}else if(field.getType().equals(Short.class)){
+						params.add(Short.valueOf((value)));
+					}else if(field.getType().isEnum()){
+						params.add(ClassHelper.stringToEnum(field.getType() , value));
 					}else{
-						params.add(value);
+						//entity id
+						params.add(Long.valueOf((value)));
 					}
-				}else if(field.getType().equals(Boolean.class)){
-					params.add(Boolean.valueOf(value));
-				}else if(field.getType().equals(Date.class)){
-					params.add(SysUtils.toDate(value));
-				}else if(field.getType().equals(Integer.class)){
-					params.add(Integer.valueOf((value)));
-				}else if(field.getType().equals(Double.class)){
-					params.add(Double.valueOf((value)));
-				}else if(field.getType().equals(Float.class)){
-					params.add(Float.valueOf((value)));
-				}else if(field.getType().equals(Long.class)){
-					params.add(Long.valueOf((value)));
-				}else if(field.getType().equals(Short.class)){
-					params.add(Short.valueOf((value)));
-				}else if(field.getType().isEnum()){
-					params.add(ClassHelper.stringToEnum(field.getType() , value));
-				}else{
-					//entity id
-					params.add(Long.valueOf((value)));
+				}catch(Exception e){
+					Set<FieldValidation> set = new HashSet<FieldValidation>();
+					set.add(new FormFieldValidation(field.getName(), "bad format"));
+					if(CollectionUtils.isNotEmpty(set)){
+						throw new ValidationError(set);
+					}
 				}
 			}
 		}

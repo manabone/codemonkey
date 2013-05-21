@@ -29,8 +29,7 @@ Ext.define('erp.modules.SalesOrderListModule', {
 			var shipmentFormModule = this.app.getModule('salesShipmentFormModule');
 			shipmentFormModule.createWindow({salesOrder : record.get('id') , callback : function(module){
 				module.doAction('createShipment' , function(module , result){
-					debugger;
-					module.model = module.Model.create(result);
+					module.model = module.Model.create(result.data);
 					module.getLineGridStore().loadData(module.model.data.lines);
 					
 				} , {salesOrder : record.get('id')});
