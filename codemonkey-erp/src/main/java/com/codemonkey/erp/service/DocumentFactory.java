@@ -20,7 +20,7 @@ public class DocumentFactory{
 		
 		SalesShipment sp = new SalesShipment();
 		sp.setWarehouse(so.getWarehouse());
-		
+		sp.setCustomer(so.getCustomer());
 		List<SalesShipmentLine> spLines = buildShipmentLines(so.getLines());
 		
 		sp.setLines(spLines);

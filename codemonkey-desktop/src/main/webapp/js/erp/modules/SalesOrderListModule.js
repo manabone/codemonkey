@@ -33,7 +33,7 @@ Ext.define('erp.modules.SalesOrderListModule', {
 					module.getLineGridStore().loadData(module.model.data.lines);
 					
 				} , {salesOrder : record.get('id')});
-			}});	
+			}});
 		}
 	},
 	
@@ -54,7 +54,7 @@ Ext.define('erp.modules.SalesOrderListModule', {
     searchForm : function() {
     	return {
     		items : [
-				{name  : "JOINS"   , xtype : 'hiddenfield' , fieldLabel : "JOINS"  , value : 'lines_LEFT'},
+				{name  : "JOINS"   , xtype : 'hiddenfield' , fieldLabel : "JOINS"  , value : 'lines_LEFT' },
 				{xtype :"searchingselect",name :"lines.item.id",config :{model :"ItemList"},fieldLabel :"item" }
     		]
     	};

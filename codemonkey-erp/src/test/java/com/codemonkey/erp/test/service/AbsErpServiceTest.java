@@ -121,6 +121,7 @@ public class AbsErpServiceTest {
 	SalesShipmentLine buildShipmentLine() {
 		
 		SalesShipment sp = buildShipment();
+		sp.setCustomer(buildCustomer());
 		SalesShipmentLine line = new SalesShipmentLine();
 		
 		setDocumentLineAttr(line);

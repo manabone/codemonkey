@@ -29,7 +29,7 @@ public class ShipmentItemTransaction extends ItemTransaction {
 	
 	public ShipmentItemTransaction(SalesShipmentLine spLine) {
 		super(spLine);
-		this.customer = spLine.getSalesOrderLine().getHeader().getCustomer();
+		this.customer = spLine.getHeader().getCustomer();
 		this.setSpLine(spLine);
 		this.setQtyOnHand(Calc.neg(spLine.getQty()));
 		this.setQtyOnSalesOrder(Calc.neg(spLine.getQty()));

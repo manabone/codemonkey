@@ -48,6 +48,7 @@ public class DocumentFactoryTest extends AbsErpServiceTest {
 		SalesShipment sp = DocumentFactory.createSalesShipment(so);
 		
 		assertNotNull(sp.getWarehouse());
+		assertNotNull(sp.getCustomer());
 		
 		List<SalesShipmentLine> spLines = sp.getLines();
 		
