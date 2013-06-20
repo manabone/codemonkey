@@ -113,10 +113,17 @@
 			<id>jasperreports</id>
 			<url>http://jasperreports.sourceforge.net/maven2</url>
 		</repository>
+		
+		<repository>
+            <id>jboss</id>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </repository>
+		
 		<repository>
 			<id>Alfresco Maven Repository</id>
 			<url>https://maven.alfresco.com/nexus/content/groups/public/</url>
 		</repository>
+		
 		<repository>
 			<id>org.springframework.maven.milestone</id>
 			<name>Spring Maven Milestone Repository</name>
@@ -183,6 +190,7 @@
 		<db.name>codemonkey_springmvc</db.name>
 		<test.db.name>${db.name}_test</test.db.name>
 		<basePackage>${groupId}</basePackage>
+		<jbpm.version>4.4</jbpm.version>
 	</properties>
 
 
