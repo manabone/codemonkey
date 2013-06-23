@@ -1,5 +1,7 @@
 package com.codemonkey.web.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -19,6 +21,10 @@ import com.codemonkey.utils.SysUtils;
 @RequestMapping("/auth/**")
 public class AuthController {
 
+	private static final String LOCALE = "locale";
+
+	private static final String MODULE = "module";
+
 	private static final String LOGOUT = "logout";
 
 	private static final String LOGIN = "login";
@@ -30,6 +36,8 @@ public class AuthController {
 	private static final String HOME = "home";
 
 	private static final String SIGNUP = "signup";
+	
+	private static final String DEFAULT_LOCALE = "zh_CN";
 
 	@Autowired private AppUserService appUserService;
 	
@@ -77,9 +85,17 @@ public class AuthController {
 		return "redirect:signup";
 	}
 	
-	@ModelAttribute("module")
-    public String getFromURI(@RequestParam(value="module", required=false) String module, HttpServletRequest request) {
+	@ModelAttribute(MODULE)
+    public String getFromURI(@RequestParam(value=MODULE, required=false) String module, HttpServletRequest request) {
     	return StringUtils.isNotEmpty(module) ? module : "erp";
+    }
+	
+	@ModelAttribute(LOCALE)
+    public String locale(Locale locale) {
+		if(locale == null){
+			return DEFAULT_LOCALE;
+		}
+    	return locale.toString();
     }
 	
 }
