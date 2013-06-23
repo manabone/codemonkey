@@ -102,23 +102,23 @@ Ext.define('AM.modules.ListModule', {
     
     // actions 
     createAction : {
-		action : 'create', text: 'add', iconCls : 'add'
+		action : 'create', text: i18n.add, iconCls : 'add'
 	},
 	
 	editAction : {
-		action : 'edit' , text:'Edit', iconCls:'option'
+		action : 'edit' , text:i18n.edit, iconCls:'option'
     },
     
     destroyAction : {
-		action : 'destroy', text: 'destroy', iconCls : 'remove'
+		action : 'destroy', text: i18n.destroy, iconCls : 'remove'
 	},
 	
 	searchAction : {
-		action : 'search', text: 'search', iconCls : 'icon-search'
+		action : 'search', text: i18n.search, iconCls : 'icon-search'
 	},
 	
 	resetAction : {
-		action : 'reset', text: 'reset', iconCls : 'icon-reset'
+		action : 'reset', text: i18n.reset, iconCls : 'icon-reset'
 	},
     
 	//end actions
@@ -183,7 +183,7 @@ Ext.define('AM.modules.ListModule', {
     createTbar : function(){
     	
     	var menu =  {
-            text: 'Actions',
+            text: i18n.actions,
             menu : [
 				this.createModuleAction(this.createAction),
 				this.createModuleAction(this.editAction),

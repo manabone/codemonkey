@@ -30,32 +30,32 @@ var ExtUtils = {
 	
 	defaultGridCols1 : [	
        	{header: 'id', dataIndex: 'id' ,  flex: 1 , hidden : true},
-       	{dataIndex:"code",flex:1,header:"code"},
-		{dataIndex:"name",flex:1,header:"name"}
+       	{dataIndex:"code",flex:1,header : i18n.code},
+		{dataIndex:"name",flex:1,header : i18n.name}
 	],
 	
 	defaultGridCols2 : [	
-		{dataIndex:"creationDate",flex:1,header:"creationDate"},
-		{dataIndex:"createdBy",flex:1,header:"createdBy"},
-		{dataIndex:"modificationDate",flex:1,header:"modificationDate"},
-		{dataIndex:"modifiedBy",flex:1,header:"modifiedBy"}
+		{dataIndex:"creationDate",flex:1,header: i18n.creationDate},
+		{dataIndex:"createdBy",flex:1,header:i18n.createdBy},
+		{dataIndex:"modificationDate",flex:1,header:i18n.modificationDate},
+		{dataIndex:"modifiedBy",flex:1,header:i18n.modifiedBy}
 	],
 	
 	defaultFormItems : [
-	    {xtype:"textfield"  , name:"code"        , fieldLabel:"code"},
-		{xtype:"textfield"  , name:"name"        , fieldLabel:"name"},
-		{xtype:"textfield"  , name:"description" , fieldLabel:"description"},
-		{xtype:"numberfield", name:"id"          , fieldLabel:"id" , hidden : true}
+	    {xtype:"textfield"  , name:"code"        , fieldLabel:i18n.code},
+		{xtype:"textfield"  , name:"name"        , fieldLabel:i18n.name},
+		{xtype:"textfield"  , name:"description" , fieldLabel:i18n.description},
+		{xtype:"numberfield", name:"id"          , fieldLabel:i18n.id , hidden : true}
 	],
 	
 	defaultFormButtons : [{
 		action : 'save',
 		iconCls: 'icon-update',
-		text : 'Save'
+		text : i18n.save
 	},{
 		action : 'backToList',
 		iconCls: 'icon-back-to-list',
-		text : 'Back to List'
+		text : i18n.backToList
 	}],
 		
 	//-------------------------------------------------------
@@ -110,7 +110,7 @@ var ExtUtils = {
 			layout : 'column',
 			border : 0,
 			id : 'searchForm',
-			title : 'search',
+			title : i18n.search,
 			height : 100 ,
 			defaultType: 'textfield',
 			bodyPadding: 10,
@@ -118,11 +118,11 @@ var ExtUtils = {
 			collapsed : true,
 			collapseFirst : true,
 			items : [
-				{id : 'query'  , name  : 'query'   , xtype : 'textfield' , fieldLabel : 'name' }
+				{id : 'query'  , name  : 'query'   , xtype : 'textfield' , fieldLabel : i18n.name }
 			],
 			buttons : [
-				{xtype : 'button' , iconCls: 'icon-search', text : 'search' , action : 'search'}, 
-				{xtype : 'button' , iconCls: 'icon-reset', text : 'reset' , action : 'reset'}     
+				{xtype : 'button' , iconCls: 'icon-search', text : i18n.search , action : i18n.search}, 
+				{xtype : 'button' , iconCls: 'icon-reset', text : i18n.reset , action : i18n.reset}     
             ]
 			
 		};
@@ -806,17 +806,17 @@ var ExtUtils = {
 	creationInfoPanel : function(){
 		var col1 = this.panel({
 			items:[
-				{"xtype":"textfield","name":"id","fieldLabel":"id" , readOnly : true},
-				{"xtype":"textfield","name":"createdBy","fieldLabel":"created by" , readOnly : true},
-				{"xtype":"textfield","name":"modifiedBy","fieldLabel":"modified by" , readOnly : true}
+				{xtype:"textfield",name:"id","fieldLabel": i18n.id , readOnly : true},
+				{xtype:"textfield",name:"createdBy","fieldLabel":  i18n.createdBy , readOnly : true},
+				{xtype:"textfield",name:"modifiedBy","fieldLabel": i18n.modifiedBy , readOnly : true}
 			]
 		});
     	
     	var col2 =  this.panel({
     		items:[
-				{"xtype":"textfield","name":"originVersion","fieldLabel":"origin version" , readOnly : true},
-				{"xtype":"textfield","name":"creationDate","format":"Y-m-d","fieldLabel":"creation date" , readOnly : true},
-				{"xtype":"textfield","name":"modificationDate","format":"Y-m-d","fieldLabel":"modifed date" , readOnly : true}
+				{xtype:"textfield",name:"originVersion","fieldLabel": i18n.originVersion , readOnly : true},
+				{xtype:"textfield",name:"creationDate","format":"Y-m-d","fieldLabel": i18n.creationDate , readOnly : true},
+				{xtype:"textfield",name:"modificationDate","format":"Y-m-d","fieldLabel":i18n.modificationDate , readOnly : true}
 			]
     	});
     	
