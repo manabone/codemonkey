@@ -1,0 +1,21 @@
+var i18n = {
+	code : 'Code',
+	name : 'Name',
+	creationDate : 'Creation Date',
+	createdBy : 'Created By',
+	modificationDate : 'Modification Date',
+	modifiedBy : 'Modified By',
+	description : 'Description',
+	id : 'Id',
+	save : 'Save',
+	backToList : 'Back To List',
+	search : 'Search',
+	reset : 'Reset',
+	destroy : 'Destroy',
+	actions : 'Actions',
+	add : 'Add',
+	edit : 'Edit',
+	cancel : 'Cancel',
+	originVersion : 'Origin Version',
+	creationInfo : 'Creation Info'
+};
