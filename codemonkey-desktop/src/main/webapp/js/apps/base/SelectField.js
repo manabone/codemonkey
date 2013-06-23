@@ -23,6 +23,7 @@ Ext.define('Erp.ui.SelectField', {
 		
 		Erp.ui.SelectField.superclass.initComponent.call(this);
 		me.emptyText = 'Select ...';
+		me.listConfig = {width : 150};
 		me.matchFieldWidth = false;
 	},
 	
