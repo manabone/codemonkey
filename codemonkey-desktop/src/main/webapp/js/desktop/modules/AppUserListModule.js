@@ -42,8 +42,7 @@ Ext.define('AM.modules.AppUserListModule', {
 	     	bbar:{
 				xtype : 'pagingtoolbar',
 				store : me.store,
-				displayInfo: true,
-				emptyMsg: "No records to display"
+				displayInfo: true
 			}
 	    };
     }

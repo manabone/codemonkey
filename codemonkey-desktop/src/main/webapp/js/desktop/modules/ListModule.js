@@ -39,21 +39,6 @@ Ext.define('AM.modules.ListModule', {
         	columns : me.gridCols() 
         });
         
-//    	me.store = ExtUtils.ajaxStore({model : me.modelName});
-//		
-//    	me.grid = {
-//    		id : me.gridId,
-//    		xtype : 'grid',	
-//    		flex : 3,
-//	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(me.gridCols) || ExtUtils.defaultGridCols,
-//	     	store : me.store,
-//	     	bbar:{
-//				xtype : 'pagingtoolbar',
-//				store : me.store,
-//				displayInfo: true,
-//				emptyMsg: "No records to display"
-//			}
-//	    };
     },
     
     createWindowItem : function(){
