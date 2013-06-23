@@ -2,19 +2,32 @@ package com.codemonkey.utils;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public final class EnumUtils {
 
 	private EnumUtils(){}
 	
-	public static JSONArray getEnmuDataByClazz(String className) {
-		JSONArray ja = new JSONArray();
+	public static JSONObject getEnmuDataByClazz(String className , String pacakageName , String method) {
+		JSONObject ja = new JSONObject();
+		
 		if(StringUtils.isNotBlank(className)){
+			
+			String pName = null;
+			
+			if(StringUtils.isBlank(pacakageName)){
+				pName = "com.codemonkey.domain.";
+			}else{
+				pName = pacakageName + '.';
+			}
+			String cName = pName + className;
+			
 			try {
-				return getEnmuDataByClazz(Class.forName(className));
+				return getEnmuDataByClazz(Class.forName(cName) , method);
 			} catch (ClassNotFoundException e) {
 				return ja;
 			}
@@ -22,13 +35,33 @@ public final class EnumUtils {
 		return ja;
 	}
 
-	public static JSONArray getEnmuDataByClazz(Class<?> clazz){
-		JSONArray ja = new JSONArray();
-		if(clazz.isEnum()){
+	public static JSONObject getEnmuDataByClazz(Class<?> clazz , String method){
+		JSONObject ja = new JSONObject();
+		if(clazz != null && clazz.isEnum()){
 			Object[] enumConstants = clazz.getEnumConstants();
-			ja = buildEnmuCoboxData(Arrays.asList(enumConstants));
+			ja = buildJsonData(Arrays.asList(enumConstants));
 		}
 		return ja;
+	}
+
+	private static JSONObject buildJsonData(List<Object> coll) {
+		JSONObject jo = new JSONObject();
+		JSONArray data = new JSONArray();
+		try {
+			if (coll != null && !coll.isEmpty()) {
+				for (Object obj : coll) {
+					JSONObject jso = new JSONObject();
+					jso.put("name" , ClassHelper.callGetter(obj, "name"));
+					jso.put("text" , ClassHelper.callGetter(obj, "text"));
+					data.put(jso);
+				}
+				jo.put("data", data);
+				jo.put("totalCount", coll.size());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jo;
 	}
 
 	public static JSONArray buildEnmuCoboxData(Collection<?> coll) {

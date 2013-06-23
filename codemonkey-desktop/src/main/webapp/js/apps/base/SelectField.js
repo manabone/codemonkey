@@ -4,17 +4,29 @@ Ext.define('Erp.ui.SelectField', {
 
 	valueField:'name',
 	displayField:'text',
-	queryMode:'local',
+	forceSelection : true,
 	
 	initComponent : function() {
 		var me = this;
-		me.store = me.buildStore();
+		
+		if(me.model){
+			me.store = new Ext.data.JsonStore ({
+		        fields: ['name' , 'text'],
+		        id: "selectStore-" + me.model,
+		        proxy: ExtUtils.ajaxProxy({model:'Enum'})
+		    });
+			ExtUtils.storeReload(me.store,{className : me.model});
+		}else{
+			me.queryMode = 'local';
+			me.store = me.buildLocalStore();
+		}
+		
 		Erp.ui.SelectField.superclass.initComponent.call(this);
 		me.emptyText = 'Select ...';
 		me.matchFieldWidth = false;
 	},
 	
-	buildStore : function(){
+	buildLocalStore : function(){
 		var me = this;
 		var d = me.data;
 		if(d && d.length > 0 && d[0][0] != '') {

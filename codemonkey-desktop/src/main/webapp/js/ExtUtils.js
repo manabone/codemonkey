@@ -502,8 +502,7 @@ var ExtUtils = {
 	     	bbar:{
 				xtype : 'pagingtoolbar',
 				store : store,
-				displayInfo: true,
-				emptyMsg: "No records to display"
+				displayInfo: true
 			}
 	    };
 		
@@ -708,9 +707,10 @@ var ExtUtils = {
 	},
 	
 	ajaxProxy : function(config){
+		var action = config.action || CONSTANTS.READ;
 		var proxy = {
 			type: CONSTANTS.PROXY_TYPE,
-	        url : NS.url(config.model || config.modelName , CONSTANTS.READ),
+	        url : NS.url(config.model || config.modelName , action),
 	        reader: {
 				type: CONSTANTS.READER_TYPE,
 				root: CONSTANTS.READER_ROOT,

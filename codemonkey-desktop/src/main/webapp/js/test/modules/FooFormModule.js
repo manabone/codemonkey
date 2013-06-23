@@ -37,7 +37,7 @@ Ext.define('test.modules.FooFormModule', {
 			{xtype :"datefield",name :"creationDate",format :"Y-m-d",fieldLabel :"creation date" , allowBlank : false},
 			{xtype :"datefield",name :"modificationDate",format :"Y-m-d",fieldLabel :"modification date"},
 			{xtype :"checkbox",name :"fbool",fieldLabel :"fbool"},
-			{xtype :"selectfield",name :"fstatus",data :[["ACTIVE","ACTIVE"],["INACTIVE","INACTIVE"]],fieldLabel :"fstatus" , allowBlank : false},
+			{xtype :"selectfield",name :"fstatus", model : 'Status' ,fieldLabel :"fstatus" , allowBlank : false},
 			{xtype :"searchingselect",name :"appRole",config :{model :"AppRoleList"},fieldLabel :"app role" , allowBlank : false},
 			{xtype :"searchingselect",name :"appUserGroup",config :{model :"AppUserGroup"},fieldLabel :"app user group"}       
 	    ];
