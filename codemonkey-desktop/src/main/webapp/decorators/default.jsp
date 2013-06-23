@@ -11,15 +11,16 @@
 	    <meta http-equiv="Expires" content="0"/>
 	    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	    <script type="text/javascript" src="${ctx}/js/extjs41/ext-all-debug.js"></script>
-	    <script type="text/javascript" src="${ctx}/js/extjs41/ext-lang-${locale}.js"></script>
-	   
+	    <c:if test="${locale != 'en'}">
+			<script type="text/javascript" src="${ctx}/js/extjs41/ext-lang-${locale}.js"></script>
+		</c:if>
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/resources/css/ext-all-${theme}.css" />
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/resources/css/icon.css" />
-
 
 		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingSelect.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/TreeCombo.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/SelectField.js"></script>
+		
 		<script type="text/javascript" src="${ctx}/js/i18n/i18n-${locale}.js"></script>
 		<script type="text/javascript" src="${ctx}/js/ExtUtils.js"></script>
 		<script type="text/javascript" src="${ctx}/js/NamingStrategy.js"></script>
