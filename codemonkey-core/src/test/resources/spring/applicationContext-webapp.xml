@@ -42,7 +42,7 @@
     </bean>
     
     <bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
-          id="localeResolver" p:cookieMaxAge="#{60 * 60 * 24 * 30}" p:defaultLocale="en">
+          id="localeResolver" p:cookieMaxAge="#{60 * 60 * 24 * 30}" p:defaultLocale="zh_CN">
         <description>Enables locale resolution with the help of a one month long cookie </description>
     </bean>
     
