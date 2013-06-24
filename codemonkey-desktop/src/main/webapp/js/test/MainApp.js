@@ -41,6 +41,15 @@ Ext.define('test.MainApp', {
        { name: 'Grid Window', iconCls: 'icon-grid', module: 'fooListModule' }
     ],
     
+    startConfig : {
+    	menu: [{
+    		 text: 'erp',
+    		 handler: function(){
+	            window.location = '?module=erp';
+	        }
+    	}]
+    },
+    
     getModules : function(){
         return [
 //			new test.modules.Foo2ListModule(),

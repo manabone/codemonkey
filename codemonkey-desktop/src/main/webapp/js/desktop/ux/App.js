@@ -96,15 +96,15 @@ Ext.define('Ext.ux.desktop.App', {
 
         Ext.apply(cfg, me.startConfig);
 
-        Ext.each(me.modules, function (module) {
-            launcher = module.launcher;
-            if (launcher) {
-                launcher.handler = launcher.handler || Ext.bind(me.createWindow, me, [module]);
-                if(!module.hidden){
-                	cfg.menu.push(module.launcher);
-                }
-            }
-        });
+//        Ext.each(me.modules, function (module) {
+//            launcher = module.launcher;
+//            if (launcher) {
+//                launcher.handler = launcher.handler || Ext.bind(me.createWindow, me, [module]);
+//                if(!module.hidden){
+//                	cfg.menu.push(module.launcher);
+//                }
+//            }
+//        });
 
         return cfg;
     },
