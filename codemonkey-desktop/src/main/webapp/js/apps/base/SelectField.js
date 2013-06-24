@@ -13,6 +13,7 @@ Ext.define('Erp.ui.SelectField', {
 			me.store = new Ext.data.JsonStore ({
 		        fields: ['name' , 'text'],
 		        id: "selectStore-" + me.model,
+		        autoLoad : true,
 		        proxy: ExtUtils.ajaxProxy({model:'Enum'})
 		    });
 			ExtUtils.storeReload(me.store,{className : me.model});
