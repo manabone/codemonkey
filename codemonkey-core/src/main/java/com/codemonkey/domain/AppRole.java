@@ -11,10 +11,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.envers.Audited;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 @Entity
+@Audited
 public class AppRole extends AbsEE {
 
 	/**

@@ -14,12 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.envers.Audited;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.codemonkey.utils.OgnlUtils;
 
 @Entity
+@Audited
 public class AppUser extends AbsEE{
 
 	/**

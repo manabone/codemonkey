@@ -4,10 +4,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 @Entity
 @DiscriminatorValue("bar")
+@Audited
 public class Bar extends AbsMM{
 
 	/**

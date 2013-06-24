@@ -213,6 +213,14 @@
 		</dependency>
         <!-- end hibernate -->
         
+        <!-- hibernate audit -->
+        <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
+        <!-- dbunit -->
         <dependency>
 		   <groupId>dbunit</groupId>
 		   <artifactId>dbunit</artifactId>

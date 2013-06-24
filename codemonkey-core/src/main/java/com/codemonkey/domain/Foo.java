@@ -10,13 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 import com.codemonkey.annotation.SkipBuild;
 import com.codemonkey.utils.OgnlUtils;
-import com.codemonkey.utils.SysUtils;
 
 @Entity
+@Audited
 public class Foo extends AbsEE{
 
 	/**

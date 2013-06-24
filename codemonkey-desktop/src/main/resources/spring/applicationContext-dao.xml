@@ -44,10 +44,29 @@
 				<prop key="hibernate.default_schema">${hibernate.default_schema}</prop>
 				-->
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				
+				<!-- hibernate audit -->
+				<prop key="org.hibernate.envers.audit_table_suffix">${org.hibernate.envers.audit_table_suffix}</prop>
+			    <prop key="org.hibernate.envers.audit_table_prefix">${org.hibernate.envers.audit_table_prefix}</prop>
+			    <prop key="org.hibernate.envers.revision_field_name">${org.hibernate.envers.revision_field_name}</prop>
+			    <prop key="org.hibernate.envers.revision_type_field_name">${org.hibernate.envers.revision_type_field_name}</prop>
+			    <prop key="org.hibernate.envers.revision_on_collection_change">${org.hibernate.envers.revision_on_collection_change}</prop>
+			    <prop key="org.hibernate.envers.do_not_audit_optimistic_locking_field">${org.hibernate.envers.do_not_audit_optimistic_locking_field}</prop>
+			    <prop key="org.hibernate.envers.store_data_at_delete">${org.hibernate.envers.store_data_at_delete}</prop>
+			    <prop key="org.hibernate.envers.default_schema">${org.hibernate.envers.default_schema}</prop>
+			    <prop key="org.hibernate.envers.default_catalog">${org.hibernate.envers.default_catalog}</prop>
 			</props>
 		</property>
     </bean>
     
+    <bean name="postInsertEventListener" class="org.hibernate.envers.event.EnversPostInsertEventListenerImpl"/>
+    <bean name="postUpdateEventListener" class="org.hibernate.envers.event.EnversPostUpdateEventListenerImpl" />
+    <bean name="postDeleteEventListener" class="org.hibernate.envers.event.EnversPostDeleteEventListenerImpl" />
+    <bean name="postCollectionRecreateEventListener" class="org.hibernate.envers.event.EnversPostCollectionRecreateEventListenerImpl" />
+    <bean name="preCollectionRemoveEventListener" class="org.hibernate.envers.event.EnversPreCollectionRemoveEventListenerImpl" />
+    <bean name="preCollectionUpdateEventListener" class="org.hibernate.envers.event.EnversPreCollectionUpdateEventListenerImpl" />
+    
+	
     <bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
     
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->

@@ -8,15 +8,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 import org.apache.shiro.util.CollectionUtils;
+import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 import com.codemonkey.security.RequestType;
 
 @Entity
-@Table
+@Audited
 public class AppPermission extends AbsMM{
 
 	/**
