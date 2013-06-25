@@ -64,20 +64,25 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo.put("JOINS", "bars_LEFT");
 		queryInfo.put("bars.code_Like", "bar");
 		
-		list = fooService.findByQueryInfo(queryInfo);
+		JSONObject queryAndSort = new JSONObject();
+		queryAndSort.put("query" , queryInfo);
+		
+		list = fooService.findByQueryInfo(queryAndSort);
 		
 		assertEquals(1 , count);
 		
 		
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_LE", 3);
-		list = fooService.findByQueryInfo(queryInfo);
+		queryAndSort.put("query" , queryInfo);
+		list = fooService.findByQueryInfo(queryAndSort);
 		
 		assertEquals(1 , list.size());
 		
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_LE", 2);
-		list = fooService.findByQueryInfo(queryInfo);
+		queryAndSort.put("query" , queryInfo);
+		list = fooService.findByQueryInfo(queryAndSort);
 		
 		assertEquals(0 , list.size());
 		
@@ -150,16 +155,19 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		fooService.save(foo3);
 		
 		//from Foo where 1 = 1
-		JSONObject queryInfo = new JSONObject();
-		List<Foo> foos = fooService.findByQueryInfo(queryInfo);
+		JSONObject queryAndSort = new JSONObject();
+		List<Foo> foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(3 , foos.size());
 		
 		foos = fooService.findAll();
 		assertEquals(3 , foos.size());
 		
 		//from Foo E where 1 = 1 and E.fbool = ? [true]
-		queryInfo.put("fbool", "true");
-		foos = fooService.findByQueryInfo(queryInfo);
+		JSONObject queryInfo = new JSONObject().put("fbool", "true");
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
 		foos = fooService.findAllBy("fbool", true);
@@ -168,7 +176,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.fnumber >= ? [2]
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_GE", "2");
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(2 , foos.size());
 		
 		foos = fooService.findAllBy("fnumber_GE", 2d);
@@ -177,7 +187,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.fstatus = ? ['ACTIVE']
 		queryInfo = new JSONObject();
 		queryInfo.put("fstatus", "ACTIVE");
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(2 , foos.size());
 		
 		foos = fooService.findAllBy("fstatus", Status.ACTIVE);
@@ -186,7 +198,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.fdate >=  ? ['2011-12-07']
 		queryInfo = new JSONObject();
 		queryInfo.put("fdate_GE", "2011-12-07");
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(2 , foos.size());
 		
 		Date date = new DateTime("2011-12-07").toDate();
@@ -196,7 +210,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.fstring like ? ['%3%']
 		queryInfo = new JSONObject();
 		queryInfo.put("fstring_Like", "3");
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
 		foos = fooService.findAllBy("fstring_Like" , "%3%");
@@ -205,7 +221,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.appRole.id = ? [1]
 		queryInfo = new JSONObject();
 		queryInfo.put("appRole.id", role.getId());
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
 		foos = fooService.findAllBy("appRole.id" , role.getId());
@@ -214,7 +232,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.appRole.name = ? ['role1']
 		queryInfo = new JSONObject();
 		queryInfo.put("appRole.name", "role1");
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
 		foos = fooService.findAllBy("appRole.name" , "role1");
@@ -224,7 +244,9 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("fbool", "false");
 		queryInfo.put("fnumber_LE", "2");
-		foos = fooService.findByQueryInfo(queryInfo);
+		queryAndSort = new JSONObject();
+		queryAndSort.put("query", queryInfo);
+		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
 		foos = fooService.findAllBy("fboolAndfnumber_LE" , false , 2d);

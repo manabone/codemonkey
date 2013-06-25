@@ -122,7 +122,11 @@ public final class HqlHelper {
 		
 		String orderBy = orderByQueryInfo(queryAndSort);
 		
-		return findBy + orderBy;
+		if(StringUtils.isNotBlank(orderBy)){
+			findBy += orderBy;
+		}
+		
+		return findBy;
 	}
 	
 	public static String countByQueryInfo(Class<?> type , JSONObject queryInfo){
