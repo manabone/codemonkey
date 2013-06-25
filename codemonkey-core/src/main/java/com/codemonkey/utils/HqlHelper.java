@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.codemonkey.error.FieldValidation;
@@ -109,14 +110,19 @@ public final class HqlHelper {
 		return hql.replace(SELECT_FROM , SELECT_COUNT_FROM);
 	}
 	
-	public static String findByQueryInfo(Class<?> type , JSONObject queryInfo){
-		String findBy = queryInfoToFindBy(queryInfo);
+	public static String findByQueryInfo(Class<?> type , JSONObject queryAndSort){
 		
-		if(queryInfo.has(JOINS)){
-			return findyBy(type , findBy , queryInfo.getString(JOINS).split(","));
+		String findBy = queryInfoToFindBy(queryAndSort);
+		
+		if(queryAndSort.has("query") && queryAndSort.getJSONObject("query").has(JOINS)){
+			findBy = findyBy(type , findBy , queryAndSort.getJSONObject("query").getString(JOINS).split(","));
+		}else{
+			findBy = findyBy(type , findBy);
 		}
 		
-		return findyBy(type , findBy);
+		String orderBy = orderByQueryInfo(queryAndSort);
+		
+		return findBy + orderBy;
 	}
 	
 	public static String countByQueryInfo(Class<?> type , JSONObject queryInfo){
@@ -130,11 +136,17 @@ public final class HqlHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<Object> extractParamsFromQueryInfo(Class<?> type , JSONObject queryInfo){
+	public static List<Object> extractParamsFromQueryInfo(Class<?> type , JSONObject queryAndSort){
 		List<Object> params = new ArrayList<Object>();
-		if(queryInfo == null){
-			return null;
+		if(queryAndSort == null){
+			return params;
 		}
+		
+		if(!queryAndSort.has("query")){
+			return params;
+		}
+		
+		JSONObject queryInfo = queryAndSort.getJSONObject("query");
 		
 		Iterator<String> it = queryInfo.keys();
 		
@@ -224,11 +236,17 @@ public final class HqlHelper {
 	//---------------------------------------//
 	
 	@SuppressWarnings("unchecked")
-	private static String queryInfoToFindBy(JSONObject queryInfo){
+	private static String queryInfoToFindBy(JSONObject queryAndSort){
 		StringBuffer buffer = new StringBuffer();
-		if(queryInfo == null){
+		if(queryAndSort == null){
 			return null;
 		}
+		
+		if(!queryAndSort.has("query")){
+			return null;
+		}
+		
+		JSONObject queryInfo = queryAndSort.getJSONObject("query");
 		
 		Iterator<String> it = queryInfo.keys();
 		
@@ -333,5 +351,34 @@ public final class HqlHelper {
         prop = (prop.charAt(0) + "").toLowerCase() + prop.substring(1);
         return prop;
     }
+
+
+	public static String orderByQueryInfo(JSONObject queryInfo) {
+		if(queryInfo == null){
+			return null;
+		}
+		
+		if(!queryInfo.has("sort")){
+			return null;
+		}
+		
+		StringBuffer buffer = new StringBuffer(" ORDER BY ");
+		
+		JSONArray sortArray = queryInfo.getJSONArray("sort");
+		
+		for(int i = 0 ; i < sortArray.length() ; i++){
+			JSONObject sort = sortArray.getJSONObject(i);
+			
+			buffer.append(sort.get("property"));
+			buffer.append(' ');
+			buffer.append(sort.get("direction"));
+			
+			if(i < sortArray.length() - 1 ){
+				buffer.append(" , ");
+			}
+		}
+		
+		return buffer.toString();
+	}
 	
 }

@@ -681,6 +681,7 @@ var ExtUtils = {
 	},
 	
 	ajaxStore : function(config){
+		config = Ext.apply({remoteSort : true} , config);
 		return this._createStore('Ext.data.JsonStore' , config);
 	},
 	

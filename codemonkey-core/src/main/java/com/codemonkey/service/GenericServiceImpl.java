@@ -254,12 +254,12 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		return getDao().get(Long.valueOf(source));
 	}
 	
-	public List<T> findByQueryInfo(JSONObject queryInfo, Integer start, Integer limit) {
+	public List<T> findByQueryInfo(JSONObject queryAndSort, Integer start, Integer limit) {
 		
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		
-		List<T> list = getDao().findByQueryInfo(queryInfo , start , limit);
+		List<T> list = getDao().findByQueryInfo(queryAndSort , start , limit);
 		
 		stopWatch.stop();
 		getLog().info(stopWatch);

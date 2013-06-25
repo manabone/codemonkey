@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -225,17 +226,18 @@ public class GenericDao<T extends IEntity> {
 		return hqlQuery;
 	}
 	
-	public List<T> findByQueryInfo(JSONObject queryInfo, Integer start, Integer limit) {
+	public List<T> findByQueryInfo(JSONObject queryAndSort, Integer start, Integer limit) {
 		
-		String hql = HqlHelper.findByQueryInfo(getType(), queryInfo);
-		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryInfo);
+		String hql = HqlHelper.findByQueryInfo(getType(), queryAndSort);
+		
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryAndSort);
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return hqlQuery.setMaxResults(limit).setFirstResult(start).list();
 	}
 
-	public List<T> findByQueryInfo(JSONObject queryInfo) {
-		String hql = HqlHelper.findByQueryInfo(getType(), queryInfo);
-		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryInfo);
+	public List<T> findByQueryInfo(JSONObject queryAndSort) {
+		String hql = HqlHelper.findByQueryInfo(getType(), queryAndSort);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryAndSort);
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return hqlQuery.list();
 	}

@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,15 +53,17 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     //----------------------
     @RequestMapping("read")
     @ResponseBody 
-    public String read(@RequestParam(required=false) Integer page , 
-    		@RequestParam(required=false , defaultValue = "0") Integer start , 
-    		@RequestParam(required=false , defaultValue = "25") Integer limit ,
-    		@RequestParam(required=false) String id,
-    		@RequestParam(required=false) String query,
-    		@RequestParam(required=false) JSONObject queryInfo) {
+    public String read(@RequestParam(required = false) Integer page , 
+    		@RequestParam(required = false , defaultValue = "0") Integer start , 
+    		@RequestParam(required = false , defaultValue = "25") Integer limit ,
+    		@RequestParam(required = false) String id,
+    		@RequestParam(required = false) String query,
+    		@RequestParam(required = false) JSONArray sort,
+    		@RequestParam(required = false) JSONObject queryInfo) {
     	
     	List<T> list = new ArrayList<T>();
     	long total = 0;
+    	
     	if(StringUtils.isNotBlank(id)){
     		T t = service().get(Long.valueOf(id));
     		total = 1;
@@ -71,9 +74,10 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     		};
     		list = service().find(criterions);
     		total = service().count(criterions);
-    	}else if(queryInfo  != null){
-    		list = service().findByQueryInfo(queryInfo , start , limit);
-    		total = service().countByQueryInfo(queryInfo);
+    	}else if(sort != null || queryInfo != null){
+    		JSONObject queryAndSort = new JSONObject().put("sort", sort).put("query", queryInfo);
+    		list = service().findByQueryInfo(queryAndSort , start , limit);
+    		total = service().countByQueryInfo(queryAndSort);
     	}else{
     		list = service().findAll(start , limit);
     		total = service().count();
@@ -82,9 +86,9 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     	return buildJson(list , total);
     }
     
-    //----------------------
+	//----------------------
     // destroy
-    //----------------------
+    //---------------------- 
 	@RequestMapping("destroy")
     @ResponseBody
 	public String destroy(@RequestBody String body){
