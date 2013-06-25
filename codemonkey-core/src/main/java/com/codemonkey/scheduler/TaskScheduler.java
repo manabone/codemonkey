@@ -15,6 +15,6 @@ public class TaskScheduler {
 	
 	@Scheduled(cron = "0 0/1 * * * *")
 	public void run() {
-		log.info("5 min run once");
+		log.info("1 min run once");
 	}
 }
