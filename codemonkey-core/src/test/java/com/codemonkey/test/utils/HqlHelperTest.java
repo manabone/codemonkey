@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.HqlHelper;
 
 public class HqlHelperTest {
@@ -16,12 +17,12 @@ public class HqlHelperTest {
 	public void orderByQueryInfo() throws ParseException{
 		
 		JSONArray sortArray = new JSONArray("[{property:\"fstring\",direction:\"ASC\"}]");
-		JSONObject sort = new JSONObject().put("sort", sortArray);
+		JSONObject sort = new JSONObject().put(ExtConstant.SORT, sortArray);
 		String orderBy = HqlHelper.orderByQueryInfo(sort);
 		assertEquals(" ORDER BY fstring ASC" , orderBy);
 		
 		sortArray = new JSONArray("[{property:\"fstring\",direction:\"ASC\"},{property:\"fstring2\",direction:\"DESC\"}]");
-		sort = new JSONObject().put("sort", sortArray);
+		sort = new JSONObject().put(ExtConstant.SORT, sortArray);
 		orderBy = HqlHelper.orderByQueryInfo(sort);
 		assertEquals(" ORDER BY fstring ASC , fstring2 DESC" , orderBy);
 

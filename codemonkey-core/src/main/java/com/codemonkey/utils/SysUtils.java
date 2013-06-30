@@ -7,15 +7,21 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dbunit.database.DatabaseConnection;
@@ -25,6 +31,8 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
@@ -248,6 +256,74 @@ public class SysUtils {
 		AppUser user = (AppUser) SysUtils.getAttribute(CURRENCT_USER);
 		
 		return user !=null ? user.getUsername() : null;
+	}
+
+	public static Map<String, Object> jsonToMap(JSONObject jo) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(jo == null){
+			return map;
+		}
+		
+		Iterator<?> it = jo.keys();
+		while(it.hasNext()){
+			String key = (String) it.next();
+			map.put(key, jo.opt(key));
+		}
+		return map;
+	}
+	
+	public static List<Map<String, Object>> jsonToMap(JSONArray ja) {
+		
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+		if(ja == null){
+			return list;
+		}
+		
+		for(int i = 0 ; i < ja.length() ; i++){
+			JSONObject jo = ja.optJSONObject(i);
+			if(jo != null){
+				Map<String , Object> map = jsonToMap(jo);
+				list.add(map);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static JSONObject mapToJson(Map<String , Object> map) {
+		
+		JSONObject jo = new JSONObject();
+		
+		if(map == null){
+			return jo;
+		}
+		
+		Set<Entry<String, Object>> set = map.entrySet();
+		Iterator<Entry<String, Object>> it = set.iterator();
+		while(it.hasNext()){
+			Entry<String , Object> entry = (Entry<String , Object>) it.next();
+			jo.put(entry.getKey(), entry.getValue());
+		}
+		return jo;
+	}
+	
+	public static JSONArray mapToJson(List<Map<String , Object>> list) {
+		
+		JSONArray ja = new JSONArray();
+		
+		if(CollectionUtils.isEmpty(list)){
+			return ja;
+		}
+		
+		for(Map<String , Object> map : list){
+			JSONObject jo = mapToJson(map);
+			ja.put(jo);
+		}
+		
+		return ja;
 	}
 
 }

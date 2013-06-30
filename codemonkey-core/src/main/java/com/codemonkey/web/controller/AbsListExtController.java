@@ -75,7 +75,7 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     		list = service().find(criterions);
     		total = service().count(criterions);
     	}else if(sort != null || queryInfo != null){
-    		JSONObject queryAndSort = new JSONObject().put("sort", sort).put("query", queryInfo);
+    		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
     		list = service().findByQueryInfo(queryAndSort , start , limit);
     		total = service().countByQueryInfo(queryAndSort);
     	}else{

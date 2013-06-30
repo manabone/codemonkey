@@ -28,7 +28,7 @@ public class MybatisServiceImpl implements MybatisService {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		
-		HashMap<String , Object> param = new HashMap<String , Object>();
+		Map<String , Object> param = SysUtils.jsonToMap(queryAndSort);
 		
 		List<Map<String,Object>> list = dao.query(id , param);
 		
@@ -46,7 +46,7 @@ public class MybatisServiceImpl implements MybatisService {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		
-		HashMap<String , Object> param = new HashMap<String , Object>();
+		Map<String , Object> param = SysUtils.jsonToMap(queryInfo);
 		
 		Long count = dao.count(id, param);
 		

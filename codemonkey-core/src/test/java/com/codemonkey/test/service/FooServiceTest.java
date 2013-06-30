@@ -20,6 +20,7 @@ import com.codemonkey.service.AppRoleService;
 import com.codemonkey.service.BarService;
 import com.codemonkey.service.FooService;
 import com.codemonkey.utils.ClassHelper;
+import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.web.converter.CustomConversionService;
 
 public class FooServiceTest extends GenericServiceTest<Foo> {
@@ -65,7 +66,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo.put("bars.code_Like", "bar");
 		
 		JSONObject queryAndSort = new JSONObject();
-		queryAndSort.put("query" , queryInfo);
+		queryAndSort.put(ExtConstant.QUERY , queryInfo);
 		
 		list = fooService.findByQueryInfo(queryAndSort);
 		
@@ -74,14 +75,14 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_LE", 3);
-		queryAndSort.put("query" , queryInfo);
+		queryAndSort.put(ExtConstant.QUERY , queryInfo);
 		list = fooService.findByQueryInfo(queryAndSort);
 		
 		assertEquals(1 , list.size());
 		
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_LE", 2);
-		queryAndSort.put("query" , queryInfo);
+		queryAndSort.put(ExtConstant.QUERY , queryInfo);
 		list = fooService.findByQueryInfo(queryAndSort);
 		
 		assertEquals(0 , list.size());
@@ -165,7 +166,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		//from Foo E where 1 = 1 and E.fbool = ? [true]
 		JSONObject queryInfo = new JSONObject().put("fbool", "true");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
@@ -177,7 +178,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_GE", "2");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(2 , foos.size());
 		
@@ -188,7 +189,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("fstatus", "ACTIVE");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(2 , foos.size());
 		
@@ -199,7 +200,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("fdate_GE", "2011-12-07");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(2 , foos.size());
 		
@@ -211,7 +212,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("fstring_Like", "3");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
@@ -222,7 +223,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("appRole.id", role.getId());
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
@@ -233,7 +234,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo = new JSONObject();
 		queryInfo.put("appRole.name", "role1");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
@@ -245,7 +246,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		queryInfo.put("fbool", "false");
 		queryInfo.put("fnumber_LE", "2");
 		queryAndSort = new JSONObject();
-		queryAndSort.put("query", queryInfo);
+		queryAndSort.put(ExtConstant.QUERY, queryInfo);
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		

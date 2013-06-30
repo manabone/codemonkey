@@ -48,7 +48,7 @@ public abstract class AbsIbatisController extends AbsController implements Secur
     	long total = mybatisService.count(getQueryId(), queryInfo);
     	List<Map<String , Object>> list = null;
     	if(total > 0){
-    		JSONObject queryAndSort = new JSONObject().put("sort", sort).put("query", queryInfo);
+    		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
     		list = mybatisService.query(getQueryId(), queryAndSort);
     	}
     	

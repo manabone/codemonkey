@@ -114,8 +114,8 @@ public final class HqlHelper {
 		
 		String findBy = queryInfoToFindBy(queryAndSort);
 		
-		if(queryAndSort.has("query") && queryAndSort.getJSONObject("query").has(JOINS)){
-			findBy = findyBy(type , findBy , queryAndSort.getJSONObject("query").getString(JOINS).split(","));
+		if(queryAndSort.has(ExtConstant.QUERY) && queryAndSort.getJSONObject(ExtConstant.QUERY).has(JOINS)){
+			findBy = findyBy(type , findBy , queryAndSort.getJSONObject(ExtConstant.QUERY).getString(JOINS).split(","));
 		}else{
 			findBy = findyBy(type , findBy);
 		}
@@ -146,11 +146,11 @@ public final class HqlHelper {
 			return params;
 		}
 		
-		if(!queryAndSort.has("query")){
+		if(!queryAndSort.has(ExtConstant.QUERY)){
 			return params;
 		}
 		
-		JSONObject queryInfo = queryAndSort.getJSONObject("query");
+		JSONObject queryInfo = queryAndSort.getJSONObject(ExtConstant.QUERY);
 		
 		Iterator<String> it = queryInfo.keys();
 		
@@ -246,11 +246,11 @@ public final class HqlHelper {
 			return null;
 		}
 		
-		if(!queryAndSort.has("query")){
+		if(!queryAndSort.has(ExtConstant.QUERY)){
 			return null;
 		}
 		
-		JSONObject queryInfo = queryAndSort.getJSONObject("query");
+		JSONObject queryInfo = queryAndSort.getJSONObject(ExtConstant.QUERY);
 		
 		Iterator<String> it = queryInfo.keys();
 		
@@ -362,13 +362,13 @@ public final class HqlHelper {
 			return null;
 		}
 		
-		if(!queryInfo.has("sort")){
+		if(!queryInfo.has(ExtConstant.SORT)){
 			return null;
 		}
 		
 		StringBuffer buffer = new StringBuffer(" ORDER BY ");
 		
-		JSONArray sortArray = queryInfo.getJSONArray("sort");
+		JSONArray sortArray = queryInfo.getJSONArray(ExtConstant.SORT);
 		
 		for(int i = 0 ; i < sortArray.length() ; i++){
 			JSONObject sort = sortArray.getJSONObject(i);
