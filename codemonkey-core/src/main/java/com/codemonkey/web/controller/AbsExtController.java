@@ -2,7 +2,6 @@ package com.codemonkey.web.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -11,15 +10,8 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.IEntity;
-import com.codemonkey.error.AuthError;
-import com.codemonkey.error.BadObjVersionError;
-import com.codemonkey.error.SessionTimeoutError;
-import com.codemonkey.error.SysError;
-import com.codemonkey.error.ValidationError;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
@@ -27,7 +19,7 @@ import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
 
-public abstract class AbsExtController<T extends IEntity> implements SecurityController{
+public abstract class AbsExtController<T extends IEntity> extends AbsController implements SecurityController{
 	
 	private Class<?> type;
 	
@@ -104,36 +96,6 @@ public abstract class AbsExtController<T extends IEntity> implements SecurityCon
 		return jo;
 	}
 	
-	@ExceptionHandler(SysError.class)
-	@ResponseBody
-	public String handleSysException(SysError ex, HttpServletRequest request) {
-		return ex.json().toString();
-	}
-	
-	@ExceptionHandler(AuthError.class)
-	@ResponseBody
-	public String handleAuthException(AuthError ex, HttpServletRequest request) {
-		return ex.json().toString();
-	}
-	
-	@ExceptionHandler(ValidationError.class)
-	@ResponseBody
-	public String handleValidationException(ValidationError ex, HttpServletRequest request) {
-		return ex.json().toString();
-	}
-	
-	@ExceptionHandler(BadObjVersionError.class)
-	@ResponseBody
-	public String handleBadVersionException(BadObjVersionError ex, HttpServletRequest request) {
-		return ex.json().toString();
-	}
-	
-	@ExceptionHandler(SessionTimeoutError.class)
-	@ResponseBody
-	public String handleSessionTimeout(SessionTimeoutError ex, HttpServletRequest request) {
-		return ex.json().toString();
-	}
-    
 	public Class<?> getType() {
 		return type;
 	}

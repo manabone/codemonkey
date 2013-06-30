@@ -194,14 +194,14 @@
 		
 		<!-- hibernate audit -->
 		<org.hibernate.envers.default_catalog></org.hibernate.envers.default_catalog>
-		<org.hibernate.envers.default_schema>audit</org.hibernate.envers.default_schema>
+		<org.hibernate.envers.default_schema></org.hibernate.envers.default_schema>
 		<org.hibernate.envers.store_data_at_delete>true</org.hibernate.envers.store_data_at_delete>
 		<org.hibernate.envers.do_not_audit_optimistic_locking_field>true</org.hibernate.envers.do_not_audit_optimistic_locking_field>
 		<org.hibernate.envers.revision_on_collection_change>true</org.hibernate.envers.revision_on_collection_change>
 		<org.hibernate.envers.revision_type_field_name>rev_type</org.hibernate.envers.revision_type_field_name>
 		<org.hibernate.envers.revision_field_name>rev</org.hibernate.envers.revision_field_name>
-		<org.hibernate.envers.audit_table_prefix>log_</org.hibernate.envers.audit_table_prefix>
-		<org.hibernate.envers.audit_table_suffix>_audit</org.hibernate.envers.audit_table_suffix>
+		<org.hibernate.envers.audit_table_prefix>audit_</org.hibernate.envers.audit_table_prefix>
+		<org.hibernate.envers.audit_table_suffix></org.hibernate.envers.audit_table_suffix>
 				
 	</properties>
 

@@ -16,6 +16,7 @@
     <import resource="classpath*:spring/applicationContext-globle.xml"/>
     <import resource="classpath*:spring/applicationContext-service.xml"/>
     <import resource="classpath*:spring/applicationContext-shiro.xml"/>
+    <import resource="classpath*:spring/applicationContext-mybatis.xml"/>
   
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
