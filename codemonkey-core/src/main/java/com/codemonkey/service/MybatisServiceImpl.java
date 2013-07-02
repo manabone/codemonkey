@@ -1,6 +1,5 @@
 package com.codemonkey.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +19,6 @@ public class MybatisServiceImpl implements MybatisService {
 	
 	private Logger logger = SysUtils.getLog(getClass());
 
-	/* (non-Javadoc)
-	 * @see com.codemonkey.service.MybatisService1#query(java.lang.String, java.util.Map)
-	 */
 	@Override
 	public List<Map<String,Object>> query(String id , JSONObject queryAndSort){
 		StopWatch stopWatch = new StopWatch();
@@ -38,9 +34,6 @@ public class MybatisServiceImpl implements MybatisService {
 		return list;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.codemonkey.service.MybatisService1#count(java.lang.String, java.util.Map)
-	 */
 	@Override
 	public long count(String id , JSONObject queryInfo){
 		StopWatch stopWatch = new StopWatch();

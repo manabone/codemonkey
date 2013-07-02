@@ -269,7 +269,15 @@ public class SysUtils {
 		Iterator<?> it = jo.keys();
 		while(it.hasNext()){
 			String key = (String) it.next();
-			map.put(key, jo.opt(key));
+			
+			
+			if(jo.optJSONObject(key) != null){
+				map.put(key, jsonToMap(jo.optJSONObject(key)));
+			}else if(jo.optJSONArray(key) != null){
+				map.put(key, jsonToMap(jo.optJSONArray(key)));
+			}else{
+				map.put(key , jo.get(key));
+			}
 		}
 		return map;
 	}
