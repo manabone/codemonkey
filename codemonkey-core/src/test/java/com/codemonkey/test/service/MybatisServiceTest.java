@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.codemonkey.service.MybatisService;
 import com.codemonkey.utils.ExtConstant;
@@ -20,8 +21,12 @@ public class MybatisServiceTest extends GenericServiceTest {
 
 	@Autowired private MybatisService mybatisService;
 
+	@Autowired private JdbcTemplate jdbcTemplate;
+	
 	@Test
 	public void testQuery() throws ParseException{
+		
+		prepareData();
 		
 		List<Map<String , Object>> list = mybatisService.query("selectAppUserList", null);
 		assertEquals(2 , list.size());
@@ -45,11 +50,18 @@ public class MybatisServiceTest extends GenericServiceTest {
 		assertEquals("admin" , list.get(0).get("username"));
 		
 	}
+
+	private void prepareData() {
+		jdbcTemplate.execute("insert into app_user (id , username , password) values (-1 , 'admin' , 'admin')");
+		jdbcTemplate.execute("insert into app_user (id , username , password) values (-2 , 'user' , 'user')");
+	}
 	
 	@Test
 	public void testCount(){
+
+		prepareData();
 		
-		long count = mybatisService.count("selectCountAppUser", null);
+		long count = mybatisService.count("selectAppUserList_count", null);
 		assertEquals(2 , count);
 		
 	}

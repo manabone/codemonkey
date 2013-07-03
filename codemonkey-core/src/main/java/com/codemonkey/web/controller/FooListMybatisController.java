@@ -20,7 +20,5 @@ public class FooListMybatisController extends AbsIbatisController{
 	String getQueryId() {
 		return "selectFooList";
 	}
-	
-	
 
 }

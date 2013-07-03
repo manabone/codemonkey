@@ -1,0 +1,34 @@
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.codemonkey.dao.MybatisDao">
+	<!-- foo -->
+	<select id="selectFooList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from foo t
+		<include refid="selectFooList_where"/>
+		<if test="sort != null">
+			order by 
+			<foreach item="item" index="index" collection="sort" separator=",">
+				${item.property} ${item.direction} 
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="selectFooList_count" parameterType="java.util.HashMap" resultType="long">
+		select count(*) from foo
+		<include refid="selectAppUserList_where"/>
+	</select>
+	
+	<sql id="selectFooList_where">
+		<where>
+			<if test="query != null">
+				<if test="query.username != null">
+					and t.username like '%${query.username}%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- appUser end -->
+</mapper>

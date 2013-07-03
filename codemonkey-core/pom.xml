@@ -13,63 +13,10 @@
    	<!--					  BUILD							     -->
    	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<build>
+		<defaultGoal>install</defaultGoal>
 		
         <plugins>
-	        <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>dbunit-maven-plugin</artifactId>
-				<version>1.0-beta-3</version>
-	
-				<!--jar file that has the jdbc driver -->
-				<dependencies>
-					<dependency>
-						<groupId>${jdbc.groupId}</groupId>
-						<artifactId>${jdbc.artifactId}</artifactId>
-						<version>${jdbc.version}</version>
-					</dependency>
-				</dependencies>
-				
-				<configuration>
-					<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-				</configuration>
-	
-				<executions>
-					<execution>
-						<id>insert-test-data</id>
-						<phase>test</phase>
-						<goals>
-							<goal>operation</goal>
-						</goals>
-						<!-- specific configurations -->
-						<configuration>
-							<driver>${jdbc.driverClassName}</driver>
-							<url>${jdbc.url.test}</url>
-							<username>${jdbc.username}</username>
-							<password>${jdbc.password}</password>
-							<type>CLEAN_INSERT</type>
-							<src>src\test\resources\test-data.xml</src>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>insert-default-data</id>
-						<phase>run</phase>
-						<goals>
-							<goal>operation</goal>
-						</goals>
-						<!-- specific configurations -->
-						<configuration>
-							<driver>${jdbc.driverClassName}</driver>
-							<url>${jdbc.url}</url>
-							<username>${jdbc.username}</username>
-							<password>${jdbc.password}</password>
-							<type>UPDATE</type>
-							<src>src\main\resources\default-data.xml</src>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+    	</plugins>
 	</build>
 	
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -288,7 +235,7 @@
 		<dependency>
 		   <groupId>org.mybatis</groupId>
 		   <artifactId>mybatis</artifactId>
-		   <version>3.2.2</version>
+		   <version>3.1.1</version>
 		</dependency>
 				
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -321,7 +268,7 @@
 		    <artifactId>json-rpc</artifactId>
 		    <version>${json-rpc.version}</version>
 		</dependency>
-		  <!-- 
+		<!-- 
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>

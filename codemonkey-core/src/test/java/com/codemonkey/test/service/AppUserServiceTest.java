@@ -69,9 +69,6 @@ public class AppUserServiceTest extends GenericServiceTest<AppUser>{
 		
 		assertNotNull(user);
 		
-		user = appUserService.findBy("username", "admin");
-		
-		assertNotNull(user);
 	}
 	
 	@Test
