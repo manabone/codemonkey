@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.codemonkey.domain.AppPermission;
 
 @Controller
-@RequestMapping("/ext/fooListMybatis/**")
-public class FooListMybatisController extends AbsIbatisController{
+@RequestMapping("/ext/fooList/**")
+public class FooListMybatisController extends AbsMybatisController{
 
 	@Override
 	public List<AppPermission> regAppPermission() {

@@ -20,7 +20,7 @@ import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 
 
-public abstract class AbsIbatisController extends AbsController implements SecurityController{
+public abstract class AbsMybatisController extends AbsController implements SecurityController{
 	
 	private Logger log;
 	
@@ -28,7 +28,7 @@ public abstract class AbsIbatisController extends AbsController implements Secur
 	
 	@Autowired MybatisService mybatisService;
 	
-	AbsIbatisController(){
+	AbsMybatisController(){
 		log = SysUtils.getLog(getClass());
 	}
 	

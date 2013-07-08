@@ -5,6 +5,7 @@
 		<groupId>com.codemonkey</groupId>
 		<artifactId>codemonkey</artifactId>
 		<version>1.0.0</version>
+		<relativePath>../codemonkey/pom.xml</relativePath>
 	</parent>
 	<artifactId>codemonkey-activiti</artifactId>
 

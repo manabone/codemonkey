@@ -116,7 +116,7 @@
 		
 		<repository>
             <id>jboss</id>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
         </repository>
 		
 		<repository>
@@ -155,7 +155,7 @@
 		<javassist.version>3.9.0.GA</javassist.version>
 		<drools.version>5.2.0.Final</drools.version>
 		<jbpm.version>5.1.0.Final</jbpm.version>
-		<activiti.version>5.13</activiti.version>
+		<activiti.version>5.9</activiti.version>
 		<servlet-api.version>2.5</servlet-api.version>
 		<jsp-api.version>2.1</jsp-api.version>
 		<jstl.version>1.2</jstl.version>
