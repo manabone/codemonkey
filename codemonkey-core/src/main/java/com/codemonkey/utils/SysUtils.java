@@ -270,7 +270,6 @@ public class SysUtils {
 		while(it.hasNext()){
 			String key = (String) it.next();
 			
-			
 			if(jo.optJSONObject(key) != null){
 				map.put(key, jsonToMap(jo.optJSONObject(key)));
 			}else if(jo.optJSONArray(key) != null){
@@ -332,6 +331,28 @@ public class SysUtils {
 		}
 		
 		return ja;
+	}
+	
+	public static String columnToProp(String col){
+		
+		if(StringUtils.isBlank(col)) return "";
+		//replace _a to A
+		Pattern p1= Pattern.compile("_[a-z]{1}");
+		Matcher m1 = p1.matcher(col);
+		
+		while(m1.find()){
+			col = col.replace(m1.group(), m1.group().substring(1).toUpperCase());
+		}
+		
+		//replace _1 to 1
+		Pattern p2= Pattern.compile("_\\d{1}");
+		Matcher m2 = p2.matcher(col);
+		
+		while(m2.find()){
+			col = col.replace(m2.group(), m2.group().substring(1).toUpperCase());
+		}
+		return col;
+		
 	}
 
 }

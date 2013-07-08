@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 import com.codemonkey.service.MybatisService;
 import com.codemonkey.utils.ExtConstant;
@@ -83,7 +84,8 @@ public abstract class AbsMybatisController extends AbsController implements Secu
 			Iterator<Entry<String,Object>> it = set.iterator();
 			while(it.hasNext()){
 				Entry<String,Object> e = it.next();
-				jo.put(e.getKey().toString() , e.getValue());
+					jo.put(SysUtils.columnToProp(e.getKey().toString()) , HtmlUtils.htmlEscape(e.getValue().toString()));
+				
 				data.put(jo);
 			}
 		}

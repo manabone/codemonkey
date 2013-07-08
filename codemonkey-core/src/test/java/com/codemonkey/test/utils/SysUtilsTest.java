@@ -19,6 +19,18 @@ public class SysUtilsTest extends AbsServiceTest{
 	}
 	
 	@Test
+	public void testColumnToProp(){
+		String prop = SysUtils.columnToProp("test_a");
+		assertEquals("testA" , prop);
+		
+		prop = SysUtils.columnToProp("test_1");
+		assertEquals("test1" , prop);
+		
+		prop = SysUtils.columnToProp("test_good_1");
+		assertEquals("testGood1" , prop);
+	}
+	
+	@Test
 	public void testMessage(){
 		String msg = sysUtils.msg("foo.fnumber");
 		assertEquals("fnumber" , msg);

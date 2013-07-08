@@ -18,7 +18,7 @@
 	
 	<select id="selectFooList_count" parameterType="java.util.HashMap" resultType="long">
 		select count(*) from foo
-		<include refid="selectAppUserList_where"/>
+		<include refid="selectFooList_where"/>
 	</select>
 	
 	<sql id="selectFooList_where">
