@@ -41,7 +41,7 @@ import com.codemonkey.erp.service.WarehouseService;
 import com.codemonkey.utils.SysUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:spring/erp-test.xml" })
+@ContextConfiguration(locations = { "classpath*:spring/app-test-*.xml" })
 @Transactional
 public class AbsErpServiceTest {
 
