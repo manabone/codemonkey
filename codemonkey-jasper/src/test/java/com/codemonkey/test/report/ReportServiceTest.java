@@ -11,9 +11,7 @@ import com.codemonkey.report.ReportService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { 
-	"classpath*:spring/applicationContext-datasource.xml", 
-	"classpath*:spring/applicationContext-dao.xml",
-	"classpath*:spring/applicationContext-globle.xml"
+	"classpath*:spring/app-test-*.xml"
 })
 @Transactional
 public class ReportServiceTest {

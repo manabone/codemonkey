@@ -27,7 +27,7 @@ public class ReportServiceImpl extends AbsService implements ReportService{
 	 * @see com.codemonkey.report.ReportService#pdf(java.lang.String, java.lang.String)
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void pdf(String destinationFile, String templatePath) {
 		JasperReport jasperReport;
 		JasperPrint jasperPrint;
@@ -66,6 +66,7 @@ public class ReportServiceImpl extends AbsService implements ReportService{
 	/* (non-Javadoc)
 	 * @see com.codemonkey.report.ReportService#xml(java.lang.String, java.lang.String)
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void xml(String destinationFile, String templatePath){
 
@@ -75,7 +76,7 @@ public class ReportServiceImpl extends AbsService implements ReportService{
 		try {
 			jasperReport = getJasperReport(templatePath);
 			connection = datasource.getConnection();
-			jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap<Object, Object>(), connection);
+			jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap(), connection);
 			JasperExportManager.exportReportToXmlFile(jasperPrint, destinationFile, false);
 			
 		} catch (JRException e) {
