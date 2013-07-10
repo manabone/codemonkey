@@ -206,19 +206,6 @@
         
         <!-- pushlets -->
         
-		<!-- mybatis -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>1.2.0</version>
-		</dependency>
-		
-		<dependency>
-		   <groupId>org.mybatis</groupId>
-		   <artifactId>mybatis</artifactId>
-		   <version>3.1.1</version>
-		</dependency>
-				
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!--					  RUNTIME							 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
