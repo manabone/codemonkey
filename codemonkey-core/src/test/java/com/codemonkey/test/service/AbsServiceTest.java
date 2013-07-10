@@ -14,7 +14,7 @@ import com.codemonkey.domain.AppUser;
 import com.codemonkey.utils.SysUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:spring/applicationContextTest.xml" })
+@ContextConfiguration(locations = { "classpath*:spring/app-test-*.xml" })
 @Transactional
 public class AbsServiceTest {
 
