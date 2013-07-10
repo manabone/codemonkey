@@ -6,6 +6,7 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
+		<module>../codemonkey-mybatis</module>
 		<module>../codemonkey-maven-plugin</module>
 		<module>../codemonkey-dbMigration</module>
 		<module>../codemonkey-core</module>

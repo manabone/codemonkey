@@ -1,4 +1,4 @@
-package com.codemonkey.test.service;
+package com.codemonkey.test.mybatis;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,15 +9,26 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.codemonkey.service.MybatisService;
+import com.codemonkey.mybatis.service.MybatisService;
 import com.codemonkey.utils.ExtConstant;
 
 
-@SuppressWarnings("rawtypes")
-public class MybatisServiceTest extends GenericServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { 
+		"classpath*:spring/applicationContext-datasource.xml", 
+		"classpath*:spring/applicationContext-dao.xml",
+		"classpath*:spring/applicationContext-globle.xml",
+		"classpath*:spring/applicationContext-mybatis.xml"
+})
+@Transactional
+public class MybatisServiceTest{
 
 	@Autowired private MybatisService mybatisService;
 

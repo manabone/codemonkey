@@ -1,4 +1,4 @@
-package com.codemonkey.web.controller;
+package com.codemonkey.mybatis.controller;
 
 import java.util.List;
 

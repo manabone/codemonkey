@@ -1,4 +1,4 @@
-package com.codemonkey.dao;
+package com.codemonkey.mybatis.dao;
 
 import java.util.List;
 import java.util.Map;

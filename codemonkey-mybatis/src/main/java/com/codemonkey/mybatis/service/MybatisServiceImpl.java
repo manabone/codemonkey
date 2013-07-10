@@ -1,4 +1,4 @@
-package com.codemonkey.service;
+package com.codemonkey.mybatis.service;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.codemonkey.dao.MybatisDao;
+import com.codemonkey.mybatis.dao.MybatisDao;
 import com.codemonkey.utils.SysUtils;
 
 @Service

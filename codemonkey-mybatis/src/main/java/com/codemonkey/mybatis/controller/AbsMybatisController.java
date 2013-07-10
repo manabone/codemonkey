@@ -1,4 +1,4 @@
-package com.codemonkey.web.controller;
+package com.codemonkey.mybatis.controller;
 
 import java.util.Iterator;
 import java.util.List;
@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
-import com.codemonkey.service.MybatisService;
+import com.codemonkey.mybatis.service.MybatisService;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
+import com.codemonkey.web.controller.AbsController;
+import com.codemonkey.web.controller.SecurityController;
 
 
 public abstract class AbsMybatisController extends AbsController implements SecurityController{
@@ -27,7 +29,7 @@ public abstract class AbsMybatisController extends AbsController implements Secu
 	
 	public static String SUBFIX_COUNT = "_count";
 	
-	@Autowired MybatisService mybatisService;
+	@Autowired private MybatisService mybatisService;
 	
 	AbsMybatisController(){
 		log = SysUtils.getLog(getClass());
