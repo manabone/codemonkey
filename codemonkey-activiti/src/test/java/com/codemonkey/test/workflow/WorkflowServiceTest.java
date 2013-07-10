@@ -20,10 +20,7 @@ import com.codemonkey.workflow.WorkflowService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { 
-		"classpath*:spring/applicationContext-datasource.xml", 
-		"classpath*:spring/applicationContext-dao.xml",
-		"classpath*:spring/applicationContext-globle.xml", 
-		"classpath*:spring/applicationContext-activiti.xml"
+		"classpath*:spring/app-test-*.xml"
 })
 @Transactional
 public class WorkflowServiceTest {
