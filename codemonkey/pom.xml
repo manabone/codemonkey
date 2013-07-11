@@ -195,6 +195,8 @@
 		<basePackage>${groupId}</basePackage>
 		<jbpm.version>4.4</jbpm.version>
 		
+		<ibatis.version>2.3.4.726</ibatis.version>
+		
 		<!-- hibernate audit -->
 		<org.hibernate.envers.default_catalog></org.hibernate.envers.default_catalog>
 		<org.hibernate.envers.default_schema></org.hibernate.envers.default_schema>
