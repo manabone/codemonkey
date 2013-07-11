@@ -29,7 +29,7 @@ public abstract class AbsIbatisController extends AbsController implements Secur
 	
 	public static String SUBFIX_COUNT = "_count";
 	
-	@Autowired private IbatisService mybatisService;
+	@Autowired private IbatisService ibatisService;
 	
 	AbsIbatisController(){
 		log = SysUtils.getLog(getClass());
@@ -50,11 +50,11 @@ public abstract class AbsIbatisController extends AbsController implements Secur
     		@RequestParam(required = false) JSONArray sort,
     		@RequestParam(required = false) JSONObject queryInfo) {
     	
-    	long total = mybatisService.count(getQueryId() + SUBFIX_COUNT , queryInfo);
+    	long total = ibatisService.count(getQueryId() + SUBFIX_COUNT , queryInfo);
     	List<Map<String , Object>> list = null;
     	if(total > 0){
     		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
-    		list = mybatisService.query(getQueryId(), queryAndSort);
+    		list = ibatisService.query(getQueryId(), queryAndSort);
     	}
     	return buildJson(list , total);
     }
