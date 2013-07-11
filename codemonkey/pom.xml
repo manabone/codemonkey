@@ -14,6 +14,7 @@
 		<module>../codemonkey-erp</module>
 		<module>../codemonkey-activiti</module>
 		<module>../codemonkey-jasper</module>
+		<module>../codemonkey-ibatis</module>
 	</modules>
 	<build>
 
