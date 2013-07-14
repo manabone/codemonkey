@@ -12,9 +12,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppRole;
 import com.codemonkey.domain.AppUser;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.error.AuthError;
 import com.codemonkey.utils.JsonArrayConverter;
 import com.codemonkey.utils.SysUtils;
@@ -23,7 +23,7 @@ import com.codemonkey.web.converter.CustomConversionService;
 @Service
 public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements AppUserService{
 
-	@Autowired private AppPermissionService appPermissionService;
+	@Autowired private UrlPermissionService urlPermissionService;
 	
 	@Override
 	public void save(AppUser user) {
@@ -69,7 +69,7 @@ public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements A
 	}
 
 	public void isAuth(String url) {
-		AppPermission permission = appPermissionService.findBy("url_Like", url + "%");
+		UrlPermission permission = urlPermissionService.findBy("url_Like", url + "%");
 		
 		Subject subject = SecurityUtils.getSubject();
 		

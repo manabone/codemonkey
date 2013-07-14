@@ -4,18 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 
 import org.apache.shiro.util.CollectionUtils;
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
-import com.codemonkey.security.RequestType;
-
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @Audited
 public class AppPermission extends AbsMM{
 
@@ -26,26 +25,18 @@ public class AppPermission extends AbsMM{
 	
 	private String permission;
 	
-	private String url;
-	
-	@Enumerated(EnumType.STRING)
-	private RequestType requestType;
-	
 	@ManyToMany(mappedBy="appPermissions" , fetch=FetchType.EAGER)
 	private Set<AppRole> appRoles = new HashSet<AppRole>();
 	
 	AppPermission(){}
 	
-	public AppPermission(String permission , String url , RequestType requestType){
+	public AppPermission(String permission){
 		this.permission = permission;
-		this.url = url;
-		this.requestType = requestType;
 	}
 	
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
 		jo.put("permission", getPermission());
-		jo.put("url", getUrl());
 		return jo;
 	}
 	
@@ -55,14 +46,6 @@ public class AppPermission extends AbsMM{
 
 	public String getPermission() {
 		return permission;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 	public Set<AppRole> getAppRoles() {
@@ -83,14 +66,6 @@ public class AppPermission extends AbsMM{
 			set.add(appRole.getName());
 		}
 		return set;
-	}
-
-	public RequestType getRequestType() {
-		return requestType;
-	}
-
-	public void setRequestType(RequestType requestType) {
-		this.requestType = requestType;
 	}
 
 }

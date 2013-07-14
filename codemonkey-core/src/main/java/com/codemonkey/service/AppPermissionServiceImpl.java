@@ -9,7 +9,7 @@ public class AppPermissionServiceImpl extends GenericServiceImpl<AppPermission> 
 
 	@Override
 	public AppPermission createEntity() {
-		return new AppPermission(null , null , null);
+		return new AppPermission(null);
 	}
 
 }

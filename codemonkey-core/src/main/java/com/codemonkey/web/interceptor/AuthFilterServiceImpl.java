@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.security.RequestType;
-import com.codemonkey.service.AppPermissionService;
+import com.codemonkey.service.UrlPermissionService;
 import com.codemonkey.utils.ExtConstant;
 
 @Component
@@ -22,7 +22,7 @@ import com.codemonkey.utils.ExtConstant;
 @Transactional(propagation=Propagation.REQUIRED)
 public class AuthFilterServiceImpl extends AuthenticationFilter {
 
-	@Autowired private AppPermissionService appPermissionService;
+	@Autowired private UrlPermissionService urlPermissionService;
 	
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         if (isLoginRequest(request, response)) {
@@ -32,7 +32,7 @@ public class AuthFilterServiceImpl extends AuthenticationFilter {
         	String uri = r.getRequestURI();
         	String url = uri.replaceFirst(r.getContextPath(), "");
         	
-    		AppPermission permission = appPermissionService.findBy("url_Like", url + "%");
+    		UrlPermission permission = urlPermissionService.findBy("url_Like", url + "%");
         	
     		if(permission != null && RequestType.HTML.equals(permission.getRequestType())){
     			 saveRequestAndRedirectToLogin(request, response);

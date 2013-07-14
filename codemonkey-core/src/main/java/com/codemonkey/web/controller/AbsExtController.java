@@ -1,5 +1,6 @@
 package com.codemonkey.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.IEntity;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
@@ -94,6 +97,16 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 			jo.put(ExtConstant.DATA, data);
     	}
 		return jo;
+	}
+	
+	protected List<AppPermission> convertToAppPermissionList(List<UrlPermission> list) {
+		List<AppPermission> pList = new ArrayList<AppPermission>();
+		if(CollectionUtils.isNotEmpty(list)){
+			for(UrlPermission p : list){
+				pList.add(p);
+			}
+		}
+		return pList;
 	}
 	
 	public Class<?> getType() {

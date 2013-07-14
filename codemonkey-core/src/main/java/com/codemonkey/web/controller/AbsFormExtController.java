@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.IEntity;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
@@ -107,7 +108,7 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
 	}
 
 	public List<AppPermission> regAppPermission(){
-		return AppResourceHelper.formPermissions(getType());
+		List<UrlPermission> list = AppResourceHelper.formPermissions(getType());
+		return convertToAppPermissionList(list);
 	}
-	
 }

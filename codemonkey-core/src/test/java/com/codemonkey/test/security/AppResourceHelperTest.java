@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.Foo;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.security.RequestType;
 
@@ -15,7 +15,7 @@ public class AppResourceHelperTest {
 
 	@Test
 	public void test(){
-		List<AppPermission> list = AppResourceHelper.formPermissions(Foo.class);
+		List<UrlPermission> list = AppResourceHelper.formPermissions(Foo.class);
 		
 		assertEquals(4 , list.size());
 		assertEquals("/app/ext/foo/create" , list.get(0).getUrl());

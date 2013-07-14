@@ -6,14 +6,15 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.utils.ExtConstant;
 
 public final class AppResourceHelper {
 	
 	private AppResourceHelper(){} 
 	
-	public static List<AppPermission> formPermissions(Class<?> clazz){
-		List<AppPermission> permissions = new ArrayList<AppPermission>();
+	public static List<UrlPermission> formPermissions(Class<?> clazz){
+		List<UrlPermission> permissions = new ArrayList<UrlPermission>();
 		permissions.add(formPermission(clazz , Operation.CREATE));
 		permissions.add(formPermission(clazz , Operation.READ));
 		permissions.add(formPermission(clazz , Operation.UPDATE));
@@ -21,8 +22,8 @@ public final class AppResourceHelper {
 		return permissions;
 	}
 	
-	public static List<AppPermission> listPermissions(Class<?> clazz){
-		List<AppPermission> permissions = new ArrayList<AppPermission>();
+	public static List<UrlPermission> listPermissions(Class<?> clazz){
+		List<UrlPermission> permissions = new ArrayList<UrlPermission>();
 		permissions.add(listPermission(clazz , Operation.READ));
 		permissions.add(listPermission(clazz , Operation.DESTROY));
 		permissions.add(listPermission(clazz , Operation.LIST));
@@ -30,20 +31,20 @@ public final class AppResourceHelper {
 		return permissions;
 	}
 	
-	public static AppPermission formPermission(Class<?> clazz , Operation op){
+	public static UrlPermission formPermission(Class<?> clazz , Operation op){
 		String permission = formPermissionString(clazz, op);
 		String url = formUrl(clazz, op);
 		RequestType requestType = op.getRequestType();
 		
-		return new AppPermission(permission , url , requestType);
+		return new UrlPermission(permission , clazz.getSimpleName() + op.getName() , url , requestType);
 	}
 	
-	private static AppPermission listPermission(Class<?> clazz , Operation op){
+	private static UrlPermission listPermission(Class<?> clazz , Operation op){
 		String permission = listPermissionString(clazz, op);
 		String url = listUrl(clazz, op);
 		RequestType requestType = op.getRequestType();
 		
-		return new AppPermission(permission , url , requestType);
+		return new UrlPermission(permission , clazz.getSimpleName() + op.getName() , url , requestType);
 	}
 
 	private static String formUrl(Class<?> clazz, Operation op) {
