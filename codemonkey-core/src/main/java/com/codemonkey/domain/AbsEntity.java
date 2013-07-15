@@ -6,11 +6,14 @@ import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
+import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 import com.codemonkey.annotation.Label;
@@ -35,13 +38,16 @@ public class AbsEntity implements Serializable{
 	
     @Label("code")
     @Index(name = "code_index")
+    @Audited
     private String code;
     
     @Label("name")
     @Index(name = "name_index")
+    @Audited
 	private String name;
 	
     @Label("description")
+    @Audited
 	private String description;
 	
 	@Version
@@ -53,18 +59,24 @@ public class AbsEntity implements Serializable{
 	
 	@Label("creation date")
 	@SkipBuild
+	@Temporal(TemporalType.TIMESTAMP)
+	@Audited
 	private Date creationDate;
 	
 	@Label("created by")
 	@SkipBuild
+	@Audited
 	private String createdBy;
 	
 	@Label("modified date")
 	@SkipBuild
+	@Temporal(TemporalType.TIMESTAMP)
+	@Audited
 	private Date modificationDate;
 	
 	@Label("modified by")
 	@SkipBuild
+	@Audited
 	private String modifiedBy;
 	
 	public SequenceCreator getSequenceCreator() {

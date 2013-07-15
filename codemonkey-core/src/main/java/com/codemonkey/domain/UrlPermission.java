@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 import com.codemonkey.security.RequestType;
@@ -13,6 +14,7 @@ import com.codemonkey.security.RequestType;
 @Entity
 @DiscriminatorColumn
 @DiscriminatorValue("URL_PERMISSION")
+@Audited
 public class UrlPermission extends AppPermission{
 
 	/**
@@ -26,6 +28,8 @@ public class UrlPermission extends AppPermission{
 	
 	@Enumerated(EnumType.STRING)
 	private RequestType requestType;
+	
+	public UrlPermission(){}
 	
 	public UrlPermission(String permission , String componentId , String url , RequestType requestType){
 		super(permission);

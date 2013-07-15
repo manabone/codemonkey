@@ -822,7 +822,9 @@ var ExtUtils = {
     	});
     	
     	var p2 = this.panel({
-    		title : "creation info",
+    		collapsed : true,
+    		collapsible : true,
+    		title : i18n.creationInfo,
     		items : ExtUtils.columnLayout([col1 , col2])
     	});
     	

@@ -25,51 +25,66 @@ public class AppRole extends AbsEE {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="app_role_app_permissions", 
+	@JoinTable(name="app_role_url_permissions", 
 		joinColumns={@JoinColumn(name="app_role")},
-		inverseJoinColumns={@JoinColumn(name="app_permissions")})
-	private Set<AppPermission> appPermissions = new HashSet<AppPermission>();
+		inverseJoinColumns={@JoinColumn(name="url_permissions")})
+	private Set<UrlPermission> urlPermissions = new HashSet<UrlPermission>();
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="app_role_cmp_permissions", 
+		joinColumns={@JoinColumn(name="app_role")},
+		inverseJoinColumns={@JoinColumn(name="cmp_permissions")})
+	private Set<CmpPermission> cmpPermissions = new HashSet<CmpPermission>();
 	
 	@Override
 	public JSONObject detailJson() {
 		JSONObject jo = super.detailJson();
-		JSONArray ja = new JSONArray();
-		if(CollectionUtils.isNotEmpty(appPermissions)){
-			for(AppPermission p : appPermissions){
-				ja.put(p.detailJson());
+		JSONArray urlPermissionsJa = new JSONArray();
+		if(CollectionUtils.isNotEmpty(urlPermissions)){
+			for(AppPermission p : urlPermissions){
+				urlPermissionsJa.put(p.detailJson());
 			}
 		}
-		jo.put("appPermissions", ja);
+		jo.put("urlPermissions", urlPermissionsJa);
+		
+		JSONArray cmpPermissionsJa = new JSONArray();
+		if(CollectionUtils.isNotEmpty(cmpPermissions)){
+			for(AppPermission p : cmpPermissions){
+				cmpPermissionsJa.put(p.detailJson());
+			}
+		}
+		jo.put("cmpPermissions", cmpPermissionsJa);
 		return jo;
 	}
 	
 	public Set<String> getPermissions() {
 		Set<String> permissions = new HashSet<String>();
-		if(appPermissions == null || appPermissions.isEmpty()) {
+		if(urlPermissions == null || urlPermissions.isEmpty()) {
 			return permissions;
 		}
 		
-		Iterator<AppPermission> it = appPermissions.iterator();
+		Iterator<UrlPermission> it = urlPermissions.iterator();
 		while(it.hasNext()){
-			AppPermission ap = it.next();
+			UrlPermission ap = it.next();
 			permissions.add(ap.getPermission());
 		}
 		return permissions;
 	}
 	
-	public Set<AppPermission> getAppPermissions() {
-		return appPermissions;
+	public Set<UrlPermission> getUrlPermissions() {
+		return urlPermissions;
 	}
 
-	public void addAppPermission(AppPermission appPermission1) {
-		appPermissions.add(appPermission1);
+	public Set<AppPermission> getAppPermissions() {
+		return null;
 	}
-	
-	public void clearAppPermissions(){
-		if(CollectionUtils.isEmpty(appPermissions)) {
-			return;
-		}
-		appPermissions.clear();
+
+	public void clearAppPermissions() {
+		
+	}
+
+	public void addAppPermission(AppPermission appPermission) {
+		
 	}
 	
 }

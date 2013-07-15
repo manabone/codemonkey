@@ -341,6 +341,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
         var me = this, win, cfg = Ext.applyIf(config || {}, {
                 stateful: false,
                 isWindow: true,
+                autoScroll : true,
                 constrainHeader: true,
                 closeAction : 'hide',
                 minimizable: true,

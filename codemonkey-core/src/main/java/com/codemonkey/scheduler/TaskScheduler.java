@@ -2,7 +2,7 @@ package com.codemonkey.scheduler;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.codemonkey.utils.SysUtils;
@@ -13,7 +13,7 @@ public class TaskScheduler {
 
 	private Logger log = SysUtils.getLog(TaskScheduler.class);
 	
-	@Scheduled(cron = "0 0/1 * * * *")
+	//@Scheduled(cron = "0 0/1 * * * *")
 	public void run() {
 		log.info("1 min run once");
 	}

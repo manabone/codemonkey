@@ -4,11 +4,13 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 @Entity
 @DiscriminatorColumn
 @DiscriminatorValue("CMP_PERMISSION")
+@Audited
 public class CmpPermission extends AppPermission{
 
 	/**
@@ -21,6 +23,8 @@ public class CmpPermission extends AppPermission{
 	private CmpType cmpType;
 	
 	private CmpPermissionType cmpPermissionType;
+	
+	public CmpPermission(){}
 	
 	public CmpPermission(String permission , String componentId , CmpType cmpType , CmpPermissionType cmpPermissionType){
 		super(permission);
