@@ -29,7 +29,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
             features: this.orderLineGridFeatures,
 			columns : [
     	        {header: '权限编码' ,  dataIndex: 'permission' },
-    	  		{header: '控件ID' ,  dataIndex: 'price',  flex: 1},
+    	  		{header: '控件ID' ,  dataIndex: 'componentId',  flex: 1},
     	  		{header: '请求路径' ,  dataIndex: 'url',  flex: 1},
     	  		{header: '请求类型' ,  dataIndex: 'requestType', flex: 1}
 		   ]
@@ -50,7 +50,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
             features: this.orderLineGridFeatures,
             columns : [
     	        {header: '权限编码' ,  dataIndex: 'permission'},
-    	  		{header: '控件ID' ,  dataIndex: 'price',  flex: 1},
+    	  		{header: '控件ID' ,  dataIndex: 'componentId',  flex: 1},
     	  		{header: '控件类型' ,  dataIndex: 'cmpType',  flex: 1},
     	  		{header: '操作权限' ,  dataIndex: 'cmpPermissionType', flex: 1}
 		    ]
