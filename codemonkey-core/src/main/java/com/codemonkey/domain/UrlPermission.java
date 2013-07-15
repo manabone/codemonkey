@@ -1,6 +1,5 @@
 package com.codemonkey.domain;
 
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 import com.codemonkey.security.RequestType;
 
 @Entity
-@DiscriminatorColumn
 @DiscriminatorValue("URL_PERMISSION")
 @Audited
 public class UrlPermission extends AppPermission{

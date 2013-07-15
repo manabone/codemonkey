@@ -356,6 +356,16 @@ Ext.define('Ext.ux.desktop.Desktop', {
             		type : 'vbox',
             		align : 'stretch',
             		pack  : 'start'
+            	},
+            	listeners : {
+            		afterrender : {
+            			fn : function(win) {
+            				debugger;
+                            win.setHeight(300);
+                            win.center();
+            			},
+            			single : true
+            		}
             	}
             });
 
