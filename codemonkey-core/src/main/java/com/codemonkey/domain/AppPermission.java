@@ -19,10 +19,13 @@ public class AppPermission extends AbsMM{
 	
 	private String permission;
 	
+	private String componentId;
+	
 	AppPermission(){}
 	
-	public AppPermission(String permission){
+	public AppPermission(String permission , String componentId){
 		this.permission = permission;
+		this.componentId = componentId;
 	}
 	
 	public JSONObject listJson() {
@@ -37,6 +40,14 @@ public class AppPermission extends AbsMM{
 
 	public String getPermission() {
 		return permission;
+	}
+
+	public String getComponentId() {
+		return componentId;
+	}
+
+	public void setComponentId(String componentId) {
+		this.componentId = componentId;
 	}
 
 }

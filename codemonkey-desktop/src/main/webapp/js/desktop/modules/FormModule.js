@@ -81,7 +81,7 @@ Ext.define('AM.modules.FormModule', {
     	}
     },
     
- // actions 
+    // actions 
     saveAction : {
 		action : 'save', text: i18n.save, iconCls : 'icon-update'
 	},

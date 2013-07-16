@@ -9,6 +9,7 @@ import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
 import com.codemonkey.security.RequestType;
+import com.codemonkey.utils.OgnlUtils;
 
 @Entity
 @DiscriminatorValue("URL_PERMISSION")
@@ -20,8 +21,6 @@ public class UrlPermission extends AppPermission{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String componentId;
-	
 	private String url;
 	
 	@Enumerated(EnumType.STRING)
@@ -30,15 +29,16 @@ public class UrlPermission extends AppPermission{
 	public UrlPermission(){}
 	
 	public UrlPermission(String permission , String componentId , String url , RequestType requestType){
-		super(permission);
-		this.componentId = componentId;
+		super(permission , componentId);
 		this.url = url;
 		this.setRequestType(requestType);
 	}
 	
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
-		jo.put("permission", getPermission());
+		jo.put("componentId", OgnlUtils.stringValue("componentId", this));
+		jo.put("url", OgnlUtils.stringValue("url", this));
+		jo.put("requestType", OgnlUtils.stringValue("requestType", this));
 		return jo;
 	}
 	
@@ -48,14 +48,6 @@ public class UrlPermission extends AppPermission{
 
 	public String getUrl() {
 		return url;
-	}
-
-	public String getComponentId() {
-		return componentId;
-	}
-
-	public void setComponentId(String componentId) {
-		this.componentId = componentId;
 	}
 
 	public RequestType getRequestType() {

@@ -203,6 +203,14 @@ var ExtUtils = {
 	 * */
 	popup : function(config){
 		
+		var fields = ExtUtils.fieldsFromCols(config.columns);
+    	
+    	var store = ExtUtils.ajaxStore({
+    		modelName : config.modelName,
+    		fields : fields,
+    		autoLoad : true
+    	});
+		
 		var win = Ext.create('Ext.window.Window', {
 			id : config.id + 'popupWin',  
 	        height: 400,
@@ -237,7 +245,7 @@ var ExtUtils = {
 	        },{
 	        	xtype:'grid',
 	        	flex : 6 ,
-	        	store: config.store,
+	        	store: config.store || store,
 	        	columns: config.columns ,
 	        	selType : config.selType || 'rowmodel',
 	        	selModel : config.selModel,
@@ -624,13 +632,15 @@ var ExtUtils = {
 			Ext.apply(data2,data);
 			var store = grid.getStore();
 			var r = Ext.ModelManager.create(data2, store.model.modelName);
-			if(grid.plugins[0]) grid.plugins[0].cancelEdit();
+			if(grid.plugins && grid.plugins[0]) grid.plugins[0].cancelEdit();
 			var count = store.getCount();
 			if(typeof(index) == 'number' && index <=count) {
 				count = index;
 			}
 			store.insert(count, r);
-            if(grid.plugins[0]) grid.plugins[0].startEditByPosition({row: count, column: 0});
+            if(grid.plugins && grid.plugins[0]){
+            	grid.plugins[0].startEditByPosition({row: count, column: 0});
+            }
             grid.getView().getSelectionModel().select(count,false,false);
             var record = grid.getView().getSelectionModel().getSelection()[0];
             return record;
@@ -645,7 +655,7 @@ var ExtUtils = {
 			selection = this.getSelected(grid.id);
 		}
 	   if(selection) {
-	   		if(grid.plugins[0]) {
+	   		if(grid.plugins && grid.plugins[0]) {
 				grid.plugins[0].cancelEdit();
 			}
 			var selectionIndex = grid.getStore().indexOf(selection);

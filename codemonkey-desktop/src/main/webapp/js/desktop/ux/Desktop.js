@@ -360,9 +360,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
             	listeners : {
             		afterrender : {
             			fn : function(win) {
-            				debugger;
-                            win.setHeight(300);
-                            win.center();
+//            				win.maximize(true);
             			},
             			single : true
             		}
