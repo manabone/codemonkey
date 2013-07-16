@@ -96,7 +96,9 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
     @ResponseBody 
     public String read(@RequestParam(required=false) String id,
     		@RequestParam(required=false) String query,
-    		@RequestParam(required=false) JSONObject queryInfo) {
+    		@RequestParam(required = false) JSONArray sort,
+    		@RequestParam(required = false) JSONObject queryInfo){
+    	
     	List<T> list = new ArrayList<T>();
     	
     	if(StringUtils.isNotBlank(id)){
@@ -107,8 +109,9 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
 				Restrictions.like("name", query, MatchMode.ANYWHERE)	
     		};
     		list = service().find(criterions);
-    	}else if(queryInfo != null){
-    		list = service().findByQueryInfo(queryInfo);
+    	}else if(sort != null || queryInfo != null){
+    		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
+    		list = service().findByQueryInfo(queryAndSort);
     	}else{
     		list = service().findAll();
     	}

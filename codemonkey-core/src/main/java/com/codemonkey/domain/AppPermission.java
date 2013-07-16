@@ -4,8 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
+
+import com.codemonkey.annotation.Label;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -17,15 +20,20 @@ public class AppPermission extends AbsMM{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Label("权限编码")
 	private String permission;
 	
+	@Label("控件ID")
 	private String componentId;
 	
 	AppPermission(){}
 	
-	public AppPermission(String permission , String componentId){
+	public AppPermission(String permission , String description){
 		this.permission = permission;
-		this.componentId = componentId;
+		if(StringUtils.isNotBlank(permission)){
+			this.componentId = permission.replace(':', '_');
+		}
+		this.setDescription(description);
 	}
 	
 	public JSONObject listJson() {

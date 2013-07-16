@@ -10,6 +10,10 @@ Ext.define('AM.modules.AppRoleFormModule', {
     
     modelName : 'AppRole',
     
+    modelFields : function() {
+    	return ['urlPermissions' , 'cmpPermissions'].concat(ExtUtils.defaultModelFields);
+    },
+    
     // actions 
     addUrlPerimssionAction : {
 		iconCls : 'add' , text: '添加' , action : 'addUrlPerimssion'
@@ -17,6 +21,14 @@ Ext.define('AM.modules.AppRoleFormModule', {
 	
 	removeUrlPerimssionAction : {
 		iconCls:'remove' , text: '删除' , action : 'removeUrlPerimssion'
+    },
+    
+    addCmpPerimssionAction : {
+		iconCls : 'add' , text: '添加' , action : 'addCmpPerimssion'
+	},
+	
+	removeCmpPerimssionAction : {
+		iconCls:'remove' , text: '删除' , action : 'removeCmpPerimssion'
     },
     //end actions
     
@@ -51,35 +63,40 @@ Ext.define('AM.modules.AppRoleFormModule', {
     	
     	var urlPermissionGrid = ExtUtils.arrayGrid({
     		id : 'appRoleForm_urlPermissionGrid',
+    		modelName : 'UrlPermission',
     		ownerModule : me,
-            features: this.orderLineGridFeatures,
 			columns : me.urlPermissionColumns
 		});
     	
       	var p3ActionBar =  me.createToolbar([
              me.createModuleAction(this.addUrlPerimssionAction),
-             me.createModuleAction(this.removeUrlPerimssionAction),
+             me.createModuleAction(this.removeUrlPerimssionAction)
       	]);
     	
     	var p3 = ExtUtils.panel({
     		title : '操作权限',
+    		collapsible : true,
     		items : urlPermissionGrid,
     		tbar: p3ActionBar
     	});
     	
     	var cmpPermissionGrid = ExtUtils.arrayGrid({
     		id : 'appRoleForm_cmpPermissionGrid',
+    		modelName : 'CmpPermission',
     		ownerModule : me,
             columns : me.cmpPermissionColumns
 		});
     	
+    	var p4ActionBar =  me.createToolbar([
+             me.createModuleAction(this.addCmpPerimssionAction),
+             me.createModuleAction(this.removeCmpPerimssionAction)
+      	]);
+    	
     	var p4 = ExtUtils.panel({
-    		title : '数据可见性权限',
+    		title : '控件可见性权限',
+    		collapsible : true,
     		items : cmpPermissionGrid,
-    		tbar: [
-		       { xtype: 'button', text: '添加' },
-		       { xtype: 'button', text: '删除' }
-		    ]
+    		tbar: p4ActionBar
     	});
     	
     	return ExtUtils.fitLayout([p1, p3 , p4 ,p2 ]);
@@ -90,7 +107,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
     	var me = this;
     	
     	ExtUtils.popup({
-			id : 'urlPermission_popup',
+			id : 'urlPermission',
 			modelName : 'UrlPermission',
 			columns : me.urlPermissionColumns,
 			itemdblclick : function(view , record , item , e , eOpts){
@@ -104,12 +121,53 @@ Ext.define('AM.modules.AppRoleFormModule', {
     
     addUrlPerimssion_callback : function(record){
     	var grid = Ext.getCmp('appRoleForm_urlPermissionGrid');
-    	ExtUtils.addLine(grid , record);
+    	ExtUtils.addLine(grid , record.data);
     },
     
     removeUrlPerimssion : function(){
     	var grid = Ext.getCmp('appRoleForm_urlPermissionGrid');
     	ExtUtils.removeLine(grid);
+    },
+    
+    addCmpPerimssion : function(){
+    	
+    	var me = this;
+    	
+    	ExtUtils.popup({
+			id : 'cmpPermission',
+			modelName : 'CmpPermission',
+			columns : me.cmpPermissionColumns,
+			itemdblclick : function(view , record , item , e , eOpts){
+				me.addCmpPerimssion_callback(record);
+			} ,
+			okclick : function(record){
+				me.addCmpPerimssion_callback(record);
+			}
+		});
+    },
+    
+    addCmpPerimssion_callback : function(record){
+    	var grid = Ext.getCmp('appRoleForm_cmpPermissionGrid');
+    	ExtUtils.addLine(grid , record.data);
+    },
+    
+    removeCmpPerimssion : function(){
+    	var grid = Ext.getCmp('appRoleForm_cmpPermissionGrid');
+    	ExtUtils.removeLine(grid);
+    },
+    
+    beforeSave : function(values){
+    	var urlPermissions = ExtUtils.getAllData(Ext.getCmp('appRoleForm_urlPermissionGrid'));
+    	var cmpPermissions = ExtUtils.getAllData(Ext.getCmp('appRoleForm_cmpPermissionGrid'));
+    	Ext.apply(values , {
+    		urlPermissions : urlPermissions || [],
+    		cmpPermissions : cmpPermissions || []
+    	});
+    },
+    
+    afterModelLoad : function(model){
+ 	   Ext.getCmp('appRoleForm_urlPermissionGrid').getStore().loadData(model.data.urlPermissions);
+ 	   Ext.getCmp('appRoleForm_cmpPermissionGrid').getStore().loadData(model.data.cmpPermissions);
     }
 
 });

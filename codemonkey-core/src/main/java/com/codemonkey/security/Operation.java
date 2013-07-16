@@ -4,43 +4,63 @@ import com.codemonkey.domain.IEnum;
 
 public enum Operation implements IEnum{
 	
-	CREATE,
-	DESTROY,
-	UPDATE,
-	READ,
-	
-	POST,
-	
-	EDIT{
+	CREATE{
 		@Override
-		public RequestType getRequestType(){
-			return RequestType.HTML;
+		public String getText() {
+			return "新建";
 		}
 	},
-	LIST{
+	DESTROY{
 		@Override
-		public RequestType getRequestType(){
-			return RequestType.HTML;
+		public String getText() {
+			return "删除";
 		}
 	},
-	NEW{
+	UPDATE{
 		@Override
-		public RequestType getRequestType(){
-			return RequestType.HTML;
+		public String getText() {
+			return "更新";
 		}
-	};
+	},
+	READ{
+		@Override
+		public String getText() {
+			return "读取";
+		}
+	},
+	
+	POST;
+	
+//	EDIT{
+//		@Override
+//		public RequestType getRequestType(){
+//			return RequestType.HTML;
+//		}
+//	},
+//	LIST{
+//		@Override
+//		public RequestType getRequestType(){
+//			return RequestType.HTML;
+//		}
+//	},
+//	NEW{
+//		@Override
+//		public RequestType getRequestType(){
+//			return RequestType.HTML;
+//		}
+//	};
 
 	public RequestType getRequestType(){
 		return RequestType.JSON;
 	}
 	
 	@Override
-	public String getText() {
+	public String getName() {
 		return name();
 	}
 
 	@Override
-	public String getName() {
+	public String getText() {
 		return name();
 	}
 	

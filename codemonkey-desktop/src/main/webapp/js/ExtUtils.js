@@ -254,6 +254,7 @@ var ExtUtils = {
 					itemdblclick : {
 						fn : function (/* Ext.view.View*/ view ,/* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts ){
 							config.itemdblclick(view , record , item , e , eOpts);
+							this.up('window').close();
 						}
 					}
 				}
@@ -484,6 +485,20 @@ var ExtUtils = {
 		return data;
 	},
 	
+	getAllData : function(grid){
+		var data = [];
+		
+		var records = grid.getStore().getRange();
+		
+		for(var i = 0 ; i < records.length ; i++){
+			var row = {rowId : records[i].id};
+			Ext.apply(row , records[i].data);
+			data.push(row);
+		}
+		
+		return data;
+	},
+	
 	ajaxGrid : function(config){
 		var columns = config.columns || this.defaultGridCols1.concat(this.defaultGridCols2);
 		var fields = this.fieldsFromCols(columns);
@@ -522,7 +537,7 @@ var ExtUtils = {
 		
 		var fields = this.fieldsFromCols(config.columns);
 		
-		Ext.define('Model', {
+		Ext.define(config.modelName, {
 		    extend: 'Ext.data.Model',
 		    fields: fields
 		});
@@ -530,7 +545,7 @@ var ExtUtils = {
 		config.columns = [Ext.create('Ext.grid.RowNumberer')].concat(config.columns);
 		
 		var modelConfig = {
-	        model: 'Model',
+	        model: config.modelName,
 	        data : []
 		};
 		
@@ -631,6 +646,11 @@ var ExtUtils = {
 			}
 			Ext.apply(data2,data);
 			var store = grid.getStore();
+			
+			if(this.isExistedRecord(grid , data2)){
+				return;
+			}
+			
 			var r = Ext.ModelManager.create(data2, store.model.modelName);
 			if(grid.plugins && grid.plugins[0]) grid.plugins[0].cancelEdit();
 			var count = store.getCount();
@@ -667,6 +687,17 @@ var ExtUtils = {
         		grid.getView().getSelectionModel().select(selectionIndex-1, false, false);
         	}
         }
+	},
+	
+	isExistedRecord : function(grid , r){
+		var store = grid.getStore();
+		for(var i = 0 ; i < store.getCount() ; i++){
+			var record = store.getAt(i);
+			if(record.get('id') == r.id){
+				return true;
+			}
+		}
+		return false;
 	},
 	//-------------------------------------------------------
 	//           STORE UTILs

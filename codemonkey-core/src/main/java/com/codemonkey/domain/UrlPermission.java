@@ -8,12 +8,14 @@ import javax.persistence.Enumerated;
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
+import com.codemonkey.annotation.Label;
 import com.codemonkey.security.RequestType;
 import com.codemonkey.utils.OgnlUtils;
 
 @Entity
 @DiscriminatorValue("URL_PERMISSION")
 @Audited
+@Label("操作权限")
 public class UrlPermission extends AppPermission{
 
 	/**
@@ -21,17 +23,19 @@ public class UrlPermission extends AppPermission{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Label("请求路径")
 	private String url;
 	
 	@Enumerated(EnumType.STRING)
+	@Label("请求类型")
 	private RequestType requestType;
 	
 	public UrlPermission(){}
 	
-	public UrlPermission(String permission , String componentId , String url , RequestType requestType){
-		super(permission , componentId);
+	public UrlPermission(String permission , String url , RequestType requestType , String description){
+		super(permission , description);
 		this.url = url;
-		this.setRequestType(requestType);
+		this.requestType = requestType;
 	}
 	
 	public JSONObject listJson() {

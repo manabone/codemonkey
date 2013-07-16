@@ -5,8 +5,9 @@ import java.util.List;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppRole;
+import com.codemonkey.domain.CmpPermission;
+import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.utils.JsonArrayConverter;
 import com.codemonkey.web.converter.CustomConversionService;
 
@@ -17,11 +18,18 @@ public class AppRoleServiceImpl extends GenericServiceImpl<AppRole> implements A
 	public AppRole buildEntity(JSONObject params , CustomConversionService ccService){
 		AppRole appRole = super.buildEntity(params , ccService);
 		
-		appRole.clearAppPermissions();
-		JsonArrayConverter<AppPermission> appRolesConverter = new JsonArrayConverter<AppPermission>();
-		List<AppPermission> permissions = appRolesConverter.convert(params , "appPermissions" , AppPermission.class , ccService);
-		for(AppPermission appPermission : permissions){
-			appRole.addAppPermission(appPermission);
+		appRole.clearUrlPermissions();
+		JsonArrayConverter<UrlPermission> urlPermissionConverter = new JsonArrayConverter<UrlPermission>();
+		List<UrlPermission> permissions = urlPermissionConverter.convert(params , "urlPermissions" , UrlPermission.class , ccService);
+		for(UrlPermission urlPermission : permissions){
+			appRole.addUrlPermission(urlPermission);
+		}
+		
+		appRole.clearCmpPermissions();
+		JsonArrayConverter<CmpPermission> cmpPermissionConverter = new JsonArrayConverter<CmpPermission>();
+		List<CmpPermission> cmpPermissions = cmpPermissionConverter.convert(params , "cmpPermissions" , CmpPermission.class , ccService);
+		for(CmpPermission cmpPermission : cmpPermissions){
+			appRole.addCmpPermission(cmpPermission);
 		}
 		return appRole;
 	}

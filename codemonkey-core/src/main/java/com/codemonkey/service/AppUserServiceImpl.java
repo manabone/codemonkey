@@ -41,7 +41,7 @@ public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements A
 		
 		appUser.clearAppRoles();
 		JsonArrayConverter<AppRole> appRolesConverter = new JsonArrayConverter<AppRole>();
-		List<AppRole> roles = appRolesConverter.convert(params , "appRoles" , AppRole.class , ccService);
+		List<AppRole> roles = appRolesConverter.convert(params , "roles" , AppRole.class , ccService);
 		for(AppRole role : roles){
 			appUser.addAppRole(role);
 		}

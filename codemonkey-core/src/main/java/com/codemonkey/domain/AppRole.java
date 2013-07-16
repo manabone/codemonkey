@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,12 +29,14 @@ public class AppRole extends AbsEE {
 	@JoinTable(name="app_role_url_permissions", 
 		joinColumns={@JoinColumn(name="app_role")},
 		inverseJoinColumns={@JoinColumn(name="url_permissions")})
+	@NotAudited
 	private Set<UrlPermission> urlPermissions = new HashSet<UrlPermission>();
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="app_role_cmp_permissions", 
 		joinColumns={@JoinColumn(name="app_role")},
 		inverseJoinColumns={@JoinColumn(name="cmp_permissions")})
+	@NotAudited
 	private Set<CmpPermission> cmpPermissions = new HashSet<CmpPermission>();
 	
 	@Override
@@ -48,8 +51,8 @@ public class AppRole extends AbsEE {
 		jo.put("urlPermissions", urlPermissionsJa);
 		
 		JSONArray cmpPermissionsJa = new JSONArray();
-		if(CollectionUtils.isNotEmpty(cmpPermissions)){
-			for(AppPermission p : cmpPermissions){
+		if(CollectionUtils.isNotEmpty(getCmpPermissions())){
+			for(AppPermission p : getCmpPermissions()){
 				cmpPermissionsJa.put(p.detailJson());
 			}
 		}
@@ -75,16 +78,29 @@ public class AppRole extends AbsEE {
 		return urlPermissions;
 	}
 
-	public Set<AppPermission> getAppPermissions() {
-		return null;
+	public void addUrlPermission(UrlPermission urlPermission) {
+		urlPermissions.add(urlPermission);
 	}
 
-	public void clearAppPermissions() {
+	public void addCmpPermission(CmpPermission cmpPermission) {
+		getCmpPermissions().add(cmpPermission);
 		
 	}
 
-	public void addAppPermission(AppPermission appPermission) {
-		
+	public void clearUrlPermissions() {
+		if(CollectionUtils.isNotEmpty(urlPermissions)){
+			urlPermissions.clear();
+		}
+	}
+
+	public void clearCmpPermissions() {
+		if(CollectionUtils.isNotEmpty(getCmpPermissions())){
+			getCmpPermissions().clear();
+		}
+	}
+
+	public Set<CmpPermission> getCmpPermissions() {
+		return cmpPermissions;
 	}
 	
 }

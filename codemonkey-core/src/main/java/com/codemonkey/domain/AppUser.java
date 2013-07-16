@@ -1,8 +1,6 @@
 package com.codemonkey.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -43,7 +41,7 @@ public class AppUser extends AbsEE{
 	private String salt;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	private List<AppRole> roles = new ArrayList<AppRole>();
+	private Set<AppRole> roles = new HashSet<AppRole>();
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -93,8 +91,12 @@ public class AppUser extends AbsEE{
 		}
 		
 		for(AppRole role : getRoles()){
-			if(CollectionUtils.isNotEmpty(role.getAppPermissions())){
-				permissions.addAll(role.getAppPermissions());
+			if(CollectionUtils.isNotEmpty(role.getUrlPermissions())){
+				permissions.addAll(role.getUrlPermissions());
+			}
+			
+			if(CollectionUtils.isNotEmpty(role.getCmpPermissions())){
+				permissions.addAll(role.getCmpPermissions());
 			}
 		}
 		
@@ -130,10 +132,6 @@ public class AppUser extends AbsEE{
 		}
 		
 		return appRoles;
-	}
-
-	public void setRoles(List<AppRole> roles) {
-		this.roles = roles;
 	}
 
 	public String getFirstName() {

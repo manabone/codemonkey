@@ -17,7 +17,7 @@ public class AppResourceHelperTest {
 	public void test(){
 		List<UrlPermission> list = AppResourceHelper.formPermissions(Foo.class);
 		
-		assertEquals(4 , list.size());
+		assertEquals(3 , list.size());
 		assertEquals("/app/ext/foo/create" , list.get(0).getUrl());
 		assertEquals("foo:create" , list.get(0).getPermission());
 		assertEquals(RequestType.JSON , list.get(0).getRequestType());
@@ -30,13 +30,13 @@ public class AppResourceHelperTest {
 		assertEquals("foo:update" , list.get(2).getPermission());
 		assertEquals(RequestType.JSON , list.get(2).getRequestType());
 		
-		assertEquals("/app/ext/foo/edit" , list.get(3).getUrl());
-		assertEquals("foo:edit" , list.get(3).getPermission());
-		assertEquals(RequestType.HTML , list.get(3).getRequestType());
+//		assertEquals("/app/ext/foo/edit" , list.get(3).getUrl());
+//		assertEquals("foo:edit" , list.get(3).getPermission());
+//		assertEquals(RequestType.HTML , list.get(3).getRequestType());
 		
 		list = AppResourceHelper.listPermissions(Foo.class);
 		
-		assertEquals(4 , list.size());
+		assertEquals(2 , list.size());
 	
 		assertEquals("/app/ext/fooList/read" , list.get(0).getUrl());
 		assertEquals("fooList:read" , list.get(0).getPermission());
@@ -46,13 +46,13 @@ public class AppResourceHelperTest {
 		assertEquals("fooList:destroy" , list.get(1).getPermission());
 		assertEquals(RequestType.JSON , list.get(1).getRequestType());
 		
-		assertEquals("/app/ext/fooList/index" , list.get(2).getUrl());
-		assertEquals("fooList:list" , list.get(2).getPermission());
-		assertEquals(RequestType.HTML , list.get(2).getRequestType());
-		
-		assertEquals("/app/ext/fooList/new" , list.get(3).getUrl());
-		assertEquals("fooList:new" , list.get(3).getPermission());
-		assertEquals(RequestType.HTML , list.get(3).getRequestType());
+//		assertEquals("/app/ext/fooList/index" , list.get(2).getUrl());
+//		assertEquals("fooList:list" , list.get(2).getPermission());
+//		assertEquals(RequestType.HTML , list.get(2).getRequestType());
+//		
+//		assertEquals("/app/ext/fooList/new" , list.get(3).getUrl());
+//		assertEquals("fooList:new" , list.get(3).getPermission());
+//		assertEquals(RequestType.HTML , list.get(3).getRequestType());
 	
 	}
 }
