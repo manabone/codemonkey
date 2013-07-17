@@ -1,7 +1,7 @@
 package com.codemonkey.domain;
 
 public enum CmpType implements IEnum{
-	Column , Field , Menu;
+	Column , Field , Menu , Button;
 
 	@Override
 	public String getText() {
