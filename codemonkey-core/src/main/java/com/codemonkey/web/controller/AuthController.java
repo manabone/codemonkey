@@ -1,20 +1,29 @@
 package com.codemonkey.web.controller;
 
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.codemonkey.domain.AppRole;
 import com.codemonkey.domain.AppUser;
+import com.codemonkey.domain.CmpPermission;
 import com.codemonkey.service.AppUserService;
+import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 
 @Controller
@@ -49,7 +58,30 @@ public class AuthController {
     }
 	
 	@RequestMapping(HOME)
-    public String home() {
+    public String home(HttpSession session , ModelMap map) {
+
+		JSONObject pageData = new JSONObject();
+		JSONArray cmpPermissions = new JSONArray();
+		
+		pageData.put(ExtConstant.CMP_PERMISSIONS, cmpPermissions);
+		
+		AppUser user = (AppUser) session.getAttribute(SysUtils.CURRENCT_USER);
+		
+		Set<AppRole> roles = user.getRoles();
+		
+		if(CollectionUtils.isNotEmpty(roles)){
+			for(AppRole role : roles){
+				Set<CmpPermission> cmpSet = role.getCmpPermissions();
+				if(CollectionUtils.isNotEmpty(cmpSet)){
+					for(CmpPermission cmp : cmpSet){
+						cmpPermissions.put(cmp.listJson());
+					}
+				}
+			}
+		}
+		
+		map.put(ExtConstant.PAGE_DATA, pageData);
+		
         return HOME_PAGE;
     }
 	
