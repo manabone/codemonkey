@@ -38,7 +38,7 @@
 			}
 		};
 		
-		var PAGE_DATA = {labels:[]};
+		var PAGE_DATA = ${pageData};
 		
 		Ext.onReady(function() {
 			Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
