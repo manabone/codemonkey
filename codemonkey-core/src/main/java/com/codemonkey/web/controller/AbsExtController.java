@@ -22,7 +22,7 @@ import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
 
-public abstract class AbsExtController<T extends IEntity> extends AbsController implements SecurityController{
+public abstract class AbsExtController<T extends IEntity> extends AbsController {
 	
 	private Class<?> type;
 	
@@ -37,10 +37,6 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 	AbsExtController(){
 		this.type = ClassHelper.getSuperClassGenricType(getClass());
 		log = SysUtils.getLog(getClass());
-	}
-	
-	public void regResources() {
-		
 	}
 	
 	//----------------------

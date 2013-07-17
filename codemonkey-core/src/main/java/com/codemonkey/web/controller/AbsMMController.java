@@ -204,7 +204,7 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
 		return cols;
 	}
     
-	public List<AppPermission> regAppPermission(){
+	public List<AppPermission> regAppPermissions(){
 		return AppResourceHelper.mmPermissions(getType());
 	}
 

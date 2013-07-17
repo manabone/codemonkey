@@ -108,7 +108,7 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
 		return result.toString();
 	}
 	
-	public List<AppPermission> regAppPermission(){
+	public List<AppPermission> regAppPermissions(){
 		return convertToAppPermissionList(AppResourceHelper.listPermissions(getType()));
 	}
 }

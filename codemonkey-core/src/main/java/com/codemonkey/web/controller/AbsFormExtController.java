@@ -107,7 +107,7 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
 		result.put(ExtConstant.ERROR_MSG, e.getMessage());
 	}
 
-	public List<AppPermission> regAppPermission(){
+	public List<AppPermission> regAppPermissions(){
 		List<UrlPermission> list = AppResourceHelper.formPermissions(getType());
 		return convertToAppPermissionList(list);
 	}

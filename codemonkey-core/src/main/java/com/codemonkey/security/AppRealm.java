@@ -37,7 +37,7 @@ public class AppRealm extends AuthorizingRealm {
     	if( username != null ){
         	AppUser user = appUserService.findBy("username" , username );
             if( user != null && user.getRoles() != null ){  
-                SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();  
+                SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
                 if(user.isAdmin()){
                 	List<AppPermission> ps = appPermissionService.findAll();
                 	if(CollectionUtils.isNotEmpty(ps)){

@@ -1,10 +1,15 @@
 package com.codemonkey.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.error.AuthError;
 import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.SessionTimeoutError;
@@ -12,7 +17,7 @@ import com.codemonkey.error.SysError;
 import com.codemonkey.error.ValidationError;
 
 
-public abstract class AbsController {
+public abstract class AbsController implements SecurityController {
 	
 	@ExceptionHandler(SysError.class)
 	@ResponseBody
@@ -42,5 +47,15 @@ public abstract class AbsController {
 	@ResponseBody
 	public String handleSessionTimeout(SessionTimeoutError ex, HttpServletRequest request) {
 		return ex.json().toString();
+	}
+	
+	@Override
+	public List<AppPermission> regAppPermissions() {
+		return new ArrayList<AppPermission>();
+	}
+	
+	@Override
+	public List<SecurityComponent> regSecurityComponents() {
+		return new ArrayList<SecurityComponent>();
 	}
 }

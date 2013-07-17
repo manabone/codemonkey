@@ -4,6 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
@@ -23,36 +24,30 @@ public class CmpPermission extends AppPermission{
 	private static final long serialVersionUID = 1L;
 	
 	@Enumerated(EnumType.STRING)
-	@Label("控件类型")
-	private CmpType cmpType;
-	
-	@Enumerated(EnumType.STRING)
 	@Label("操作权限")
 	private CmpPermissionType cmpPermissionType;
 	
+	@Label("控件ID")
+	@ManyToOne
+	private SecurityComponent component;
+	
 	public CmpPermission(){}
 	
-	public CmpPermission(String permission , CmpType cmpType , CmpPermissionType cmpPermissionType , String description){
-		super(permission , description);
-		this.setCmpType(cmpType);
-		this.setCmpPermissionType(cmpPermissionType);
+	public CmpPermission(SecurityComponent component , CmpPermissionType cmpPermissionType){
+		this.cmpPermissionType = cmpPermissionType;
+		this.component = component;
 	}
 	
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
 		jo.put("cmpType", OgnlUtils.stringValue("cmpType", this));
 		jo.put("cmpPermissionType", OgnlUtils.stringValue("cmpPermissionType", this));
+		jo.put("component.id", OgnlUtils.stringValue("component.id", this));
+		jo.put("component.code", OgnlUtils.stringValue("component.code", this));
+		jo.put("component.cmpType", OgnlUtils.stringValue("component.cmpType", this));
 		return jo;
 	}
 	
-	public CmpType getCmpType() {
-		return cmpType;
-	}
-
-	public void setCmpType(CmpType cmpType) {
-		this.cmpType = cmpType;
-	}
-
 	public CmpPermissionType getCmpPermissionType() {
 		return cmpPermissionType;
 	}

@@ -4,11 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
-
-import com.codemonkey.annotation.Label;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -20,19 +17,10 @@ public class AppPermission extends AbsMM{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Label("权限编码")
-	private String permission;
-	
-	@Label("控件ID")
-	private String componentId;
-	
 	AppPermission(){}
 	
 	public AppPermission(String permission , String description){
-		this.permission = permission;
-		if(StringUtils.isNotBlank(permission)){
-			this.componentId = permission.replace(':', '_');
-		}
+		this.setCode(permission);
 		this.setDescription(description);
 	}
 	
@@ -43,19 +31,11 @@ public class AppPermission extends AbsMM{
 	}
 	
 	public void setPermission(String permission) {
-		this.permission = permission;
+		this.setCode(permission);
 	}
 
 	public String getPermission() {
-		return permission;
-	}
-
-	public String getComponentId() {
-		return componentId;
-	}
-
-	public void setComponentId(String componentId) {
-		this.componentId = componentId;
+		return getCode();
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.codemonkey.ibatis.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.ibatis.service.IbatisService;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
@@ -36,6 +39,17 @@ public abstract class AbsIbatisController extends AbsController implements Secur
 	}
 	
 	abstract String getQueryId();
+	
+	
+	@Override
+	public List<AppPermission> regAppPermissions() {
+		return new ArrayList<AppPermission>();
+	}
+
+	@Override
+	public List<SecurityComponent> regSecurityComponents() {
+		return new ArrayList<SecurityComponent>();
+	}
 	
 	//----------------------
     // read

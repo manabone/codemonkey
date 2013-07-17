@@ -37,8 +37,8 @@ public abstract class DocumentFormController<T extends Document> extends AbsForm
     }
     
     @Override
-    public List<AppPermission> regAppPermission(){
-    	List<AppPermission> list = super.regAppPermission();
+    public List<AppPermission> regAppPermissions(){
+    	List<AppPermission> list = super.regAppPermissions();
     	list.add(AppResourceHelper.formPermission(getType() , Operation.POST));
     	return list;
 	}

@@ -22,9 +22,11 @@ import com.codemonkey.dbMigration.migration.DriverManagerMigrationManager;
 import com.codemonkey.dbMigration.migration.MigrationManager;
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppUser;
+import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.domain.Status;
 import com.codemonkey.service.AppPermissionService;
 import com.codemonkey.service.AppUserService;
+import com.codemonkey.service.SecurityComponentService;
 import com.codemonkey.utils.EnumHolder;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.controller.SecurityController;
@@ -35,6 +37,7 @@ import com.codemonkey.web.controller.SecurityController;
 public class StartUpServiceImpl implements StartUpService {
 
 	@Autowired private AppPermissionService appPermissionService;
+	@Autowired private SecurityComponentService securityComponentService;
 	@Autowired private List<SecurityController> securityControllers;
 	@Autowired private DriverManagerDataSource dbUnitdatasource;
 	@Autowired private AppUserService appUserService;
@@ -89,17 +92,38 @@ public class StartUpServiceImpl implements StartUpService {
 		
 		if(CollectionUtils.isNotEmpty(securityControllers)){
 			for(SecurityController sc : securityControllers){
-				if(CollectionUtils.isNotEmpty(sc.regAppPermission())){
-					appPermissions.addAll(sc.regAppPermission());
+				if(CollectionUtils.isNotEmpty(sc.regAppPermissions())){
+					appPermissions.addAll(sc.regAppPermissions());
 				}
 			}
 		}
 		
-		if(CollectionUtils.isNotEmpty(securityControllers)){
+		if(CollectionUtils.isNotEmpty(appPermissions)){
 			for(AppPermission p : appPermissions){
-				List<AppPermission> pp = appPermissionService.findAllBy("permission", p.getPermission());
-				if(CollectionUtils.isEmpty(pp)){
+				AppPermission pp = appPermissionService.findBy("permission", p.getPermission());
+				if(pp == null){
 					appPermissionService.save(p);
+				}
+			}
+		}
+	}
+	
+	public void doInitSecurityComponents(){
+		List<SecurityComponent> cmps = new ArrayList<SecurityComponent>();
+		
+		if(CollectionUtils.isNotEmpty(securityControllers)){
+			for(SecurityController sc : securityControllers){
+				if(CollectionUtils.isNotEmpty(sc.regSecurityComponents())){
+					cmps.addAll(sc.regSecurityComponents());
+				}
+			}
+		}
+		
+		if(CollectionUtils.isNotEmpty(cmps)){
+			for(SecurityComponent c : cmps){
+				SecurityComponent cc = securityComponentService.findBy("code", c.getCode());
+				if(cc == null){
+					securityComponentService.save(c);
 				}
 			}
 		}

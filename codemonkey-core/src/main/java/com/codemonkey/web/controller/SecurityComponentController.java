@@ -12,8 +12,8 @@ import com.codemonkey.extcmp.ExtFormField;
 import com.codemonkey.service.GenericService;
 
 @Controller
-@RequestMapping("/ext/securityComponent/**")
-public class AppPermissionController extends AbsMMController<AppPermission>{
+@RequestMapping("/ext/appPermission/**")
+public class SecurityComponentController extends AbsMMController<AppPermission>{
 
 	@Override
 	protected List<ExtFormField> getFormFields(){

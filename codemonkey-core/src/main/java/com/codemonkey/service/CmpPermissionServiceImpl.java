@@ -9,7 +9,7 @@ public class CmpPermissionServiceImpl extends GenericServiceImpl<CmpPermission> 
 
 	@Override
 	public CmpPermission createEntity() {
-		return new CmpPermission(null , null , null , null);
+		return new CmpPermission(null , null);
 	}
 
 }

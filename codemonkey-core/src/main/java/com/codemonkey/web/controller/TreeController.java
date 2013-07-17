@@ -1,7 +1,5 @@
 package com.codemonkey.web.controller;
 
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.Foo;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.tree.ChildNode;
@@ -78,10 +75,6 @@ public class TreeController extends AbsExtController<Foo>{
 		return jo.toString();
 	}
 	
-	public List<AppPermission> regAppPermission() {
-		return null;
-	}
-
 	@Override
 	protected GenericService<Foo> service() {
 		return null;
