@@ -56,6 +56,14 @@ public class StartUpServiceImpl implements StartUpService {
 			admin.setPassword("admin");
 			appUserService.save(admin);
 		}
+		
+		AppUser user = appUserService.findBy("username", "user");
+		if(user == null){
+			user = new AppUser();
+			user.setUsername("user");
+			user.setPassword("user");
+			appUserService.save(user);
+		}
 	}
 	
 	/* (non-Javadoc)
