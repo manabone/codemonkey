@@ -39,6 +39,8 @@ public final class ExtConstant {
 	public static final String QUERY = "query";
 	
 	public static final String SORT = "sort";
+	
+	public static final String CMP_PERMISSIONS = "cmpPermissions";
 
 	private ExtConstant(){}
 }
