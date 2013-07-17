@@ -71,7 +71,7 @@ public class AppUser extends AbsEE{
 				ja.put(role.listJson());
 			}
 		}
-		jo.put("appRoles", ja);
+		jo.put("roles", ja);
 		return jo;
 	}
 	
