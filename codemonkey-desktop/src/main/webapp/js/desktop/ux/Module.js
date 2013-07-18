@@ -67,12 +67,12 @@ Ext.define('Ext.ux.desktop.Module', {
     processSecurityComponents : function(){
     	if(PAGE_DATA && PAGE_DATA.cmpPermissions){
     		for(var i = 0 ; i < PAGE_DATA.cmpPermissions.length ; i++){
-    			var cmp = Ext.ComponentQuery.query(PAGE_DATA.cmpPermissions[i].component_code);
-    			if(cmp){
+    			var cmps = Ext.ComponentQuery.query(PAGE_DATA.cmpPermissions[i].component_code);
+    			if(cmps && cmps[0]){
     				if(PAGE_DATA.cmpPermissions[i].cmpPermissionType == 'Hidden'){
-    					cmp.hide();
+    					cmps[0].hide();
     				}else if(PAGE_DATA.cmpPermissions[i].cmpPermissionType == 'ReadOnly'){
-    					cmp.readOnly();
+    					cmps[0].readOnly();
     				}
     			}
     		}
