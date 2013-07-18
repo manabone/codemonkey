@@ -101,18 +101,21 @@ Ext.define('AM.modules.FormModule', {
     
 	save : function(){
 		var me = this;
-		var values = ExtUtils.formValues(this.formId);
+		var values = ExtUtils.formValues(me.formId);
 		if(values){
+			
 			this.beforeSave(values);
+			
 			var model = this.Model.create(values);
-			ExtUtils.mask(Ext.getCmp(this.winId));
+			ExtUtils.mask(Ext.getCmp(me.winId));
+			
 	    	model.save({
 	    		success: function(model , res) {
 	    			Ext.getCmp(me.formId).getForm().loadRecord(res.resultSet.records[0]);
 	    			if(me.save_callback){
 	    				me.save_callback(model);
 	    			}
-	    			
+	    			ExtUtils.clearInvalidFields(me.formId);
 	    			ExtUtils.unmask(Ext.getCmp(me.winId));
 	    		},
 	    		
@@ -122,7 +125,7 @@ Ext.define('AM.modules.FormModule', {
 	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
 	    			var data = op.request.scope.reader.jsonData["data"];
 	    			var errorMsg = op.request.scope.reader.jsonData["errorMsg"];
-	    			
+	    			ExtUtils.clearInvalidFields(me.formId);
 	    			me.handleError(errorKey , errorMsg , errors , data);
 	    			
 	    			ExtUtils.unmask(Ext.getCmp(me.winId));

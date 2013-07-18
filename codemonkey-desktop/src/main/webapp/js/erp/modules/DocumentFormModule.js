@@ -84,7 +84,6 @@ Ext.define('erp.modules.DocumentFormModule', {
 	},
     
     afterModelLoad : function(model){
-    	debugger;
  	   this.getLineGridStore().loadData(model.data.lines);
     },
     

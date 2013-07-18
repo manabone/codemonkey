@@ -32,6 +32,7 @@ Ext.define('erp.modules.SalesOrderFormModule', {
     	
     	var lineGrid = ExtUtils.arrayGrid({
     		id : this.lineGridId,
+    		modelName : 'SalesOrderLine',
     		ownerModule : me,
     		plugins : this.orderLineGridPlugins(me),
             features: this.orderLineGridFeatures,

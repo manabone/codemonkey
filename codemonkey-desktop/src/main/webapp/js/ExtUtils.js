@@ -192,6 +192,15 @@ var ExtUtils = {
 		}
 	},
 	
+	clearInvalidFields : function(formId){
+		var formPanel = Ext.getCmp(formId);
+		var form = formPanel.getForm();
+		var fields = form.getFields();
+		for(var i = 0 ; i < fields.length ; i++){
+			fields.getAt(i).clearInvalid();
+		}
+	},
+	
 	/*
 	 * config{
 	 * 	id : id,
