@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.json.JSONObject;
 
 import com.codemonkey.annotation.Label;
@@ -29,6 +30,7 @@ public class CmpPermission extends AppPermission{
 	
 	@Label("控件ID")
 	@ManyToOne
+	@NotAudited
 	private SecurityComponent component;
 	
 	public CmpPermission(){}
@@ -40,9 +42,8 @@ public class CmpPermission extends AppPermission{
 	
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
-		jo.put("cmpType", OgnlUtils.stringValue("cmpType", this));
 		jo.put("cmpPermissionType", OgnlUtils.stringValue("cmpPermissionType", this));
-		jo.put("component.id", OgnlUtils.stringValue("component.id", this));
+		jo.put("component", OgnlUtils.stringValue("component.id", this));
 		jo.put("component.code", OgnlUtils.stringValue("component.code", this));
 		jo.put("component.cmpType", OgnlUtils.stringValue("component.cmpType", this));
 		return jo;

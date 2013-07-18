@@ -35,17 +35,33 @@ Ext.define('AM.modules.AppRoleFormModule', {
     urlPermissionColumns : [
 		{header: '权限编码' ,  dataIndex: 'permission' },
 		{header: '描述' ,  dataIndex: 'description', flex: 1},
-		{header: '控件ID' ,  dataIndex: 'componentId',  flex: 1},
 		{header: '请求路径' ,  dataIndex: 'url',  flex: 1},
 		{header: '请求类型' ,  dataIndex: 'requestType', flex: 1}
     ],
     
     cmpPermissionColumns : [
-        {header: '权限编码' ,  dataIndex: 'permission'},
-        {header: '描述' ,  dataIndex: 'description', flex: 1},
-  		{header: '控件ID' ,  dataIndex: 'componentId',  flex: 1},
-  		{header: '控件类型' ,  dataIndex: 'cmpType',  flex: 1},
-  		{header: '操作权限' ,  dataIndex: 'cmpPermissionType', flex: 1}
+        {dataIndex: 'component_code' , hidden : true},
+        ExtUtils.searchingColumn({
+        	header : '控件编码' ,  
+        	dataIndex : 'component',
+        	textDataIndex : 'component_code',
+        	listModel : 'SecurityComponent',
+        	lineGridId : 'appRoleForm_cmpPermissionGrid',
+        	itemdblclick : function(record , cmp , r){
+        		r.set('component_code' , record.get('code'));
+        		r.set('component_type' , record.get('cmpType'));
+        		r.set('component_description' , record.get('description'));
+        	},
+        	cols : [
+        	     {header: 'id', dataIndex: 'id' , hidden : true},
+        	     {dataIndex:"code",flex:1,header : i18n.code},
+                 {header: '控件类型' ,  dataIndex: 'cmpType', flex: 1},
+                 {header: '描述' ,  dataIndex: 'description', flex: 1}
+            ]
+        }),
+        {header: '控件类型' , dataIndex: 'component_type' },
+        {header: '描述' , dataIndex: 'component_description'},
+  		{header: '操作权限' ,  dataIndex: 'cmpPermissionType'}
     ],
     
     formItems : function(){
@@ -84,7 +100,10 @@ Ext.define('AM.modules.AppRoleFormModule', {
     		id : 'appRoleForm_cmpPermissionGrid',
     		modelName : 'CmpPermission',
     		ownerModule : me,
-            columns : me.cmpPermissionColumns
+            columns : me.cmpPermissionColumns,
+            plugins : [
+               Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})
+ 	    	]
 		});
     	
     	var p4ActionBar =  me.createToolbar([
@@ -130,25 +149,8 @@ Ext.define('AM.modules.AppRoleFormModule', {
     },
     
     addCmpPerimssion : function(){
-    	
-    	var me = this;
-    	
-    	ExtUtils.popup({
-			id : 'cmpPermission',
-			modelName : 'CmpPermission',
-			columns : me.cmpPermissionColumns,
-			itemdblclick : function(view , record , item , e , eOpts){
-				me.addCmpPerimssion_callback(record);
-			} ,
-			okclick : function(record){
-				me.addCmpPerimssion_callback(record);
-			}
-		});
-    },
-    
-    addCmpPerimssion_callback : function(record){
     	var grid = Ext.getCmp('appRoleForm_cmpPermissionGrid');
-    	ExtUtils.addLine(grid , record.data);
+    	ExtUtils.addLine(grid);
     },
     
     removeCmpPerimssion : function(){

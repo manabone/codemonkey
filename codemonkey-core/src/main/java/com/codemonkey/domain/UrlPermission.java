@@ -40,7 +40,6 @@ public class UrlPermission extends AppPermission{
 	
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
-		jo.put("componentId", OgnlUtils.stringValue("componentId", this));
 		jo.put("url", OgnlUtils.stringValue("url", this));
 		jo.put("requestType", OgnlUtils.stringValue("requestType", this));
 		return jo;

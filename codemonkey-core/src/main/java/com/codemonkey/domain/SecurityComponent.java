@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import org.json.JSONObject;
+
 import com.codemonkey.annotation.Label;
+import com.codemonkey.utils.OgnlUtils;
 
 @Entity
 public class SecurityComponent extends AbsMM{
@@ -24,6 +27,13 @@ public class SecurityComponent extends AbsMM{
 		this.setCode(code);
 		this.setDescription(description);
 		this.cmpType = cmpType;
+	}
+	
+	@Override
+	public JSONObject listJson() {
+		JSONObject jo = super.listJson();
+		jo.put("cmpType",  OgnlUtils.stringValue("cmpType", this));
+		return jo;
 	}
 
 	public CmpType getCmpType() {

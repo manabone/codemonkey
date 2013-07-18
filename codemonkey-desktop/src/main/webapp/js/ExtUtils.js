@@ -29,7 +29,7 @@ var ExtUtils = {
 	defaultModelFields : ['id','code','name','description','originVersion','creationDate','createdBy','modificationDate','modifiedBy'],
 	
 	defaultGridCols1 : [	
-       	{header: 'id', dataIndex: 'id' ,  flex: 1 , hidden : true},
+       	{header: 'id', dataIndex: 'id' , hidden : true},
        	{dataIndex:"code",flex:1,header : i18n.code},
 		{dataIndex:"name",flex:1,header : i18n.name}
 	],
@@ -432,11 +432,16 @@ var ExtUtils = {
   					gridId : cfg.lineGridId ,
   					dataIndex: cfg.dataIndex,
   					hiddenDataIndex: cfg.textDataIndex,
+  					cols : cfg.cols,
   					success : function(record , cmp){
-  						var r = ExtUtils.getSelected(cmp.config.gridId);
-  						if(r){
-  							r.set(cfg.dataIndex , record.get('id'));
-  							r.set(cfg.textDataIndex , record.get('name'));
+  						var targetRecord = ExtUtils.getSelected(cmp.config.gridId);
+  						if(targetRecord){
+  							targetRecord.set(cfg.dataIndex , record.get('id'));
+  							if(cfg.itemdblclick){
+  	  							cfg.itemdblclick(record , cmp , targetRecord);
+  	  						}else{
+  	  							targetRecord.set(cfg.textDataIndex , record.get('name'));
+  	  						}
   						}
   					}
   				}

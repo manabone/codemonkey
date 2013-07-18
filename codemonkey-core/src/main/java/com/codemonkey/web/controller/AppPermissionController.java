@@ -12,7 +12,7 @@ import com.codemonkey.extcmp.ExtFormField;
 import com.codemonkey.service.GenericService;
 
 @Controller
-@RequestMapping("/ext/securityComponent/**")
+@RequestMapping("/ext/appPermission/**")
 public class AppPermissionController extends AbsMMController<AppPermission>{
 
 	@Override

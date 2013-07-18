@@ -3,18 +3,21 @@ package com.codemonkey.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.extcmp.ExtCol;
 import com.codemonkey.extcmp.ExtFormField;
-import com.codemonkey.service.GenericService;
+import com.codemonkey.service.SecurityComponentService;
 
 @Controller
-@RequestMapping("/ext/appPermission/**")
-public class SecurityComponentController extends AbsMMController<AppPermission>{
+@RequestMapping("/ext/securityComponent/**")
+public class SecurityComponentController extends AbsMMController<SecurityComponent>{
 
+	@Autowired private SecurityComponentService securityComponentService;
+	
 	@Override
 	protected List<ExtFormField> getFormFields(){
 		return null;
@@ -32,8 +35,8 @@ public class SecurityComponentController extends AbsMMController<AppPermission>{
   	}
 
 	@Override
-	protected GenericService<AppPermission> service() {
-		return null;
+	protected SecurityComponentService service() {
+		return securityComponentService;
 	}
 
 }

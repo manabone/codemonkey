@@ -82,6 +82,7 @@ public class StartUpServiceImpl implements StartUpService {
 		SysUtils.putAttribute(SysUtils.CURRENCT_USER, new AppUser());
 		doInitUsers();
 		doInitAppPermissions();
+		doInitSecurityComponents();
 	}
 	
 	/* (non-Javadoc)
@@ -100,7 +101,7 @@ public class StartUpServiceImpl implements StartUpService {
 		
 		if(CollectionUtils.isNotEmpty(appPermissions)){
 			for(AppPermission p : appPermissions){
-				AppPermission pp = appPermissionService.findBy("permission", p.getPermission());
+				AppPermission pp = appPermissionService.findBy("code", p.getPermission());
 				if(pp == null){
 					appPermissionService.save(p);
 				}

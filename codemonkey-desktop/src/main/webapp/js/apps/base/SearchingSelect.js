@@ -86,7 +86,7 @@ Ext.define('AM.base.SearchingSelect', {
     	}
     	this.modelFields = modelFields;
     	
-    	Ext.define('Model', {
+    	Ext.define(this.config.model , {
     	    extend: 'Ext.data.Model',
     	    fields: modelFields
     	});
@@ -95,7 +95,7 @@ Ext.define('AM.base.SearchingSelect', {
     	
     	var store = Ext.create('Ext.data.Store', {
             autoLoad: false,
-            model: 'Model',
+            model: this.config.model,
             proxy: proxy
         });
     	
@@ -138,7 +138,7 @@ Ext.define('AM.base.SearchingSelect', {
 		me.store.load();
 		ExtUtils.popup({
 			id : me.id,
-			store : me.store,
+			modelName : me.config.model,
 			columns : me.gridCols,
 			itemdblclick : function(view , record , item , e , eOpts){
 				me.itemdblclick(view , record , item , e , eOpts);
@@ -154,7 +154,7 @@ Ext.define('AM.base.SearchingSelect', {
 		me.setValue(record.get(me.valueField));
 		me.setRawValue(record.get(me.displayField));
 		Ext.callback(me.config.success , this , [record ,  me]);
-		Ext.getCmp(me.id + 'popupWin').close();
+//		Ext.getCmp(me.id + 'popupWin').close();
 		me.triggerCell.item(0).setDisplayed(true);
 	},
 	
