@@ -231,13 +231,13 @@ var ExtUtils = {
 		    	defaultType: 'textfield',
 		    	bodyPadding: '10% 40%',
 		    	items : [
-					{id : 'popup-query'  , name  : 'query'   , fieldLabel : 'name' },
-					{id : 'popup-search' , xtype : 'button' , text : 'search', handler : function(){
+					{id : 'popup-query'  , name  : 'code'   , fieldLabel : i18n.code },
+					{id : 'popup-search' , xtype : 'button' , text : i18n.search , handler : function(){
 						var store = Ext.getCmp('grid').getStore();
 			    		ExtUtils.gridSearch(store, 'popup-form');
 			    		
 					}}, 
-					{id : 'popup-reset'  , xtype : 'button' , text : 'reset' , handler : function(){
+					{id : 'popup-reset'  , xtype : 'button' , text : i18n.reset , handler : function(){
 						var store = Ext.getCmp('grid').getStore();
 			    		ExtUtils.gridReset(store, 'popup-form');
 					}}
@@ -436,10 +436,10 @@ var ExtUtils = {
   					success : function(record , cmp){
   						var targetRecord = ExtUtils.getSelected(cmp.config.gridId);
   						if(targetRecord){
-  							targetRecord.set(cfg.dataIndex , record.get('id'));
   							if(cfg.itemdblclick){
   	  							cfg.itemdblclick(record , cmp , targetRecord);
   	  						}else{
+  	  							targetRecord.set(cfg.dataIndex , record.get('id'));
   	  							targetRecord.set(cfg.textDataIndex , record.get('name'));
   	  						}
   						}

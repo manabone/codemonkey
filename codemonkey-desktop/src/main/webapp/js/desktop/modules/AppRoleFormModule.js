@@ -40,6 +40,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
     ],
     
     cmpPermissionColumns : [
+        {dataIndex: 'id' , hidden : true},
         {dataIndex: 'component_code' , hidden : true},
         ExtUtils.searchingColumn({
         	header : '控件编码' ,  
@@ -48,6 +49,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
         	listModel : 'SecurityComponent',
         	lineGridId : 'appRoleForm_cmpPermissionGrid',
         	itemdblclick : function(record , cmp , r){
+        		r.set('component' , record.get('id'));
         		r.set('component_code' , record.get('code'));
         		r.set('component_type' , record.get('cmpType'));
         		r.set('component_description' , record.get('description'));
@@ -61,7 +63,9 @@ Ext.define('AM.modules.AppRoleFormModule', {
         }),
         {header: '控件类型' , dataIndex: 'component_type' },
         {header: '描述' , dataIndex: 'component_description'},
-  		{header: '操作权限' ,  dataIndex: 'cmpPermissionType'}
+  		{header: '操作权限' ,  dataIndex: 'cmpPermissionType' , 
+        	editor: {xtype :"selectfield" , model : 'CmpPermissionType'}
+        }
     ],
     
     formItems : function(){

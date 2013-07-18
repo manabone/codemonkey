@@ -25,7 +25,7 @@ public class FooListController extends AbsListExtController<Foo>{
 	@Override
 	public List<SecurityComponent> regSecurityComponents() {
 		List<SecurityComponent> list = super.regSecurityComponents();
-		list.add(new SecurityComponent("fooFormModule_create" , CmpType.Button , "foo create"));
+		list.add(new SecurityComponent("#appRoleFormModule_window button[action=create]" , CmpType.Button , "foo create"));
 		return list;
 	}
 }

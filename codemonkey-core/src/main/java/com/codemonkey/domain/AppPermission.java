@@ -1,15 +1,12 @@
 package com.codemonkey.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
-@Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @Audited
+@MappedSuperclass
 public class AppPermission extends AbsMM{
 
 	/**

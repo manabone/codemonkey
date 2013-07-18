@@ -76,27 +76,19 @@ public class AppUser extends AbsEE{
 	}
 	
 	public Set<AppPermission> getPermissions(){
-		Set<AppPermission> permissions = new HashSet<AppPermission>();
-		if(CollectionUtils.isEmpty(getRoles())){
-			return permissions;
-		}
-		
 		Set<AppRole> appRoles = getRoles();
-		if(appRoles == null){
-			appRoles = new HashSet<AppRole>();
+		Set<AppPermission> permissions = new HashSet<AppPermission>();
+		if(CollectionUtils.isEmpty(appRoles)){
+			return permissions;
 		}
 		
 		if(getAppUserGroup() != null && CollectionUtils.isNotEmpty(getAppUserGroup().getRoles())){
 			appRoles.addAll(getAppUserGroup().getRoles());
 		}
 		
-		for(AppRole role : getRoles()){
+		for(AppRole role : appRoles){
 			if(CollectionUtils.isNotEmpty(role.getUrlPermissions())){
 				permissions.addAll(role.getUrlPermissions());
-			}
-			
-			if(CollectionUtils.isNotEmpty(role.getCmpPermissions())){
-				permissions.addAll(role.getCmpPermissions());
 			}
 		}
 		
@@ -123,8 +115,8 @@ public class AppUser extends AbsEE{
 	public Set<AppRole> getRoles() {
 		
 		Set<AppRole> appRoles = new HashSet<AppRole>();
-		if(CollectionUtils.isNotEmpty(this.roles)){
-			appRoles.addAll(appRoles);
+		if(CollectionUtils.isNotEmpty(roles)){
+			appRoles.addAll(roles);
 		}
 		
 		if(this.getAppUserGroup() != null && CollectionUtils.isNotEmpty(this.getAppUserGroup().getRoles())){

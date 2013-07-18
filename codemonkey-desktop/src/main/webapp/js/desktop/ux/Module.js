@@ -57,10 +57,17 @@ Ext.define('Ext.ux.desktop.Module', {
         }
         win.show();
         this.afterWindowCreate();
+        this.processSecurityComponents();
         if(config && config.callback){
         	config.callback(me);
         }
         return win;
+    },
+    
+    processSecurityComponents : function(){
+    	if(PAGE_DATA && PAGE_DATA.cmpPermissions){
+    		debugger;
+    	}
     },
     
     createModuleAction : function(cfg){

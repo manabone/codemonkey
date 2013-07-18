@@ -3,6 +3,7 @@ package com.codemonkey.service;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.codemonkey.domain.AppRole;
@@ -14,6 +15,8 @@ import com.codemonkey.web.converter.CustomConversionService;
 @Service
 public class AppRoleServiceImpl extends GenericServiceImpl<AppRole> implements AppRoleService{
 
+	@Autowired private CmpPermissionService cmpPermissionService;
+	
 	@Override
 	public AppRole buildEntity(JSONObject params , CustomConversionService ccService){
 		AppRole appRole = super.buildEntity(params , ccService);
@@ -29,6 +32,7 @@ public class AppRoleServiceImpl extends GenericServiceImpl<AppRole> implements A
 		JsonArrayConverter<CmpPermission> cmpPermissionConverter = new JsonArrayConverter<CmpPermission>();
 		List<CmpPermission> cmpPermissions = cmpPermissionConverter.convert(params , "cmpPermissions" , CmpPermission.class , ccService);
 		for(CmpPermission cmpPermission : cmpPermissions){
+			cmpPermissionService.save(cmpPermission);
 			appRole.addCmpPermission(cmpPermission);
 		}
 		return appRole;

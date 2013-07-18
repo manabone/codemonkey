@@ -37,15 +37,15 @@ public class CmpPermission extends AppPermission{
 	
 	public CmpPermission(SecurityComponent component , CmpPermissionType cmpPermissionType){
 		this.cmpPermissionType = cmpPermissionType;
-		this.component = component;
+		this.setComponent(component);
 	}
 	
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
 		jo.put("cmpPermissionType", OgnlUtils.stringValue("cmpPermissionType", this));
 		jo.put("component", OgnlUtils.stringValue("component.id", this));
-		jo.put("component.code", OgnlUtils.stringValue("component.code", this));
-		jo.put("component.cmpType", OgnlUtils.stringValue("component.cmpType", this));
+		jo.put("component_code", OgnlUtils.stringValue("component.code", this));
+		jo.put("component_cmpType", OgnlUtils.stringValue("component.cmpType", this));
 		return jo;
 	}
 	
@@ -55,6 +55,14 @@ public class CmpPermission extends AppPermission{
 
 	public void setCmpPermissionType(CmpPermissionType cmpPermissionType) {
 		this.cmpPermissionType = cmpPermissionType;
+	}
+
+	public SecurityComponent getComponent() {
+		return component;
+	}
+
+	public void setComponent(SecurityComponent component) {
+		this.component = component;
 	}
 
 }
