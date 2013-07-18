@@ -66,7 +66,16 @@ Ext.define('Ext.ux.desktop.Module', {
     
     processSecurityComponents : function(){
     	if(PAGE_DATA && PAGE_DATA.cmpPermissions){
-    		debugger;
+    		for(var i = 0 ; i < PAGE_DATA.cmpPermissions.length ; i++){
+    			var cmp = Ext.ComponentQuery.query(PAGE_DATA.cmpPermissions[i].component_code);
+    			if(cmp){
+    				if(PAGE_DATA.cmpPermissions[i].cmpPermissionType == 'Hidden'){
+    					cmp.hide();
+    				}else if(PAGE_DATA.cmpPermissions[i].cmpPermissionType == 'ReadOnly'){
+    					cmp.readOnly();
+    				}
+    			}
+    		}
     	}
     },
     

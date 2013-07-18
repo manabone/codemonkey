@@ -427,6 +427,7 @@ var ExtUtils = {
 			
   			editor: {
   				xtype :"searchingselect" , 
+  				displayField : cfg.textDataIndex,
   				config :{
   					model : cfg.listModel , 
   					gridId : cfg.lineGridId ,

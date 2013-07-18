@@ -61,6 +61,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
                  {header: '描述' ,  dataIndex: 'description', flex: 1}
             ]
         }),
+        
         {header: '控件类型' , dataIndex: 'component_type' },
         {header: '描述' , dataIndex: 'component_description'},
   		{header: '操作权限' ,  dataIndex: 'cmpPermissionType' , 

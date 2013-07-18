@@ -45,7 +45,8 @@ public class CmpPermission extends AppPermission{
 		jo.put("cmpPermissionType", OgnlUtils.stringValue("cmpPermissionType", this));
 		jo.put("component", OgnlUtils.stringValue("component.id", this));
 		jo.put("component_code", OgnlUtils.stringValue("component.code", this));
-		jo.put("component_cmpType", OgnlUtils.stringValue("component.cmpType", this));
+		jo.put("component_type", OgnlUtils.stringValue("component.cmpType", this));
+		jo.put("component_description", OgnlUtils.stringValue("component.description", this));
 		return jo;
 	}
 	
