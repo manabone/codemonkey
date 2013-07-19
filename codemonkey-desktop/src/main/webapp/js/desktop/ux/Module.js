@@ -57,11 +57,20 @@ Ext.define('Ext.ux.desktop.Module', {
         }
         win.show();
         this.afterWindowCreate();
+        this.fixWindowOverflowY();
         this.processSecurityComponents();
         if(config && config.callback){
         	config.callback(me);
         }
         return win;
+    },
+    
+    //FIXME bad fix for window overflow
+    fixWindowOverflowY : function(){
+    	var els = Ext.query('#' + this.id + '_window_form-innerCt');
+    	if(els && els[0]){
+    		Ext.DomHelper.applyStyles(els[0], {'overflow-y':'auto'});
+    	}
     },
     
     processSecurityComponents : function(){
