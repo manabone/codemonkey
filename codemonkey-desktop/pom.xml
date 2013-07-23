@@ -98,7 +98,6 @@
     	<!--					  PLUGINS							 -->
     	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 		<plugins>
-			<!-- drools complier -->
 		
 			<plugin>
                 <groupId>com.codemonkey</groupId>

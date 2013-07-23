@@ -18,11 +18,11 @@ Ext.define('test.modules.${EntityName}ListModule', {
 	iconCls : 'icon-grid',
     
     modelFields : function(){
-    	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>];
+    	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>].concat(ExtUtils.defaultModelFields);
     },
 	
 	gridCols  : function() {
-		return ${columnsJson};
+		return ExtUtils.defaultGridCols1.concat(${columnsJson}).concat(ExtUtils.defaultGridCols2);
 	}
 	
 });

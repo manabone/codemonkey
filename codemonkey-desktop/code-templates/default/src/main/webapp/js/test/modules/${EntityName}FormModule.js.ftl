@@ -12,10 +12,20 @@ Ext.define('test.modules.${EntityName}FormModule', {
     
     modelFields : function(){
     
-    	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>];
+    	return [<#list fields as f>'${f.name}'<#if f_has_next>,</#if></#list>].concat(ExtUtils.defaultModelFields);
     },
     
     formItems : function(){
-		return ${fieldsJson};
+    
+		var me = this;
+    	
+    	var p1 = ExtUtils.creationInfoPanel();
+    	
+    	var p2 = ExtUtils.panel({
+    		title : 'Detail',
+    		items : ${fieldsJson}
+    	});
+    	
+    	return ExtUtils.fitLayout([p1, p2]);
     }
 });
