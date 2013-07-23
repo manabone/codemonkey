@@ -32,6 +32,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import com.codemonkey.annotation.Label;
+import com.codemonkey.domain.AbsEntity;
 import com.codemonkey.generator.FileExporter;
 import com.codemonkey.utils.ClassHelper;
 
@@ -112,7 +113,7 @@ public class GenMojo extends AbstractMojo {
 		binding.put("entityPackage" , entityPackage);
 		
 		Class<?> clazz = loadClass(entityName);
-		List<Field> fields = ClassHelper.getAllFields(clazz);
+		List<Field> fields = ClassHelper.getAllFields(clazz , AbsEntity.class);
 		binding.put("fields", fields);
 		binding.put("labels", buildLabels(fields));
 		
