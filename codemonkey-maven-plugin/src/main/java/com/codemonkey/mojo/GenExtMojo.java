@@ -33,6 +33,7 @@ import org.hibernate.validator.constraints.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.codemonkey.domain.AbsEntity;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.EnumUtils;
 
@@ -53,7 +54,7 @@ public class GenExtMojo extends GenMojo {
 		Map<String, Object> binding = super.buildBinding();
 		
 		Class<?> clazz = loadClass(getEntityName());
-		List<Field> fields = ClassHelper.getAllFields(clazz);
+		List<Field> fields = ClassHelper.getAllFields(clazz , AbsEntity.class);
 		JSONArray fieldsJa = new JSONArray();
 		
 		List<Field> stringFields = new ArrayList<Field>();

@@ -143,9 +143,13 @@ public final class ClassHelper {
 	}
 	
 	public static List<Field> getAllFields(Class<?> clazz){
+		return getAllFields(clazz , Object.class);
+	}
+	
+	public static List<Field> getAllFields(Class<?> clazz , Class<?> rootClass){
 		List<Field> fields = new ArrayList<Field>();
 		Class<?> clazz1 = clazz;
-		while(!clazz1.equals(Object.class)){
+		while(!clazz1.equals(rootClass)){
 			Field[] fs = clazz1.getDeclaredFields();
 			if(fs != null){
 				for(int i = 0 ; i < fs.length ; i++){
