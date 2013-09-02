@@ -13,6 +13,7 @@ public abstract class TreeNode {
 		jo.put("id", id);
 		jo.put("name", name);
 		jo.put("text", text);
+		jo.put("checked", false);
 		return jo;
 	}
 	

@@ -1,3 +1,28 @@
+/**
+config : {
+	model :"AppRoleList",
+	cols : [
+	    {header: 'id',  dataIndex: 'id',  flex: 1},
+	    {header: 'description',  dataIndex: 'description',  flex: 1}
+	],
+	searchingForm : {
+		items : [
+		   {id : 'description_Like'  , name  : 'description_Like'   , xtype : 'textfield' , fieldLabel : "description" }
+		]
+	},
+	
+	formId : NS.formId('appRoleFormMoudle'),
+	
+	searchParams : function(){
+		return {};
+	},
+	
+	success : function(r , cmp){
+		cmp.setRawValue(r.get('description'));
+	}
+}
+*/
+
 Ext.define('AM.base.SearchingSelect', {
 //    extend:'Ext.form.field.ComboBox',
     
@@ -15,14 +40,14 @@ Ext.define('AM.base.SearchingSelect', {
     
     valueField : 'id',
     
-    displayField : 'description',
+    displayField : 'name',
     
     popupWin : null,
     
 	defaultCols : [ 
-       {header : 'id', hidden : false, dataIndex : 'id', flex : 1 }, 
-       {header : 'name', dataIndex : 'name', flex : 1 }, 
-       {header : 'description', dataIndex : 'description', flex : 1}
+       {header : i18n.id, hidden : false, dataIndex : 'id', flex : 1 }, 
+       {header : i18n.name, dataIndex : 'name', flex : 1 }, 
+       {header : i18n.description , dataIndex : 'description', flex : 1}
 	],
 	
     hValue : null,
@@ -58,7 +83,7 @@ Ext.define('AM.base.SearchingSelect', {
     					me.hValue = '';
         	    		me.setRawValue('');
         	    		if(me.triggerCell && me.triggerCell.item(0)){
-        	    			me.triggerCell.item(0).setDisplayed(false);
+//        	    			me.triggerCell.item(0).setDisplayed(false);
         	    		}
     				}
     				
@@ -76,10 +101,13 @@ Ext.define('AM.base.SearchingSelect', {
     initComponent: function() {
     	var me = this;
     	
+    	me.formId = this.config.formId;
+    	
     	var modelFields = [];
     	
-    	var gridCols = Ext.apply([] , this.config.cols , this.defaultCols);
+    	var gridCols = this.config.cols || this.defaultCols;
     	this.gridCols = gridCols;
+    	this.searchingForm = this.config.searchingForm || {};
     	
     	for(var i = 0 ; i < gridCols.length ; i++ ){
     		modelFields.push(gridCols[i].dataIndex);
@@ -106,7 +134,7 @@ Ext.define('AM.base.SearchingSelect', {
     	}
     	
     	me.on('afterrender' , function( /*Ext.Component*/ cmp , /*Object*/ eOpts ){
-    		cmp.triggerCell.item(0).setDisplayed(false);
+//    		cmp.triggerCell.item(0).setDisplayed(false);
     	});
     	
     	if(this.allowBlank === false && this.fieldLabel){
@@ -122,7 +150,7 @@ Ext.define('AM.base.SearchingSelect', {
 //             me.setValue('');
              me.setRawValue('');
              me.hValue = '';
-             me.triggerCell.item(0).setDisplayed(false);
+//             me.triggerCell.item(0).setDisplayed(false);
              me.updateLayout();
          }
     },
@@ -140,6 +168,8 @@ Ext.define('AM.base.SearchingSelect', {
 			id : me.id,
 			modelName : me.config.model,
 			columns : me.gridCols,
+			searchParams : me.config.searchParams ? me.config.searchParams(this) : {},
+			searchingForm : me.searchingForm,
 			itemdblclick : function(view , record , item , e , eOpts){
 				me.itemdblclick(view , record , item , e , eOpts);
 			} ,

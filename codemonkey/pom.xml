@@ -17,6 +17,7 @@
 		<module>../codemonkey-ibatis</module>
 	</modules>
 	<build>
+		<defaultGoal>install</defaultGoal>
 
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 		<!-- RESOURCES -->
@@ -84,7 +85,7 @@
 						<!-- specific configuration for this execution -->
 						<configuration>
 							<autocommit>true</autocommit>
-							<sqlCommand>create database ${test.db.name}</sqlCommand>
+							<sqlCommand>create database ${test.db.name} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci </sqlCommand>
 							<!-- ignore error when database is not avaiable -->
 							<onError>continue</onError>
 						</configuration>
@@ -99,7 +100,7 @@
 						<!-- specific configuration for this execution -->
 						<configuration>
 							<autocommit>true</autocommit>
-							<sqlCommand>create database ${db.name}</sqlCommand>
+							<sqlCommand>create database ${db.name} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci </sqlCommand>
 							<onError>continue</onError>
 						</configuration>
 					</execution>
@@ -149,6 +150,8 @@
 	<!-- PROPERTIES -->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
 		<jetty.version>6.1.26</jetty.version>
 		<junit.version>4.8.2</junit.version>
 		<shiro.version>1.1.0</shiro.version>
@@ -301,9 +304,10 @@
 				<hibernate.max_fetch_depth>3</hibernate.max_fetch_depth>
 				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
 
+				<db.server>localhost:3306</db.server>
 				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-				<jdbc.url>jdbc:mysql://localhost:3306/${db.name}?characterEncoding=UTF-8</jdbc.url>
-				<jdbc.url.test>jdbc:mysql://localhost:3306/${test.db.name}?characterEncoding=UTF-8</jdbc.url.test>
+				<jdbc.url>jdbc:mysql://${db.server}/${db.name}?characterEncoding=UTF-8</jdbc.url>
+				<jdbc.url.test>jdbc:mysql://${db.server}/${test.db.name}?characterEncoding=UTF-8</jdbc.url.test>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>root</jdbc.password>
 
@@ -312,7 +316,7 @@
 				<jdbc.groupId>mysql</jdbc.groupId>
 				<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
 				<jdbc.version>5.1.9</jdbc.version>
-				<db.default.url>jdbc:mysql://localhost:3306/mysql</db.default.url>
+				<db.default.url>jdbc:mysql://${db.server}/mysql</db.default.url>
 				
 			</properties>
 		</profile>

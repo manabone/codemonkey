@@ -17,5 +17,12 @@ var i18n = {
 	edit : '修改',
 	cancel : '取消',
 	originVersion : '版本',
-	creationInfo : '创建信息'
+	creationInfo : '创建信息',
+	ok : '确认',
+	failed : '失败',
+	donGriffin:'菜单',
+	settings:'设置',
+	logout:'退出',
+	tips:'您确定要退出吗？',
+	start:'开始'
 };

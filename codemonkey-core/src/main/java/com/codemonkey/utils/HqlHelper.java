@@ -18,7 +18,33 @@ import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.FormFieldValidation;
 import com.codemonkey.error.ValidationError;
 
+
+/*
+	查询后缀
+ 	_LE 小于等于 
+ 	_LT 小于
+ 	_GE 大于等于
+ 	_GT 大于
+ 	_Like 模糊查询
+ 	_isNull 为空
+ 	_isNotNull 不为空
+ 	_notEQ 不等于
+ 	_EQ 等于(默认)
+*/
+
 public final class HqlHelper {
+
+	private static final String AND = "And";
+
+	private static final String ASC = "ASC";
+
+	private static final String DESC = "DESC";
+	
+	private static final String _ASC = "_ASC";
+
+	private static final String _DESC = "_DESC";
+
+	private static final String ORDER_BY = "OrderBy";
 
 	private static final String ILIKE = "_Ilike";
 
@@ -96,11 +122,51 @@ public final class HqlHelper {
 		
 		buffer.append(" where 1=1  ");
 		buffer.append(findByToJPQL(query));
+		buffer.append(orderByToJPQL(query));
 		
         return buffer.toString();
 		
 	}
 	
+	private static String orderByToJPQL(String query) {
+		
+		StringBuffer jpql = new StringBuffer("");
+		
+		String orderBy = query;
+		if(query.indexOf(ORDER_BY) >= 0){
+			orderBy = query.substring(query.indexOf(ORDER_BY) + ORDER_BY.length());
+			
+			if(StringUtils.isNotBlank(orderBy)){
+				
+				jpql.append(" Order By ");
+				
+				String[] parts = orderBy.split(AND);
+				for (int i = 0; i < parts.length; i++) {
+					String part = parts[i];
+			            
+			        if (part.endsWith(_DESC)) {
+		                String prop = extractProp(part, _DESC);
+		                jpql.append(prop);
+		                jpql.append(" ");
+		                jpql.append(DESC);
+		            } else if (part.endsWith(_ASC)) {
+		            	String prop = extractProp(part, _ASC);
+		                jpql.append(prop);
+		                jpql.append(" ");
+		                jpql.append(ASC);
+	            	}
+			        
+			        if(i < parts.length - 1){
+			        	 jpql.append(" , ");
+			        }
+	            }
+			}
+		}
+		
+		return jpql.toString();
+	}
+
+
 	public static String countBy(Class<?> type , String findbyQuery){
 		return countBy(type , findbyQuery , null);
 	}
@@ -264,7 +330,7 @@ public final class HqlHelper {
 			String value = queryInfo.getString(key);
 			if(StringUtils.isNotBlank(value) && !"null".equalsIgnoreCase(value)){
 				buffer.append(key);
-				buffer.append("And");
+				buffer.append(AND);
 			}
 		}
 		return buffer.toString();
@@ -274,19 +340,21 @@ public final class HqlHelper {
 
 		String conditions = "";
 		String findBy = query;
-		if(query.indexOf("OrderBy") >= 0){
-			findBy = query.substring( 0 , query.indexOf("OrderBy"));
+		if(query.indexOf(ORDER_BY) >= 0){
+			findBy = query.substring( 0 , query.indexOf(ORDER_BY));
 		}
 		if(StringUtils.isNotBlank(findBy)){
 			StringBuffer jpql = new StringBuffer();
 			 
 			
-	        String[] parts = findBy.split("And");
+	        String[] parts = findBy.split(AND);
 	        for (int i = 0; i < parts.length; i++) {
 	            String part = parts[i];
 	            
 	            if (i <= parts.length - 1) {
-	                jpql.append(" AND ");
+	                jpql.append(" ");
+	                jpql.append(AND);
+	                jpql.append(" ");
 	            }
 	            
 	            if (part.endsWith(NOT_EQUAL)) {

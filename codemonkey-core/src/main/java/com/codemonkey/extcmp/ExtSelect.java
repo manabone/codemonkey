@@ -9,8 +9,8 @@ public class ExtSelect extends ExtFormField {
 
 	private Class<?> enumClazz;
 	
-	public ExtSelect(String id , Class<?> enumClazz) {
-		super(id);
+	public ExtSelect(String name , String lable , Class<?> enumClazz) {
+		super(name , lable);
 		setXtype(ExtCmp.SELECT);
 		this.enumClazz = enumClazz; 
 	}

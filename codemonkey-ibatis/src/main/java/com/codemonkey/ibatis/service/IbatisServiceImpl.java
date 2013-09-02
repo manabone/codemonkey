@@ -54,4 +54,43 @@ public class IbatisServiceImpl implements IbatisService {
 		return count;
 	}
 	
+	@Override
+	public void insert(String id ,Map<String, Object> param){
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		dao.insert(id, param);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+	}
+	
+	@Override
+	public void update(String id ,Map<String, Object> param){
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		dao.update(id, param);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+	}
+	
+	@Override
+	public List<Map<String,Object>> querybylist(String id , Map<String, Object> param){
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		List<Map<String,Object>> list = dao.query(id , param);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+		return list;
+	}
+	
 }

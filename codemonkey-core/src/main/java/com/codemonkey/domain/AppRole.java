@@ -39,6 +39,13 @@ public class AppRole extends AbsEE {
 	@NotAudited
 	private Set<CmpPermission> cmpPermissions = new HashSet<CmpPermission>();
 	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="app_role_power_tree", 
+		joinColumns={@JoinColumn(name="app_role")},
+		inverseJoinColumns={@JoinColumn(name="power_tree")})
+	@NotAudited
+	private Set<PowerTree> powerTrees = new HashSet<PowerTree>();
+	
 	@Override
 	public JSONObject detailJson() {
 		JSONObject jo = super.detailJson();
@@ -51,8 +58,8 @@ public class AppRole extends AbsEE {
 		jo.put("urlPermissions", urlPermissionsJa);
 		
 		JSONArray cmpPermissionsJa = new JSONArray();
-		if(CollectionUtils.isNotEmpty(getCmpPermissions())){
-			for(AppPermission p : getCmpPermissions()){
+		if(CollectionUtils.isNotEmpty(cmpPermissions)){
+			for(AppPermission p : cmpPermissions){
 				cmpPermissionsJa.put(p.detailJson());
 			}
 		}
@@ -83,8 +90,11 @@ public class AppRole extends AbsEE {
 	}
 
 	public void addCmpPermission(CmpPermission cmpPermission) {
-		getCmpPermissions().add(cmpPermission);
-		
+		cmpPermissions.add(cmpPermission);
+	}
+	
+	public void addPowerTree(PowerTree powerTree) {
+		powerTrees.add(powerTree);
 	}
 
 	public void clearUrlPermissions() {
@@ -94,12 +104,18 @@ public class AppRole extends AbsEE {
 	}
 
 	public void clearCmpPermissions() {
-		if(CollectionUtils.isNotEmpty(getCmpPermissions())){
-			getCmpPermissions().clear();
+		if(CollectionUtils.isNotEmpty(cmpPermissions)){
+			cmpPermissions.clear();
 		}
 	}
-
-	public Set<CmpPermission> getCmpPermissions() {
+	
+	public void clearPowerTrees() {
+		if(CollectionUtils.isNotEmpty(powerTrees)){
+			powerTrees.clear();
+		}
+	}
+	
+	public Set<CmpPermission> getCmpPermissions(){
 		return cmpPermissions;
 	}
 	

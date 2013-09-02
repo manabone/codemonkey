@@ -50,6 +50,6 @@ Ext.define('test.modules.FooListModule', {
 			{header: 'createdBy',  dataIndex: 'createdBy',  flex: 1},
 			{header: 'modificationDate',  dataIndex: 'modificationDate',  flex: 1},
 			{header: 'modifiedBy',  dataIndex: 'modifiedBy',  flex: 1}
-			];
+		];
 	}
 });

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codemonkey.domain.AppPermission;
+import com.codemonkey.domain.PowerTree;
 import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.error.AuthError;
 import com.codemonkey.error.BadObjVersionError;
@@ -18,6 +19,10 @@ import com.codemonkey.error.ValidationError;
 
 
 public abstract class AbsController implements SecurityController {
+	
+	public static final String LOCALE = "locale";
+	
+	public static final String DEFAULT_LOCALE = "zh_CN";
 	
 	@ExceptionHandler(SysError.class)
 	@ResponseBody
@@ -57,5 +62,10 @@ public abstract class AbsController implements SecurityController {
 	@Override
 	public List<SecurityComponent> regSecurityComponents() {
 		return new ArrayList<SecurityComponent>();
+	}
+	
+	@Override
+	public List<PowerTree> regPowerTrees() {
+		return new ArrayList<PowerTree>();
 	}
 }

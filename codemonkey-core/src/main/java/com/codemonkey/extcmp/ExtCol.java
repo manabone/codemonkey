@@ -16,6 +16,11 @@ public class ExtCol extends ExtCmp{
 		this.header = id;
 	}
 	
+	public ExtCol(String id , String header) {
+		this(id);
+		this.header = header;
+	}
+	
 	public JSONObject json(){
 		JSONObject jo = super.json();
 		

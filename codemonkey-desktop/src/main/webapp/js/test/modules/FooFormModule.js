@@ -38,11 +38,35 @@ Ext.define('test.modules.FooFormModule', {
 			{xtype :"datefield",name :"modificationDate",format :"Y-m-d",fieldLabel :"modification date"},
 			{xtype :"checkbox",name :"fbool",fieldLabel :"fbool"},
 			{xtype :"selectfield",name :"fstatus", model : 'Status' ,fieldLabel :"fstatus" , allowBlank : false},
-			{xtype :"searchingselect",name :"appRole",config :{model :"AppRoleList"},fieldLabel :"app role" , allowBlank : false},
+			{xtype :"searchingselect",name :"appRole",fieldLabel :"app role" , allowBlank : false ,
+				config : {
+					model :"AppRoleList",
+					formId : NS.formId('fooFormModule'),
+					cols : [
+				        {header: 'id',  dataIndex: 'id',  flex: 1},
+				        {header: 'name',  dataIndex: 'name',  flex: 1},
+				        {header: 'description',  dataIndex: 'description',  flex: 1}
+					],
+					searchingForm : {
+						items : [
+						   {name : 'code_Like'   , xtype : 'textfield' , fieldLabel : i18n.code },
+						   {name : 'name_Like'   , xtype : 'textfield' , fieldLabel : i18n.name },
+						   {name : 'description_Like'   , xtype : 'textfield' , fieldLabel : "description" }
+						]
+					},
+					success : function(r , cmp){
+						ExtUtils.record2form({
+							appUserGroup: r.get('id'),
+							description: r.get('description')
+						} , cmp.formId);
+					}
+				}
+			},
 			{xtype :"searchingselect",name :"appUserGroup",config :{model :"AppUserGroup"},fieldLabel :"app user group"}       
 	    ];
 		
 		var grid = ExtUtils.arrayGrid({
+			modelName : 'AppRole',
 			columns :  [
    	            {header: 'id',  dataIndex: 'id',  flex: 1},
 	 	  		{header: 'name' ,  dataIndex: 'name',  flex: 1},

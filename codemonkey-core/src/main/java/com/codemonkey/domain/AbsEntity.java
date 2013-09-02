@@ -83,6 +83,10 @@ public class AbsEntity implements Serializable{
 		return null;
 	}
 	
+	public boolean isNew(){
+		return getId() == null;
+	}
+	
 	public JSONObject listJson() {
 		JSONObject jo = new JSONObject();
 		jo.put("id", OgnlUtils.stringValue("id", this));

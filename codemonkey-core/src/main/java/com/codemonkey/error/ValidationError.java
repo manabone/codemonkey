@@ -44,8 +44,9 @@ public class ValidationError extends SysError{
 	}
 
 	public String getDetailMessage() {
-		StringBuffer buffer = new StringBuffer("validateion error : ");
-		buffer.append("<br>");
+//		StringBuffer buffer = new StringBuffer("validateion error : ");
+//		buffer.append("<br>");
+		StringBuffer buffer = new StringBuffer();
 		
 		if(StringUtils.isNotBlank(super.getDetailMessage())){
 			buffer.append(super.getDetailMessage());
@@ -54,8 +55,8 @@ public class ValidationError extends SysError{
 		
 		if(CollectionUtils.isNotEmpty(errorSet)){
 			for(FieldValidation fv : errorSet){
-				buffer.append(fv.getFieldName());
-				buffer.append(" : ");
+//				buffer.append(fv.getFieldName());
+//				buffer.append(" : ");
 				buffer.append(fv.getMessage());
 				buffer.append("<br>");
 			}

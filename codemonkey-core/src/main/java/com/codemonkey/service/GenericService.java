@@ -50,4 +50,6 @@ public interface GenericService<T> extends Converter<String, T> {
 	
 	T createEntity();
 	
+	boolean unique(T t , String query , Object... params);
+	
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="codemonkey-desktop">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="codemonkey-core-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/codemonkey-core/codemonkey-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="codemonkey-dbMigration-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/codemonkey-dbMigration/codemonkey-dbMigration">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="codemonkey-ibatis-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/codemonkey-ibatis/codemonkey-ibatis">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="codemonkey-desktop"/>
+        <property name="java-output-path" value="/codemonkey-desktop/target/classes"/>
+    </wb-module>
+</project-modules>

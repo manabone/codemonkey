@@ -24,6 +24,10 @@ Ext.define('AM.modules.AppUserFormModule', {
 	removeAppRoleAction : {
 		iconCls:'remove' , text: '删除' , action : 'removeAppRole'
     },
+    
+    changePasswordAction : {
+		iconCls:'change' , text: '修改密码' , action : 'changePassword'
+    },
   
     //end actions
     
@@ -33,7 +37,7 @@ Ext.define('AM.modules.AppUserFormModule', {
     		title : '基本信息',
 			items:[
     			{xtype:"textfield",name:"username",fieldLabel:"用户名"},
-    			{xtype:"textfield",fieldLabel:"密码" , inputType : 'password'}
+    			{xtype:"textfield",fieldLabel:"姓名" , name : 'name'}
 			]
     	});
     	
@@ -59,6 +63,16 @@ Ext.define('AM.modules.AppUserFormModule', {
     	});
     	
     	return ExtUtils.fitLayout([p1, p3 ,p2 ]);
+    },
+    
+    createBbar : function(){
+    	var actions = [
+   			this.createModuleAction(this.saveAction),
+   			this.createModuleAction(this.cancelAction),
+   			this.createModuleAction(this.changePasswordAction)
+   		];
+    	       	
+    	return this.createToolbar(actions);
     },
     
     //action handlers
@@ -90,6 +104,47 @@ Ext.define('AM.modules.AppUserFormModule', {
     	var me = this;
     	var grid = Ext.getCmp(me.appRoleGridId);
     	ExtUtils.removeLine(grid);
+    },
+    
+    changePassword : function(){
+    	var me = this;
+    	var win = Ext.create('Ext.window.Window', {
+    		id : "appUserFormModule_changePasswordWin",  
+	        modal : true,
+	        title: '修改密码',
+	        
+    		items : Ext.create('Ext.form.Panel', {
+    			id : 'appUserFormModule_passwordForm',
+    			bodyStyle: 'padding:20px 20px 10px 20px',
+    			items: [
+    			    {xtype:"hidden", name : "id" , value : this.entityId},
+	       			{xtype:"textfield",fieldLabel:"新密码" , inputType : 'password', name : "password"},
+	       			{xtype:"textfield",fieldLabel:"确认新密码" , inputType : 'password', name : "password_ack"}
+	   			]
+    		}),
+	   		
+	   		buttons : [{
+			    id : 'ok',
+				text: i18n.ok,
+				handler : function(){
+					var values = ExtUtils.formValues("appUserFormModule_passwordForm");
+					if(values.password && values.password == values.password_ack){
+						me.doAction('changePassword' , function(){
+				    		Ext.getCmp('appUserFormModule_changePasswordWin').close();
+						}, Ext.encode(values));
+					}else{
+						alert("密码不一致");
+					}
+			    }
+			}, {
+				id: 'cancel',
+			    text: i18n.cancel,
+			    handler : function(){
+			    	Ext.getCmp('appUserFormModule_changePasswordWin').close();
+			    }
+			}]
+    	});
+	    win.show();
     },
     
     //end action handlers

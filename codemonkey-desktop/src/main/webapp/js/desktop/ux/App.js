@@ -87,24 +87,13 @@ Ext.define('Ext.ux.desktop.App', {
      * then modify the returned object before returning it.
      */
     getStartConfig: function () {
-        var me = this,
-            cfg = {
-                app: me,
-                menu: []
-            },
-            launcher;
+        var me = this;
+        var cfg = {
+            app: me,
+            menu: []
+        };
 
         Ext.apply(cfg, me.startConfig);
-
-//        Ext.each(me.modules, function (module) {
-//            launcher = module.launcher;
-//            if (launcher) {
-//                launcher.handler = launcher.handler || Ext.bind(me.createWindow, me, [module]);
-//                if(!module.hidden){
-//                	cfg.menu.push(module.launcher);
-//                }
-//            }
-//        });
 
         return cfg;
     },

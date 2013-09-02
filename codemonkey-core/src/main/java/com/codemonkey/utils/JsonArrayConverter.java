@@ -34,8 +34,7 @@ public class JsonArrayConverter<T> {
 	@SuppressWarnings("unchecked")
 	private T createNewInstance(Class<?> clazz) {
 		try {
-			T t = (T) clazz.newInstance();
-			return t;
+			return (T) clazz.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

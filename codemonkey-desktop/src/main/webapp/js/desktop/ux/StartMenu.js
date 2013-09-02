@@ -32,22 +32,23 @@ Ext.define('Ext.ux.desktop.StartMenu', {
     width: 300,
 
     initComponent: function() {
-        var me = this, menu = me.menu;
-
-        me.menu = new Ext.menu.Menu({
-            cls: 'ux-start-menu-body',
-            border: false,
-            floating: false,
-            items: menu
-        });
-        me.menu.layout.align = 'stretch';
-
-        me.items = [me.menu];
-        me.layout = 'fit';
-
-        Ext.menu.Manager.register(me);
+        var me = this;
         me.callParent();
-        // TODO - relay menu events
+
+        var store = ExtUtils.treeStore({modelName : 'powerTree'});
+    	store.load({
+    		callback : function(){
+    			me.menu = new Ext.menu.Menu({
+		            cls: 'ux-start-menu-body',
+		            border: false,
+		            floating: false,
+		            items: []
+		        });
+		        me.menu.layout.align = 'stretch';
+		        me.layout = 'fit';
+		        Ext.menu.Manager.register(me);
+    		}
+    	});
 
         me.toolbar = new Ext.toolbar.Toolbar(Ext.apply({
             dock: 'right',

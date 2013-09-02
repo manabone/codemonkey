@@ -11,7 +11,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
     modelName : 'AppRole',
     
     modelFields : function() {
-    	return ['urlPermissions' , 'cmpPermissions'].concat(ExtUtils.defaultModelFields);
+    	return ['urlPermissions' , 'cmpPermissions' , 'powerTrees'].concat(ExtUtils.defaultModelFields);
     },
     
     // actions 
@@ -123,7 +123,21 @@ Ext.define('AM.modules.AppRoleFormModule', {
     		tbar: p4ActionBar
     	});
     	
-    	return ExtUtils.fitLayout([p1, p3 , p4 ,p2 ]);
+    	var treeStore = ExtUtils.treeStore({modelName : 'powerTree'});
+    	treeStore.load();
+    	
+    	var tree = Ext.create('Ext.tree.Panel', {
+    		 id : 'appRoleForm_powerTreePanel',
+             store: treeStore,
+             useArrows: true,
+             hideHeaders: true,
+             rootVisible: false,
+             title : '权限树',
+     		 collapsible : true,
+     		 frame : true
+         });
+    	
+    	return ExtUtils.fitLayout([p1 , p3 , p4 , tree , p2 ]);
     },
     
     addUrlPerimssion : function(){
@@ -166,8 +180,10 @@ Ext.define('AM.modules.AppRoleFormModule', {
     beforeSave : function(values){
     	var urlPermissions = ExtUtils.getAllData(Ext.getCmp('appRoleForm_urlPermissionGrid'));
     	var cmpPermissions = ExtUtils.getAllData(Ext.getCmp('appRoleForm_cmpPermissionGrid'));
+    	var powerTrees = ExtUtils.checkedTreeJson('appRoleForm_powerTreePanel');
     	Ext.apply(values , {
     		urlPermissions : urlPermissions || [],
+    		powerTrees : powerTrees || [],
     		cmpPermissions : cmpPermissions || []
     	});
     },
@@ -175,6 +191,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
     afterModelLoad : function(model){
  	   Ext.getCmp('appRoleForm_urlPermissionGrid').getStore().loadData(model.data.urlPermissions);
  	   Ext.getCmp('appRoleForm_cmpPermissionGrid').getStore().loadData(model.data.cmpPermissions);
+ 	  
     }
 
 });

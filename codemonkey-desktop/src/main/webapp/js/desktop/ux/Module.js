@@ -19,6 +19,8 @@ Ext.define('Ext.ux.desktop.Module', {
 
     afterWindowCreate : Ext.emptyFn,
     
+    onWindowClose : Ext.emptyFn,
+    
     createBbar : Ext.emptyFn,
     
     createTbar : Ext.emptyFn,
@@ -30,12 +32,12 @@ Ext.define('Ext.ux.desktop.Module', {
         };
         
     },
-	
+    
     createWindow : function(config){
     	var me = this;
     	Ext.apply(me , config);
         var desktop = this.app.getDesktop();
-        me.winId = this.id + '_window';
+        me.winId = NS.windowId(this.id);
         
         var win = desktop.getWindow(me.winId);
         if(!win){
@@ -56,6 +58,11 @@ Ext.define('Ext.ux.desktop.Module', {
         	win.animateTarget = win.taskButton.el;
         }
         win.show();
+        
+        win.on('close' , function ( panel, eOpts ){
+        	me.onWindowClose();
+        });
+        
         this.afterWindowCreate();
         this.fixWindowOverflowY();
         this.processSecurityComponents();
@@ -90,39 +97,18 @@ Ext.define('Ext.ux.desktop.Module', {
     
     createModuleAction : function(cfg){
 		var me = this;
-    	Ext.apply(cfg , {
-			handler: function(){
-				if(cfg.action){
-					me[cfg.action]();
-				}
-	        }
-		});
-		
-		return  Ext.create('Ext.Action', cfg);
+    	return ExtUtils.createModuleAction(me , cfg);
 	},
 	
-	createMenu : function(module , actions){
-		return {
-            xtype: 'menu',
-            plain: true,
-            items : actions
-		};
+	createMenu : function(actions){
+		return ExtUtils.createMenu(actions);
 	},
 	
 	createToolbar : function(actions){
-		return {
-            xtype: 'toolbar',
-            items: actions
-            
-        };
+		return ExtUtils.createToolbar(actions);
 	},
 	
 	createButtons : function(actions){
-		var buttons = [];
-		
-		for(var i = 0 ; i < actions.length ; i++){
-			buttons.push(Ext.create('Ext.button.Button', actions[i]));
-		}
-		return buttons;
+		return ExtUtils.createButtons(actions);
 	}
 });

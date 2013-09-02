@@ -16,7 +16,12 @@ var CONSTANTS = {
 	CREATE : 'create',
 	UPDATE : 'update',
 	DESTROY : 'destroy',
-	THEME : 'theme'
+	THEME : 'theme',
+	
+	FIELD_DEFAULTS: {
+        labelAlign: 'left',
+        labelWidth: 60
+    }
 };
 
 Ext.form.field.Date.prototype.format = 'Y-m-d';
@@ -39,6 +44,16 @@ var ExtUtils = {
 		{dataIndex:"createdBy",flex:1,header:i18n.createdBy},
 		{dataIndex:"modificationDate",flex:1,header:i18n.modificationDate},
 		{dataIndex:"modifiedBy",flex:1,header:i18n.modifiedBy}
+	],
+	
+	defaultGridCols3 : [	
+	   	{header: 'id', dataIndex: 'id' , hidden : true},
+		{dataIndex:"name",flex:1,header : i18n.name}
+	],
+	
+	defaultGridCols4 : [	
+	    {header: 'id', dataIndex: 'id' , hidden : true},
+	    {dataIndex:"code",flex:1,header : i18n.code}
 	],
 	
 	defaultFormItems : [
@@ -115,18 +130,20 @@ var ExtUtils = {
 			defaultType: 'textfield',
 			bodyPadding: 10,
 			collapsible : true,
-			collapsed : true,
+			collapsed : false,
 			collapseFirst : true,
+			fieldDefaults: CONSTANTS.FIELD_DEFAULTS,
 			items : [
-				{id : 'query'  , name  : 'query'   , xtype : 'textfield' , fieldLabel : i18n.name }
-			],
-			buttons : [
-				{xtype : 'button' , iconCls: 'icon-search', text : i18n.search , action : i18n.search}, 
-				{xtype : 'button' , iconCls: 'icon-reset', text : i18n.reset , action : i18n.reset}     
-            ]
+				{ name  : 'name_Like'   , xtype : 'textfield' , fieldLabel : i18n.name }
+			]
+//			,
+//			buttons : [
+//				{xtype : 'button' , iconCls: 'icon-search', text : i18n.search , action : i18n.search}, 
+//				{xtype : 'button' , iconCls: 'icon-reset', text : i18n.reset , action : i18n.reset}     
+//            ]
 			
 		};
-		return Ext.applyIf(config , defaultConfig);
+		return Ext.apply({} , config , defaultConfig);
 	},
 	
 	themeSelect : function(PAGE_DATA){
@@ -212,12 +229,36 @@ var ExtUtils = {
 	 * */
 	popup : function(config){
 		
+		var me = this;
+		me.gridId = config.modelName + '_popupGrid';
+		me.searchingFormId = config.modelName + '_popupSearchForm';
+		
 		var fields = ExtUtils.fieldsFromCols(config.columns);
     	
     	var store = ExtUtils.ajaxStore({
     		modelName : config.modelName,
-    		fields : fields,
-    		autoLoad : true
+    		fields : fields
+    	});
+    	
+    	me.reloadStore(store , config.searchParams);
+    	
+    	Ext.apply(config.searchingForm , {
+    		id : me.searchingFormId,
+    		collapsed : false,
+    		buttons : [
+   				{xtype : 'button' , iconCls: 'icon-search', text : i18n.search , 
+   					handler : function(){
+   						var grid = Ext.getCmp(me.gridId);
+   						ExtUtils.gridSearch(grid , me.searchingFormId , config.searchParams);
+   					}
+   				}, 
+   				{xtype : 'button' , iconCls: 'icon-reset', text : i18n.reset , 
+   					handler : function(){
+   						var grid = Ext.getCmp(me.gridId);
+   						ExtUtils.gridReset(grid , me.searchingFormId);
+   					}
+   				}
+            ]
     	});
 		
 		var win = Ext.create('Ext.window.Window', {
@@ -231,46 +272,30 @@ var ExtUtils = {
 				align : 'stretch',
 				pack  : 'start'
 			},
-	        items: [{
-				xtype : 'form',
-				layout : 'column',
-				border : 0,
-				id : 'popup-form',
-				flex : 1 ,
-		    	defaultType: 'textfield',
-		    	bodyPadding: '10% 40%',
-		    	items : [
-					{id : 'popup-query'  , name  : 'code'   , fieldLabel : i18n.code },
-					{id : 'popup-search' , xtype : 'button' , text : i18n.search , handler : function(){
-						var store = Ext.getCmp('grid').getStore();
-			    		ExtUtils.gridSearch(store, 'popup-form');
-			    		
-					}}, 
-					{id : 'popup-reset'  , xtype : 'button' , text : i18n.reset , handler : function(){
-						var store = Ext.getCmp('grid').getStore();
-			    		ExtUtils.gridReset(store, 'popup-form');
-					}}
-				]
-	        },{
-	        	xtype:'grid',
-	        	flex : 6 ,
-	        	store: config.store || store,
-	        	columns: config.columns ,
-	        	selType : config.selType || 'rowmodel',
-	        	selModel : config.selModel,
-	        	id : 'grid',
-				listeners : {
-					itemdblclick : {
-						fn : function (/* Ext.view.View*/ view ,/* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts ){
-							config.itemdblclick(view , record , item , e , eOpts);
-							this.up('window').close();
+	        items: [
+	            ExtUtils.searchingForm(config.searchingForm),
+
+	            {
+		        	xtype:'grid',
+		        	flex : 6 ,
+		        	store: config.store || store,
+		        	columns: config.columns ,
+		        	selType : config.selType || 'rowmodel',
+		        	selModel : config.selModel,
+		        	id : me.gridId,
+					listeners : {
+						itemdblclick : {
+							fn : function (/* Ext.view.View*/ view ,/* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts ){
+								config.itemdblclick(view , record , item , e , eOpts);
+								this.up('window').close();
+							}
 						}
 					}
-				}
-	        }],
+		        }
+	        ],
 	        buttons : [{
 			    id : 'ok',
-				text: 'OK',
+				text: i18n.ok,
 				handler : function(){
 					var selModel = this.up('window').down('grid').getSelectionModel();
 					var records = selModel.getSelection();
@@ -285,7 +310,7 @@ var ExtUtils = {
 			    }
 			}, {
 				id: 'cancel',
-			    text: 'Cancel',
+			    text: i18n.cancel,
 			    handler : function(){
 			    	this.up('window').close();
 			    }
@@ -325,6 +350,18 @@ var ExtUtils = {
 			form.findField(p).setValue(data[p]);
 		}
 		
+	},
+	
+	validateForm : function(formId){
+		var formPanel = Ext.getCmp(formId);
+		if(formPanel){
+			return formPanel.getForm().isValid();
+		}
+	},
+	
+	fieldValue : function(formId , fieldName){
+		var data = this.formValues(formId);
+		return data[fieldName];
 	},
 	
 	formValues : function(formId){
@@ -522,7 +559,7 @@ var ExtUtils = {
 		
 		Ext.define(modelName , {
 		    extend: 'Ext.data.Model',
-		    fields: fields,
+		    fields: fields
 		});
 		
 	    // create the Data Store
@@ -537,7 +574,7 @@ var ExtUtils = {
 	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(config.columns),
 	     	store : store,
 	     	features: config.features,
-	     	bbar:{
+	     	bbar:config.bbar || {
 				xtype : 'pagingtoolbar',
 				store : store,
 				displayInfo: true
@@ -602,10 +639,8 @@ var ExtUtils = {
 		return null;
 	},
 	
-	gridSearch : function(store , searchFormId){
-		var formId = searchFormId || 'searchForm';
+	reloadStore : function(store , params){
 		var proxy = store.getProxy();
-		var params = this.formValues(formId);
 		if(params){
 			proxy.extraParams = {
 				queryInfo :	Ext.encode(params)
@@ -620,7 +655,22 @@ var ExtUtils = {
 		}
 	},
 	
-	gridReset : function(store , searchFormId){
+	gridSearch : function(grid , searchFormId , defaultParams){
+		var formId = searchFormId || 'searchForm';
+		if(grid && grid.getStore()){
+			var store = grid.getStore();
+			
+			var params = this.formValues(formId);
+			
+			params = Ext.apply({} , params , defaultParams);
+			
+			if(params){
+				this.reloadStore(store , params);
+			}
+		}
+	},
+	
+	gridReset : function(grid , searchFormId){
 		var formId = searchFormId || 'searchForm';
 		var form = Ext.getCmp(formId);
 		
@@ -628,7 +678,10 @@ var ExtUtils = {
 			form.getForm().reset();
 		}
 		
-		this.storeReload(store);
+		if(grid && grid.getStore()){
+			this.storeReload(grid.getStore());
+		}
+		
 	},
 	
 	addLine: function(grid, data, index){
@@ -801,15 +854,7 @@ var ExtUtils = {
 		 };
 		 
 		 for(var i = 0 ; arrays && i < arrays.length ; i++){
-			 Ext.apply(arrays[i],{
-				 border : 0,
-				 padding : 5,
-		    	 bodyPadding : 5
-		     });
-			 layout.items.push({
-			    xtype:'container',
-			    items: arrays[i]
-			});
+			 layout.items.push(this.panel({border : 0 , items : arrays[i] }));
 		 }
 		 
 		 return layout;
@@ -855,21 +900,17 @@ var ExtUtils = {
 	},
 	
 	creationInfoPanel : function(){
-		var col1 = this.panel({
-			items:[
-				{xtype:"textfield",name:"id","fieldLabel": i18n.id , readOnly : true},
-				{xtype:"textfield",name:"createdBy","fieldLabel":  i18n.createdBy , readOnly : true},
-				{xtype:"textfield",name:"modifiedBy","fieldLabel": i18n.modifiedBy , readOnly : true}
-			]
-		});
+		var col1 = [
+			{xtype:"textfield",name:"id","fieldLabel": i18n.id , readOnly : true},
+			{xtype:"textfield",name:"createdBy","fieldLabel":  i18n.createdBy , readOnly : true},
+			{xtype:"textfield",name:"modifiedBy","fieldLabel": i18n.modifiedBy , readOnly : true}
+		];
     	
-    	var col2 =  this.panel({
-    		items:[
-				{xtype:"textfield",name:"originVersion","fieldLabel": i18n.originVersion , readOnly : true},
-				{xtype:"textfield",name:"creationDate","format":"Y-m-d","fieldLabel": i18n.creationDate , readOnly : true},
-				{xtype:"textfield",name:"modificationDate","format":"Y-m-d","fieldLabel":i18n.modificationDate , readOnly : true}
-			]
-    	});
+    	var col2 =  [
+			{xtype:"textfield",name:"originVersion","fieldLabel": i18n.originVersion , readOnly : true},
+			{xtype:"textfield",name:"creationDate","format":"Y-m-d","fieldLabel": i18n.creationDate , readOnly : true},
+			{xtype:"textfield",name:"modificationDate","format":"Y-m-d","fieldLabel":i18n.modificationDate , readOnly : true}
+		];
     	
     	var p2 = this.panel({
     		collapsed : true,
@@ -885,10 +926,160 @@ var ExtUtils = {
 		var p = Ext.apply({} , config , {
 			xtype : 'panel',
 			padding : 5,
-    		bodyPadding : 5
+    		bodyPadding : 5,
+    		fieldDefaults: CONSTANTS.FIELD_DEFAULTS
     	});
 		return p;
-	} 
+	},
+	
+	//-------------------------------------------------------
+	//           TREE UTILs
+	//-------------------------------------------------------	
+	
+	checkedTreeJson : function(treePanelId){
+		var values = [];
+		var treeNodes = Ext.getCmp('appRoleForm_powerTreePanel').getView().getChecked();
+		
+		if(!treeNodes){
+			return values;
+		}
+		
+		for(var i = 0 ; i < treeNodes.length ; i++){
+			values.push({id : treeNodes[i].data.id , parentId : treeNodes[i].data.parentId , root : treeNodes[i].data.root , text : treeNodes[i].data.text});
+		}
+		
+		return values;
+	},
+	
+	//-------------------------------------------------------
+	//           MODULE UTILs
+	//-------------------------------------------------------	
+	
+	createModuleAction : function(module , cfg){
+    	Ext.apply(cfg , {
+			handler: function(){
+				if(cfg.action){
+					module[cfg.action]();
+				}
+	        }
+		});
+		
+		return  Ext.create('Ext.Action', cfg);
+	},
+	
+	createMenu : function(actions){
+		return {
+            xtype: 'menu',
+            plain: true,
+            items : actions
+		};
+	},
+	
+	createToolbar : function(actions){
+		return {
+            xtype: 'toolbar',
+            items: actions
+            
+        };
+	},
+	
+	createButtons : function(actions){
+		var buttons = [];
+		
+		for(var i = 0 ; i < actions.length ; i++){
+			buttons.push(Ext.create('Ext.button.Button', actions[i]));
+		}
+		return buttons;
+	},
+	
+	moduleDoSave : function(module){
+		if(!ExtUtils.validateForm(module.formId)){
+			return;
+		}
+		
+		var values = ExtUtils.formValues(module.formId);
+		if(values){
+			
+			module.beforeSave(values);
+			
+			var model = module.Model.create(values);
+			ExtUtils.mask(Ext.getCmp(module.winId));
+			
+	    	model.save({
+	    		success: function(model , res) {
+	    			Ext.getCmp(module.formId).getForm().loadRecord(res.resultSet.records[0]);
+	    			if(module.save_callback){
+	    				module.save_callback(model);
+	    			}
+	    			ExtUtils.clearInvalidFields(module.formId);
+	    			ExtUtils.unmask(Ext.getCmp(module.winId));
+	    			//add tips
+	    			ExtUtils.tipMsg(module , '系统提示' , '保存成功！');
+	    		},
+	    		
+	    		failure: function(rec, op) {
+	    			
+	    			var errors = op.request.scope.reader.jsonData["errorFields"];
+	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
+	    			var data = op.request.scope.reader.jsonData["data"];
+	    			var errorMsg = op.request.scope.reader.jsonData["errorMsg"];
+	    			ExtUtils.clearInvalidFields(module.formId);
+	    			ExtUtils.handleError(errorKey , errorMsg , errors , data);
+	    			
+	    			ExtUtils.unmask(Ext.getCmp(module.winId));
+				}
+	    	});
+		}
+	},
+	
+	moduleDoAction : function(module , action , fn , params){
+		var values = ExtUtils.formValues(module.formId);
+		if(values){
+			module.beforeSave(values);
+			ExtUtils.mask(Ext.getCmp(module.winId));
+			var url = NS.url(module.modelName , action);
+			Ext.Ajax.request({
+			    url: url,
+			    method: 'post',
+			    params: params || Ext.encode(values),
+			    success: function(response){
+			    	
+			    	var result = Ext.decode(response.responseText);
+			    	if(result.success === false){
+			    		ExtUtils.handleError(result.errorKey , result.errorMsg , result.errorFields , result.data);
+			    	}else {
+			    		var model = module.Model.create(result.data);
+			    		Ext.getCmp(module.formId).getForm().loadRecord(model);
+			    		module.manageControl(result.data);
+			    		if(fn){
+				    		fn(module , result);
+				    	}
+			    	}
+			    	
+			    	ExtUtils.unmask(Ext.getCmp(module.winId));
+			    },
+			    failure: function(response, opts) {
+			    	Ext.Msg.alert("Failed","error occured");
+			    	ExtUtils.unmask(Ext.getCmp(module.winId));
+			    }
+			});
+		}
+	},
+	
+	createBox : function(t, s){
+        return '<div class="msg"><h3>' + t + '</h3><p>' + s + '</p></div>';
+    },
+    
+    tipMsg : function(module , title, content){
+    	var win = module.app.getDesktop().getWindow(module.winId);
+         if(win){
+            var msgCt = Ext.DomHelper.insertFirst(win.el , {id:'msg-div'}, true);
+//            var s = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 1));
+            var m = Ext.DomHelper.append(msgCt, ExtUtils.createBox(title || '系统提示' , content), true);
+            m.hide();
+            m.slideIn('t').ghost("t", { delay: 1000, remove: true});
+         }
+    }
 	
 };
 

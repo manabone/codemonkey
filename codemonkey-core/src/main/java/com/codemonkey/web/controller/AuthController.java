@@ -30,8 +30,6 @@ import com.codemonkey.utils.SysUtils;
 @RequestMapping("/auth/**")
 public class AuthController {
 
-	private static final String LOCALE = "locale";
-
 	private static final String MODULE = "module";
 
 	private static final String LOGOUT = "logout";
@@ -46,8 +44,6 @@ public class AuthController {
 
 	private static final String SIGNUP = "signup";
 	
-	private static final String DEFAULT_LOCALE = "zh_CN";
-
 	@Autowired private AppUserService appUserService;
 	
 	private Logger log = SysUtils.getLog(AuthController.class);
@@ -122,10 +118,10 @@ public class AuthController {
     	return StringUtils.isNotEmpty(module) ? module : "erp";
     }
 	
-	@ModelAttribute(LOCALE)
+	@ModelAttribute(AbsController.LOCALE)
     public String locale(Locale locale) {
 		if(locale == null){
-			return DEFAULT_LOCALE;
+			return AbsController.DEFAULT_LOCALE;
 		}
     	return locale.toString();
     }

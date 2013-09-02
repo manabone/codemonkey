@@ -1,10 +1,8 @@
 package com.codemonkey.ibatis.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/ext/fooList/**")
+//@Controller
+//@RequestMapping("/ext/fooIbatisList/**")
 public class FooListIbatisController extends AbsIbatisController{
 
 	@Override

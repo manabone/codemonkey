@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
@@ -50,6 +52,7 @@ public class GenExtMojo extends GenMojo {
 	private static final String MODEL = "model";
 	private static final String XTYPE = "xtype";
 
+	@Override
 	protected Map<String, Object> buildBinding() {
 		Map<String, Object> binding = super.buildBinding();
 		
@@ -92,11 +95,17 @@ public class GenExtMojo extends GenMojo {
 		buildEnumFields(enumFields , fieldsJa);
 		buildRelationFields(relationFields , fieldsJa);
 		
-		binding.put("fieldsJson", unescapeUnicode(fieldsJa.toString()));
+		binding.put("fieldsJson", formatJSON(unescapeUnicode(fieldsJa.toString())));
 		
 		//build columns
-		binding.put("columnsJson", unescapeUnicode(buildColumnsJson(fields)));
+		binding.put("columnsJson", formatJSON(unescapeUnicode(buildColumnsJson(fields))));
 		return binding;
+	}
+
+	private String formatJSON(String json) {
+		Pattern p = Pattern.compile("\"(\\w*)\"(:)"); 
+		Matcher m = p.matcher(json); 
+		return m.replaceAll("$1$2");
 	}
 
 	private String buildColumnsJson(List<Field> fields) {

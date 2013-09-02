@@ -2,6 +2,7 @@ package com.codemonkey.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,14 +62,31 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
     protected JSONObject getPageData() {
 		JSONObject pageData = new JSONObject();
 		pageData.put(ExtConstant.THEME, SysUtils.getAttribute(ExtConstant.THEME));
-		pageData.put("modelFields", MMHelper.getModelFields(type));
 		pageData.put("modelName", MMHelper.getModelName(type));
 		pageData.put("formItems", getFormItems());
+		pageData.put("modelFields", getModelFields(getFormItems()));
+		pageData.put("searchingFormItems", getSearchingFormItems());
 		pageData.put("cols", getCols());
 		return pageData;
 	}
 
-    //----------------------
+    private JSONArray getModelFields(JSONArray formItems) {
+    	JSONArray ja = new JSONArray();
+    	if(formItems != null && formItems.length() > 0){
+    		for(int i = 0 ; i < formItems.length() ; i++){
+    			ja.put(formItems.getJSONObject(i).getString("name"));
+    		}
+    	}
+		return ja;
+	}
+
+	private JSONArray getSearchingFormItems() {
+    	JSONArray ja = new JSONArray();
+    	ja.put(new ExtText("name_Like", "name").json());
+		return ja;
+	}
+
+	//----------------------
     // create
     //----------------------
     @RequestMapping("create")
@@ -175,12 +194,20 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
   		return items;
   	}
   	
+  	@ModelAttribute(LOCALE)
+    public String locale(Locale locale) {
+		if(locale == null){
+			return DEFAULT_LOCALE;
+		}
+    	return locale.toString();
+    }
+  	
   	//override by subclass if you needs
   	protected List<ExtFormField> getFormFields(){
   		List<ExtFormField> items = new ArrayList<ExtFormField>();
   		items.add(new ExtHidden("id"));
-  		items.add(new ExtText("name"));
-  		items.add(new ExtText("description"));
+  		items.add(new ExtText("name" , "name"));
+  		items.add(new ExtText("description" , "description"));
   		return items;
   	}
 

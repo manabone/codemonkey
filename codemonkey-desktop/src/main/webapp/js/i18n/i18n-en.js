@@ -17,5 +17,14 @@ var i18n = {
 	edit : 'Edit',
 	cancel : 'Cancel',
 	originVersion : 'Origin Version',
-	creationInfo : 'Creation Info'
+	creationInfo : 'Creation Info',
+	ok : 'OK',
+	failed : 'Failed',
+    donGriffin:'Don Griffin',
+    settings:'Settings',
+    logout:'Logout',
+    tips:'Are you sure you want to logout?',
+    start:'start'	
+    
+   
 };

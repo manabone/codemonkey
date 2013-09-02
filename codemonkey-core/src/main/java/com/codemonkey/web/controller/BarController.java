@@ -20,8 +20,8 @@ public class BarController extends AbsMMController<Bar>{
 	@Override
 	protected List<ExtFormField> getFormFields(){
   		List<ExtFormField> items = super.getFormFields();
-  		items.add(new ExtPopup("foo" , "FooList"));
-  		items.add(new ExtPopup("bar" , "Bar"));
+  		items.add(new ExtPopup("foo" , "FooList" , "foo"));
+  		items.add(new ExtPopup("bar" , "Bar" , "bar"));
   		return items;
   	}
 

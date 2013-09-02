@@ -9,7 +9,7 @@ public class SecurityComponentServiceImpl extends GenericServiceImpl<SecurityCom
 
 	@Override
 	public SecurityComponent createEntity() {
-		return new SecurityComponent(null , null , null);
+		return new SecurityComponent(null , null);
 	}
 
 }

@@ -50,6 +50,14 @@ var NamingStrategy = {
 	
 	capitalize : function(str){
 		return Ext.String.capitalize(str);
+	},
+	
+	windowId : function(moduleId){
+		return moduleId + '_window';
+	},
+	
+	formId : function(moduleId){
+		return this.windowId(moduleId) + '_form';
 	}
 	
 };

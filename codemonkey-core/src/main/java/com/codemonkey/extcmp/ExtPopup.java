@@ -6,8 +6,8 @@ public class ExtPopup extends ExtFormField {
 
 	private String model;
 	
-	public ExtPopup(String id , String model) {
-		super(id);
+	public ExtPopup(String name , String model , String lable) {
+		super(name , lable);
 		setXtype(ExtCmp.POP_UP);
 		this.model = model;
 	}

@@ -253,9 +253,13 @@ public class SysUtils {
 	}
 
 	public static String getCurrentUsername() {
-		AppUser user = (AppUser) SysUtils.getAttribute(CURRENCT_USER);
+		AppUser user = getCurrentUser();
 		
 		return user !=null ? user.getUsername() : null;
+	}
+	
+	public static AppUser getCurrentUser() {
+		return (AppUser) SysUtils.getAttribute(CURRENCT_USER);
 	}
 
 	public static Map<String, Object> jsonToMap(JSONObject jo) {
@@ -335,7 +339,9 @@ public class SysUtils {
 	
 	public static String columnToProp(String col){
 		
-		if(StringUtils.isBlank(col)) return "";
+		if(StringUtils.isBlank(col)){
+			return "";
+		}
 		//replace _a to A
 		Pattern p1= Pattern.compile("_[a-z]{1}");
 		Matcher m1 = p1.matcher(col);

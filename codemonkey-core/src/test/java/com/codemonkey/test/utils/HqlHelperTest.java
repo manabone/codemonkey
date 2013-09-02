@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import com.codemonkey.domain.Foo;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.HqlHelper;
 
@@ -26,6 +27,51 @@ public class HqlHelperTest {
 		orderBy = HqlHelper.orderByQueryInfo(sort);
 		assertEquals(" ORDER BY fstring ASC , fstring2 DESC" , orderBy);
 
+	}
+	
+	@Test
+	public void testBuildHql(){
+		
+		String hql = HqlHelper.findyBy(Foo.class, "fstring");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fstring = ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fstring_EQ");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fstring = ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_LE");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber <= ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_LT");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber < ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_GE");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber >= ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_GT");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber > ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fstring_Like");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fstring like ? " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_isNull");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber is null " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_isNotNull");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber is not null " , hql);
+		
+		hql = HqlHelper.findyBy(Foo.class, "fnumber_notEQ");
+		
+		assertEquals("SELECT E FROM com.codemonkey.domain.Foo E  where 1=1   And fnumber <> ? " , hql);
+		
 	}
 	
 }

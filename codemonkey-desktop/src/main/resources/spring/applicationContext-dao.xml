@@ -40,6 +40,7 @@
 				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>				 				
 				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.query.substitutions">true 1, false 0</prop>
 				<!-- 
 				<prop key="hibernate.default_schema">${hibernate.default_schema}</prop>
 				-->
@@ -58,13 +59,6 @@
 			</props>
 		</property>
     </bean>
-    
-    <bean name="postInsertEventListener" class="org.hibernate.envers.event.EnversPostInsertEventListenerImpl"/>
-    <bean name="postUpdateEventListener" class="org.hibernate.envers.event.EnversPostUpdateEventListenerImpl" />
-    <bean name="postDeleteEventListener" class="org.hibernate.envers.event.EnversPostDeleteEventListenerImpl" />
-    <bean name="postCollectionRecreateEventListener" class="org.hibernate.envers.event.EnversPostCollectionRecreateEventListenerImpl" />
-    <bean name="preCollectionRemoveEventListener" class="org.hibernate.envers.event.EnversPreCollectionRemoveEventListenerImpl" />
-    <bean name="preCollectionUpdateEventListener" class="org.hibernate.envers.event.EnversPreCollectionUpdateEventListenerImpl" />
     
 	
     <bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>

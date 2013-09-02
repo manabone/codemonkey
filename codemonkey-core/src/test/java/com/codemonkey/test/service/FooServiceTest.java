@@ -29,6 +29,27 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 	@Autowired private AppRoleService appRoleService;
 	@Autowired private CustomConversionService ccService;
 	@Autowired private BarService barService;
+	
+	@Test
+	public void testUnique(){
+		Foo foo1 = new Foo();
+		foo1.setCode("foo-1");
+		foo1.setFstring("test");
+		foo1.setFnumber(3d);
+		assertEquals(true , fooService.unique(foo1, "code", foo1.getCode()));
+		
+		Foo foo2 = new Foo();
+		foo2.setCode("foo-1");
+		foo2.setFstring("test");
+		assertEquals(true , fooService.unique(foo2, "code", foo2.getCode()));
+		
+		fooService.save(foo1);
+		assertEquals(true , fooService.unique(foo1, "code", foo1.getCode()));
+		
+		assertEquals(false , fooService.unique(foo2, "code", foo2.getCode()));
+		
+	}
+	
 	@Test
 	public void testLeftJoin(){
 		Foo foo = new Foo();
@@ -253,5 +274,121 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		foos = fooService.findAllBy("fboolAndfnumber_LE" , false , 2d);
 		assertEquals(1 , foos.size());
 		
+	}
+	
+	@Test 
+	public void testFindByAndCountBy(){
+		
+		Foo foo = new Foo();
+		foo.setFstring("aa");
+		foo.setFnumber(1.0);
+		fooService.save(foo);
+				
+		Foo fooa = new Foo();
+		fooa.setFstring("aaa");
+		fooa.setFnumber(1.0);
+		fooService.save(fooa);
+		
+		Foo foob = new Foo();
+		foob.setFstring("bbb");
+		foob.setFnumber(2.0);
+		fooService.save(foob);
+		
+		Foo fooc = new Foo();
+		fooc.setFstring("ccc");
+		fooc.setFnumber(3.0);
+		fooService.save(fooc);
+		
+		Foo food = new Foo();
+		food.setFstring("ddd");
+		food.setFnumber(3.0);
+		food.setFdate(new Date());
+		fooService.save(food);
+		
+		
+		long count = fooService.countBy("fstring", "aa");
+		assertEquals(1 , count);
+		
+		List<Foo> list = fooService.findAllBy("fstring", "aa");
+		assertEquals(1 , list.size());
+		
+		count = fooService.countBy("fstring_EQ", "aa");
+		assertEquals(1 , count);
+		
+		list = fooService.findAllBy("fstring_EQ", "aa");
+		assertEquals(1 , list.size());
+		
+		count = fooService.countBy("fnumber_notEQ", 1.0);
+		assertEquals(3 , count);
+		
+		list = fooService.findAllBy("fnumber_notEQ", 1.0);
+		assertEquals(3 , list.size());
+		
+		count = fooService.countBy("fstring_Like", "%aa%");
+		assertEquals(2 , count);
+		
+		list = fooService.findAllBy("fstring_Like", "%aa%");
+		assertEquals(2 , list.size());
+		
+		count = fooService.countBy("fstring_Like", "%aa%");
+		assertEquals(2 , count);
+		
+		list = fooService.findAllBy("fstring_Like", "%aa%");
+		assertEquals(2 , list.size());
+		
+		count = fooService.countBy("fnumber_GE", 1.0);
+		assertEquals(5 , count);
+		
+		list = fooService.findAllBy("fnumber_GE", 1.0);
+		assertEquals(5 , list.size());
+		
+		count = fooService.countBy("fnumber_GT", 1.0);
+		assertEquals(3 , count);
+		
+		list = fooService.findAllBy("fnumber_GT", 1.0);
+		assertEquals(3 , list.size());
+		
+		count = fooService.countBy("fnumber_LE", 3.0);
+		assertEquals(5 , count);
+		
+		list = fooService.findAllBy("fnumber_LE", 3.0);
+		assertEquals(5 , list.size());
+		
+		count = fooService.countBy("fnumber_LT", 3.0);
+		assertEquals(3 , count);
+		
+		list = fooService.findAllBy("fnumber_LT", 3.0);
+		assertEquals(3 , list.size());
+		
+		count = fooService.countBy("fdate_isNull");
+		assertEquals(4 , count);
+		
+		list = fooService.findAllBy("fdate_isNull");
+		assertEquals(4 , list.size());
+		
+		count = fooService.countBy("fdate_isNotNull");
+		assertEquals(1 , count);
+		
+		list = fooService.findAllBy("fdate_isNotNull");
+		assertEquals(1 , list.size());
+		
+		count = fooService.countBy("fnumber_GEAndfnumber_LE" , 2.0 , 3.0);
+		assertEquals(3 , count);
+		
+		list = fooService.findAllBy("fnumber_GEAndfnumber_LE" , 2.0 , 3.0);
+		assertEquals(3 , list.size());
+		
+		Foo fooTest = fooService.findBy("fstring", "bbb");
+		assertEquals(foob.getId() , fooTest.getId());
+		
+		list = fooService.findAllBy("OrderByFnumber_DESC");
+		assertEquals(new Double(3.0) , list.get(0).getFnumber());
+		
+		list = fooService.findAllBy("OrderByFnumber_DESCAndFdate_ASC");
+		assertNull(list.get(0).getFdate());
+		
+		list = fooService.findAllBy("fdate_isNotNullOrderByFnumber_DESCAndFdate_ASC");
+		assertNotNull(list.get(0).getFdate());
+		assertEquals(new Double(3.0) , list.get(0).getFnumber());
 	}
 }

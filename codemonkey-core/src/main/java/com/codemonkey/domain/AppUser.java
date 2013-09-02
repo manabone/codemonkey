@@ -29,10 +29,6 @@ public class AppUser extends AbsEE{
 	
 	private String username;
 	
-	private String firstName;
-	
-	private String lastName;
-	
 	private String email;
 	
 	@NotNull
@@ -124,22 +120,6 @@ public class AppUser extends AbsEE{
 		}
 		
 		return appRoles;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public String getEmail() {

@@ -14,15 +14,22 @@
 	    <c:if test="${locale != 'en'}">
 			<script type="text/javascript" src="${ctx}/js/extjs41/ext-lang-${locale}.js"></script>
 		</c:if>
+		
+		<script type="text/javascript" src="${ctx}/js/extjs41/examples.js"></script>
+		
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/resources/css/ext-all-${theme}.css" />
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/resources/css/icon.css" />
+	    <link rel="stylesheet" type="text/css" href="${ctx}/css/example.css" />
+
+		<script type="text/javascript" src="${ctx}/js/i18n/i18n-${locale}.js"></script>
 
 		<script type="text/javascript" src="${ctx}/js/apps/base/SearchingSelect.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/TreeCombo.js"></script>
 		<script type="text/javascript" src="${ctx}/js/apps/base/SelectField.js"></script>
 		
-		<script type="text/javascript" src="${ctx}/js/i18n/i18n-${locale}.js"></script>
+		
 		<script type="text/javascript" src="${ctx}/js/ExtUtils.js"></script>
+		<script type="text/javascript" src="${ctx}/js/ExtFix.js"></script>
 		<script type="text/javascript" src="${ctx}/js/NamingStrategy.js"></script>
 		
 	    <decorator:head/>

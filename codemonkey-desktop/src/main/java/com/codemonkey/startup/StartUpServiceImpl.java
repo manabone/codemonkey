@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,12 @@ import com.codemonkey.dbMigration.migration.DriverManagerMigrationManager;
 import com.codemonkey.dbMigration.migration.MigrationManager;
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppUser;
+import com.codemonkey.domain.PowerTree;
 import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.domain.Status;
 import com.codemonkey.service.AppPermissionService;
 import com.codemonkey.service.AppUserService;
+import com.codemonkey.service.PowerTreeService;
 import com.codemonkey.service.SecurityComponentService;
 import com.codemonkey.utils.EnumHolder;
 import com.codemonkey.utils.SysUtils;
@@ -42,6 +45,7 @@ public class StartUpServiceImpl implements StartUpService {
 	@Autowired private DriverManagerDataSource dbUnitdatasource;
 	@Autowired private AppUserService appUserService;
 	@Autowired private EnumHolder enumHolder;
+	@Autowired private PowerTreeService powerTreeService;
 	
 	private Logger logger = SysUtils.getLog(StartUpServiceImpl.class);
 	
@@ -83,8 +87,39 @@ public class StartUpServiceImpl implements StartUpService {
 		doInitUsers();
 		doInitAppPermissions();
 		doInitSecurityComponents();
+		doInitPowerTree();
 	}
 	
+	private void doInitPowerTree() {
+		List<PowerTree> powerTrees = new ArrayList<PowerTree>();
+		
+		if(CollectionUtils.isNotEmpty(securityControllers)){
+			for(SecurityController sc : securityControllers){
+				if(CollectionUtils.isNotEmpty(sc.regPowerTrees())){
+					powerTrees.addAll(sc.regPowerTrees());
+				}
+			}
+		}
+		
+		if(CollectionUtils.isNotEmpty(powerTrees)){
+			for(PowerTree p : powerTrees){
+				
+				PowerTree p1 = powerTreeService.findBy("code", p.getCode());
+				
+				if(p1 == null){
+					if(StringUtils.isNotBlank(p.getParentCode())){
+						PowerTree pp = powerTreeService.findBy("code", p.getParentCode());
+						if(pp != null){
+							p.setParent(pp);
+						}
+					}
+					powerTreeService.save(p);
+				}
+			}
+		}
+		
+	}
+
 	/* (non-Javadoc)
 	 * @see com.codemonkey.startup.StartUpService#initAppPermissions()
 	 */

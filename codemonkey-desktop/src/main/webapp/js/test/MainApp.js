@@ -14,11 +14,17 @@ Ext.define('test.MainApp', {
     extend: 'AM.base.AbsDesktopApp',
 
     requires: [
+               
+       'AM.modules.AppRoleListModule',
+       'AM.modules.AppRoleFormModule',
+       'AM.modules.AppUserListModule',
+       'AM.modules.AppUserFormModule',   
+               
         'test.modules.FooListModule',
         'test.modules.FooFormModule',
         
-        'test.modules.Foo2ListModule',
-        'test.modules.Foo2FormModule',
+//        'test.modules.Foo2ListModule',
+//        'test.modules.Foo2FormModule',
         
         'test.modules.BarModule',
         'test.modules.TreeModule',
@@ -27,13 +33,16 @@ Ext.define('test.MainApp', {
     ],
     
     shortcutItems : [
-        { name: 'Foo2 List', iconCls: 'grid-shortcut', module: 'foo2ListModule'},
+//        { name: 'Foo2 List', iconCls: 'grid-shortcut', module: 'foo2ListModule'},
         
+		{ name: 'roles', iconCls: 'grid-shortcut', module: 'appRoleListModule'},
+		{ name: 'users', iconCls: 'grid-shortcut', module: 'appUserListModule'},
 		{ name: 'Foo List', iconCls: 'grid-shortcut', module: 'fooListModule'},
 		{ name: 'Bar', iconCls: 'grid-shortcut', module: 'barModule'},
 		{ name: 'Tree grid' , iconCls: 'grid-shortcut', module: 'treeModule'},
 		{ name: 'Tree grid', iconCls: 'grid-shortcut', module: 'treeGridModule'},
-		{ name: 'File upload', iconCls: 'grid-shortcut', module: 'uploadFileModule'},
+		{ name: 'File upload', iconCls: 'grid-shortcut', module: 'uploadFileModule'}
+		
     ],
     
     quickStartItems : [
@@ -52,8 +61,13 @@ Ext.define('test.MainApp', {
     
     getModules : function(){
         return [
-			new test.modules.Foo2ListModule(),
-			new test.modules.Foo2FormModule(),
+//			new test.modules.Foo2ListModule(),
+//			new test.modules.Foo2FormModule(),
+			
+			new AM.modules.AppRoleListModule(),
+			new AM.modules.AppRoleFormModule(),
+			new AM.modules.AppUserListModule(),
+			new AM.modules.AppUserFormModule(),
 			
 			new test.modules.FooListModule(),
 			new test.modules.FooFormModule(),

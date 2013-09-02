@@ -15,6 +15,8 @@ Ext.require(
 
 Ext.define('AM.base.AbsDesktopApp', {
     extend: 'Ext.ux.desktop.App',
+    
+    requires : ['AM.modules.ChangePasswordFormModule'],
 
     getDesktopConfig: function () {
         var me = this, ret = me.callParent();
@@ -42,21 +44,28 @@ Ext.define('AM.base.AbsDesktopApp', {
         var me = this, ret = me.callParent();
 
         return Ext.apply(ret, {
-            title: 'Don Griffin',
+            title: i18n.donGriffin,
             iconCls: 'user',
             height: 300,
             toolConfig: {
                 width: 100,
                 items: [
                     {
-                        text:'Settings',
+                        text:i18n.settings,
                         iconCls:'settings',
                         handler: me.onSettings,
                         scope: me
                     },
                     '-',
                     {
-                        text:'Logout',
+                        text:'ChangePassword',
+                        iconCls:'change',
+                        handler: me.changePassword,
+                        scope: me
+                    },
+                    '-',
+                    {
+                        text:i18n.logout,
                         iconCls:'logout',
                         handler: me.onLogout,
                         scope: me
@@ -77,9 +86,14 @@ Ext.define('AM.base.AbsDesktopApp', {
             ]
         });
     },
+         
+    changePassword : function(){
+    	var formModule = this.getModule('changePasswordFormModule');
+	 	formModule.createWindow();
+    },
 
     onLogout: function () {
-        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?' , function(btn){
+        Ext.Msg.confirm(i18n.logout, i18n.tips , function(btn){
         	if(btn == 'yes'){
         		ExtUtils.mask();
         		window.location = '/app/auth/logout';

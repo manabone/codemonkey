@@ -28,11 +28,13 @@ Ext.define('erp.modules.SalesOrderListModule', {
 		if(record && record.get('id')){
 			var shipmentFormModule = this.app.getModule('salesShipmentFormModule');
 			shipmentFormModule.createWindow({salesOrder : record.get('id') , callback : function(module){
-				module.doAction('createShipment' , function(module , result){
-					module.model = module.Model.create(result.data);
-					module.getLineGridStore().loadData(module.model.data.lines);
-					
-				} , {salesOrder : record.get('id')});
+				module.doAction('createShipment' ,
+					function(module , result){
+						module.model = module.Model.create(result.data);
+						module.getLineGridStore().loadData(module.model.data.lines);
+						
+					} , 
+					{salesOrder : record.get('id')});
 			}});
 		}
 	},

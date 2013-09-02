@@ -26,8 +26,19 @@
 		</dependency>
 		<dependency>
 			<groupId>com.codemonkey</groupId>
-			<artifactId>codemonkey-erp</artifactId>
+			<artifactId>codemonkey-ibatis</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.codemonkey</groupId>
+			<artifactId>iiterp-core</artifactId>
+			<version>2.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.codemonkey</groupId>
+			<artifactId>iiterp-hr</artifactId>
+			<version>2.0</version>
 		</dependency>
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!--				  WEB									 -->
@@ -100,20 +111,12 @@
 		<plugins>
 		
 			<plugin>
-                <groupId>com.codemonkey</groupId>
-                <artifactId>codemonkey-maven-plugin</artifactId>
-                <version>1.0</version>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>${jetty.version}</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<webAppConfig>
-						<port>9090</port>
-						<contextPath>/</contextPath>
-					</webAppConfig>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			
@@ -129,60 +132,43 @@
 						</systemProperties>
 		        </configuration>
 			</plugin>
-			
-			<plugin>
-				<groupId>net.alchim31.maven</groupId>
-				<artifactId>yuicompressor-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<!-- 
-						<phase>war</phase>
-						<goals>
-							<goal>compress</goal>
-						</goals>
-						 -->
-					</execution>
-				</executions>
-				<configuration>
-					<gzip>true</gzip>
-					<failOnWarning>true</failOnWarning>
-					<aggregations>
-						<aggregation>
-							
-							<!-- remove files after aggregation (default: false) <removeIncluded>true</removeIncluded> -->
-							<!-- insert new line after each concatenation (default: false) -->
-							<insertNewLine>false</insertNewLine>
-							<output>${project.build.directory}/${project.build.finalName}/all.js</output>
-							<!-- files to include, path relative to output's directory or absolute 
-								path -->
-							<!--inputDir>base directory for non absolute includes, default to parent 
-								dir of output</inputDir -->
-							<includes>
-								<include>${basedir}/src/main/webapp/js/**/*.js</include>
-								<exclude>${basedir}/src/main/webapp/js/extjs41/*.js</exclude>
-							</includes>
-							<!-- files to exclude, path relative to output's directory <excludes> 
-								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
-						</aggregation>
-					</aggregations>
-				</configuration>
-				<dependencies>
-					<dependency>
-					   <groupId>com.yahoo.platform.yui</groupId>
-					   <artifactId>yuicompressor</artifactId>
-					   <version>2.4.6</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			
 		</plugins>
 		
-        <!-- Read the contents of the file below to see how to change databases -->
-        <!--
-        <filters>
-            <filter>src/main/resources/jdbc.properties</filter>
-        </filters>
-        -->
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>deployToTomcat</id>
+			<build>
+				<plugins>
+					<plugin>
+		                <groupId>org.codehaus.mojo</groupId>
+		                <artifactId>tomcat-maven-plugin</artifactId>
+		                <configuration>
+		                    <url>${tomcat.manageUrl}</url>
+		                    <path>${tomcat.publishPath}</path>
+		                    <username>${tomcat.username}</username>
+		                    <password>${tomcat.passsword}</password>
+		                </configuration>
+		                <executions>
+		                	 <execution>
+		                        <id>install</id>
+		                        <phase>install</phase>
+		                        <goals>
+		                            <goal>redeploy</goal>
+		                        </goals>
+		                    </execution>
+		                </executions>
+		            </plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
+	<properties>
+		<tomcat.username>tomcat</tomcat.username>
+		<tomcat.passsword>tomcat</tomcat.passsword>
+		<tomcat.manageUrl>http://localhost:9090/manager/html</tomcat.manageUrl>
+		<tomcat.publishPath>/</tomcat.publishPath>
+	</properties>
 </project>

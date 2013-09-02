@@ -22,8 +22,15 @@ public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooServic
 		if(foo.getFnumber() == null || foo.getFnumber() > 10){
 			set.add(new FormFieldValidation("fnumber" , "invalid number greater than 10"));
 		}
+		
+		if(!unique(foo , "fstring" , foo.getFstring())){
+			set.add(new FormFieldValidation("fstring" , "fstring not unique"));
+		}
+		
 		return set;
 	}
+	
+	
 //	测试是否开启事务
 //	@Override
 //	public void doSave(Foo entity){

@@ -60,7 +60,7 @@ Ext.define('AM.modules.ListModule', {
  	                     return false;
  	                 }
  	             }
- 	         },
+ 	         }
          };
          var grid2 = Ext.apply(gridConfig , this.grid);
          var searchFormDefaultConfig = {
@@ -69,8 +69,8 @@ Ext.define('AM.modules.ListModule', {
        				{name  : "name_Ilike"   , xtype : 'textfield' , fieldLabel : "name" }
        			],
           	buttons : [
-				this.createModuleAction(this.searchAction),
-				this.createModuleAction(this.resetAction)
+				this.createModuleAction(me.searchAction),
+				this.createModuleAction(me.resetAction)
             ]
           };
          
@@ -130,13 +130,13 @@ Ext.define('AM.modules.ListModule', {
 	},
 	
 	search : function(){
-    	var store = Ext.getCmp(this.gridId).getStore();
-    	ExtUtils.gridSearch(store , this.searchFormId);
+    	var grid = Ext.getCmp(this.gridId);
+    	ExtUtils.gridSearch(grid , this.searchFormId);
     },
     
     reset : function(){
-    	var store = Ext.getCmp(this.gridId).getStore();
-    	ExtUtils.gridReset(store , this.searchFormId);
+    	var grid = Ext.getCmp(this.gridId);
+    	ExtUtils.gridReset(grid , this.searchFormId);
     },
     
     destroy : function(){

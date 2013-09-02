@@ -10,6 +10,8 @@ public interface IEntity {
 
 	Long getId();
 	
+	boolean isNew();
+	
 	String getCode();
 	
 	void setCode(String code);

@@ -9,6 +9,7 @@ Ext.define('AM.modules.FormModule', {
 	form : null,
 	entityId : null,
 	winId : null,
+	formId : null,
 	
 	gridId : null,
 	
@@ -24,6 +25,15 @@ Ext.define('AM.modules.FormModule', {
 	modelFields : function(){ 
     	return ExtUtils.defaultModelFields;
     },
+    
+    reloadListGrid : function(){
+    	if(this.gridId){
+			var grid = Ext.getCmp(this.gridId);
+			if(grid){
+				grid.getStore().load();
+			}
+		}
+    },
 	
 	init : function(){
 		this.callParent();
@@ -32,14 +42,15 @@ Ext.define('AM.modules.FormModule', {
 	        fields: this.modelFields() || ExtUtils.defaultModelFields,
 	        proxy: ExtUtils.proxy(this.modelName)
 		});
-    	    
+        
     	this.form = {
 	    	xtype : 'form',
 	    	layout: {
 	    	    type: 'vbox',
 	    	    align : 'stretch',
-	    	    pack  : 'start',
+	    	    pack  : 'start'
 	    	},
+	    	fieldDefaults: CONSTANTS.FIELD_DEFAULTS,
 	    	defaultType: 'textfield',
 	    	flex : 2,
 	    	items : this.formItems() || ExtUtils.defaultFormItems
@@ -49,7 +60,7 @@ Ext.define('AM.modules.FormModule', {
     createWindowItem : function(){
     	var me = this;
     	
-    	me.formId = me.winId + '_form';
+    	me.formId = NS.formId(me.id);
     	var formConfig = {
 			id : me.formId
     	};
@@ -60,6 +71,10 @@ Ext.define('AM.modules.FormModule', {
     
     afterWindowCreate : function(){
     	this.loadEntityToForm();
+    },
+    
+    onWindowClose : function(){
+    	this.reloadListGrid();
     },
     
     loadEntityToForm : function(){
@@ -100,69 +115,15 @@ Ext.define('AM.modules.FormModule', {
     },
     
 	save : function(){
-		var me = this;
-		var values = ExtUtils.formValues(me.formId);
-		if(values){
-			
-			this.beforeSave(values);
-			
-			var model = this.Model.create(values);
-			ExtUtils.mask(Ext.getCmp(me.winId));
-			
-	    	model.save({
-	    		success: function(model , res) {
-	    			Ext.getCmp(me.formId).getForm().loadRecord(res.resultSet.records[0]);
-	    			if(me.save_callback){
-	    				me.save_callback(model);
-	    			}
-	    			ExtUtils.clearInvalidFields(me.formId);
-	    			ExtUtils.unmask(Ext.getCmp(me.winId));
-	    		},
-	    		
-	    		failure: function(rec, op) {
-	    			
-	    			var errors = op.request.scope.reader.jsonData["errorFields"];
-	    			var errorKey = op.request.scope.reader.jsonData["errorKey"];
-	    			var data = op.request.scope.reader.jsonData["data"];
-	    			var errorMsg = op.request.scope.reader.jsonData["errorMsg"];
-	    			ExtUtils.clearInvalidFields(me.formId);
-	    			me.handleError(errorKey , errorMsg , errors , data);
-	    			
-	    			ExtUtils.unmask(Ext.getCmp(me.winId));
-				}
-	    	});
-		}
-	},
-	
-	handleError : function(errorKey , errorMsg , errors , data){
-		
-		var me = this;
-		
-		if(errorKey == "ValidationError" && errors){
-			
-			var formErrors = errors.filter(function(element, index, array){
-				return (element.type == 'FormField');
-			});
-			
-			ExtUtils.markInvalidFields(me.formId , formErrors);
-			
-			if(errorMsg){
-				Ext.Msg.alert("Failed", errorMsg);
-			}
-			
-		}else if(errorKey == "BadObjVersionError" && data){
-			Ext.Msg.alert("Failed", errorMsg);
-			var model = me.Model.create(data);
-    		Ext.getCmp(me.formId).getForm().loadRecord(model);
-		}else{
-			Ext.Msg.alert("Failed", errorMsg);
-		}
+		ExtUtils.moduleDoSave(this);
 	},
 	
 	cancel : function(){
+		this.reloadListGrid();
 		var win = this.app.desktop.getWindow(this.winId);
 		win.doClose();
 	},
+	
 
 	//end action handler
     
@@ -177,38 +138,7 @@ Ext.define('AM.modules.FormModule', {
     },
 	
 	doAction : function(action , fn , params){
-		var me = this;
-		var values = ExtUtils.formValues(me.formId);
-		if(values){
-			this.beforeSave(values);
-			ExtUtils.mask(Ext.getCmp(me.winId));
-			var url = NS.url(me.modelName , action);
-			Ext.Ajax.request({
-			    url: url,
-			    method: 'post',
-			    params: params || Ext.encode(values),
-			    success: function(response){
-			    	
-			    	var result = Ext.decode(response.responseText);
-			    	if(result.success === false){
-			    		me.handleError(result.errorKey , result.errorMsg , result.errorFields , result.data);
-			    	}else {
-			    		var model = me.Model.create(result.data);
-			    		Ext.getCmp(me.formId).getForm().loadRecord(model);
-			    		me.manageControl(result.data);
-			    		if(fn){
-				    		fn(me , result);
-				    	}
-			    	}
-			    	
-			    	ExtUtils.unmask(Ext.getCmp(me.winId));
-			    },
-			    failure: function(response, opts) {
-			    	Ext.Msg.alert("Failed","error occured");
-			    	ExtUtils.unmask(Ext.getCmp(me.winId));
-			    }
-			});
-		}
+		ExtUtils.moduleDoAction(this , action , fn , params);
 	}
     
 });

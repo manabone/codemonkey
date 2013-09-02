@@ -1,7 +1,11 @@
 package com.codemonkey.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.RandomNumberGenerator;
@@ -16,6 +20,9 @@ import com.codemonkey.domain.AppRole;
 import com.codemonkey.domain.AppUser;
 import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.error.AuthError;
+import com.codemonkey.error.FieldValidation;
+import com.codemonkey.error.FormFieldValidation;
+import com.codemonkey.error.ValidationError;
 import com.codemonkey.utils.JsonArrayConverter;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
@@ -85,4 +92,27 @@ public class AppUserServiceImpl extends GenericServiceImpl<AppUser> implements A
 	public AppUser createEntity() {
 		return new AppUser();
 	}
+	
+	@Override
+	public AppUser doChangePassword(JSONObject body, CustomConversionService ccService) {
+		Set<FieldValidation> set = new HashSet<FieldValidation>();
+		if(body.has("password") && StringUtils.isNotBlank(body.getString("password")) && body.has("password_ack")){
+			String password = body.getString("password");
+			String passwordAck = body.getString("password_ack");
+			
+			if(!password.equals(passwordAck)){
+				set.add(new FormFieldValidation("password" , "密码不同"));
+			}
+		}
+		
+		if(CollectionUtils.isNotEmpty(set)){
+			throw new ValidationError(set);
+		}
+		
+		AppUser user = buildEntity(body , ccService);
+		
+		save(user);
+		return user;
+	}
+	
 }

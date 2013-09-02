@@ -31,12 +31,12 @@
 	            },{
 	            	editable: false,
 	                fieldLabel: 'Module',
-	                value: 'erp',
+	                value: 'iiterp-hr',
 	                name : 'module',
 	                xtype: 'combo',
 	                store: [
-	                    ['erp', 'erp'],
-	                    ['test', 'test']
+	                    ['test', '测试'],
+	                    ['iiterp-hr', '人力资源']
 	                ]
 	            }],
 		 

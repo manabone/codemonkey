@@ -7,14 +7,14 @@ public abstract class ExtFormField extends ExtCmp {
 
 	private String name;
 	
-	private String fieldLabel;
+	private String fieldLable;
 	
 	private String value;
 
-	public ExtFormField(String id) {
-		super("form_" + id);
-		this.name = id;
-		this.fieldLabel = id;
+	public ExtFormField(String name , String lable) {
+		super("form_" + name);
+		this.name = name;
+		this.fieldLable = lable;
 	}
 	
 	public JSONObject json(){
@@ -24,8 +24,8 @@ public abstract class ExtFormField extends ExtCmp {
 			jo.put("name", name);
 		}
 		
-		if(StringUtils.isNotBlank(fieldLabel)){
-			jo.put("fieldLabel", fieldLabel);
+		if(StringUtils.isNotBlank(getFieldLable())){
+			jo.put("fieldLabel", getFieldLable());
 		}
 		
 		return jo;
@@ -39,20 +39,20 @@ public abstract class ExtFormField extends ExtCmp {
 		this.name = name;
 	}
 
-	public String getFieldLabel() {
-		return fieldLabel;
-	}
-
-	public void setFieldLabel(String fieldLabel) {
-		this.fieldLabel = fieldLabel;
-	}
-
 	public String getValue() {
 		return value;
 	}
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getFieldLable() {
+		return fieldLable;
+	}
+
+	public void setFieldLable(String fieldLable) {
+		this.fieldLable = fieldLable;
 	}
 	
 	

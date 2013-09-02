@@ -79,7 +79,7 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		getLog().info(stopWatch);
 		
 	}
-
+	
 	//implements by subclass if needed
 	//if validation failed , throw ValidationError exception
 	protected Set<FieldValidation> validate(T entity) {
@@ -89,11 +89,25 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		}
 		
 		if(StringUtils.isNotBlank(entity.getCode())){
-			long count = getDao().countBy("code" , entity.getCode());
-			if(count > 1){
+			if(!unique(entity, "code" , entity.getCode())){
 				errorSet.add(new FormFieldValidation("code" , "code must be unique"));
 			}
 		}
+		
+//		List<Field> fields = ClassHelper.getAllFields(type);
+//		if(CollectionUtils.isNotEmpty(fields)){
+//			for(Field f : fields){
+//				if(f.getAnnotation(Length.class) != null){
+//					Length len = f.getAnnotation(Length.class);
+//					
+//					String value = OgnlUtils.stringValue(f.getName(), entity);
+//					if(value.length() > len.max()){
+//						errorSet.add(new FormFieldValidation(f.getName() , "数据超过最大长度:" + len.max()));
+//					}
+//					
+//				}
+//			}
+//		}
 		
 		return errorSet;
 	}
@@ -297,11 +311,40 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 	}
 	
 	public T doSave(JSONObject body , CustomConversionService ccService){
+		validateInput(body);
 		T t = buildEntity(body , ccService);
 		save(t);
 		return t;
 	}
 	
+	public boolean unique(T t , String query , Object... params){
+		
+		long count = countBy(query , params);
+		
+		if(t.isNew()){
+			if(count > 0){
+				return false;
+			}
+		}else{
+			if(count > 1){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private void validateInput(JSONObject body) {
+		Set<FieldValidation> errorSet = validateJson(body);
+		errorSet.remove(null);
+		if(CollectionUtils.isNotEmpty(errorSet)){
+			throw new ValidationError(errorSet);
+		}
+	}
+
+	protected Set<FieldValidation> validateJson(JSONObject body) {
+		return new HashSet<FieldValidation>();
+	}
+
 	public T buildEntity(JSONObject params , CustomConversionService ccService){
 		T t = null;
 		Long id = extractId(params);

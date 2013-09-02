@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.codemonkey.domain.CmpType;
 import com.codemonkey.domain.Foo;
+import com.codemonkey.domain.SecurityButton;
 import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.service.FooService;
 
@@ -25,7 +25,7 @@ public class FooListController extends AbsListExtController<Foo>{
 	@Override
 	public List<SecurityComponent> regSecurityComponents() {
 		List<SecurityComponent> list = super.regSecurityComponents();
-		list.add(new SecurityComponent("#appRoleFormModule_window button[action=create]" , CmpType.Button , "foo create"));
+		list.add(new SecurityButton("#appRoleFormModule_window button[action=create]" , "foo create"));
 		return list;
 	}
 }
