@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true" 
+	xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+    
+    <!-- annotation scanning -->
+    <context:component-scan base-package="com.codemonkey.controller"/>
+    <context:component-scan base-package="com.codemonkey.web.controller"/>
+   
+    <!-- enable annotation based controller -->
+    <mvc:annotation-driven conversion-service="customConversionService"/>
+    
+    <!-- add interceptors to the web controllers -->
+    
+    <!-- map the homepage to the index view -->
+    <mvc:view-controller path="/" view-name="index"/>
+    
+    <mvc:interceptors>
+		<bean class="com.codemonkey.web.interceptor.CommonInterceptor"></bean>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		     <property name="paramName" value="locale" />
+		</bean>
+		<bean class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<bean class="com.codemonkey.web.interceptor.AuthInterceptor"></bean>
+	</mvc:interceptors>
+	
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          id="multipartResolver" p:maxUploadSize="#{3 * 1024 * 1024}">
+        <description>Enable file upload with a 3mo maximum allowed</description>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+          id="localeResolver" p:cookieMaxAge="#{60 * 60 * 24 * 30}" p:defaultLocale="zh_CN">
+        <description>Enables locale resolution with the help of a one month long cookie </description>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver" p:order="1">
+        <description>Enables @ExceptionHandler annotations</description>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver" p:order="2">
+        <description>Enables @ResponseStatus annotations</description>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver" p:order="3" />
+    
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"
+        p:defaultErrorView="errors/exception-caught" p:order="4" p:warnLogCategory="warn">
+        <description>When no @ExceptionHandler was found then map these exceptions to view names, set the default error</description>
+    </bean>
+</beans>
