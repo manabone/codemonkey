@@ -13,6 +13,7 @@
 	    
 	    <link rel="stylesheet" type="text/css" href="${ctx}/css/bootstrap-3.0.0.min.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/css/bootstrap-theme-3.0.0.min.css" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/css/base.css" />
 		
 		<script type="text/javascript" src="${ctx}/js/jquery-2.0.3.min.js"></script>
 	    <script type="text/javascript" src="${ctx}/js/bootstrap-3.0.0.min.js"></script>
