@@ -36,17 +36,17 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		foo1.setCode("foo-1");
 		foo1.setFstring("test");
 		foo1.setFnumber(3d);
-		assertEquals(true , fooService.unique(foo1, "code", foo1.getCode()));
+		assertEquals(true , fooService.isUnique(foo1, "code", foo1.getCode()));
 		
 		Foo foo2 = new Foo();
 		foo2.setCode("foo-1");
 		foo2.setFstring("test");
-		assertEquals(true , fooService.unique(foo2, "code", foo2.getCode()));
+		assertEquals(true , fooService.isUnique(foo2, "code", foo2.getCode()));
 		
 		fooService.save(foo1);
-		assertEquals(true , fooService.unique(foo1, "code", foo1.getCode()));
+		assertEquals(true , fooService.isUnique(foo1, "code", foo1.getCode()));
 		
-		assertEquals(false , fooService.unique(foo2, "code", foo2.getCode()));
+		assertEquals(false , fooService.isUnique(foo2, "code", foo2.getCode()));
 		
 	}
 	
@@ -68,31 +68,34 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		barService.save(bar1);
 		barService.save(bar2);
 		
-		String[] joins = {"bars_LEFT"};
-		List<Foo> list = fooService.findAllBy("bars.name", joins , "bar1");
+		List<Foo> list = fooService.findAllBy("bars.name" , "bar1");
 		
 		assertEquals(1 , list.size());
 		
-		long count = fooService.countBy("bars.name", joins , "bar1");
+		long count = fooService.countBy("bars.name" , "bar1");
 		
 		assertEquals(1 , count);
 		
-		Foo foo2 = fooService.findBy("bars.name", joins , "bar1");
+		Foo foo2 = fooService.findBy("bars.name" , "bar1");
 		
 		assertNotNull(foo2);
 		
 		
 		JSONObject queryInfo = new JSONObject();
 		queryInfo.put("JOINS", "bars_LEFT");
-		queryInfo.put("bars.code_Like", "bar");
+		queryInfo.put("bars.name_Like", "bar");
 		
 		JSONObject queryAndSort = new JSONObject();
 		queryAndSort.put(ExtConstant.QUERY , queryInfo);
 		
 		list = fooService.findByQueryInfo(queryAndSort);
 		
-		assertEquals(1 , count);
+		assertEquals(1 , list.size());
 		
+		queryInfo.put("fstring", "test");
+		list = fooService.findByQueryInfo(queryAndSort);
+		
+		assertEquals(1 , list.size());
 		
 		queryInfo = new JSONObject();
 		queryInfo.put("fnumber_LE", 3);
@@ -108,6 +111,49 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		
 		assertEquals(0 , list.size());
 		
+		//test or
+		queryInfo = new JSONObject();
+		queryInfo.put("JOINS", "bars_LEFT");
+		queryInfo.put("bars.name_Like||bars.code_Like", "bar");
+		queryAndSort.put(ExtConstant.QUERY , queryInfo);
+		
+		list = fooService.findByQueryInfo(queryAndSort);
+		
+		assertEquals(1 , list.size());
+		
+	}
+	
+	@Test
+	public void testMultiLeftJoin(){
+		Foo fooParent = new Foo();
+		fooParent.setCode("foo-parent");
+		fooParent.setFstring("foo-parent");
+		fooParent.setFnumber(3d);
+		fooService.save(fooParent);
+		
+		Foo foo = new Foo();
+		foo.setCode("foo");
+		foo.setFstring("foo");
+		foo.setFnumber(3d);
+		foo.setParent(fooParent);
+		fooService.save(foo);
+		
+		Bar bar1 = new Bar();
+		bar1.setName("bar1");
+		bar1.setFoo(fooParent);
+		
+		Bar bar2 = new Bar();
+		bar2.setName("bar2");
+		bar2.setFoo(fooParent);
+		
+		barService.save(bar1);
+		barService.save(bar2);
+		
+		fooService.findAll();
+		barService.findAll();
+		
+		List<Foo> list = fooService.findAllBy("parent.bars.name_Like", "%bar1%");
+		assertEquals(1 , list.size());
 	}
 	
 	@Test
@@ -271,7 +317,7 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		foos = fooService.findByQueryInfo(queryAndSort);
 		assertEquals(1 , foos.size());
 		
-		foos = fooService.findAllBy("fboolAndfnumber_LE" , false , 2d);
+		foos = fooService.findAllBy("fbool&&fnumber_LE" , false , 2d);
 		assertEquals(1 , foos.size());
 		
 	}
@@ -372,10 +418,10 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		list = fooService.findAllBy("fdate_isNotNull");
 		assertEquals(1 , list.size());
 		
-		count = fooService.countBy("fnumber_GEAndfnumber_LE" , 2.0 , 3.0);
+		count = fooService.countBy("fnumber_GE&&fnumber_LE" , 2.0 , 3.0);
 		assertEquals(3 , count);
 		
-		list = fooService.findAllBy("fnumber_GEAndfnumber_LE" , 2.0 , 3.0);
+		list = fooService.findAllBy("fnumber_GE&&fnumber_LE" , 2.0 , 3.0);
 		assertEquals(3 , list.size());
 		
 		Foo fooTest = fooService.findBy("fstring", "bbb");
@@ -384,10 +430,10 @@ public class FooServiceTest extends GenericServiceTest<Foo> {
 		list = fooService.findAllBy("OrderByFnumber_DESC");
 		assertEquals(new Double(3.0) , list.get(0).getFnumber());
 		
-		list = fooService.findAllBy("OrderByFnumber_DESCAndFdate_ASC");
+		list = fooService.findAllBy("OrderByFnumber_DESC&&Fdate_ASC");
 		assertNull(list.get(0).getFdate());
 		
-		list = fooService.findAllBy("fdate_isNotNullOrderByFnumber_DESCAndFdate_ASC");
+		list = fooService.findAllBy("fdate_isNotNullOrderByFnumber_DESC&&Fdate_ASC");
 		assertNotNull(list.get(0).getFdate());
 		assertEquals(new Double(3.0) , list.get(0).getFnumber());
 	}

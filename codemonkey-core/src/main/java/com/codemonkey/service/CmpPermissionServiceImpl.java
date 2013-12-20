@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.CmpPermission;
 
 @Service
-public class CmpPermissionServiceImpl extends GenericServiceImpl<CmpPermission> implements CmpPermissionService{
+public class CmpPermissionServiceImpl extends PhysicalServiceImpl<CmpPermission> implements CmpPermissionService{
 
 	@Override
 	public CmpPermission createEntity() {

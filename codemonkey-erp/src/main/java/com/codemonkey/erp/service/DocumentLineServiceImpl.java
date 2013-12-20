@@ -9,10 +9,10 @@ import com.codemonkey.erp.domain.Document;
 import com.codemonkey.erp.domain.DocumentLine;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.RowFieldValidation;
-import com.codemonkey.service.GenericServiceImpl;
+import com.codemonkey.service.PhysicalServiceImpl;
 
 @Service
-public abstract class DocumentLineServiceImpl<T extends DocumentLine > extends GenericServiceImpl<T> implements DocumentLineService<T>{
+public abstract class DocumentLineServiceImpl<T extends DocumentLine > extends PhysicalServiceImpl<T> implements DocumentLineService<T>{
 
 	public List<T> getLinesByHeader(Document doc) {
 		return findAllBy("header.id" , doc.getId());

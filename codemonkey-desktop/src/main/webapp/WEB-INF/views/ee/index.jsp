@@ -6,6 +6,7 @@
 		Ext.Loader.setConfig({
 			enabled : true,
 			paths : {
+				'Ext.ux' : '../../js/extjs-ux',
 				'Ext.ux.desktop' : '../../js/desktop/ux',
 				'MyDesktop' : '../../js/desktop',
 				'AM.modules' : '../../js/desktop/modules',

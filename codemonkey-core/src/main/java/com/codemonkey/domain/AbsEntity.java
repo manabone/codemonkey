@@ -79,6 +79,11 @@ public class AbsEntity implements Serializable{
 	@Audited
 	private String modifiedBy;
 	
+	@Label("delFlg")
+	@SkipBuild
+	@Audited
+	private Boolean delFlg = false;
+	
 	public SequenceCreator getSequenceCreator() {
 		return null;
 	}
@@ -98,12 +103,16 @@ public class AbsEntity implements Serializable{
 		jo.put("modificationDate", OgnlUtils.stringValue("modificationDate", this));
 		jo.put("createdBy", OgnlUtils.stringValue("createdBy", this));
 		jo.put("modifiedBy", OgnlUtils.stringValue("modifiedBy", this));
-		
+		jo.put("delFlg", OgnlUtils.stringValue("delFlg", this));
 		return jo;
 	}
 	
 	public JSONObject detailJson(){
 		return listJson();
+	}
+	
+	public String getSyncNamingSpace(){
+		return null;
 	}
 	
 	public boolean isOptimisticLockingFailure() {
@@ -194,6 +203,14 @@ public class AbsEntity implements Serializable{
 
 	public void setOriginVersion(Integer originVersion) {
 		this.originVersion = originVersion;
+	}
+
+	public Boolean getDelFlg() {
+		return delFlg;
+	}
+
+	public void setDelFlg(Boolean delFlg) {
+		this.delFlg = delFlg;
 	}
 	
 }

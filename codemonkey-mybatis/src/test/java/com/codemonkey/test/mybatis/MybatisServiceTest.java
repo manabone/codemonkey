@@ -60,8 +60,8 @@ public class MybatisServiceTest{
 	}
 
 	private void prepareData() {
-		jdbcTemplate.execute("insert into app_user (id , username , password) values (-1 , 'admin' , 'admin')");
-		jdbcTemplate.execute("insert into app_user (id , username , password) values (-2 , 'user' , 'user')");
+		jdbcTemplate.execute("insert into app_user (id , dtype , username , password) values (-1 , 'appUser' , 'admin' , 'admin')");
+		jdbcTemplate.execute("insert into app_user (id , dtype , username , password) values (-2 , 'appUser' , 'user' , 'user')");
 	}
 	
 	@Test

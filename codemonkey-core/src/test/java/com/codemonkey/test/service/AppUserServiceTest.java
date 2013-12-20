@@ -4,10 +4,6 @@ package com.codemonkey.test.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -55,15 +51,6 @@ public class AppUserServiceTest extends GenericServiceTest<AppUser>{
 		appUserService.delete(user2.getId());
 		
 		assertEquals(count + 2 , appUserService.findAll().size());
-		
-		List<AppUser> users = new ArrayList<AppUser>();
-		
-		//test find by criteria
-		users = appUserService.find();
-		assertEquals(count + 2 , users.size());
-		
-		users = appUserService.find(Restrictions.eq("username", "user1"));
-		assertEquals(1 , users.size());
 		
 		AppUser user = appUserService.findBy("username", "user1");
 		

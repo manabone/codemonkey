@@ -1,6 +1,5 @@
 package com.codemonkey.web.validator;
 
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,7 @@ public class AppUserValidator extends DefaultValidator<AppUser>{
 	
 	public void validate(AppUser user, BindingResult bindingResult) {
 		
-		long count = appUserService.count(Restrictions.eq("username", user.getUsername()));
+		long count = appUserService.countBy("username", user.getUsername());
 		
 		if(count > 0){
 			bindingResult.rejectValue("username", "", "user name is not unique");

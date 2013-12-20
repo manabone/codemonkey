@@ -7,9 +7,6 @@ import com.codemonkey.domain.AbsEE;
 @Entity
 public class SequenceCreator extends AbsEE{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String prefix;
@@ -19,6 +16,9 @@ public class SequenceCreator extends AbsEE{
 	private Integer step = 1;
 	
 	private Long current = start;
+	
+	public SequenceCreator() {
+	}
 
 	public SequenceCreator(String prefix) {
 		this.prefix = prefix;

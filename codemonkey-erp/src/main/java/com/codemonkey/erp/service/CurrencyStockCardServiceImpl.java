@@ -4,10 +4,10 @@ import org.springframework.stereotype.Service;
 
 import com.codemonkey.erp.domain.Currency;
 import com.codemonkey.erp.domain.CurrencyStockCard;
-import com.codemonkey.service.GenericServiceImpl;
+import com.codemonkey.service.PhysicalServiceImpl;
 
 @Service
-public class CurrencyStockCardServiceImpl extends GenericServiceImpl<CurrencyStockCard> implements CurrencyStockCardService{
+public class CurrencyStockCardServiceImpl extends PhysicalServiceImpl<CurrencyStockCard> implements CurrencyStockCardService{
 
 	public CurrencyStockCard getStockCard(Currency currency) {
 		CurrencyStockCard stockCard = findBy("currency", currency);

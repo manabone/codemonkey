@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.UrlPermission;
 
 @Service
-public class UrlPermissionServiceImpl extends GenericServiceImpl<UrlPermission> implements UrlPermissionService{
+public class UrlPermissionServiceImpl extends PhysicalServiceImpl<UrlPermission> implements UrlPermissionService{
 
 	@Override
 	public UrlPermission createEntity() {

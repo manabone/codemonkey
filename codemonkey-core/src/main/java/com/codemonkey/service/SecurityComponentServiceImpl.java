@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.SecurityComponent;
 
 @Service
-public class SecurityComponentServiceImpl extends GenericServiceImpl<SecurityComponent> implements SecurityComponentService{
+public class SecurityComponentServiceImpl extends PhysicalServiceImpl<SecurityComponent> implements SecurityComponentService{
 
 	@Override
 	public SecurityComponent createEntity() {

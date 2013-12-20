@@ -44,7 +44,9 @@ public class ValidateTypeTest {
 		assertEquals(true  , ValidateType.FIX_PHONE.validate("0411-5401579"));
 		assertEquals(true  , ValidateType.FIX_PHONE.validate("0411-54015791"));
 		assertEquals(true  , ValidateType.FIX_PHONE.validate("024-88880000"));
-		assertEquals(true  , ValidateType.FIX_PHONE.validate("024-888800000"));
+		assertEquals(false  , ValidateType.FIX_PHONE.validate("111-88880000"));
+		assertEquals(false  , ValidateType.FIX_PHONE.validate("024-888800000"));
+		assertEquals(false  , ValidateType.FIX_PHONE.validate("024-888000"));
 		assertEquals(false , ValidateType.FIX_PHONE.validate("124-888800000"));
 		assertEquals(false , ValidateType.FIX_PHONE.validate("01124-888800000"));
 		assertEquals(false , ValidateType.FIX_PHONE.validate("02488880000"));

@@ -5,12 +5,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.codemonkey.ibatis.dao.IbatisDao;
-import com.codemonkey.ibatis.utils.IbatisUtils;
 import com.codemonkey.utils.SysUtils;
 
 @Service
@@ -21,11 +19,9 @@ public class IbatisServiceImpl implements IbatisService {
 	private Logger logger = SysUtils.getLog(getClass());
 
 	@Override
-	public List<Map<String,Object>> query(String id , JSONObject queryAndSort){
+	public List<Map<String,Object>> query(String id , Object param){
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		
-		Map<String , Object> param = IbatisUtils.jsonToMap(queryAndSort);
 		
 		List<Map<String,Object>> list = dao.query(id , param);
 		
@@ -36,13 +32,11 @@ public class IbatisServiceImpl implements IbatisService {
 	}
 	
 	@Override
-	public long count(String id , JSONObject queryInfo){
+	public long count(String id , Object obj){
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		
-		Map<String , Object> param = IbatisUtils.jsonToMap(queryInfo);
-		
-		Long count = dao.count(id, param);
+		Long count = dao.count(id, obj);
 		
 		if(count == null){
 			count = 0L;
@@ -55,42 +49,95 @@ public class IbatisServiceImpl implements IbatisService {
 	}
 	
 	@Override
-	public void insert(String id ,Map<String, Object> param){
-		
+	public List<Map<String,Object>> querybylist(String id , Object obj){
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		
-		dao.insert(id, param);
-		
-		stopWatch.stop();
-		logger.info(stopWatch);
-		
-	}
-	
-	@Override
-	public void update(String id ,Map<String, Object> param){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		dao.update(id, param);
-		
-		stopWatch.stop();
-		logger.info(stopWatch);
-		
-	}
-	
-	@Override
-	public List<Map<String,Object>> querybylist(String id , Map<String, Object> param){
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<Map<String,Object>> list = dao.query(id , param);
+		List<Map<String,Object>> list = dao.query(id , obj);
 		
 		stopWatch.stop();
 		logger.info(stopWatch);
 		
 		return list;
+	}
+	
+	@Override
+	public List<Map<String,Object>> querybylist(String id){
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		List<Map<String,Object>> list = dao.query(id);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+		return list;
+	}
+	
+	@Override
+	public Map<String,Object> querybyobject(String id , Object obj){
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		Map<String,Object> map = dao.queryobj(id, obj);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+		return map;
+	}
+	
+	
+	@Override
+	public Map<String,Object> querybyobject(String id){
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		Map<String,Object> map = dao.queryobj(id);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+		return map;
+	}
+
+	@Override
+	public void insert(String id , Object obj){
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		dao.insert(id, obj);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+	}
+	
+	@Override
+	public void update(String id , Object obj){
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		dao.update(id, obj);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
+	}
+	
+	@Override
+	public void delete(String id , Object obj){
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		dao.delete(id, obj);
+		
+		stopWatch.stop();
+		logger.info(stopWatch);
+		
 	}
 	
 }

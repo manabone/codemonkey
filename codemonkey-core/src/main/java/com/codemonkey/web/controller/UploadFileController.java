@@ -26,7 +26,7 @@ import com.codemonkey.utils.ExtConstant;
 @Controller
 @RequestMapping(value = "/ext/uploadFile/**")
 public class UploadFileController {
-	private static final int TEN_THOUSAND = 10000;
+	public static final int TEN_THOUSAND = 10000;
 	private static final String UPLOAD_FILE = "uploadfile";
 	private String uploadFolderPath;
 	private ServletConfig config;
@@ -46,7 +46,8 @@ public class UploadFileController {
 	}
 
 	@RequestMapping("create")
-	@ResponseBody public String create(UploadItem uploadItem, BindingResult bindingResult,
+	@ResponseBody 
+	public String create(UploadItem uploadItem, BindingResult bindingResult,
 			HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
 		

@@ -223,6 +223,46 @@
     background-image: url(../images/grid48x48.png);
 }
 
+.appRole-shortcut {
+    background-image: url(../images/appRole.png);
+}
+
+.appUser-shortcut {
+    background-image: url(../images/appUser.png);
+}
+
+.group-shortcut {
+    background-image: url(../images/group.png);
+}
+
+.worker-shortcut {
+    background-image: url(../images/worker.png);
+}
+
+.jobGroup-shortcut {
+    background-image: url(../images/jobGroup.png);
+}
+
+.personContract-shortcut {
+    background-image: url(../images/personContract.png);
+}
+
+.positionAdjust-shortcut {
+    background-image: url(../images/positionAdjust.png);
+}
+
+.deviceGroup-shortcut {
+    background-image: url(../images/deviceGroup.png);
+}
+
+.person-shortcut {
+    background-image: url(../images/person.png);
+}
+
+.oaRules-shortcut {
+    background-image: url(../images/oaRules.png);
+}
+
 .notepad-shortcut {
     background-image: url(../images/notepadLarge.png);
     width: 46px;
@@ -274,16 +314,16 @@
     background-image:url( ../images/grid.png ) !important;
 }
 .add {
-    background-image:url(..//icons/fam/add.gif) !important;
+    background-image:url(../icons/fam/add.gif) !important;
 }
 .option {
-    background-image:url(..//icons/fam/plugin.gif) !important;
+    background-image:url(../icons/fam/plugin.gif) !important;
 }
 .remove {
-    background-image:url(..//icons/fam/delete.gif) !important;
+    background-image:url(../icons/fam/delete.gif) !important;
 }
 .save {
-    background-image:url(..//icons/save.gif) !important;
+    background-image:url(../icons/save.gif) !important;
 }
 .accordion {
     background-image:url(../images/accordian.gif) !important;

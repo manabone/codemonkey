@@ -3,10 +3,10 @@ package com.codemonkey.erp.service;
 import org.springframework.stereotype.Service;
 
 import com.codemonkey.erp.domain.Vendor;
-import com.codemonkey.service.GenericServiceImpl;
+import com.codemonkey.service.LogicalServiceImpl;
 
 @Service
-public class VendorServiceImpl extends GenericServiceImpl<Vendor> implements VendorService{
+public class VendorServiceImpl extends LogicalServiceImpl<Vendor> implements VendorService{
 
 	@Override
 	public Vendor createEntity() {

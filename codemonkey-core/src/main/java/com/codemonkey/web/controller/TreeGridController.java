@@ -24,15 +24,41 @@ public class TreeGridController extends AbsExtController<Foo>{
 		
 		if("root".equals(node)){
 			
-			TreeNode note1 = new ParentNode();
-			note1.setId("window");
-			note1.setName("window");
-			note1.setText("window");
+			ParentNode note1 = new ParentNode();
+			note1.addAttr("id", "window");
+			note1.addAttr("name", "window");
+			note1.addAttr("text", "window");
+			note1.addAttr("expanded" , true);
 			
-			TreeNode note2 = new ParentNode();
-			note2.setId("form");
-			note2.setName("form");
-			note2.setText("form");
+			TreeNode child1 = new ChildNode();
+			child1.addAttr("id", "text");
+			child1.addAttr("name", "text");
+			child1.addAttr("text", "text");
+			note1.add(child1);
+			
+			TreeNode child2 = new ChildNode();
+			child2.addAttr("id", "select");
+			child2.addAttr("name", "select");
+			child2.addAttr("text", "select");
+			note1.add(child2);
+			
+			ParentNode note2 = new ParentNode();
+			note2.addAttr("id", "form");
+			note2.addAttr("name", "form");
+			note2.addAttr("text", "form");
+			note2.addAttr("expanded" , true);
+			
+			TreeNode child3 = new ChildNode();
+			child3.addAttr("id", "messageBox");
+			child3.addAttr("name", "messageBox");
+			child3.addAttr("text", "messageBox");
+			note2.add(child3);
+			
+			TreeNode child4 = new ChildNode();
+			child4.addAttr("id", "panel");
+			child4.addAttr("name", "panel");
+			child4.addAttr("text", "panel");
+			note2.add(child4);
 			
 			data.put(note1.json());
 			data.put(note2.json());
@@ -40,14 +66,15 @@ public class TreeGridController extends AbsExtController<Foo>{
 		}else if("form".equals(node)){
 			
 			TreeNode child1 = new ChildNode();
-			child1.setId("text");
-			child1.setName("text");
-			child1.setText("text");
+			child1.addAttr("id", "text");
+			child1.addAttr("name", "text");
+			child1.addAttr("text", "text");
+			
 			
 			TreeNode child2 = new ChildNode();
-			child2.setId("select");
-			child2.setName("select");
-			child2.setText("select");
+			child2.addAttr("id", "select");
+			child2.addAttr("name", "select");
+			child2.addAttr("text", "select");
 			
 			data.put(child1.json());
 			data.put(child2.json());
@@ -55,14 +82,14 @@ public class TreeGridController extends AbsExtController<Foo>{
 		}else if("window".equals(node)){
 			
 			TreeNode child1 = new ChildNode();
-			child1.setId("messageBox");
-			child1.setName("messageBox");
-			child1.setText("messageBox");
+			child1.addAttr("id", "messageBox");
+			child1.addAttr("name", "messageBox");
+			child1.addAttr("text", "messageBox");
 			
 			TreeNode child2 = new ChildNode();
-			child2.setId("panel");
-			child2.setName("panel");
-			child2.setText("panel");
+			child2.addAttr("id", "panel");
+			child2.addAttr("name", "panel");
+			child2.addAttr("text", "panel");
 			
 			data.put(child1.json());
 			data.put(child2.json());

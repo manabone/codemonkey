@@ -105,10 +105,7 @@ Ext.define('AM.modules.AppRoleFormModule', {
     		id : 'appRoleForm_cmpPermissionGrid',
     		modelName : 'CmpPermission',
     		ownerModule : me,
-            columns : me.cmpPermissionColumns,
-            plugins : [
-               Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})
- 	    	]
+            columns : me.cmpPermissionColumns
 		});
     	
     	var p4ActionBar =  me.createToolbar([
@@ -124,7 +121,8 @@ Ext.define('AM.modules.AppRoleFormModule', {
     	});
     	
     	var treeStore = ExtUtils.treeStore({modelName : 'powerTree'});
-    	treeStore.load();
+    	
+    	me.treeStore = treeStore;
     	
     	var tree = Ext.create('Ext.tree.Panel', {
     		 id : 'appRoleForm_powerTreePanel',
@@ -189,9 +187,11 @@ Ext.define('AM.modules.AppRoleFormModule', {
     },
     
     afterModelLoad : function(model){
+    	var me = this;
  	   Ext.getCmp('appRoleForm_urlPermissionGrid').getStore().loadData(model.data.urlPermissions);
  	   Ext.getCmp('appRoleForm_cmpPermissionGrid').getStore().loadData(model.data.cmpPermissions);
  	  
+ 	   ExtUtils.reloadStore(me.treeStore , {appRole:model.data.id});
     }
 
 });

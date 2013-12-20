@@ -64,6 +64,7 @@ public class AppRole extends AbsEE {
 			}
 		}
 		jo.put("cmpPermissions", cmpPermissionsJa);
+		
 		return jo;
 	}
 	
@@ -83,6 +84,10 @@ public class AppRole extends AbsEE {
 	
 	public Set<UrlPermission> getUrlPermissions() {
 		return urlPermissions;
+	}
+
+	public Set<PowerTree> getPowerTrees() {
+		return powerTrees;
 	}
 
 	public void addUrlPermission(UrlPermission urlPermission) {

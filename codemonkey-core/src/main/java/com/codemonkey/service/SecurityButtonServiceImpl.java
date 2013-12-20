@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.SecurityButton;
 
 @Service
-public class SecurityButtonServiceImpl extends GenericServiceImpl<SecurityButton> implements SecurityButtonService{
+public class SecurityButtonServiceImpl extends PhysicalServiceImpl<SecurityButton> implements SecurityButtonService{
 
 	@Override
 	public SecurityButton createEntity() {

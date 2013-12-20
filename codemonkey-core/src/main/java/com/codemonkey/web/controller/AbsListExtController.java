@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.ui.ModelMap;
@@ -16,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.EE;
+import com.codemonkey.domain.IEntity;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
+import com.codemonkey.web.view.ExcelView;
 
 
 public abstract class AbsListExtController<T extends EE> extends AbsExtController<T>{
@@ -58,10 +59,15 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     		@RequestParam(required = false , defaultValue = "25") Integer limit ,
     		@RequestParam(required = false) String id,
     		@RequestParam(required = false) String query,
-    		@RequestParam(required = false) JSONArray sort,
-    		@RequestParam(required = false) JSONObject queryInfo) {
+    		@RequestParam(required = false , defaultValue="[]") JSONArray sort,
+    		@RequestParam(required = false , defaultValue="{}") JSONObject queryInfo) {
     	
-    	List<T> list = new ArrayList<T>();
+    	return handleRead(start, limit, id, query, sort, queryInfo);
+    }
+
+	protected String handleRead(Integer start, Integer limit, String id,
+			String query, JSONArray sort, JSONObject queryInfo) {
+		List<T> list = new ArrayList<T>();
     	long total = 0;
     	
     	if(StringUtils.isNotBlank(id)){
@@ -69,22 +75,16 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     		total = 1;
     		list.add(t);
     	}else if(StringUtils.isNotBlank(query)){
-    		Criterion[] criterions = {
-				Restrictions.like("name", query, MatchMode.ANYWHERE)
-    		};
-    		list = service().find(criterions);
-    		total = service().count(criterions);
+    		list = service().findAllBy("name_Like" , '%' + query + '%');
+    		total = service().countBy("name_Like" , '%' + query + '%');
     	}else if(sort != null || queryInfo != null){
     		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
     		list = service().findByQueryInfo(queryAndSort , start , limit);
     		total = service().countByQueryInfo(queryAndSort);
-    	}else{
-    		list = service().findAll(start , limit);
-    		total = service().count();
     	}
     	
     	return buildJson(list , total);
-    }
+	}
     
 	//----------------------
     // destroy
@@ -92,6 +92,10 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
 	@RequestMapping("destroy")
     @ResponseBody
 	public String destroy(@RequestBody String body){
+		return handleDestroy(body);
+	}
+
+	protected String handleDestroy(String body) {
 		JSONObject result = new JSONObject();
 		try{
 			JSONObject params = new JSONObject(body);
@@ -106,6 +110,36 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
 			e.printStackTrace();
 		}
 		return result.toString();
+	}
+	
+	//----------------------
+    // export
+    //----------------------
+	@RequestMapping("export")
+	public ModelAndView export(ModelMap modelMap , 
+			@RequestParam JSONArray cols , 
+			@RequestParam(required = false) String scope,
+			@RequestParam(required = false) Integer start,
+			@RequestParam(required = false) Integer limit , 
+			@RequestParam(required = false) String fileName,
+			@RequestParam(required = false , defaultValue = "[]") JSONArray sort,
+    		@RequestParam(required = false , defaultValue = "{}") JSONObject queryInfo){
+		List<T> list = null;
+		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
+		if("".equals(scope)){
+			list = service().findByQueryInfo(queryAndSort);
+		}else if("当前页".equals(scope)){
+			list = service().findByQueryInfo(queryAndSort , start , limit);
+		}
+		
+		List<IEntity> list2 = new ArrayList<IEntity>();
+		
+		if(CollectionUtils.isNotEmpty(list)){
+			list2.addAll(list);
+		}
+		
+		ExcelView view = new ExcelView(cols , list2  , fileName);
+		return new ModelAndView(view , modelMap);
 	}
 	
 	public List<AppPermission> regAppPermissions(){

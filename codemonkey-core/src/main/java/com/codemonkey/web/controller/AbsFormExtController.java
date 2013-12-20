@@ -1,6 +1,5 @@
 package com.codemonkey.web.controller;
 
-import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -41,16 +40,21 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody String body) {
-    	return update(body);
+    	return handleUpdate(body);
     }
-    
-    //----------------------
+
+	//----------------------
     // read
     //----------------------
     @RequestMapping("read")
     @ResponseBody 
     public String read(@RequestParam Long id) {
-    	T t = null;
+    	return handleRead(id);
+    }
+
+    protected String handleRead(Long id) {
+    	
+		T t = null;
     	if(id == NEW_ENTITY_ID){
     		t = service().createEntity();
     	}else{
@@ -63,10 +67,10 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
 			result.put(ExtConstant.SUCCESS, true);
     	}
     	return result.toString();
-    }
+	}
     
     protected JSONObject buildJson(T t){
-    	return t.detailJson();
+    	return jsonResult(t);
     }
 
 	//----------------------
@@ -76,35 +80,7 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
     @ResponseBody
 	public String update(@RequestBody String body){
 		
-		JSONObject params = parseJson(body);
-		
-		T t = service().doSave(params , getCcService());
-		
-		return result(t);
-	}
-	
-	public String result(T t) {
-		JSONObject result = new JSONObject();
-		result.put(ExtConstant.DATA, t.detailJson());
-		result.put(ExtConstant.SUCCESS, true);
-		return result.toString();
-	}
-	
-	protected JSONObject parseJson(String body){
-		JSONObject params = new JSONObject();
-		try {
-			params = new JSONObject(body);
-		} catch (ParseException e) {
-			errorResult(e);
-			e.printStackTrace();
-		}
-		return params;
-	}
-
-	public void errorResult(Exception e) {
-		JSONObject result = new JSONObject();
-		result.put(ExtConstant.SUCCESS, false);
-		result.put(ExtConstant.ERROR_MSG, e.getMessage());
+		return handleUpdate(body);
 	}
 
 	public List<AppPermission> regAppPermissions(){

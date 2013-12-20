@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.State;
 
 @Service
-public class StateServiceImpl extends GenericServiceImpl<State> implements StateService {
+public class StateServiceImpl extends PhysicalServiceImpl<State> implements StateService {
 
 	@Override
 	public State createEntity() {

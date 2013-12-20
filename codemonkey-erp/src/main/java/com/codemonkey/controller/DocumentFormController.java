@@ -1,4 +1,4 @@
-package com.codemonkey.erp.controller;
+package com.codemonkey.controller;
 
 import java.util.List;
 

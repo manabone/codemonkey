@@ -43,19 +43,20 @@ Ext.define('AM.modules.ListModule', {
     
     createWindowItem : function(){
     	var me = this;
-    	var contextMenu = this.getLineContextMenu();
         var gridConfig = {
      		id : this.gridId,
      		listeners: {
  				'itemdblclick' : function( /*Ext.view.View*/ view, /* Ext.data.Model*/ record, /*HTMLElement*/ item,/* Number*/ index, /*Ext.EventObject*/ e, /*Object*/ eOpts){
- 					me.edit();
+ 					me.show();
  			    }
  			},
  			viewConfig: {
  	             stripeRows: true,
+ 	             enableTextSelection:true,
  	             listeners: {
  	                 itemcontextmenu: function(view, rec, node, index, e) {
- 	                     e.stopEvent();
+ 	                	 e.stopEvent();
+ 	                	 var contextMenu = me.getLineContextMenu(rec);
  	                     contextMenu.showAt(e.getXY());
  	                     return false;
  	                 }
@@ -81,7 +82,7 @@ Ext.define('AM.modules.ListModule', {
          return [ searchForm ,  grid2];
     },
     
-    afterWindowCreate : function(){
+    afterWindowCreate : function(config){
     	Ext.getCmp(this.gridId).getStore().load();
     },
     
@@ -90,8 +91,12 @@ Ext.define('AM.modules.ListModule', {
 		action : 'create', text: i18n.add, iconCls : 'add'
 	},
 	
-	editAction : {
+    editAction : {
 		action : 'edit' , text:i18n.edit, iconCls:'option'
+    },
+    
+    showAction : {
+		action : 'show' , text:i18n.show, iconCls:'option'
     },
     
     destroyAction : {
@@ -112,7 +117,20 @@ Ext.define('AM.modules.ListModule', {
 	create : function(){
 		if(this.formModuleId){
 			var formModule = this.app.getModule(this.formModuleId);
-		 	formModule.createWindow({entityId : -1 , gridId : this.gridId});	
+		 	formModule.createWindow({entityId : -1 , gridId : this.gridId, action : 'create'});
+		 	return formModule;
+		}
+	},
+	
+	show : function(){
+		if(!this.formModuleId) return;
+		
+		var formModule = this.app.getModule(this.formModuleId);
+		
+		var record = ExtUtils.getSelected(this.gridId);
+		
+		if(record && record.get('id')){
+			formModule.createWindow({entityId : record.get('id') , gridId : this.gridId , action : 'show'});
 		}
 	},
 	
@@ -125,7 +143,20 @@ Ext.define('AM.modules.ListModule', {
 		var record = ExtUtils.getSelected(this.gridId);
 		
 		if(record && record.get('id')){
-			formModule.createWindow({entityId : record.get('id') , gridId : this.gridId});
+			formModule.createWindow({entityId : record.get('id') , gridId : this.gridId , action : 'edit'});
+		}
+	},
+	
+	show : function(){
+		
+		if(!this.formModuleId) return;
+		
+		var formModule = this.app.getModule(this.formModuleId);
+		
+		var record = ExtUtils.getSelected(this.gridId);
+		
+		if(record && record.get('id')){
+			formModule.createWindow({entityId : record.get('id') , gridId : this.gridId , action : 'show'});
 		}
 	},
 	
@@ -154,38 +185,42 @@ Ext.define('AM.modules.ListModule', {
 	
 	//end action handler
 	
+    getBbarActions : function(){
+    	return [this.createAction];
+    },
+    
     createBbar : function(){
     	
-    	var actions = [
-			this.createModuleAction(this.createAction),
-			this.createModuleAction(this.editAction),
-			this.createModuleAction(this.destroyAction)
-		];
+    	var actions = this.buildModuleActions(this.getBbarActions());
     	
-    	return this.createToolbar(actions);
+    	if(actions){
+    		return this.createToolbar(actions);
+    	}
     },
     
-    createTbar : function(){
-    	
-    	var menu =  {
-            text: i18n.actions,
-            menu : [
-				this.createModuleAction(this.createAction),
-				this.createModuleAction(this.editAction),
-				this.createModuleAction(this.destroyAction)
-    		]
-    	};
-    	
-    	return this.createToolbar(menu);
-    },
-    
-
-	getLineContextMenu : function(){
-		 return Ext.create('Ext.menu.Menu', {
-	        items: [
-	            this.editAction,
-	            this.destroyAction
-	        ]
-	    });
+	getLineContextMenu : function(record){
+		
+		var actions = this.buildModuleActions(this.getLineContextActions(record));
+		if(actions){
+			return Ext.create('Ext.menu.Menu', {
+		        items: actions
+		    });
+		}
+	},
+	
+	getLineContextActions : function(record){
+		return  [this.showAction , this.editAction];
+	},
+	
+	buildModuleActions : function(acts){
+		if(acts){
+			var actions = [];
+			for(var i = 0 ; i < acts.length ; i++){
+				actions.push(this.createModuleAction(acts[i]));
+			}
+			return actions;
+		}
+		return null;
 	}
+	
 });

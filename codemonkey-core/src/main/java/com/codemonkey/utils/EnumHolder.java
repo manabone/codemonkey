@@ -5,7 +5,9 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
-
+/**
+ * 类描述：enum保持类
+ */
 @Component
 public class EnumHolder {
 

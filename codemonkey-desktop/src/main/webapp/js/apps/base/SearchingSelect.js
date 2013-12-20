@@ -50,7 +50,7 @@ Ext.define('AM.base.SearchingSelect', {
        {header : i18n.description , dataIndex : 'description', flex : 1}
 	],
 	
-    hValue : null,
+    hValue : '',
     
     Model : null,
     

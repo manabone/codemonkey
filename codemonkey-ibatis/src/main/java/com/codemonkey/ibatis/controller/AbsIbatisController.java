@@ -1,13 +1,9 @@
 package com.codemonkey.ibatis.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.util.HtmlUtils;
 
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.SecurityComponent;
 import com.codemonkey.ibatis.service.IbatisService;
+import com.codemonkey.ibatis.utils.IbatisUtils;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.controller.AbsController;
@@ -34,11 +30,11 @@ public abstract class AbsIbatisController extends AbsController implements Secur
 	
 	@Autowired private IbatisService ibatisService;
 	
-	AbsIbatisController(){
+	public AbsIbatisController(){
 		log = SysUtils.getLog(getClass());
 	}
 	
-	abstract String getQueryId();
+	public abstract String getQueryId();
 	
 	
 	@Override
@@ -61,55 +57,26 @@ public abstract class AbsIbatisController extends AbsController implements Secur
     		@RequestParam(required = false , defaultValue = "25") Integer limit ,
     		@RequestParam(required = false) String id,
     		@RequestParam(required = false) String query,
-    		@RequestParam(required = false) JSONArray sort,
-    		@RequestParam(required = false) JSONObject queryInfo) {
+    		@RequestParam(required = false , defaultValue = "[]") JSONArray sort,
+    		@RequestParam(required = false , defaultValue = "{}") JSONObject queryInfo) {
     	
-    	long total = ibatisService.count(getQueryId() + SUBFIX_COUNT , queryInfo);
-    	List<Map<String , Object>> list = null;
-    	if(total > 0){
-    		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
-    		list = ibatisService.query(getQueryId(), queryAndSort);
-    	}
-    	return buildJson(list , total);
+    	return handleRead(start, limit, id, query, sort, queryInfo);
+    	
     }
 	
-	
-    protected String buildJson(List<Map<String,Object>> list) {
-    	JSONObject jo = buildResult(list);
-		return jo.toString();
+	protected String handleRead(Integer start, Integer limit, String id,
+			String query, JSONArray sort, JSONObject queryInfo) {
+		
+		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
+		
+		long total = ibatisService.count(getQueryId() + SUBFIX_COUNT , IbatisUtils.jsonToMap(queryAndSort));
+    	List<Map<String , Object>> list = null;
+    	if(total > 0){
+    		list = ibatisService.query(getQueryId(), IbatisUtils.jsonToMap(queryAndSort));
+    	}
+    	return IbatisUtils.buildJson(list , total);
 	}
-    
-    protected String buildJson(List<Map<String,Object>> list , long total) {
-    	JSONObject jo = buildResult(list);
-    	jo.put(ExtConstant.TOTAL_COUNT, total);
-		return jo.toString();
-	}
-    
-	private JSONObject buildResult(List<Map<String,Object>> list) {
-		JSONObject result = new JSONObject();
-		JSONArray data = new JSONArray();
-		if(CollectionUtils.isEmpty(list)){
-    		result.put(ExtConstant.SUCCESS, true);
-    		result.put(ExtConstant.DATA, data);
-    		return result;
-    	}	
-    		
-		for(Map<String,Object> m : list){
-			Set<Entry<String,Object>> set = m.entrySet();
-			JSONObject jo = new JSONObject();
-			Iterator<Entry<String,Object>> it = set.iterator();
-			while(it.hasNext()){
-				Entry<String,Object> e = it.next();
-					jo.put(SysUtils.columnToProp(e.getKey().toString()) , HtmlUtils.htmlEscape(e.getValue().toString()));
-				
-				data.put(jo);
-			}
-		}
-		result.put(ExtConstant.SUCCESS, true);
-		result.put(ExtConstant.DATA, data);
-		return result;
-	}
-	
+
 	public Logger getLog() {
 		return log;
 	}

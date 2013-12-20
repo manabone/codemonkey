@@ -15,7 +15,7 @@
 
     <!-- define the sqlMapClient -->
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-		<property name="configLocation" value="ibatis/sqlMapConfig.xml"/>
+		<property name="configLocation" value="ibatis/testMapConfig.xml"/>
 		<property name="dataSource" ref="dataSource"/>
 		<property name="useTransactionAwareDataSource" value="true"></property>
 	</bean>

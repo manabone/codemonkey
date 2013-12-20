@@ -15,43 +15,70 @@ public class IbatisDao {
 	
 	@Autowired private SqlMapClient sqlMapClient;
 	
-	public List<Map<String,Object>> query(String id , Map<String,Object> param){
+	public List<Map<String,Object>> query(String id , Object obj){
 		try {
-			return sqlMapClient.queryForList(id, param);
+			return sqlMapClient.queryForList(id, obj);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public Long count(String id , Map<String,Object> param){
+	public List<Map<String,Object>> query(String id){
 		try {
-			return (Long)sqlMapClient.queryForObject(id, param);
+			return sqlMapClient.queryForList(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public void insert(String id , Map<String,Object> param){
+	public Map<String,Object> queryobj(String id , Object obj){
 		try {
-			sqlMapClient.insert(id , param);
+			return (Map<String, Object>) sqlMapClient.queryForObject(id, obj);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Map<String,Object> queryobj(String id){
+		try {
+			return (Map<String, Object>) sqlMapClient.queryForObject(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Long count(String id , Object obj){
+		try {
+			return (Long)sqlMapClient.queryForObject(id, obj);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void insert(String id , Object obj){
+		try {
+			sqlMapClient.insert(id , obj);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void update(String id , Map<String,Object> param){
+	public void update(String id , Object obj){
 		try {
-			sqlMapClient.update(id , param);
+			sqlMapClient.update(id , obj);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void delete(String id , Map<String,Object> param){
+	public void delete(String id , Object obj){
 		try {
-			sqlMapClient.delete(id , param);
+			sqlMapClient.delete(id , obj);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

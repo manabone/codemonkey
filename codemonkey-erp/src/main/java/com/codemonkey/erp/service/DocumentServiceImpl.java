@@ -17,12 +17,12 @@ import com.codemonkey.erp.domain.Transaction;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.FormFieldValidation;
 import com.codemonkey.error.ValidationError;
-import com.codemonkey.service.GenericServiceImpl;
+import com.codemonkey.service.PhysicalServiceImpl;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.web.converter.CustomConversionService;
 
 @Service
-public abstract class DocumentServiceImpl<T extends Document , E extends DocumentLine> extends GenericServiceImpl<T> implements DocumentService<T , E>{
+public abstract class DocumentServiceImpl<T extends Document , E extends DocumentLine> extends PhysicalServiceImpl<T> implements DocumentService<T , E>{
 
 	private static final String HEADER = "header";
 

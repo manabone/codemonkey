@@ -9,7 +9,7 @@ import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.FormFieldValidation;
 
 @Service
-public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooService{
+public class FooServiceImpl extends PhysicalServiceImpl<Foo> implements FooService{
 
 	@Override
 	public Foo createEntity() {
@@ -23,7 +23,7 @@ public class FooServiceImpl extends GenericServiceImpl<Foo> implements FooServic
 			set.add(new FormFieldValidation("fnumber" , "invalid number greater than 10"));
 		}
 		
-		if(!unique(foo , "fstring" , foo.getFstring())){
+		if(!isUnique(foo , "fstring" , foo.getFstring())){
 			set.add(new FormFieldValidation("fstring" , "fstring not unique"));
 		}
 		

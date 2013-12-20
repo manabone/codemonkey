@@ -18,30 +18,30 @@
 			// Specific attributes for the text fields for username / password. 
 			// The "name" attribute defines the name of variables sent to the server.
 		        items:[{ 
-	                fieldLabel:'Username', 
+	                fieldLabel:'用户名', 
 	                name:'username', 
 	                allowBlank:false,
-	                value : 'admin'
+	                value : '${username}' ? '${username}' : 'admin'
 	            },{ 
-	                fieldLabel:'Password', 
+	                fieldLabel:'密码', 
 	                name:'password', 
 	                inputType:'password', 
 	                allowBlank:false,
-	                value : 'admin'
+	                value : '${password}' ? '${password}' : 'admin'
 	            },{
 	            	editable: false,
 	                fieldLabel: 'Module',
-	                value: 'iiterp-hr',
+	                value: 'erp',
 	                name : 'module',
 	                xtype: 'combo',
 	                store: [
-	                    ['test', '测试'],
-	                    ['iiterp-hr', '人力资源']
+	                    ['erp', 'erp'],
+	                    ['test', 'test']
 	                ]
 	            }],
 		 
 		        buttons:[{ 
-	                text:'Login',
+	                text:'登录',
 	                formBind: true,
 	                // Function that fires when user clicks the button 
 	                handler:function(){ 

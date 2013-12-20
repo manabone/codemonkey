@@ -6,7 +6,7 @@ package com.codemonkey.ibatis.controller;
 public class FooListIbatisController extends AbsIbatisController{
 
 	@Override
-	String getQueryId() {
+	public String getQueryId() {
 		return "selectFooList";
 	}
 

@@ -9,9 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -124,10 +121,7 @@ public abstract class AbsMMController<T extends MM> extends AbsExtController<T> 
     		T t = service().get(Long.valueOf(id));
     		list.add(t);
     	}else if(StringUtils.isNotBlank(query)){
-    		Criterion[] criterions = {
-				Restrictions.like("name", query, MatchMode.ANYWHERE)	
-    		};
-    		list = service().find(criterions);
+    		list = service().findAllBy("name_Like" , '%' + query + '%');
     	}else if(sort != null || queryInfo != null){
     		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
     		list = service().findByQueryInfo(queryAndSort);

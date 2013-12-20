@@ -7,7 +7,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+/**
+ * 类描述：enum工具类
+ */
 public final class EnumUtils {
 
 	private EnumUtils(){}

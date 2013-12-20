@@ -1,28 +1,4 @@
-var CONSTANTS = {
-	PAGE_SIZE : 25,
-	APP_NAME : 'AM',
-	STORE : 'store',
-	VIEW : 'view',
-	MODEL: 'model',
-	CONTROLLER : 'controller',
-	APP_FOLDER : '/js/apps',
-	PROXY_TYPE : 'ajax',
-	READER_TYPE : 'json',
-	READER_ROOT : 'data',
-	READER_SUCCESS : 'success',
-	READER_TOTAL : 'totalCount',
-	
-	READ : 'read',
-	CREATE : 'create',
-	UPDATE : 'update',
-	DESTROY : 'destroy',
-	THEME : 'theme',
-	
-	FIELD_DEFAULTS: {
-        labelAlign: 'left',
-        labelWidth: 60
-    }
-};
+
 
 Ext.form.field.Date.prototype.format = 'Y-m-d';
 
@@ -118,13 +94,73 @@ var ExtUtils = {
 	//-------------------------------------------------------
 	//           UI UTILs
 	//-------------------------------------------------------
+	
+	formWin : function(config){
 		
+		var defaultConfig = {
+	        height: 400,
+	        width: 600,
+	        layout : 'fit',
+			
+			items : ExtUtils.searchingForm({
+				title : "Excel",
+		        layout : {
+					type : 'vbox',
+					align : 'stretch',
+					pack  : 'start'
+				},
+				url: config.formAction || '', 
+				items : config.formItems,
+				buttons : config.formButtons || [{
+					text: i18n.ok,
+					handler : function(){
+						var form = this.up('form').getForm();
+						if (form.isValid()) {
+							form.submit({standardSubmit : true});
+						}
+				    }
+				}, {
+				    text: i18n.cancel,
+				    handler : function(){
+				    	this.up('window').close();
+				    }
+				}]
+			})
+			
+		};
+		
+		var opt = Ext.apply({} , config , defaultConfig);
+		
+		var win = Ext.create('Ext.window.Window', opt);
+	    win.show();
+	    return win;
+	},
+	
+	//-------------------------------------------------------
+	//            UTILs
+	//-------------------------------------------------------
+	countDown : function(starTime , endTime ) {
+		var result = (endTime - starTime)/(1000);
+		var needHours;			
+		if(result <= 0){	
+			needHours = "已结束";
+		}else{
+			var m = Math.floor(result/60);
+			var s = Math.floor(result%60);
+			var h = Math.floor(m/60);
+			m = Math.floor(m%60);
+			needHours = h+"时"+m+"分"+s+"秒";
+		}
+		
+		return needHours;
+	},
+	
 	searchingForm : function(config){
 		var defaultConfig = {
 			xtype : 'form',
 			layout : 'column',
 			border : 0,
-			id : 'searchForm',
+//			id : 'searchForm',
 			title : i18n.search,
 			height : 100 ,
 			defaultType: 'textfield',
@@ -242,7 +278,7 @@ var ExtUtils = {
     	
     	me.reloadStore(store , config.searchParams);
     	
-    	Ext.apply(config.searchingForm , {
+    	config.searchingForm = Ext.apply({} , config.searchingForm , {
     		id : me.searchingFormId,
     		collapsed : false,
     		buttons : [
@@ -290,7 +326,16 @@ var ExtUtils = {
 								this.up('window').close();
 							}
 						}
-					}
+					},
+					dockedItems : [{
+				        xtype : 'toolbar',
+				        dock  : 'bottom',
+				        items: [config.bbar || {
+								xtype : 'pagingtoolbar',
+								store : store,
+								displayInfo: true
+							}]
+					}]
 		        }
 	        ],
 	        buttons : [{
@@ -347,7 +392,10 @@ var ExtUtils = {
 		if(!data) return;
 		var form = Ext.getCmp(formId).getForm();
 		for(var p in data){
-			form.findField(p).setValue(data[p]);
+			var field = form.findField(p);
+			if(field){
+				field.setValue(data[p]);
+			}
 		}
 		
 	},
@@ -387,6 +435,49 @@ var ExtUtils = {
 		}
 		
 		return data;
+	},
+	
+	/**
+	 * 设置form field属性，支持disable 和readOnly ， editable
+	 * */
+	setFormFieldState : function(formPanel , state , exceptFields){
+		var form = formPanel.getForm();
+		var fields = form.getFields();
+		for(var i = 0 ; i < fields.items.length ; i++){
+			if(this.indexOf(exceptFields , fields.items[i].name) < 0 ){
+				if(state == 'readOnly'){
+					fields.items[i].setReadOnly(true);
+				}else if(state == 'editable'){
+					fields.items[i].setReadOnly(false);
+				}
+			}
+		}
+	},
+	
+	indexOf : function (array , obj){
+		
+		var array1 = array || [];
+		
+		for(var i = 0 ; i < array1.length ; i++){
+			if(array1[i] == obj){
+				return i;
+			}
+		}
+		
+		return -1;
+	},
+	
+	setFormButtonState : function(win , state , exceptButtons){
+		var buttons = win.query('button');
+		for(var i = 0 ; i < buttons.length ; i++){
+			if(this.indexOf(exceptButtons , buttons[i].action) < 0 ){
+				if(state == 'enable'){
+					buttons[i].enable();
+				}else if(state == 'disable'){
+					buttons[i].disable();
+				}
+			}
+		}
 	},
 	
 	openUrl : function(url){
@@ -458,6 +549,13 @@ var ExtUtils = {
 	    }
 	},
 	
+	createModel : function(config){
+		return Ext.define(config.modelName , {
+	        extend: 'Ext.data.Model',
+	        fields: config.modelFields || ExtUtils.defaultModelFields,
+	        proxy: ExtUtils.proxy(config.modelName)
+		});
+	}, 
 	//-------------------------------------------------------
 	//           GRID UTILs
 	//-------------------------------------------------------	
@@ -574,14 +672,63 @@ var ExtUtils = {
 	     	columns :   [Ext.create('Ext.grid.RowNumberer')].concat(config.columns),
 	     	store : store,
 	     	features: config.features,
-	     	bbar:config.bbar || {
-				xtype : 'pagingtoolbar',
-				store : store,
-				displayInfo: true
-			}
+			dockedItems : [{
+		         xtype : 'toolbar',
+		         dock  : 'bottom',
+		         items: [config.bbar || {
+						xtype : 'pagingtoolbar',
+						store : store,
+						displayInfo: true
+					},{ 
+					    type: 'minus',
+					    iconCls : 'ss_accept ss_excel',
+					    handler: function(event, toolEl, panel){
+					    	var grid = this.up('grid');
+					    	
+					    	if(grid && grid.columns){
+					    		var columns = [];
+					    		for(var i = 0 ; i < grid.columns.length ; i++){
+					    			var col = grid.columns[i];
+					    			columns.push({dataIndex : col.dataIndex , header : encodeURI(col.text) , hidden :  col.hidden , xtype : col.xtype});
+					    		}
+					    		
+					    		var params = grid.store.getProxy().extraParams || {};
+					    		var store = grid.store;
+					    		var limit = store.pageSize;
+					    		var start = store.currentPage == 1 ? 0 : (store.currentPage - 1) * limit + 1;
+					    		
+					    		ExtUtils.formWin({
+					    			height : 200,
+					    			formItems :[
+					    			    { name  : 'scope', model : 'ExcelScopeKind', xtype : 'selectfield' , fieldLabel : "范围"},
+			    			            { name  : 'fileName'   , xtype : 'textfield' , fieldLabel : "文件名"},
+			    			            { name  : 'start', hidden:true, xtype : 'textfield' , fieldLabel : "start" , value : start},
+			    			            { name  : 'limit', hidden:true, xtype : 'textfield' , fieldLabel : "limit" , value : limit},
+			    			            {xtype:"textfield",  hidden:true, name:"cols", fieldLabel:"列" , value : Ext.encode(columns)},
+			    			            {xtype:"textfield", hidden:true, name:"sort", fieldLabel:"顺序", value : "[]"},
+			    			            {xtype:"textfield", hidden:true, name:"queryInfo", fieldLabel:"条件", value : Ext.encode(params)}
+		    			            ],
+		    			            formAction : NS.url(modelName , 'export'),
+		    			            modelName : modelName
+					    		});
+					    	}
+					    }
+					}
+		         ]
+			}]
 	    };
 		
 		return grid;
+	},
+	
+	exportExcelList : function(gridId , modelName) {
+//		var parameters = {};
+//		if(!Strings.isEmpty(path)){
+//			var url = path + '?columnConfig=' + 
+//			CUtils.myEncodeURI(CUtils.jsonEncode(this.getColumnConfigArray(grid))) + "&" + Ext.urlEncode(parameters);
+//			document.forms["noDataForm"].action = url;
+//			document.forms["noDataForm"].submit();
+//		}
 	},
 	
 	//array grid
@@ -596,6 +743,7 @@ var ExtUtils = {
 		
 		config.columns = [Ext.create('Ext.grid.RowNumberer')].concat(config.columns);
 		
+		//FIXME 独立成一个方法构建jsonStore
 		var modelConfig = {
 	        model: config.modelName,
 	        data : []
@@ -606,14 +754,34 @@ var ExtUtils = {
 		}
 		
 		var store = Ext.create('Ext.data.JsonStore', modelConfig);
-		
-		Ext.apply(config , {
-			store : store
-		});
+       
+		Ext.apply(config , { store : store },{ 
+			plugins : [
+		           Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})
+	    	]}
+		);
 		
 		var grid = Ext.create('Ext.grid.Panel', config );
 		
 		return grid;
+	},
+	
+	jsonStore : function(config){
+		Ext.define(config.model, {
+		    extend: 'Ext.data.Model',
+		    fields: config.fields
+		});
+		
+		var modelConfig = {
+	        model: config.model,
+	        data : []
+		};
+		
+		if(config.data){
+			Ext.apply(modelConfig , {data:config.data});
+		}
+		
+		return Ext.create('Ext.data.JsonStore', modelConfig);
 	},
 	
 	removeFromGrid : function(grid){
@@ -639,7 +807,7 @@ var ExtUtils = {
 		return null;
 	},
 	
-	reloadStore : function(store , params){
+	reloadStore : function(store , params , fn){
 		var proxy = store.getProxy();
 		if(params){
 			proxy.extraParams = {
@@ -647,7 +815,13 @@ var ExtUtils = {
 			};
 			store.load({
 				callback : function(records, operation, success){
-					if(!success){
+					
+					if(success && fn){
+						fn(records, operation);
+					}
+					
+					if(!success && operation && operation.request && operation.request.scope 
+							&& operation.request.scope.reader && operation.request.scope.reader.jsonData){
 						Ext.Msg.alert('error',operation.request.scope.reader.jsonData["errorMsg"]);
 					}
 				}
@@ -679,7 +853,7 @@ var ExtUtils = {
 		}
 		
 		if(grid && grid.getStore()){
-			this.storeReload(grid.getStore());
+			this.reloadStore(grid.getStore());
 		}
 		
 	},
@@ -691,25 +865,27 @@ var ExtUtils = {
 			var cols = grid.columns;
 			for(var i=0; i<cols.length;i++ ) {
 				var fn = cols[i].dataIndex;
-				switch(cols[i].fieldType){
-					case "text" :
-						data2[fn] = '';
-						break;
-					case "integer" :
-//						data2[fn] = 0;
-						break;
-//					case "number" : 
-//						data2[fn] = 0;
-//						break;
-					case "date" : 
-						data2[fn] = '';
-						break;
-					case "checkbox" : 
-						data2[fn] = false;
-						break;
-					default :
-						data2[fn] = '';
-						break;
+				if(fn){
+					switch(cols[i].fieldType){
+						case "text" :
+							data2[fn] = '';
+							break;
+						case "integer" :
+	//						data2[fn] = 0;
+							break;
+	//					case "number" : 
+	//						data2[fn] = 0;
+	//						break;
+						case "date" : 
+							data2[fn] = '';
+							break;
+						case "checkbox" : 
+							data2[fn] = false;
+							break;
+						default :
+							data2[fn] = '';
+							break;
+					}
 				}
 			}
 			Ext.apply(data2,data);
@@ -770,15 +946,9 @@ var ExtUtils = {
 	//-------------------------------------------------------
 	//           STORE UTILs
 	//-------------------------------------------------------	
-	proxy : function(modelName){
+	proxy : function(modelName , action){
 		var proxy = {
 			type: CONSTANTS.PROXY_TYPE,
-			api: {
-				read : NS.url(modelName , CONSTANTS.READ),
-				update : NS.url(modelName , CONSTANTS.UPDATE),
-				create : NS.url(modelName , CONSTANTS.CREATE),
-				destroy : NS.url(modelName , CONSTANTS.DESTROY)
-			},
 			reader: {
 				type: CONSTANTS.READER_TYPE,
 				root: CONSTANTS.READER_ROOT,
@@ -786,6 +956,23 @@ var ExtUtils = {
 				totalProperty: CONSTANTS.READER_TOTAL	
 			}
 		};
+		
+		if(action){
+			Ext.apply(proxy , {
+				api: {
+					read : NS.url(modelName , action)
+				}
+			});
+		}else{
+			Ext.apply(proxy , {
+				api: {
+					read : NS.url(modelName , CONSTANTS.READ),
+					update : NS.url(modelName , CONSTANTS.UPDATE),
+					create : NS.url(modelName , CONSTANTS.CREATE),
+					destroy : NS.url(modelName , CONSTANTS.DESTROY)
+				}
+			});
+		}
 		return proxy;
 	},
 	
@@ -825,20 +1012,20 @@ var ExtUtils = {
 		return proxy;
 	},
 	
-	storeReload : function(store , params){
-		
-		if(!store) return;
-		
-		var proxy = store.getProxy();
-		proxy.extraParams = params || {};
+//	storeReload : function(store , params){
+//		
+//		if(!store) return;
+//		
+//		var proxy = store.getProxy();
+//		proxy.extraParams = params || {};
 //		store.load({
 //			callback : function(records, operation, success){
 //				if(!success){
-//					Ext.Msg.alert('error',operation.request.scope.reader.jsonData["errorMsg"]);
+//					Ext.Msg.alert('error','error');
 //				}
 //			}
 //		});
-	},
+//	},
 	
 	buildQueryInfo : function(obj){
 		return {queryInfo : Ext.encode(obj)};
@@ -927,6 +1114,16 @@ var ExtUtils = {
 			xtype : 'panel',
 			padding : 5,
     		bodyPadding : 5,
+    		fieldDefaults: CONSTANTS.FIELD_DEFAULTS
+    	});
+		return p;
+	},
+	
+	container : function(config){
+		var p = Ext.apply({} , config , {
+			xtype : 'container',
+			padding : 0,
+    		bodyPadding : 0,
     		fieldDefaults: CONSTANTS.FIELD_DEFAULTS
     	});
 		return p;
@@ -1024,11 +1221,21 @@ var ExtUtils = {
 	    			var data = op.request.scope.reader.jsonData["data"];
 	    			var errorMsg = op.request.scope.reader.jsonData["errorMsg"];
 	    			ExtUtils.clearInvalidFields(module.formId);
-	    			ExtUtils.handleError(errorKey , errorMsg , errors , data);
-	    			
+	    			ExtUtils.handleError(errorKey , errorMsg , errors , data , module);
+	    			ExtUtils.record2form(data , module.formId);
 	    			ExtUtils.unmask(Ext.getCmp(module.winId));
 				}
 	    	});
+		}
+	},
+	
+	handleError : function(errorKey , errorMsg , errors , data , module){
+		Ext.Msg.alert("Failed" , errorMsg);
+		
+		if(errorKey == "ValidationError" && errors){
+			ExtUtils.markInvalidFields(module.formId , errors);
+		}else if(errorKey == "BadObjVersionError" && data){
+			Ext.getCmp(module.formId).getForm().loadRecord(data);
 		}
 	},
 	
@@ -1046,11 +1253,12 @@ var ExtUtils = {
 			    	
 			    	var result = Ext.decode(response.responseText);
 			    	if(result.success === false){
-			    		ExtUtils.handleError(result.errorKey , result.errorMsg , result.errorFields , result.data);
+			    		ExtUtils.handleError(result.errorKey , result.errorMsg , result.errorFields , result.data , module);
 			    	}else {
 			    		var model = module.Model.create(result.data);
-			    		Ext.getCmp(module.formId).getForm().loadRecord(model);
-			    		module.manageControl(result.data);
+			    		var form = Ext.getCmp(module.formId).getForm();
+			    		form.loadRecord(model);
+			    		module.manageFields(form , result.data);
 			    		if(fn){
 				    		fn(module , result);
 				    	}
@@ -1066,6 +1274,29 @@ var ExtUtils = {
 		}
 	},
 	
+	doAction : function(modelName , action , params , fn){
+		var url = NS.url(modelName , action);
+		Ext.Ajax.request({
+		    url: url,
+		    method: 'post',
+		    params: params,
+		    success: function(response){
+		    	var result = Ext.decode(response.responseText);
+	    		if(fn){
+		    		fn(result);
+		    	}
+		    },
+		    failure: function(response, opts) {
+		    	Ext.Msg.alert("Failed","error occured");
+		    }
+		});
+	},
+	
+	urlDoAction : function(modelName , action , params){
+		var url = NS.url(modelName , action);
+		window.open(url+"?"+params);
+	},
+	
 	createBox : function(t, s){
         return '<div class="msg"><h3>' + t + '</h3><p>' + s + '</p></div>';
     },
@@ -1079,6 +1310,69 @@ var ExtUtils = {
             m.hide();
             m.slideIn('t').ghost("t", { delay: 1000, remove: true});
          }
+    },
+    
+    /*
+	 * powerTrees : [{
+	 * 					id : id,
+	 * 					name : name,
+	 * 					parent : parent
+	 * }]
+	 * 
+	 * return [{
+	 * 			id : id,
+	 * 			name : name,
+	 * 			menu : menu
+	 * }]
+	 * */
+    treeMenu : function(powerTrees){
+		var menu = [];
+		for(var i = 0; i < powerTrees.length; i++){
+			if(!powerTrees[i].parent){
+				menu.push({
+					id:powerTrees[i].id,
+			        text:powerTrees[i].name, 
+			        menu: ExtUtils.addScrollMenu(powerTrees, powerTrees[i].id),
+			        handler: function(){}
+				 });
+			}
+		}
+		return menu;
+    },
+    
+    addScrollMenu : function(powerTrees, menuid){
+    	var menuItem = [];
+        for (var i = 0; i < powerTrees.length; i++) {
+            var entity = powerTrees[i];
+            if (entity.parent == menuid) {
+            	menuItem.push({
+                    id: entity.id,
+                    text: entity.name
+                });
+            }
+        }
+        return menuItem;
+    },
+    
+    copyArrayProp : function(array , fromProp , toProp){
+    	if(array){
+    		for(var i = 0 ; i < array.length ; i++){
+    			array[i][toProp] = array[i][fromProp];
+    		}
+    	}
+    	return array;
+    },
+    /**
+     * 判断是否包含中文字符
+     * @param str
+     * @returns true/false
+     */
+    isChinese : function(str){
+    	var patrn=/[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi; 
+    	if(!patrn.exec(str)){ 
+    		return false; 
+    	}
+    	return true;
     }
 	
 };

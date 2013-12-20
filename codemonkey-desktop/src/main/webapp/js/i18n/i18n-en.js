@@ -15,6 +15,7 @@ var i18n = {
 	actions : 'Actions',
 	add : 'Add',
 	edit : 'Edit',
+	show : 'Show',
 	cancel : 'Cancel',
 	originVersion : 'Origin Version',
 	creationInfo : 'Creation Info',
@@ -24,7 +25,6 @@ var i18n = {
     settings:'Settings',
     logout:'Logout',
     tips:'Are you sure you want to logout?',
-    start:'start'	
-    
-   
+    start:'start',	
+    select : 'Select'
 };

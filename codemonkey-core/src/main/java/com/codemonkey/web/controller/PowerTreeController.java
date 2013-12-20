@@ -1,7 +1,9 @@
 package com.codemonkey.web.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.codemonkey.domain.AppRole;
 import com.codemonkey.domain.PowerTree;
 import com.codemonkey.service.PowerTreeService;
 import com.codemonkey.tree.ChildNode;
@@ -29,11 +32,13 @@ public class PowerTreeController extends AbsExtController<PowerTree>{
 	
 	@RequestMapping("read")
     @ResponseBody
-    public String read(@RequestParam(required=false) String id) {
+    public String read(@RequestParam(required=false) String id ,
+    		@RequestParam(required=false) AppRole appRole) {
+		
 		JSONObject jo = new JSONObject();
 		JSONArray data = new JSONArray();
 		
-		List<TreeNode> treeNodes = buildTreeNodes(id);
+		List<TreeNode> treeNodes = buildTreeNodes(id, appRole);
 
 		if(CollectionUtils.isNotEmpty(treeNodes)){
 			for(TreeNode node : treeNodes){
@@ -46,7 +51,14 @@ public class PowerTreeController extends AbsExtController<PowerTree>{
 		return jo.toString();
 	}
 	
-	private List<TreeNode> buildTreeNodes(String rootId) {
+	public List<TreeNode> buildTreeNodes(String rootId, AppRole appRole) {
+		Set<Long> powerTreeIdSet = new HashSet<Long>();
+		if(appRole != null){
+			Set<PowerTree> powerTrees = appRole.getPowerTrees();
+			for(PowerTree p : powerTrees){
+				powerTreeIdSet.add(p.getId());
+			}
+		}
 		
 		List<TreeNode> treeNodes = new ArrayList<TreeNode>();
 		
@@ -65,11 +77,14 @@ public class PowerTreeController extends AbsExtController<PowerTree>{
 				
 				if(CollectionUtils.isNotEmpty(nodes)){
 					ParentNode node = new ParentNode();
-					node.setId(root.getId().toString());
-					node.setName(root.getName());
-					node.setText(root.getName());
-					
-					List<TreeNode> childrenNodes = buildTreeNodes(node.getId().toString());
+					node.addAttr("id" , root.getId().toString());
+					node.addAttr("name" , root.getName());
+					node.addAttr("text" , root.getName());
+					if(!powerTreeIdSet.add(root.getId())){
+						node.addAttr("checked" , true);
+					}
+
+					List<TreeNode> childrenNodes = buildTreeNodes(node.getAttr("id").toString(), appRole);
 					
 					if(CollectionUtils.isNotEmpty(childrenNodes)){
 						for(TreeNode childNode : childrenNodes){
@@ -79,12 +94,14 @@ public class PowerTreeController extends AbsExtController<PowerTree>{
 					treeNodes.add(node);
 				}else{
 					ChildNode node = new ChildNode();
-					node.setId(root.getId().toString());
-					node.setName(root.getName());
-					node.setText(root.getName());
+					node.addAttr("id" , root.getId().toString());
+					node.addAttr("name" , root.getName());
+					node.addAttr("text" , root.getName());
+					if(!powerTreeIdSet.add(root.getId())){
+						node.addAttr("checked" , true);
+					}
 					treeNodes.add(node);
 				}
-				powerTreeService.findAllBy("parent_isNull");
 			}
 		}
 		

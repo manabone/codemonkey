@@ -15,6 +15,7 @@ var i18n = {
 	actions : '操作',
 	add : '添加',
 	edit : '修改',
+	show : '查看',
 	cancel : '取消',
 	originVersion : '版本',
 	creationInfo : '创建信息',
@@ -24,5 +25,6 @@ var i18n = {
 	settings:'设置',
 	logout:'退出',
 	tips:'您确定要退出吗？',
-	start:'开始'
+	start:'开始',
+	select : '请选择'
 };

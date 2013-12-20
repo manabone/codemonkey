@@ -46,7 +46,7 @@ public class PowerTree extends AbsEE{
 	public JSONObject listJson() {
 		JSONObject jo = super.listJson();
 		jo.put("parent", OgnlUtils.stringValue("parent.id", this));
-		jo.put("parent_name", OgnlUtils.stringValue("parent_name", this));
+		jo.put("parent_name", OgnlUtils.stringValue("parent.name", this));
 		return jo;
 	}
 

@@ -52,6 +52,10 @@ Ext.define('Ext.ux.desktop.Module', {
             	tbar : tbar,
                 bbar : bbar
             });
+            
+            win.on('close' , function ( panel, eOpts ){
+            	me.onWindowClose();
+            });
         }else{
         	desktop.taskbar.removeTaskButton(win.taskButton);        	
         	win.taskButton = desktop.taskbar.addTaskButton(win);
@@ -59,11 +63,7 @@ Ext.define('Ext.ux.desktop.Module', {
         }
         win.show();
         
-        win.on('close' , function ( panel, eOpts ){
-        	me.onWindowClose();
-        });
-        
-        this.afterWindowCreate();
+        this.afterWindowCreate(config);
         this.fixWindowOverflowY();
         this.processSecurityComponents();
         if(config && config.callback){

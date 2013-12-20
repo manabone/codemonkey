@@ -13,9 +13,8 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import com.codemonkey.domain.AbsEntity;
 
 /**
- * @author zhaobin
+ * 类描述：db工具类
  */
-
 public class DBHelper {
 
 	private Logger logger = SysUtils.getLog(DBHelper.class);

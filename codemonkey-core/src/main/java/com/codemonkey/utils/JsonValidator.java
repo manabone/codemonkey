@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.FormFieldValidation;
 import com.codemonkey.error.RowFieldValidation;
-
+/**
+ * 类描述：json验证类
+ */
 public class JsonValidator {
 
 	public static FieldValidation validate(String key , JSONObject body , ValidateType validateType , String label){

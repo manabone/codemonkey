@@ -8,7 +8,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.StopWatch;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +18,29 @@ import com.codemonkey.error.BadObjVersionError;
 import com.codemonkey.error.FieldValidation;
 import com.codemonkey.error.FormFieldValidation;
 import com.codemonkey.error.ValidationError;
+import com.codemonkey.security.Operation;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
+import com.codemonkey.utils.ResourceUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
 @Transactional
-public abstract class GenericServiceImpl<T extends IEntity> extends AbsService implements GenericService<T> {
+public abstract class GenericServiceImpl<T extends IEntity> extends AbsService
+		implements GenericService<T> {
 
+	@Autowired private ResourceUtils resourceUtils;
+	
 	private GenericDao<T> dao;
-	
+
 	private Class<?> type;
-	
+
 	@Override
 	public abstract T createEntity();
-	
+
+	protected SyncService getSyncService() {
+		return null;
+	}
+
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.type = ClassHelper.getSuperClassGenricType(getClass());
@@ -40,303 +48,120 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		dao.setSessionFactory(sessionFactory);
 		dao.setType(getType());
 	}
-	
+
 	protected GenericDao<T> getDao() {
 		return dao;
 	}
-	
-	public T get(Long id) {
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		T t = getDao().get(id);
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		return t;
-	}
 
 	public void save(T entity) {
-		
+
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		
-		if(entity.isOptimisticLockingFailure()){
+
+		if (entity.isOptimisticLockingFailure()) {
 			T t = get(entity.getId());
 			t.setOriginVersion(null);
 			throw new BadObjVersionError(t.detailJson());
 		}
-    	
+
 		entity.setOriginVersion(null);
-    	
-		
+
 		Set<FieldValidation> set = validate(entity);
-		if(CollectionUtils.isNotEmpty(set)){
+		if (CollectionUtils.isNotEmpty(set)) {
 			throw new ValidationError(set);
 		}
-		
+
 		getDao().save(entity);
-		
+
+		SyncService srv = getSyncService();
+
+		if (srv != null) {
+			srv.dosync(entity, Operation.UPDATE);
+		}
+
 		stopWatch.stop();
 		getLog().info(stopWatch);
-		
+
 	}
-	
-	//implements by subclass if needed
-	//if validation failed , throw ValidationError exception
+
+	// implements by subclass if needed
+	// if validation failed , throw ValidationError exception
 	protected Set<FieldValidation> validate(T entity) {
 		Set<FieldValidation> errorSet = new HashSet<FieldValidation>();
-		if(entity == null){
+		if (entity == null) {
 			return errorSet;
 		}
-		
-		if(StringUtils.isNotBlank(entity.getCode())){
-			if(!unique(entity, "code" , entity.getCode())){
-				errorSet.add(new FormFieldValidation("code" , "code must be unique"));
+
+		if (StringUtils.isNotBlank(entity.getCode())) {
+			if (!isUnique(entity, "code", entity.getCode())) {
+				errorSet.add(new FormFieldValidation("code", resourceUtils.msg("code")));
 			}
 		}
-		
-//		List<Field> fields = ClassHelper.getAllFields(type);
-//		if(CollectionUtils.isNotEmpty(fields)){
-//			for(Field f : fields){
-//				if(f.getAnnotation(Length.class) != null){
-//					Length len = f.getAnnotation(Length.class);
-//					
-//					String value = OgnlUtils.stringValue(f.getName(), entity);
-//					if(value.length() > len.max()){
-//						errorSet.add(new FormFieldValidation(f.getName() , "数据超过最大长度:" + len.max()));
-//					}
-//					
-//				}
-//			}
-//		}
-		
+
+		// List<Field> fields = ClassHelper.getAllFields(type);
+		// if(CollectionUtils.isNotEmpty(fields)){
+		// for(Field f : fields){
+		// if(f.getAnnotation(Length.class) != null){
+		// Length len = f.getAnnotation(Length.class);
+		//
+		// String value = OgnlUtils.stringValue(f.getName(), entity);
+		// if(value.length() > len.max()){
+		// errorSet.add(new FormFieldValidation(f.getName() , "数据超过最大长度:" +
+		// len.max()));
+		// }
+		//
+		// }
+		// }
+		// }
+
 		return errorSet;
 	}
 
-	public void delete(Long id) {
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		getDao().delete(id);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-	
-	}
-
-	public List<T> findAll() {
-
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findAll();
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-	
-	public List<T> findAll(int start , int limit){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findAll(start , limit);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-	
-	public List<T> find(Criterion... criterions){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findByCriteria(criterions);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-	
-	public List<T> find(int start, int limit, Criterion... criterions) {
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findByCriteria(start , limit , criterions);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-
-	public T findBy(String query , Object... params){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		T t = getDao().findBy(query , params);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return t;
-	}
-	
-	public T findBy(String query , String[] joins , Object... params){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		T t = getDao().findBy(query , joins , params);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return t;
-	}
-	
-	@Override
-	public long countBy(String query, Object... params) {
-		return countBy(query , null , params);
-	}
-
-	@Override
-	public long countBy(String query, String[] joins, Object... params) {
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		long count = getDao().countBy(query, joins , params);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return count;
-	}
-	
-	public List<T> findAllBy(String query , Object... params){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findAllBy(query , params);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-	
-	@Override
-	public List<T> findAllBy(String query, String[] joins, Object... params) {
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findAllBy(query , joins , params);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-	}
-	
-	public long count(Criterion... criterions){
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		long count = getDao().count(criterions);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return count;
-	}
-	
 	public T convert(String source) {
-		
-		if(StringUtils.isEmpty(source)){
+
+		if (StringUtils.isEmpty(source)) {
 			return null;
 		}
-		
+
 		return getDao().get(Long.valueOf(source));
 	}
-	
-	public List<T> findByQueryInfo(JSONObject queryAndSort, Integer start, Integer limit) {
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
-		List<T> list = getDao().findByQueryInfo(queryAndSort , start , limit);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-		
+
+	@Override
+	public void doDelete(List<Long> list) {
+		if(CollectionUtils.isNotEmpty(list)){
+			for(Long id : list){
+				delete(id);
+			}
+		}
 	}
 
-	public List<T> findByQueryInfo(JSONObject queryInfo) {
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-
-		List<T> list = getDao().findByQueryInfo(queryInfo);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return list;
-		
-	}
-
-	public long countByQueryInfo(JSONObject queryInfo) {
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-
-		long count = getDao().countByQueryInfo(queryInfo);
-		
-		stopWatch.stop();
-		getLog().info(stopWatch);
-		
-		return count;
-		
-	}
-	
-	public T doSave(JSONObject body , CustomConversionService ccService){
+	public T doSave(JSONObject body, CustomConversionService ccService) {
 		validateInput(body);
-		T t = buildEntity(body , ccService);
+		T t = buildEntity(body, ccService);
 		save(t);
 		return t;
 	}
-	
-	public boolean unique(T t , String query , Object... params){
-		
-		long count = countBy(query , params);
-		
-		if(t.isNew()){
-			if(count > 0){
+
+	public boolean isUnique(T t, String query, Object... params) {
+
+		long count = countBy(query, params);
+
+		if (t.isNew()) {
+			if (count > 0) {
 				return false;
 			}
-		}else{
-			if(count > 1){
+		} else {
+			if (count > 1) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	private void validateInput(JSONObject body) {
 		Set<FieldValidation> errorSet = validateJson(body);
 		errorSet.remove(null);
-		if(CollectionUtils.isNotEmpty(errorSet)){
+		if (CollectionUtils.isNotEmpty(errorSet)) {
 			throw new ValidationError(errorSet);
 		}
 	}
@@ -345,25 +170,27 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService i
 		return new HashSet<FieldValidation>();
 	}
 
-	public T buildEntity(JSONObject params , CustomConversionService ccService){
+	public T buildEntity(JSONObject params, CustomConversionService ccService) {
 		T t = null;
 		Long id = extractId(params);
-		
-		if(id == null){
+
+		if (id == null) {
 			t = createEntity();
-			ClassHelper.build(params, t , ccService);
-		}else{
+			ClassHelper.build(params, t, ccService);
+		} else {
 			t = get(id);
-			if(t != null){
-				ClassHelper.build(params, t , ccService);
+			if (t != null) {
+				ClassHelper.build(params, t, ccService);
 			}
 		}
 		return t;
 	}
-	
+
 	private Long extractId(JSONObject params) {
 		Long id = null;
-		if(params.has(ExtConstant.ID) && StringUtils.isNotBlank(params.getString(ExtConstant.ID)) && !"null".equals(params.getString(ExtConstant.ID))){
+		if (params.has(ExtConstant.ID)
+				&& StringUtils.isNotBlank(params.getString(ExtConstant.ID))
+				&& !"null".equals(params.getString(ExtConstant.ID))) {
 			id = params.getLong(ExtConstant.ID);
 		}
 		return id;

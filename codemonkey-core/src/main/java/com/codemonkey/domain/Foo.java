@@ -48,6 +48,9 @@ public class Foo extends AbsEE{
 	
 	@OneToMany(mappedBy="foo")
 	private List<Bar> bars;
+	
+	@ManyToOne
+	private Foo parent;
 
 	@Override
 	public JSONObject listJson() {
@@ -152,6 +155,14 @@ public class Foo extends AbsEE{
 
 	public void setBars(List<Bar> bars) {
 		this.bars = bars;
+	}
+
+	public Foo getParent() {
+		return parent;
+	}
+
+	public void setParent(Foo parent) {
+		this.parent = parent;
 	}
 	
 }

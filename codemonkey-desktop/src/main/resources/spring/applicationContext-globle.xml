@@ -49,6 +49,7 @@
             <list>
 		        <value>classpath:messages/Foo</value>
 		        <value>classpath:messages/AppRole</value>
+		        <value>classpath:messages_settings</value>
             </list>
         </property>
         <property name="cacheSeconds" value="120"/>

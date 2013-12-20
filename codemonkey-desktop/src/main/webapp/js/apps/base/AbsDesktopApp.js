@@ -58,7 +58,7 @@ Ext.define('AM.base.AbsDesktopApp', {
                     },
                     '-',
                     {
-                        text:'ChangePassword',
+                        text:'修改密码',
                         iconCls:'change',
                         handler: me.changePassword,
                         scope: me
@@ -89,14 +89,14 @@ Ext.define('AM.base.AbsDesktopApp', {
          
     changePassword : function(){
     	var formModule = this.getModule('changePasswordFormModule');
-	 	formModule.createWindow();
+	 	formModule.createWindow({action:'edit'});
     },
 
     onLogout: function () {
         Ext.Msg.confirm(i18n.logout, i18n.tips , function(btn){
         	if(btn == 'yes'){
         		ExtUtils.mask();
-        		window.location = '/app/auth/logout';
+        		window.location = '${ctx}/app/auth/logout';
         	}
         });
     },

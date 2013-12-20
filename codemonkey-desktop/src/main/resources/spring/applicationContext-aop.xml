@@ -28,5 +28,13 @@
 	       
 	        <aop:before pointcut-ref="businessService" method="beforeSavingEntity"/>
 	    </aop:aspect>  
+	    
+	    <!--  <aop:aspect id="AopAfterDealer" ref="aopAfterDealer">  
+	        <aop:pointcut id="afterService"  
+	            expression="execution(* com.codemonkey.service..*.save*(..))" />
+	       
+	        <aop:after-returning pointcut-ref="afterService" method="afterSavingEntity" />
+	    </aop:aspect>  -->
     </aop:config>
+    
 </beans>

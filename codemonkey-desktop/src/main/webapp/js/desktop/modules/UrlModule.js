@@ -3,9 +3,8 @@ Ext.define('AM.modules.UrlModule', {
     extend: 'Ext.ux.desktop.Module',
 
     createWindowItem : function(){
-		var url = NS.url(this.modelName);
 		var config = {
-			html : '<iframe width="100%" height="500px" style=\"border:0px;\"" src="' +url + '"></iframe>'
+			html : '<iframe width="100%" height="500px" style=\"border:0px;\"" src="' + this.url + '"></iframe>'
 		};
 		return config;
 	},

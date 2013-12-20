@@ -9,6 +9,30 @@
 	        }
 	    }
 	});
+	
+	Ext.define('OverrideLoadMask', {
+	    override: 'Ext.LoadMask',
+	    
+	    setZIndex: function(index) {
+	        var me = this,
+	            owner = me.activeOwner;
+	            
+	        if (owner) {
+	        	var zIndex = owner.el.getStyle('zIndex');
+	        	//fix IE zIndex problem
+	        	if(zIndex == 'auto'){
+	        		zIndex = 0;
+	        	}else{
+	        		zIndex = parseInt(zIndex);
+	        	}
+	        	
+	            index = parseInt(zIndex , 10) + 1;
+	        }
+
+	        me.getMaskEl().setStyle('zIndex', index - 1);
+	        return me.mixins.floating.setZIndex.apply(me, arguments);
+	    }
+	});
 
 	Ext.form.field.Base.prototype.initComponent = function(){
 		var me = this; 

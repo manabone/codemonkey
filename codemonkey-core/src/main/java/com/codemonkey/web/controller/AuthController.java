@@ -1,5 +1,6 @@
 package com.codemonkey.web.controller;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.codemonkey.domain.AppRole;
 import com.codemonkey.domain.AppUser;
 import com.codemonkey.domain.CmpPermission;
+import com.codemonkey.domain.PowerTree;
 import com.codemonkey.service.AppUserService;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
@@ -49,8 +51,15 @@ public class AuthController {
 	private Logger log = SysUtils.getLog(AuthController.class);
 	
 	@RequestMapping(SIGNUP)
-    public String signup() {
-        return SIGNUP;
+    public String signup(ModelMap map , @RequestParam(required = false) String username , @RequestParam(required = false) String password) {
+        
+		if(StringUtils.isNotBlank(username)){
+			map.put("username", username);
+		}
+		if(StringUtils.isNotBlank(password)){
+			map.put("password", password);
+		}
+		return SIGNUP;
     }
 	
 	@RequestMapping(HOME)
@@ -58,12 +67,12 @@ public class AuthController {
 
 		JSONObject pageData = new JSONObject();
 		JSONArray cmpPermissions = new JSONArray();
-		
-		pageData.put(ExtConstant.CMP_PERMISSIONS, cmpPermissions);
+		JSONArray powerTrees = new JSONArray();
 		
 		AppUser user = (AppUser) session.getAttribute(SysUtils.CURRENCT_USER);
 		
 		Set<AppRole> roles = user.getRoles();
+		Set<Long> powerTreeIdSet = new HashSet<Long>();
 		
 		if(CollectionUtils.isNotEmpty(roles)){
 			for(AppRole role : roles){
@@ -73,9 +82,22 @@ public class AuthController {
 						cmpPermissions.put(cmp.listJson());
 					}
 				}
+				
+				
+				Set<PowerTree> powerTreesSet = role.getPowerTrees();
+				if(CollectionUtils.isNotEmpty(powerTreesSet)){
+					for(PowerTree p : powerTreesSet){
+						if(powerTreeIdSet.add(p.getId())){
+							powerTrees.put(p.listJson());
+						}
+					}
+				}
 			}
 		}
 		
+		pageData.put(ExtConstant.CMP_PERMISSIONS, cmpPermissions);
+		pageData.put(ExtConstant.POWER_TREES, powerTrees);
+		pageData.put(ExtConstant.CURRENT_USER_ID, user.getId());
 		map.put(ExtConstant.PAGE_DATA, pageData);
 		
         return HOME_PAGE;
@@ -103,7 +125,6 @@ public class AuthController {
     	
     	AppUser user = appUserService.findBy("username", username);
     	req.getSession().setAttribute(SysUtils.CURRENCT_USER, user);
-    	
 		return "redirect:home";
 	}
 	

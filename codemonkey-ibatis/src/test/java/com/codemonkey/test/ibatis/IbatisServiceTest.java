@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.codemonkey.ibatis.dao.IbatisDao;
 import com.codemonkey.ibatis.service.IbatisService;
+import com.codemonkey.ibatis.utils.IbatisUtils;
 import com.codemonkey.utils.ExtConstant;
 
 
@@ -36,7 +37,6 @@ public class IbatisServiceTest{
 	public void testQuery() throws ParseException{
 		
 		prepareData();
-		
 		List<Map<String , Object>> list = ibatisService.query("test.selectAppUserList", null);
 		assertEquals(2 , list.size());
 		
@@ -46,14 +46,14 @@ public class IbatisServiceTest{
 		query.put("username_Like", "adm");
 		queryAndSort.put(ExtConstant.QUERY, query);
 		
-		list = ibatisService.query("test.selectAppUserList", queryAndSort);
+		list = ibatisService.query("test.selectAppUserList", IbatisUtils.jsonToMap(queryAndSort));
 		assertEquals(1 , list.size());
 		
 		queryAndSort = new JSONObject();
 		JSONArray sort = new JSONArray("[{\"property\":\"username\",\"direction\":\"ASC\"}]");
 		queryAndSort.put(ExtConstant.SORT, sort);
 		
-		list = ibatisService.query("test.selectAppUserList", queryAndSort);
+		list = ibatisService.query("test.selectAppUserList", IbatisUtils.jsonToMap(queryAndSort));
 		assertEquals(2 , list.size());
 		
 		assertEquals("admin" , list.get(0).get("username"));
@@ -78,7 +78,6 @@ public class IbatisServiceTest{
 	public void testCount(){
 
 		prepareData();
-		
 		long count = ibatisService.count("test.selectAppUserList_count", null);
 		assertEquals(2 , count);
 		

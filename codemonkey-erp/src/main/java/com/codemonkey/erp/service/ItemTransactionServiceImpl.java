@@ -11,10 +11,10 @@ import com.codemonkey.erp.domain.ItemPlanning;
 import com.codemonkey.erp.domain.ItemStockCard;
 import com.codemonkey.erp.domain.ItemTransaction;
 import com.codemonkey.erp.domain.Transaction;
-import com.codemonkey.service.GenericServiceImpl;
+import com.codemonkey.service.PhysicalServiceImpl;
 
 @Service
-public class ItemTransactionServiceImpl extends GenericServiceImpl<ItemTransaction> implements ItemTransactionService{
+public class ItemTransactionServiceImpl extends PhysicalServiceImpl<ItemTransaction> implements ItemTransactionService{
 
 	@Autowired private ItemStockCardService itemStockCardService;
 

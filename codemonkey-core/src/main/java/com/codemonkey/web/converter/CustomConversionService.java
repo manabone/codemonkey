@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.utils.SysUtils;
 
 @Service
-public class CustomConversionService extends
-		FormattingConversionServiceFactoryBean {
+public class CustomConversionService extends FormattingConversionServiceFactoryBean {
 
 	private Logger logger = SysUtils.getLog(CustomConversionService.class);
 

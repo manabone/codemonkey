@@ -2,8 +2,6 @@
 Ext.define('AM.modules.FormModule', {
     extend: 'Ext.ux.desktop.Module',
 
-    hidden : true,
-    
     model : null,
 	store : null,
 	form : null,
@@ -20,10 +18,31 @@ Ext.define('AM.modules.FormModule', {
 	
 	create : Ext.emptyFn,
 	
-	manageControl : Ext.emptyFn,
+	manageFields : function(form , data){
+		var fieldManager = this.fieldManager();
+		
+		var form = Ext.getCmp(this.formId);
+		var win = Ext.getCmp(this.winId);
+		
+		if(this.action == 'show'){
+			ExtUtils.setFormFieldState(form , 'readOnly' , fieldManager.exceptFields);
+			ExtUtils.setFormButtonState(win , 'disable' , fieldManager.exceptButtons);
+		}else{
+			ExtUtils.setFormFieldState(form , 'editable' , fieldManager.exceptFields);
+			ExtUtils.setFormButtonState(win , 'enable' , fieldManager.exceptButtons);
+		}
+		
+	},
 	
 	modelFields : function(){ 
     	return ExtUtils.defaultModelFields;
+    },
+    
+    fieldManager : function(){
+    	return {
+    		exceptFields : ['id' , 'createdBy' , 'modifiedBy' , 'originVersion' , 'creationDate' , 'modificationDate'],
+    		exceptButtons : ['cancel']
+    	};
     },
     
     reloadListGrid : function(){
@@ -37,11 +56,11 @@ Ext.define('AM.modules.FormModule', {
 	
 	init : function(){
 		this.callParent();
-        this.Model = Ext.define(this.modelName , {
-	        extend: 'Ext.data.Model',
-	        fields: this.modelFields() || ExtUtils.defaultModelFields,
-	        proxy: ExtUtils.proxy(this.modelName)
-		});
+        
+		this.Model = ExtUtils.createModel({
+        	modelName : this.modelName , 
+        	modelFields : this.modelFields()
+        });
         
     	this.form = {
 	    	xtype : 'form',
@@ -56,6 +75,11 @@ Ext.define('AM.modules.FormModule', {
 	    	items : this.formItems() || ExtUtils.defaultFormItems
     	};
     },
+    
+    createWindow : function(config){
+    	this.action = config.action || 'show';
+    	this.callParent(arguments);
+    },
 	
     createWindowItem : function(){
     	var me = this;
@@ -69,22 +93,26 @@ Ext.define('AM.modules.FormModule', {
     	return form2;
     },
     
-    afterWindowCreate : function(){
-    	this.loadEntityToForm();
+    afterWindowCreate : function(config){
+    	this.loadEntityToForm(config);
     },
     
     onWindowClose : function(){
     	this.reloadListGrid();
     },
     
-    loadEntityToForm : function(){
+    loadEntityToForm : function(config){
     	var me = this;
-    	if(me.entityId){
+    	if(config.readConfig){
+    		 me.reloadEntityToForm(me.modelName , config.readConfig.readAction , config.readConfig.readParams);
+    	}else if(me.entityId){
     		me.Model.load(me.entityId , {
         	    success: function(model) {
-        	        Ext.getCmp(me.formId).getForm().loadRecord(model);
+        	        var form = Ext.getCmp(me.formId).getForm();
+        	        form.loadRecord(model);
         	        me.afterModelLoad(model);
-        	        me.manageControl(model.data);
+        	        me.manageFields(form , model.data);
+        	        ExtUtils.clearInvalidFields(me.formId);
         	    }
         	});
     	}else{
@@ -93,9 +121,25 @@ Ext.define('AM.modules.FormModule', {
     			this.onTrigger1Click();
     		});
     		this.create();
+    		ExtUtils.clearInvalidFields(me.formId);
     	}
+    	
+    	
     },
     
+    reloadEntityToForm : function(model , action , param , fn){
+    	var me = this;
+    	ExtUtils.doAction(model , action , param , function(result){
+    		var form = Ext.getCmp(me.formId).getForm();
+    		form.loadRecord(result);
+    		me.afterModelLoad(result);
+	        me.manageFields(form , result.data);
+	        ExtUtils.clearInvalidFields(me.formId);
+    		if(fn){
+    			fn(result);
+    		}
+    	});
+    },
     // actions 
     saveAction : {
 		action : 'save', text: i18n.save, iconCls : 'icon-update'

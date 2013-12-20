@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.PowerTree;
 
 @Service
-public class PowerTreeServiceImpl extends GenericServiceImpl<PowerTree> implements PowerTreeService{
+public class PowerTreeServiceImpl extends PhysicalServiceImpl<PowerTree> implements PowerTreeService{
 
 	@Override
 	public PowerTree createEntity() {

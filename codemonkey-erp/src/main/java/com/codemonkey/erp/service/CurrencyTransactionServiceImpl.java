@@ -11,10 +11,10 @@ import com.codemonkey.erp.domain.CurrencyPlanning;
 import com.codemonkey.erp.domain.CurrencyStockCard;
 import com.codemonkey.erp.domain.CurrencyTransaction;
 import com.codemonkey.erp.domain.Transaction;
-import com.codemonkey.service.GenericServiceImpl;
+import com.codemonkey.service.PhysicalServiceImpl;
 
 @Service
-public class CurrencyTransactionServiceImpl extends GenericServiceImpl<Transaction> implements CurrencyTransactionService{
+public class CurrencyTransactionServiceImpl extends PhysicalServiceImpl<Transaction> implements CurrencyTransactionService{
 
 	@Autowired private CurrencyStockCardService currencyStockCardService;
 

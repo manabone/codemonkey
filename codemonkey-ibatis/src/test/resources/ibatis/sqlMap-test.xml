@@ -6,7 +6,7 @@
 <sqlMap namespace="test">
 	
 	<insert id="insertTestAppUser" parameterClass="java.util.HashMap">
-		insert into app_user (id , username , password) values (#id# , #username# , #password#)
+		insert into app_user (id , username , password, dtype) values (#id# , #username# , #password#, 'AppUser')
 	</insert>
 	
 	<sql id="selectAppUserList_where">

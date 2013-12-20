@@ -36,4 +36,10 @@ public interface IEntity {
 	
 	SequenceCreator getSequenceCreator();
 	
+	Boolean getDelFlg();
+	
+	void setDelFlg(Boolean delFlg);
+	
+	String getSyncNamingSpace();
+	
 }

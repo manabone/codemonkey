@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.codemonkey.domain.AppPermission;
 
 @Service
-public class AppPermissionServiceImpl extends GenericServiceImpl<AppPermission> implements AppPermissionService{
+public class AppPermissionServiceImpl extends PhysicalServiceImpl<AppPermission> implements AppPermissionService{
 
 	@Override
 	public AppPermission createEntity() {

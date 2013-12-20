@@ -5,6 +5,9 @@ Ext.define('Erp.ui.SelectField', {
 	valueField:'name',
 	displayField:'text',
 	forceSelection : true,
+	allowEmptyOption : null,
+	
+	editable : false,
 	
 	initComponent : function() {
 		var me = this;
@@ -16,14 +19,15 @@ Ext.define('Erp.ui.SelectField', {
 		        autoLoad : true,
 		        proxy: ExtUtils.ajaxProxy({model:'Enum'})
 		    });
-			ExtUtils.storeReload(me.store,{className : me.model});
+			
+			ExtUtils.reloadStore(me.store , {className : me.model , allowEmptyOption : me.allowEmptyOption === false ? false : true});
 		}else{
 			me.queryMode = 'local';
 			me.store = me.buildLocalStore();
 		}
 		
 		Erp.ui.SelectField.superclass.initComponent.call(this);
-		me.emptyText = 'Select ...';
+		me.emptyText = '';
 		me.listConfig = {width : 150};
 		me.matchFieldWidth = false;
 	},

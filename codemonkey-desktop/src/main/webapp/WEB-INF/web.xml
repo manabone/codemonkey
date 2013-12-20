@@ -4,6 +4,11 @@
          xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+         
+    <!-- session超时定义,单位为分钟 -->
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
 
     <!-- ================================================================== -->
     <!--     Context parameters                                             -->
@@ -21,8 +26,11 @@
     </listener>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener> 
+    
+    <listener>
+        <listener-class>com.codemonkey.utils.SystemBeanFactory</listener-class>
     </listener>
-
     <!-- ================================================================== -->
     <!--     Filters                                                        -->
     <!-- ================================================================== -->
@@ -78,7 +86,17 @@
 		</init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
+    	<servlet>
+		<servlet-name>pushlet</servlet-name>
+		<servlet-class>
+			nl.justobjects.pushlet.servlet.Pushlet
+		</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>pushlet</servlet-name>
+		<url-pattern>/pushlet.srv</url-pattern>
+	</servlet-mapping>
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/app/*</url-pattern>

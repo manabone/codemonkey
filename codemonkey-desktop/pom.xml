@@ -31,15 +31,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.codemonkey</groupId>
-			<artifactId>iiterp-core</artifactId>
-			<version>2.0</version>
+			<artifactId>codemonkey-erp</artifactId>
+			<version>1.0.0</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.codemonkey</groupId>
-			<artifactId>iiterp-hr</artifactId>
-			<version>2.0</version>
-		</dependency>
+	
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!--				  WEB									 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -86,7 +81,6 @@
             <artifactId>sitemesh</artifactId>
             <version>${sitemesh.version}</version>
         </dependency>
-        
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!--					  RUNTIME							 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -128,7 +122,7 @@
 						<path>/</path>
 						<port>9090</port>
 						<systemProperties>
-							<JAVA_OPTS>-Xms512m -Xmx1024m -XX:MaxPermSize=256m</JAVA_OPTS>
+							<JAVA_OPTS>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</JAVA_OPTS>
 						</systemProperties>
 		        </configuration>
 			</plugin>

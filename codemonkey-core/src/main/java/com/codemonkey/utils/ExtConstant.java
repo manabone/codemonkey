@@ -1,5 +1,7 @@
 package com.codemonkey.utils;
-
+/**
+ * 类描述：系统常量类
+ */
 public final class ExtConstant {
 
 	public static final String TOTAL_COUNT = "totalCount";
@@ -26,7 +28,7 @@ public final class ExtConstant {
 	
 	public static final String LOCALE = "locale";
 	
-	public static final String DEFAULT_LOCALE = "en";
+	public static final String DEFAULT_LOCALE = "zh_cn";
 	
 	public static final String DEFAULT_THEME = "classic";
 	
@@ -41,6 +43,10 @@ public final class ExtConstant {
 	public static final String SORT = "sort";
 	
 	public static final String CMP_PERMISSIONS = "cmpPermissions";
+	
+	public static final String POWER_TREES = "powerTrees";
+	
+	public static final String CURRENT_USER_ID = "currentUserId";
 
 	private ExtConstant(){}
 }

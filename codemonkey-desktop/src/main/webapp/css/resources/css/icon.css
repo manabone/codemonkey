@@ -42,3 +42,13 @@
     background-repeat:no-repeat !important;
 	background-image:url(../icon/reset_16.png) !important;
 }
+
+.ss_excel{
+	background-repeat:no-repeat !important;
+	background-image:url(../icon/excel_icon.gif) !important;
+}
+
+.icon_book_edit{
+	background-repeat:no-repeat !important;
+	background-image:url(../icon/book_edit.gif) !important;
+}

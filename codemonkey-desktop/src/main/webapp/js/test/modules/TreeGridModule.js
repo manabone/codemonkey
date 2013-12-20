@@ -34,7 +34,7 @@ Ext.define('test.modules.TreeGridModule', {
             rootVisible: false,
             store: store,
             multiSelect: true,
-            singleExpand: true,
+            singleExpand: false,
             //the 'columns' property is now 'headers'
             columns: [{
                 xtype: 'treecolumn', //this is so we know which column will show the tree

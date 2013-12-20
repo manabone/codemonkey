@@ -14,7 +14,7 @@ import com.codemonkey.utils.JsonArrayConverter;
 import com.codemonkey.web.converter.CustomConversionService;
 
 @Service
-public class AppRoleServiceImpl extends GenericServiceImpl<AppRole> implements AppRoleService{
+public class AppRoleServiceImpl extends PhysicalServiceImpl<AppRole> implements AppRoleService{
 
 	@Autowired private CmpPermissionService cmpPermissionService;
 	

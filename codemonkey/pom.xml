@@ -6,7 +6,9 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>../codemonkey-drools</module>
+		<!-- 
+		<module>../codemonkey-drools</module> 
+		-->
 		<module>../codemonkey-mybatis</module>
 		<module>../codemonkey-maven-plugin</module>
 		<module>../codemonkey-dbMigration</module>
@@ -129,12 +131,16 @@
 		</repository>
 		
 		<repository>
-			<id>org.springframework.maven.milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
+			<id>org.springframework.maven.repository</id>
+			<name>Spring Maven Repository</name>
+			<url>http://repo.springsource.org/release</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>pushlets</id>
+			<url>http://pinecone.googlecode.com/svn/repository</url>
 		</repository>
 	</repositories>
 
@@ -154,8 +160,9 @@
 		
 		<jetty.version>6.1.26</jetty.version>
 		<junit.version>4.8.2</junit.version>
-		<shiro.version>1.1.0</shiro.version>
-		<spring.version>3.1.2.RELEASE</spring.version>
+		<shiro.version>1.2.2</shiro.version>
+		<spring.version>3.1.4.RELEASE</spring.version>
+		<spring-asm.version>3.1.4.RELEASE</spring-asm.version>
 		<aspectj.version>1.6.8</aspectj.version>
 		<slf4j.version>1.5.10</slf4j.version>
 		<javassist.version>3.9.0.GA</javassist.version>
@@ -176,7 +183,7 @@
 
 		<hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
 		<hibernate-commons-annotations.version>4.0.1.Final</hibernate-commons-annotations.version>
-		<hibernate.version>4.1.6.Final</hibernate.version>
+		<hibernate.version>4.2.6.Final</hibernate.version>
 		<hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
 
 		<commons-lang.version>2.6</commons-lang.version>
@@ -212,8 +219,43 @@
 		<org.hibernate.envers.audit_table_prefix>audit_</org.hibernate.envers.audit_table_prefix>
 		<org.hibernate.envers.audit_table_suffix></org.hibernate.envers.audit_table_suffix>
 				
-	</properties>
+		<pushlet.version>2.0.4</pushlet.version>
+		
+		
+		<hibernate.show_sql>true</hibernate.show_sql>
+		<hibernate.cache.provider_class>net.sf.ehcache.hibernate.SingletonEhCacheProvider</hibernate.cache.provider_class>
+		<hibernate.format_sql>false</hibernate.format_sql>
+		<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
+		<hibernate.cache.use_query_cache>false</hibernate.cache.use_query_cache>
+		<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
+		<hibernate.validator.autoregister_listeners>false</hibernate.validator.autoregister_listeners>
+		<hibernate.cache.use_structured_entries>false</hibernate.cache.use_structured_entries>
+		<!-- hibernate.query.substitutions=true 'T', false 'F', yes 'Y', no 'N' -->
+		<hibernate.bytecode.use_reflection_optimizer>false</hibernate.bytecode.use_reflection_optimizer>
+		<hibernate.generate_statistics>false</hibernate.generate_statistics>
+		<hibernate.transaction.flush_before_completion>true</hibernate.transaction.flush_before_completion>
+		<hibernate.transaction.auto_close_session>false</hibernate.transaction.auto_close_session>
+		<hibernate.order_updates>true</hibernate.order_updates>
+		<hibernate.order_inserts>true</hibernate.order_inserts>
+		<hibernate.jdbc.batch_versioned_data>true</hibernate.jdbc.batch_versioned_data>
+		<hibernate.jdbc.batch_size>60</hibernate.jdbc.batch_size>
+		<hibernate.max_fetch_depth>3</hibernate.max_fetch_depth>
+		<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+		
+		<!-- hibernate config -->
+		<hibernate.default_schema></hibernate.default_schema>
+		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 
+		<dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
+		<dbunit.schema></dbunit.schema>
+		
+		<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+		<jdbc.groupId>mysql</jdbc.groupId>
+		<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
+		<jdbc.version>5.1.9</jdbc.version>
+		
+		<db.default.url>jdbc:mysql://${db.server}/mysql</db.default.url>
+	</properties>
 
 	<dependencies>
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -256,69 +298,29 @@
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<profiles>
 		<profile>
-			<id>postgresql</id>
-			<properties>
-				<hibernate.default_schema>core</hibernate.default_schema>
-				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
-				<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-				<jdbc.url>jdbc:postgresql://localhost:5432/${db.name}</jdbc.url>
-				<jdbc.url.test>jdbc:postgresql://localhost:5432/${test.db.name}</jdbc.url.test>
-				<jdbc.username>pgsql</jdbc.username>
-				<jdbc.password>pgsql</jdbc.password>
-				<dbunit.dataTypeFactoryName>org.dbunit.ext.postgresql.PostgresqlDataTypeFactory</dbunit.dataTypeFactoryName>
-				<dbunit.schema></dbunit.schema>
-				<jdbc.groupId>postgresql</jdbc.groupId>
-				<jdbc.artifactId>postgresql</jdbc.artifactId>
-				<jdbc.version>9.0-801.jdbc4</jdbc.version>
-				<db.default.url>jdbc:postgresql://localhost:5432/postgres</db.default.url>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>mysql</id>
+			<id>dev</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<!-- hibernate config -->
-				<hibernate.default_schema></hibernate.default_schema>
-				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
-
-				<hibernate.show_sql>false</hibernate.show_sql>
-				<hibernate.cache.provider_class>net.sf.ehcache.hibernate.SingletonEhCacheProvider</hibernate.cache.provider_class>
-				<hibernate.format_sql>false</hibernate.format_sql>
-				<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
-				<hibernate.cache.use_query_cache>false</hibernate.cache.use_query_cache>
-				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
-				<hibernate.validator.autoregister_listeners>false</hibernate.validator.autoregister_listeners>
-				<hibernate.cache.use_structured_entries>false</hibernate.cache.use_structured_entries>
-				<!-- hibernate.query.substitutions=true 'T', false 'F', yes 'Y', no 'N' -->
-				<hibernate.bytecode.use_reflection_optimizer>false</hibernate.bytecode.use_reflection_optimizer>
-				<hibernate.generate_statistics>false</hibernate.generate_statistics>
-				<hibernate.transaction.flush_before_completion>true</hibernate.transaction.flush_before_completion>
-				<hibernate.transaction.auto_close_session>false</hibernate.transaction.auto_close_session>
-				<hibernate.order_updates>true</hibernate.order_updates>
-				<hibernate.order_inserts>true</hibernate.order_inserts>
-				<hibernate.jdbc.batch_versioned_data>true</hibernate.jdbc.batch_versioned_data>
-				<hibernate.jdbc.batch_size>60</hibernate.jdbc.batch_size>
-				<hibernate.max_fetch_depth>3</hibernate.max_fetch_depth>
-				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
-
 				<db.server>localhost:3306</db.server>
-				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
 				<jdbc.url>jdbc:mysql://${db.server}/${db.name}?characterEncoding=UTF-8</jdbc.url>
 				<jdbc.url.test>jdbc:mysql://${db.server}/${test.db.name}?characterEncoding=UTF-8</jdbc.url.test>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>root</jdbc.password>
-
-				<dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
-				<dbunit.schema></dbunit.schema>
-				<jdbc.groupId>mysql</jdbc.groupId>
-				<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-				<jdbc.version>5.1.9</jdbc.version>
-				<db.default.url>jdbc:mysql://${db.server}/mysql</db.default.url>
-				
 			</properties>
 		</profile>
+		
+		<profile>
+			<id>test</id>
+			<properties>
+				<db.server>192.168.17.3:3306</db.server>
+				<jdbc.url>jdbc:mysql://${db.server}/${db.name}?characterEncoding=UTF-8</jdbc.url>
+				<jdbc.url.test>jdbc:mysql://${db.server}/${test.db.name}?characterEncoding=UTF-8</jdbc.url.test>
+				<jdbc.username>root</jdbc.username>
+				<jdbc.password>hy2011</jdbc.password>
+			</properties>
+		</profile>
+
 	</profiles>
 </project>

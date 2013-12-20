@@ -13,12 +13,6 @@ public class SysUtilsTest extends AbsServiceTest{
 	@Autowired SysUtils sysUtils;
 	
 	@Test
-	public void testAppSetting(){
-		String msg = sysUtils.getAppSetting("setting.test");
-		assertEquals("test-windows" , msg);
-	}
-	
-	@Test
 	public void testColumnToProp(){
 		String prop = SysUtils.columnToProp("test_a");
 		assertEquals("testA" , prop);
@@ -31,9 +25,15 @@ public class SysUtilsTest extends AbsServiceTest{
 	}
 	
 	@Test
-	public void testMessage(){
-		String msg = sysUtils.msg("foo.fnumber");
-		assertEquals("fnumber" , msg);
+	public void testPropToColumn(){
+		String prop = SysUtils.propToColumn("testA");
+		assertEquals("test_a" , prop);
+		
+		prop = SysUtils.propToColumn("test1");
+		assertEquals("test_1" , prop);
+		
+		prop = SysUtils.propToColumn("testGood1");
+		assertEquals("test_good_1" , prop);
 	}
 	
 	@Test

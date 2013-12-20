@@ -26,59 +26,96 @@ import com.codemonkey.annotation.SkipBuild;
 import com.codemonkey.domain.AbsEntity;
 import com.codemonkey.web.converter.CustomConversionService;
 
+/**
+ * 类描述：class工具类
+ */
 @Component
 public final class ClassHelper {
 
 	private static Logger logger = LoggerFactory.getLogger(ClassHelper.class);
+
+	private ClassHelper() {
+	}
+
 	
-	private ClassHelper(){}
-	
+	/**
+	  * 方法描述：取得实体属性值
+	  * @param: entity 实体
+	  * @param: fieldName 属性名
+	  * @return: 属性值
+	  * @author: wy
+	  */
 	public static Object getFieldValue(AbsEntity entity, String fieldName) {
-		
+
 		Field field = null;
 		try {
-			field = getFieldFromClazz(entity.getClass() , fieldName);
-			return callGetter(entity , field);
+			field = getFieldFromClazz(entity.getClass(), fieldName);
+			return callGetter(entity, field);
 		} catch (Exception e) {
-			logger.error(" call get" + StringUtils.capitalize(field.getName()) + " FAILED!!!!! ");
+			logger.error(" call get" + StringUtils.capitalize(field.getName())
+					+ " FAILED!!!!! ");
 		}
 		return null;
 	}
-	
-	public static void callSetter(Object obj , Field field, Object value) {
-		callSetter(obj , field.getName() , value);
+
+	/**
+	  * 方法描述：设置对象属性值
+	  * @param: obj 实体
+	  * @param: field 属性
+	  * @param: value 属性值
+	  * @return: void
+	  * @author: wy
+	  */
+	public static void callSetter(Object obj, Field field, Object value) {
+		callSetter(obj, field.getName(), value);
 	}
-	
+
+	/**
+	  * 方法描述：设置对象属性值
+	  * @param: obj 实体
+	  * @param: field 属性
+	  * @param: value 属性值
+	  * @return: void
+	  * @author: wy
+	  */
 	public static void callSetter(Object obj, String fieldName, Object value) {
-		
+
 		Method setter = null;
-		
-		try{
-			String setterName = "set"+ StringUtils.capitalize(fieldName);
+
+		try {
+			String setterName = "set" + StringUtils.capitalize(fieldName);
 			Field field = getFieldFromClazz(obj.getClass(), fieldName);
-			if(field != null){
-				setter = ClassUtils.getMethodIfAvailable(obj.getClass() , setterName , field.getType());
-				
-				if(setter != null && field != null){
+			if (field != null) {
+				setter = ClassUtils.getMethodIfAvailable(obj.getClass(),
+						setterName, field.getType());
+
+				if (setter != null && field != null) {
 					setter.invoke(obj, value);
-				}else{
+				} else {
 					logger.info(setterName + " is NOT FOUND !!!");
 				}
 			}
-			
-		}catch(Exception e){
-			logger.error("call "+ setter.getName() + " IN " + obj.getClass().getSimpleName() + " FAILED!!!! ");
+
+		} catch (Exception e) {
+			logger.error("call " + setter.getName() + " IN "
+					+ obj.getClass().getSimpleName() + " FAILED!!!! ");
 		}
 	}
-	
-	
-	public static Field getFieldFromClazz(Class<?> clazz , String fieldName) {
+
+	/**
+	  * 方法描述：取得对象属性
+	  * @param: clazz 类
+	  * @param: fieldName 属性名
+	  * @return: 属性
+	  * @author: wy
+	  */
+	public static Field getFieldFromClazz(Class<?> clazz, String fieldName) {
 		Class<?> clazz1 = clazz;
-		while(!clazz1.equals(Object.class)){
+		while (!clazz1.equals(Object.class)) {
 			Field[] fields = clazz1.getDeclaredFields();
-			if(fields != null){
-				for(int i = 0 ; i < fields.length ; i++){
-					if(fields[i].getName().equals(fieldName)){
+			if (fields != null) {
+				for (int i = 0; i < fields.length; i++) {
+					if (fields[i].getName().equals(fieldName)) {
 						return fields[i];
 					}
 				}
@@ -89,72 +126,75 @@ public final class ClassHelper {
 	}
 
 	public static Object callGetter(Object obj, Field field) {
-		return callGetter(obj,field.getName());
+		return callGetter(obj, field.getName());
 	}
-	
+
 	public static Object callGetter(Object obj, String fieldName) {
 		Method getter = null;
 		Object value = null;
-		if(StringUtils.isBlank(fieldName)){
+		if (StringUtils.isBlank(fieldName)) {
 			return null;
 		}
-		try{
-			getter = ClassUtils.getMethodIfAvailable(obj.getClass() , "get"+ StringUtils.capitalize(fieldName));
-			
-			if(getter != null){
+		try {
+			getter = ClassUtils.getMethodIfAvailable(obj.getClass(), "get"
+					+ StringUtils.capitalize(fieldName));
+
+			if (getter != null) {
 				value = getter.invoke(obj);
 			}
 			return value;
-			
-		}catch(Exception e){
-			logger.error("call "+ getter.getName() + " FAILED!!!! ");
+
+		} catch (Exception e) {
+			logger.error("call " + getter.getName() + " FAILED!!!! ");
 		}
 		return null;
 	}
 
-	public static Object getFieldValue(String columnName, Class<?> type, SqlRowSet rowSet) {
+	public static Object getFieldValue(String columnName, Class<?> type,
+			SqlRowSet rowSet) {
 		Object value = rowSet.getObject(columnName);
-		if(value != null && value.getClass().equals(BigDecimal.class)){
-			value = ((BigDecimal)value).doubleValue();
+		if (value != null && value.getClass().equals(BigDecimal.class)) {
+			value = ((BigDecimal) value).doubleValue();
 		}
 		return value;
 	}
-	
-	public static List<String> getAllFieldNames(Class<?> type){
+
+	public static List<String> getAllFieldNames(Class<?> type) {
 		Class<?> type1 = type;
 		List<String> list = new ArrayList<String>();
-		try{
-			while(!type1.equals(Object.class)){
+		try {
+			while (!type1.equals(Object.class)) {
 				Field[] fields = type1.getDeclaredFields();
-				if(fields != null){
-					for(int i = 0 ; i < fields.length ; i++){
+				if (fields != null) {
+					for (int i = 0; i < fields.length; i++) {
 						String name = fields[i].getName();
-						if(!"serialVersionUID".equals(name)){
+						if (!"serialVersionUID".equals(name)) {
 							list.add(name);
 						}
 					}
 				}
 				type1 = type1.getSuperclass();
 			}
-		}catch(Exception e){
-			logger.error("call getAllFieldNames "+ type1 + " FAILED!!!! ");
+		} catch (Exception e) {
+			logger.error("call getAllFieldNames " + type1 + " FAILED!!!! ");
 		}
 		return list;
 	}
-	
-	public static List<Field> getAllFields(Class<?> clazz){
-		return getAllFields(clazz , Object.class);
+
+	public static List<Field> getAllFields(Class<?> clazz) {
+		return getAllFields(clazz, Object.class);
 	}
-	
-	public static List<Field> getAllFields(Class<?> clazz , Class<?> rootClass){
+
+	public static List<Field> getAllFields(Class<?> clazz, Class<?> rootClass) {
 		List<Field> fields = new ArrayList<Field>();
 		Class<?> clazz1 = clazz;
-		while(!clazz1.equals(rootClass)){
+		while (!clazz1.equals(rootClass)) {
 			Field[] fs = clazz1.getDeclaredFields();
-			if(fs != null){
-				for(int i = 0 ; i < fs.length ; i++){
+			if (fs != null) {
+				for (int i = 0; i < fs.length; i++) {
 					Field f = fs[i];
-					if(!f.getName().equals("serialVersionUID") && f.getAnnotation(Version.class) == null){
+					if (!f.getName().equals("serialVersionUID")
+							&& f.getAnnotation(Version.class) == null) {
 						fields.add(f);
 					}
 				}
@@ -163,41 +203,47 @@ public final class ClassHelper {
 		}
 		return fields;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static void build(JSONObject params, Object model ,  CustomConversionService ccService) {
+	public static void build(JSONObject params, Object model,
+			CustomConversionService ccService) {
 		Iterator<String> it = params.keys();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			String key = it.next();
-			if(key.endsWith("_text")){
+			if (key.endsWith("_text")) {
 				continue;
 			}
-			
+
 			Field field = ReflectionUtils.findField(model.getClass(), key);
-			if(field != null && field.getAnnotation(SkipBuild.class) == null){
-				Object value = getValueFromJson(field , key , params, ccService);
+			if (field != null && field.getAnnotation(SkipBuild.class) == null) {
+				Object value = getValueFromJson(field, key, params, ccService);
 				ClassHelper.callSetter(model, field, value);
 			}
 		}
 	}
-	
-	private static Object getValueFromJson(Field field, String name, JSONObject params, CustomConversionService ccService) {
-		
-		if(StringUtils.isBlank(params.getString(name)) || params.getString(name).equals("null") || params.getString(name).equals("undefined")){
+
+	private static Object getValueFromJson(Field field, String name,
+			JSONObject params, CustomConversionService ccService) {
+
+		if (StringUtils.isBlank(params.getString(name))
+				|| params.getString(name).equals("null")
+				|| params.getString(name).equals("undefined")) {
 			return null;
 		}
-		
-		if(field == null || field.getType().equals(List.class) || field.getType().equals(Set.class)){
+
+		if (field == null || field.getType().equals(List.class)
+				|| field.getType().equals(Set.class)) {
 			return null;
 		}
-		
-		return convert(params.getString(name) , field.getType() , ccService);
+
+		return convert(params.getString(name), field.getType(), ccService);
 	}
-	
-	public static Object convert(String id , Class<?> clazz , CustomConversionService ccService){
+
+	public static Object convert(String id, Class<?> clazz,
+			CustomConversionService ccService) {
 		return ccService.getObject().convert(id, clazz);
 	}
-	
+
 	public static Class<?> getSuperClassGenricType(Class<?> clazz) {
 		return getSuperClassGenricType(clazz, 0);
 	}
@@ -220,12 +266,13 @@ public final class ClassHelper {
 		}
 		return (Class<?>) params[index];
 	}
-	
-	public static Object stringToEnum(Class<?> clazz  , String value){
+
+	public static Object stringToEnum(Class<?> clazz, String value) {
 		try {
-			Method method = ClassUtils.getMethodIfAvailable(clazz , "valueOf" , String.class);
-			if(method != null){
-				return method.invoke(clazz , value);
+			Method method = ClassUtils.getMethodIfAvailable(clazz, "valueOf",
+					String.class);
+			if (method != null) {
+				return method.invoke(clazz, value);
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -238,10 +285,10 @@ public final class ClassHelper {
 	}
 
 	public static Class<?> getGenricType4Collection(Class<?> clazz) {
-		
+
 		Type[] genType = clazz.getGenericInterfaces();
 
 		return (Class<?>) genType[0];
-		
+
 	}
 }

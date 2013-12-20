@@ -3,22 +3,35 @@ package com.codemonkey.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.codemonkey.utils.OgnlUtils;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="dtype", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("AppUser")
 @Audited
 public class AppUser extends AbsEE{
 
@@ -31,12 +44,17 @@ public class AppUser extends AbsEE{
 	
 	private String email;
 	
-	@NotNull
 	private String password;
 	
 	private String salt;
 	
+	private String workerMobilephone;
+	
 	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="app_user_roles", 
+		joinColumns={@JoinColumn(name="app_user")},
+		inverseJoinColumns={@JoinColumn(name="roles")})
+	@NotAudited
 	private Set<AppRole> roles = new HashSet<AppRole>();
 
 	@Enumerated(EnumType.STRING)
@@ -54,6 +72,7 @@ public class AppUser extends AbsEE{
 		jo.put("email", OgnlUtils.stringValue("email", this));
 		jo.put("status", OgnlUtils.stringValue("status", this));
 		jo.put("appUserGroup", OgnlUtils.stringValue("appUserGroup", this));
+		jo.put("workerMobilephone", OgnlUtils.stringValue("workerMobilephone", this));
 		return jo;
 	}
 	
@@ -69,6 +88,18 @@ public class AppUser extends AbsEE{
 		}
 		jo.put("roles", ja);
 		return jo;
+	}
+	
+	public void changePassword(String newPassword){
+		RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+		String salt = rng.nextBytes().toBase64();
+		String hashedPasswordBase64 = encodePassword(newPassword , salt);
+		setPassword(hashedPasswordBase64);
+		setSalt(salt);
+	}
+	
+	public static String encodePassword(String password , String salt) {
+		return new Sha256Hash(password , salt, 1024).toBase64();
 	}
 	
 	public Set<AppPermission> getPermissions(){
@@ -169,5 +200,13 @@ public class AppUser extends AbsEE{
 			return true;
 		}
 		return false;
+	}
+	
+	public String getWorkerMobilephone() {
+		return this.workerMobilephone;
+	}
+	
+	public void setWorkerMobilephone(String value) {
+		this.workerMobilephone = value;
 	}
 }

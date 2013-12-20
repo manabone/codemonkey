@@ -4,39 +4,23 @@ import org.json.JSONObject;
 
 public abstract class TreeNode {
 
-	private String id;
-	private String name;
-	private String text;
+	private JSONObject jo = new JSONObject();
 	
-	public JSONObject json(){
-		JSONObject jo = new JSONObject();
-		jo.put("id", id);
-		jo.put("name", name);
-		jo.put("text", text);
-		jo.put("checked", false);
+	public JSONObject addAttr(String key , Object value){
+		return jo.put(key, value);
+	}
+	
+	public Object getAttr(String key){
+		return jo.get(key);
+	}
+	
+	public JSONObject removeAttr(String key){
+		jo.remove(key);
 		return jo;
 	}
 	
-	public String getText() {
-		return text;
-	}
-	public void setText(String text) {
-		this.text = text;
+	public JSONObject json(){
+		return jo;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

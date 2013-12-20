@@ -5,7 +5,9 @@ import java.util.Date;
 import ognl.Ognl;
 import ognl.OgnlContext;
 import ognl.OgnlException;
-
+/**
+ * 类描述：ognl工具类
+ */
 public final class OgnlUtils {
 
 	private OgnlUtils(){}

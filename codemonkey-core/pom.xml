@@ -107,6 +107,12 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-asm</artifactId>
+			<version>${spring-asm.version}</version>
+		</dependency>
+		
 		<!-- hibernate -->
 
     	<dependency>
@@ -205,6 +211,11 @@
         </dependency>
         
         <!-- pushlets -->
+        <dependency>
+        	<groupId>nl.justobjects</groupId>
+        	<artifactId>pushlet</artifactId>
+        	<version>${pushlet.version}</version>
+        </dependency>
         
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!--					  RUNTIME							 -->
@@ -244,6 +255,6 @@
 			<classifier>jdk15</classifier>
 		</dependency>
 		-->
-		
+ 
 	</dependencies>
 </project>

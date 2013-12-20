@@ -169,44 +169,23 @@ public class GenericDao<T extends IEntity> {
     
 	public List<T> findAllBy(String query, Object... params) {
 		
-		String hql = HqlHelper.findyBy(getType(), query);
+		String hql = HqlHelper.findBy(getType(), query);
 		
 		Query hqlQuery = builHqlQuery(hql, params);
 		
 		return hqlQuery.list();
 	}
 	
-	public List<T> findAllBy(String query, String[] joins , Object... params) {
-		
-		String hql = HqlHelper.findyBy(getType(), query , joins);
-		
-		Query hqlQuery = builHqlQuery(hql, params);
-		
-		return hqlQuery.list();
-	}
-
 	public T findBy(String query, Object... params) {
 		
-		String hql = HqlHelper.findyBy(getType(), query);
-		Query hqlQuery = builHqlQuery(hql, params);
-		return (T) hqlQuery.uniqueResult();
-	
-	}
-	
-	public T findBy(String query, String[] joins , Object... params) {
-		
-		String hql = HqlHelper.findyBy(getType(), query , joins);
+		String hql = HqlHelper.findBy(getType(), query);
 		Query hqlQuery = builHqlQuery(hql, params);
 		return (T) hqlQuery.uniqueResult();
 	
 	}
 	
 	public long countBy(String query, Object... params) {
-		return countBy(query , null , params);
-	}
-	
-	public long countBy(String query, String[] joins , Object... params) {
-		String hql = HqlHelper.countBy(getType(), query , joins);
+		String hql = HqlHelper.countBy(getType(), query);
 		Query hqlQuery = builHqlQuery(hql, params);
 		return countResult((Long) hqlQuery.uniqueResult());
 	}
@@ -240,10 +219,26 @@ public class GenericDao<T extends IEntity> {
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return hqlQuery.list();
 	}
+	
+	public List<Object> findByQueryInfo(String hqlSelect, JSONObject queryAndSort, Integer start, Integer limit) {
+		String hql = HqlHelper.findByQueryInfo(getType(), queryAndSort);
+		hql = hql.replace(HqlHelper.SELECT_FROM , hqlSelect);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryAndSort);
+		Query hqlQuery = builHqlQuery(hql , params.toArray());
+		return hqlQuery.setMaxResults(limit).setFirstResult(start).list();
+	}
 
-	public long countByQueryInfo(JSONObject queryInfo) {
-		String hql = HqlHelper.countByQueryInfo(getType(), queryInfo);
-		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryInfo);
+	public long countByQueryInfo(JSONObject queryAndSort) {
+		String hql = HqlHelper.countByQueryInfo(getType(), queryAndSort);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryAndSort);
+		Query hqlQuery = builHqlQuery(hql , params.toArray());
+		return countResult((Long) hqlQuery.uniqueResult());
+	}
+	
+	public long countByQueryInfo(String hqlSelect , JSONObject queryAndSort) {
+		String hql = HqlHelper.countByQueryInfo(getType() , queryAndSort);
+		hql = hql.replace(HqlHelper.SELECT_FROM , hqlSelect);
+		List<Object> params = HqlHelper.extractParamsFromQueryInfo(getType(), queryAndSort);
 		Query hqlQuery = builHqlQuery(hql , params.toArray());
 		return countResult((Long) hqlQuery.uniqueResult());
 	}

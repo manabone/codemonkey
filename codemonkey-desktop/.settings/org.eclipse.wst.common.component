@@ -13,6 +13,9 @@
         <dependent-module archiveName="codemonkey-ibatis-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/codemonkey-ibatis/codemonkey-ibatis">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="codemonkey-erp-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/codemonkey-erp/codemonkey-erp">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="codemonkey-desktop"/>
         <property name="java-output-path" value="/codemonkey-desktop/target/classes"/>
     </wb-module>

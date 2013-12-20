@@ -1,5 +1,6 @@
 package com.codemonkey.web.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.ClassHelper;
 import com.codemonkey.utils.ExtConstant;
+import com.codemonkey.utils.ResourceUtils;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
@@ -32,9 +34,11 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 	
 	@Autowired private SysUtils sysUtils;
 	
+	@Autowired private ResourceUtils resourceUtils;
+	
 	protected abstract GenericService<T> service();
 	
-	AbsExtController(){
+	public AbsExtController(){
 		this.type = ClassHelper.getSuperClassGenricType(getClass());
 		log = SysUtils.getLog(getClass());
 	}
@@ -65,10 +69,47 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 			for(String fn : fieldNames){
 				String key = StringUtils.uncapitalize(type.getSimpleName()) + "." + fn;
 //				sysUtils.getAppSetting("setting.test");
-				labels.put(key , sysUtils.msg(key));
+				labels.put(key , resourceUtils.msg(key));
 			}
 		}
 		return labels;
+	}
+	
+	public String handleUpdate(String body) {
+		
+		JSONObject params = parseJson(body);
+		
+		T t = service().doSave(params , getCcService());
+		
+		return result(t);
+	}
+	
+	public String result(T t) {
+		JSONObject result = new JSONObject();
+		result.put(ExtConstant.DATA, jsonResult(t));
+		result.put(ExtConstant.SUCCESS, true);
+		return result.toString();
+	}
+	
+	public JSONObject jsonResult(T t) {
+		return t.detailJson();
+	}
+	
+	public JSONObject parseJson(String body){
+		JSONObject params = new JSONObject();
+		try {
+			params = new JSONObject(body);
+		} catch (ParseException e) {
+			errorResult(e);
+			e.printStackTrace();
+		}
+		return params;
+	}
+	
+	public void errorResult(Exception e) {
+		JSONObject result = new JSONObject();
+		result.put(ExtConstant.SUCCESS, false);
+		result.put(ExtConstant.ERROR_MSG, e.getMessage());
 	}
 	
     protected String buildJson(List<T> list) {
@@ -87,7 +128,7 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
     	if(list != null){
     		JSONArray data = new JSONArray();
     		for(T t : list){
-    			data.put(t.listJson());
+    			data.put(buildRecord(t));
     		}
     		jo.put(ExtConstant.SUCCESS, true);
 			jo.put(ExtConstant.DATA, data);
@@ -95,6 +136,10 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 		return jo;
 	}
 	
+	protected JSONObject buildRecord(T t) {
+		return t.listJson();
+	}
+
 	protected List<AppPermission> convertToAppPermissionList(List<UrlPermission> list) {
 		List<AppPermission> pList = new ArrayList<AppPermission>();
 		if(CollectionUtils.isNotEmpty(list)){

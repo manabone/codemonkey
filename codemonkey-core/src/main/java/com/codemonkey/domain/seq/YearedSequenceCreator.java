@@ -19,7 +19,7 @@ public class YearedSequenceCreator extends SequenceCreator{
 
 	@Override
 	public String getQuery() {
-		return "prefixAndYear";
+		return "prefix&&year";
 	}
 
 	@Override

@@ -8,7 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.codemonkey.web.converter.CustomConversionService;
-
+/**
+ * 类描述：json转换器
+ */
 public class JsonArrayConverter<T> {
 
 	@SuppressWarnings("unchecked")

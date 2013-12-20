@@ -9,13 +9,10 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.dbunit.operation.DatabaseOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.codemonkey.dbMigration.api.Configure;
 import com.codemonkey.dbMigration.jdbc.DBType;
@@ -36,80 +33,101 @@ import com.codemonkey.web.controller.SecurityController;
 
 @Component
 @Lazy(false)
-@Transactional(propagation=Propagation.REQUIRED)
+// @Transactional(propagation = Propagation.REQUIRED)
 public class StartUpServiceImpl implements StartUpService {
 
-	@Autowired private AppPermissionService appPermissionService;
-	@Autowired private SecurityComponentService securityComponentService;
-	@Autowired private List<SecurityController> securityControllers;
-	@Autowired private DriverManagerDataSource dbUnitdatasource;
-	@Autowired private AppUserService appUserService;
-	@Autowired private EnumHolder enumHolder;
-	@Autowired private PowerTreeService powerTreeService;
-	
+	@Autowired
+	private AppPermissionService appPermissionService;
+	@Autowired
+	private SecurityComponentService securityComponentService;
+	@Autowired
+	private List<SecurityController> securityControllers;
+	@Autowired
+	private DriverManagerDataSource datasource;
+	@Autowired
+	private AppUserService appUserService;
+	@Autowired
+	private EnumHolder enumHolder;
+	@Autowired
+	private PowerTreeService powerTreeService;
+
 	private Logger logger = SysUtils.getLog(StartUpServiceImpl.class);
-	
-	
+
 	@PostConstruct
-	public void initEnumHolder(){
+	public void initEnumHolder() {
 		enumHolder.addEnum(Status.class);
 	}
-	
-	public void doInitUsers(){
+
+	/**
+	 * 方法描述：创建初始化用户
+	 * 
+	 * @param:
+	 * @return:
+	 * @throws：
+	 * @author: zb
+	 * @version: 2013年10月23日 下午2:11:38
+	 */
+	public void doInitUsers() {
 		AppUser admin = appUserService.findBy("username", "admin");
-		if(admin == null){
+		if (admin == null) {
 			admin = new AppUser();
 			admin.setUsername("admin");
-			admin.setPassword("admin");
+			admin.setName("admin");
+			admin.changePassword("admin");
 			appUserService.save(admin);
 		}
-		
+
 		AppUser user = appUserService.findBy("username", "user");
-		if(user == null){
+		if (user == null) {
 			user = new AppUser();
 			user.setUsername("user");
-			user.setPassword("user");
+			admin.setName("user");
+			user.changePassword("user");
 			appUserService.save(user);
 		}
+
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.codemonkey.startup.StartUpService#initData()
-	 */
+
 	@PostConstruct
-	public void doInitDefaultData() throws SQLException{
-		logger.info("jdbc.url = " + dbUnitdatasource.getUrl());
-		logger.info("jdbc.username = " + dbUnitdatasource.getUsername());
-		logger.info("jdbc.password = " + dbUnitdatasource.getPassword());
-		SysUtils.loadDataToDB(dbUnitdatasource, "default-data.xml" , DatabaseOperation.UPDATE);
-	
-		SysUtils.putAttribute(SysUtils.CURRENCT_USER, new AppUser());
+	public void doInitDefaultData() throws SQLException {
+		logger.info("jdbc.url = " + datasource.getUrl());
+		logger.info("jdbc.username = " + datasource.getUsername());
+		logger.info("jdbc.password = " + datasource.getPassword());
+
 		doInitUsers();
 		doInitAppPermissions();
 		doInitSecurityComponents();
 		doInitPowerTree();
+		doInitBsUnionCode();
+		//doInitBsGroupInfo();
+		//doInitBsRegionInfo();
 	}
 	
+	private void doInitBsUnionCode() {
+		SysUtils.loadDataToDB(datasource, "classpath*:default-data/default-data-*.xml");
+	}
+
 	private void doInitPowerTree() {
 		List<PowerTree> powerTrees = new ArrayList<PowerTree>();
-		
-		if(CollectionUtils.isNotEmpty(securityControllers)){
-			for(SecurityController sc : securityControllers){
-				if(CollectionUtils.isNotEmpty(sc.regPowerTrees())){
+
+		if (CollectionUtils.isNotEmpty(securityControllers)) {
+			for (SecurityController sc : securityControllers) {
+				if (CollectionUtils.isNotEmpty(sc.regPowerTrees())) {
 					powerTrees.addAll(sc.regPowerTrees());
 				}
 			}
 		}
-		
-		if(CollectionUtils.isNotEmpty(powerTrees)){
-			for(PowerTree p : powerTrees){
-				
+
+		if (CollectionUtils.isNotEmpty(powerTrees)) {
+			for (PowerTree p : powerTrees) {
+
 				PowerTree p1 = powerTreeService.findBy("code", p.getCode());
-				
-				if(p1 == null){
-					if(StringUtils.isNotBlank(p.getParentCode())){
-						PowerTree pp = powerTreeService.findBy("code", p.getParentCode());
-						if(pp != null){
+
+				if (p1 == null) {
+					if (StringUtils.isNotBlank(p.getParentCode())) {
+						PowerTree pp = powerTreeService.findBy("code",
+								p.getParentCode());
+						if (pp != null) {
 							p.setParent(pp);
 						}
 					}
@@ -117,59 +135,69 @@ public class StartUpServiceImpl implements StartUpService {
 				}
 			}
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.codemonkey.startup.StartUpService#initAppPermissions()
-	 */
-	public void doInitAppPermissions(){
+	@Override
+	public void doInitAppPermissions() {
 		List<AppPermission> appPermissions = new ArrayList<AppPermission>();
-		
-		if(CollectionUtils.isNotEmpty(securityControllers)){
-			for(SecurityController sc : securityControllers){
-				if(CollectionUtils.isNotEmpty(sc.regAppPermissions())){
+
+		if (CollectionUtils.isNotEmpty(securityControllers)) {
+			for (SecurityController sc : securityControllers) {
+				if (CollectionUtils.isNotEmpty(sc.regAppPermissions())) {
 					appPermissions.addAll(sc.regAppPermissions());
 				}
 			}
 		}
-		
-		if(CollectionUtils.isNotEmpty(appPermissions)){
-			for(AppPermission p : appPermissions){
-				AppPermission pp = appPermissionService.findBy("code", p.getPermission());
-				if(pp == null){
+
+		if (CollectionUtils.isNotEmpty(appPermissions)) {
+			for (AppPermission p : appPermissions) {
+				AppPermission pp = appPermissionService.findBy("code",
+						p.getPermission());
+				if (pp == null) {
 					appPermissionService.save(p);
 				}
 			}
 		}
 	}
-	
-	public void doInitSecurityComponents(){
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param:
+	 * @return:
+	 * @throws：
+	 * @author: zb
+	 * @version: 2013年10月23日 下午2:13:37
+	 */
+	public void doInitSecurityComponents() {
 		List<SecurityComponent> cmps = new ArrayList<SecurityComponent>();
-		
-		if(CollectionUtils.isNotEmpty(securityControllers)){
-			for(SecurityController sc : securityControllers){
-				if(CollectionUtils.isNotEmpty(sc.regSecurityComponents())){
+
+		if (CollectionUtils.isNotEmpty(securityControllers)) {
+			for (SecurityController sc : securityControllers) {
+				if (CollectionUtils.isNotEmpty(sc.regSecurityComponents())) {
 					cmps.addAll(sc.regSecurityComponents());
 				}
 			}
 		}
-		
-		if(CollectionUtils.isNotEmpty(cmps)){
-			for(SecurityComponent c : cmps){
-				SecurityComponent cc = securityComponentService.findBy("code", c.getCode());
-				if(cc == null){
+
+		if (CollectionUtils.isNotEmpty(cmps)) {
+			for (SecurityComponent c : cmps) {
+				SecurityComponent cc = securityComponentService.findBy("code",
+						c.getCode());
+				if (cc == null) {
 					securityComponentService.save(c);
 				}
 			}
 		}
 	}
-	
+
 	@PostConstruct
 	public void executeMigration() {
 		Configure.configure();
-		MigrationManager migrationManager = new DriverManagerMigrationManager(dbUnitdatasource , DBType.POSTGRESQL);
+		MigrationManager migrationManager = new DriverManagerMigrationManager(
+				datasource, DBType.POSTGRESQL);
 		migrationManager.migrate();
 	}
-	
+
 }
