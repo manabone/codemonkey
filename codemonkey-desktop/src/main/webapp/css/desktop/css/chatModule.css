@@ -1,0 +1,55 @@
+.sender{
+	width: 400px;
+	border: 2px;
+	cursor: default;
+    
+    box-shadow:0 5px 10px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:10px;
+    margin: 5px;
+	position:relative;
+	padding: 5px;
+	
+}
+
+.recevier{
+	width: 400px;
+	border: 2px;
+	cursor: default;
+    border-radius: 10px;
+    margin: 5px;
+    padding:5px;
+
+	-moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.45), 0px 1px 2px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.45), 0px 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.45), 0px 1px 2px rgba(0,0,0,0.2);
+    border-color: #fff;
+    
+    
+    background-color: #dfdfdf;
+    background: -moz-linear-gradient(top,
+        #fff,
+        #dfdfdf 50%,
+        #cecece
+    );
+    background: -webkit-gradient(linear, left top, left bottom,
+        from(#fff),
+        color-stop(0.5, #dfdfdf),
+        to(#cecece)
+    );
+}
+
+
+.time{
+	text-align: right;
+	padding-right: 10px;
+
+}
+
+
+.context{
+	word-wrap: break-word; 
+	word-break: normal;
+}
+

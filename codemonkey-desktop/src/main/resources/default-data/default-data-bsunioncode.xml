@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="bs_unioncode_info">
+		<column>id</column>
+		<column>unioncode_field</column>
+		<column>code</column>
+		<column>name</column>
+		<column>version</column>
+		<column>del_flg</column>
+		<!-- 任务类型 -1到-5 -->
+		<row>
+			<value description="id">-1</value>
+			<value description="unioncode_field">taskKind</value>
+			<value description="code">年度计划</value>
+			<value description="name">年度计划</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-2</value>
+			<value description="unioncode_field">taskKind</value>
+			<value description="code">交办任务</value>
+			<value description="name">交办任务</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-3</value>
+			<value description="unioncode_field">taskKind</value>
+			<value description="code">信息反馈单任务</value>
+			<value description="name">信息反馈单任务</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-4</value>
+			<value description="unioncode_field">taskKind</value>
+			<value description="code">审批任务</value>
+			<value description="name">审批任务</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-5</value>
+			<value description="unioncode_field">taskKind</value>
+			<value description="code">控制点任务</value>
+			<value description="name">控制点任务</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+		<!-- 用户类型 -6到-7 -->
+		<row>
+			<value description="id">-6</value>
+			<value description="unioncode_field">customerType</value>
+			<value description="code">普通用户</value>
+			<value description="name">普通用户</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-7</value>
+			<value description="unioncode_field">customerType</value>
+			<value description="code">正式用户</value>
+			<value description="name">正式用户</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+		<!-- 用户级别 -8到-11 -->
+		<row>
+			<value description="id">-8</value>
+			<value description="unioncode_field">customerLevel</value>
+			<value description="code">A</value>
+			<value description="name">A</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-9</value>
+			<value description="unioncode_field">customerLevel</value>
+			<value description="code">B</value>
+			<value description="name">B</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-10</value>
+			<value description="unioncode_field">customerLevel</value>
+			<value description="code">C</value>
+			<value description="name">C</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-11</value>
+			<value description="unioncode_field">customerLevel</value>
+			<value description="code">D</value>
+			<value description="name">D</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+		<!-- 用户分类 -12到-15 -->
+		<row>
+			<value description="id">-12</value>
+			<value description="unioncode_field">customerKinds</value>
+			<value description="code">贸易商</value>
+			<value description="name">贸易商</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-13</value>
+			<value description="unioncode_field">customerKinds</value>
+			<value description="code">主机</value>
+			<value description="name">主机</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-14</value>
+			<value description="unioncode_field">customerKinds</value>
+			<value description="code">设计院</value>
+			<value description="name">设计院</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-15</value>
+			<value description="unioncode_field">customerKinds</value>
+			<value description="code">最终用户</value>
+			<value description="name">最终用户</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+		<!-- 用户性质 -16到-17 -->
+		<row>
+			<value description="id">-16</value>
+			<value description="unioncode_field">providerCaption</value>
+			<value description="code">有限责任</value>
+			<value description="name">有限责任</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-17</value>
+			<value description="unioncode_field">providerCaption</value>
+			<value description="code">未知</value>
+			<value description="name">未知</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+		<!-- 供应分类 -20到-89 -->
+		<row>
+			<value description="id">-20</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">o环</value>
+			<value description="name">o环</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-21</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">仓储</value>
+			<value description="name">仓储</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-22</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">仪表管阀</value>
+			<value description="name">仪表管阀</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-23</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">传动件</value>
+			<value description="name">传动件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-24</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">传动套</value>
+			<value description="name">传动套</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-25</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">保洁用品</value>
+			<value description="name">保洁用品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-26</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">其它</value>
+			<value description="name">其它</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-27</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">刀具</value>
+			<value description="name">刀具</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-28</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">办公用品</value>
+			<value description="name">办公用品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-29</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">化学品</value>
+			<value description="name">化学品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-30</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">压力容器</value>
+			<value description="name">压力容器</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-31</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">原材料</value>
+			<value description="name">原材料</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-32</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">厨具</value>
+			<value description="name">厨具</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-33</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">吊车</value>
+			<value description="name">吊车</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-34</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">堆焊</value>
+			<value description="name">堆焊</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-35</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">塑料产品</value>
+			<value description="name">塑料产品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-36</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">塑料制品</value>
+			<value description="name">塑料制品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-37</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">大连特种涂层有限公司</value>
+			<value description="name">大连特种涂层有限公司</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-38</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">宏川机械</value>
+			<value description="name">宏川机械</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-39</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">密封件</value>
+			<value description="name">密封件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-40</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">工业储物</value>
+			<value description="name">工业储物</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-41</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">工具</value>
+			<value description="name">工具</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-42</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">彩涂板</value>
+			<value description="name">彩涂板</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-43</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">抛光</value>
+			<value description="name">抛光</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-44</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">换热器</value>
+			<value description="name">换热器</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-45</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">接头阀门</value>
+			<value description="name">接头阀门</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-46</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">插键槽</value>
+			<value description="name">插键槽</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-47</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">旅顺诚山锻造厂</value>
+			<value description="name">旅顺诚山锻造厂</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-48</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">服饰</value>
+			<value description="name">服饰</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-49</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">机加工</value>
+			<value description="name">机加工</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-50</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">机床件</value>
+			<value description="name">机床件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-51</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">机械</value>
+			<value description="name">机械</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-52</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">柔性石墨</value>
+			<value description="name">柔性石墨</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-53</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">标牌</value>
+			<value description="name">标牌</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-54</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">油烟净化器</value>
+			<value description="name">油烟净化器</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-55</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">泵维修</value>
+			<value description="name">泵维修</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-56</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">润滑酯</value>
+			<value description="name">润滑酯</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-57</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">液压油</value>
+			<value description="name">液压油</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-58</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">渗透检验</value>
+			<value description="name">渗透检验</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-59</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">灯具</value>
+			<value description="name">灯具</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-60</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">热处理</value>
+			<value description="name">热处理</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-61</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">煤碳</value>
+			<value description="name">煤碳</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-62</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">物品</value>
+			<value description="name">物品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-63</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">玻璃</value>
+			<value description="name">玻璃</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-64</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">电子件</value>
+			<value description="name">电子件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-65</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">电机</value>
+			<value description="name">电机</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-66</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">电气控制</value>
+			<value description="name">电气控制</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-67</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">电线</value>
+			<value description="name">电线</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-68</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">电脑</value>
+			<value description="name">电脑</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-69</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">石墨</value>
+			<value description="name">石墨</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-70</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">石墨环</value>
+			<value description="name">石墨环</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-71</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">磨具磨料</value>
+			<value description="name">磨具磨料</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-72</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">管件</value>
+			<value description="name">管件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-73</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">管阀</value>
+			<value description="name">管阀</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-74</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">紧固件</value>
+			<value description="name">紧固件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-75</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">聚氨酯</value>
+			<value description="name">聚氨酯</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-76</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">自动化仪表</value>
+			<value description="name">自动化仪表</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-77</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">蓝德友邦机械</value>
+			<value description="name">蓝德友邦机械</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-78</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">设备</value>
+			<value description="name">设备</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-79</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">设计单位</value>
+			<value description="name">设计单位</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-80</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">货架</value>
+			<value description="name">货架</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-81</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">轴承</value>
+			<value description="name">轴承</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-82</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">辅助密封</value>
+			<value description="name">辅助密封</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-83</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">酸洗</value>
+			<value description="name">酸洗</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-84</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">钛材</value>
+			<value description="name">钛材</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-85</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">铆焊机加</value>
+			<value description="name">铆焊机加</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-86</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">锯条</value>
+			<value description="name">锯条</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-87</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">锻造</value>
+			<value description="name">锻造</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-88</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">防护服</value>
+			<value description="name">防护服</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-89</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">隔断系统墙</value>
+			<value description="name">隔断系统墙</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-90</value>
+			<value description="unioncode_field">providerType</value>
+			<value description="code">-</value>
+			<value description="name">-</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+
+		<!-- 开户银行 -101到-106 -->
+		<row>
+			<value description="id">-101</value>
+			<value description="unioncode_field">workerAccountName</value>
+			<value description="code">中国工商银行</value>
+			<value description="name">中国工商银行</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-102</value>
+			<value description="unioncode_field">workerAccountName</value>
+			<value description="code">中国农业银行</value>
+			<value description="name">中国农业银行</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-103</value>
+			<value description="unioncode_field">workerAccountName</value>
+			<value description="code">中国建设银行</value>
+			<value description="name">中国建设银行</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-104</value>
+			<value description="unioncode_field">workerAccountName</value>
+			<value description="code">中国光大银行</value>
+			<value description="name">中国光大银行</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-105</value>
+			<value description="unioncode_field">workerAccountName</value>
+			<value description="code">中国邮政储蓄银行</value>
+			<value description="name">中国邮政储蓄银行</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-106</value>
+			<value description="unioncode_field">workerAccountName</value>
+			<value description="code">交通银行</value>
+			<value description="name">交通银行</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+		<!-- 产品分类 -112到-170 -->
+		<row>
+			<value description="id">-112</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">传动套</value>
+			<value description="name">传动套</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-113</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">刀具</value>
+			<value description="name">刀具</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-114</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">办公用品</value>
+			<value description="name">办公用品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-115</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">压力容器</value>
+			<value description="name">压力容器</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-116</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">原材料</value>
+			<value description="name">原材料</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-117</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">喷涂</value>
+			<value description="name">喷涂</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-118</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">图纸</value>
+			<value description="name">图纸</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-119</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">堆焊</value>
+			<value description="name">堆焊</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-120</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">填料密封</value>
+			<value description="name">填料密封</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-121</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">密封件</value>
+			<value description="name">密封件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-122</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">导热油</value>
+			<value description="name">导热油</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-123</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">工作制服</value>
+			<value description="name">工作制服</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-124</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">工作台柜</value>
+			<value description="name">工作台柜</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-125</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">平台车</value>
+			<value description="name">平台车</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-126</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">平磨</value>
+			<value description="name">平磨</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-127</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">开关仪表</value>
+			<value description="name">开关仪表</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-128</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">弹簧</value>
+			<value description="name">弹簧</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-129</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">抛光</value>
+			<value description="name">抛光</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-130</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">换热器</value>
+			<value description="name">换热器</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-131</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">插键槽</value>
+			<value description="name">插键槽</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-132</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">有色金属</value>
+			<value description="name">有色金属</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-133</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">机加工</value>
+			<value description="name">机加工</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-134</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">机械</value>
+			<value description="name">机械</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-135</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">柔性石墨</value>
+			<value description="name">柔性石墨</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-136</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">标准件</value>
+			<value description="name">标准件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-137</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">标牌</value>
+			<value description="name">标牌</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-138</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">橡胶件</value>
+			<value description="name">橡胶件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-139</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">橡胶制品</value>
+			<value description="name">橡胶制品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-140</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">泵维修</value>
+			<value description="name">泵维修</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-141</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">液压油</value>
+			<value description="name">液压油</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-142</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">渗透检验</value>
+			<value description="name">渗透检验</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-143</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">热处理</value>
+			<value description="name">热处理</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-144</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">焊条</value>
+			<value description="name">焊条</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-145</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">物品</value>
+			<value description="name">物品</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-146</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">电子</value>
+			<value description="name">电子</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-147</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">电火花</value>
+			<value description="name">电火花</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-148</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">电缆</value>
+			<value description="name">电缆</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-149</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">电脑</value>
+			<value description="name">电脑</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-150</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">电镀</value>
+			<value description="name">电镀</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-151</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">石化</value>
+			<value description="name">石化</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-152</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">石墨环</value>
+			<value description="name">石墨环</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-153</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">碳化硅</value>
+			<value description="name">碳化硅</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-154</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">碳石墨</value>
+			<value description="name">碳石墨</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-155</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">管件</value>
+			<value description="name">管件</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-156</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">管件阀门</value>
+			<value description="name">管件阀门</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-157</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">线切割</value>
+			<value description="name">线切割</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-158</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">维修</value>
+			<value description="name">维修</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-159</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">货架</value>
+			<value description="name">货架</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-160</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">起重机</value>
+			<value description="name">起重机</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-161</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">软片</value>
+			<value description="name">软片</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-162</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">轴承</value>
+			<value description="name">轴承</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-163</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">酸洗</value>
+			<value description="name">酸洗</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-164</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">金钢石砂轮</value>
+			<value description="name">金钢石砂轮</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-165</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">钢材</value>
+			<value description="name">钢材</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-166</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">铸造</value>
+			<value description="name">铸造</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-167</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">锻造</value>
+			<value description="name">锻造</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-168</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">镀膜</value>
+			<value description="name">镀膜</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-169</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">防爆电器</value>
+			<value description="name">防爆电器</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-170</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">隔断</value>
+			<value description="name">隔断</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+		<row>
+			<value description="id">-171</value>
+			<value description="unioncode_field">productCategories</value>
+			<value description="code">-</value>
+			<value description="name">-</value>
+			<value description="version">0</value>
+			<value description="del_flg">0</value>
+		</row>
+
+	</table>
+</dataset>
