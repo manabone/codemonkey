@@ -13,6 +13,7 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 import org.json.JSONObject;
 
@@ -48,6 +49,7 @@ public class AbsEntity implements Serializable{
 	
     @Label("description")
     @Audited
+    @Type(type="text")
 	private String description;
 	
 	@Version

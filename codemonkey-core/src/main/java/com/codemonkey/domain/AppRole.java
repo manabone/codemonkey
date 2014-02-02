@@ -46,6 +46,13 @@ public class AppRole extends AbsEE {
 	@NotAudited
 	private Set<PowerTree> powerTrees = new HashSet<PowerTree>();
 	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="app_role_function_node", 
+		joinColumns={@JoinColumn(name="app_role")},
+		inverseJoinColumns={@JoinColumn(name="function_node")})
+	@NotAudited
+	private Set<FunctionNode> functionNodes = new HashSet<FunctionNode>();
+	
 	@Override
 	public JSONObject detailJson() {
 		JSONObject jo = super.detailJson();
@@ -64,6 +71,14 @@ public class AppRole extends AbsEE {
 			}
 		}
 		jo.put("cmpPermissions", cmpPermissionsJa);
+		
+		JSONArray functionNodesJa = new JSONArray();
+		if(CollectionUtils.isNotEmpty(functionNodes)){
+			for(FunctionNode p : functionNodes){
+				functionNodesJa.put(p.detailJson());
+			}
+		}
+		jo.put("functionNodes", functionNodesJa);
 		
 		return jo;
 	}
@@ -122,6 +137,14 @@ public class AppRole extends AbsEE {
 	
 	public Set<CmpPermission> getCmpPermissions(){
 		return cmpPermissions;
+	}
+
+	public Set<FunctionNode> getFunctionNodes() {
+		return functionNodes;
+	}
+
+	public void setFunctionNodes(Set<FunctionNode> functionNodes) {
+		this.functionNodes = functionNodes;
 	}
 	
 }

@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.codemonkey.domain.Foo;
+import com.codemonkey.domain.IEntity;
 import com.codemonkey.service.GenericService;
 import com.codemonkey.utils.EnumUtils;
 
 @Controller
 @RequestMapping("/ext/enum/**")
-public class EnumController extends AbsExtController<Foo> {
+public class EnumController extends AbsExtController<IEntity> {
 	
 	@RequestMapping("read")
 	@ResponseBody
@@ -46,7 +46,7 @@ public class EnumController extends AbsExtController<Foo> {
 	}
 	
 	@Override
-	protected GenericService<Foo> service() {
+	protected GenericService<IEntity> service() {
 		return null;
 	}
 

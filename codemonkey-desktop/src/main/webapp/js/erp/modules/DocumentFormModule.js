@@ -31,7 +31,7 @@ Ext.define('erp.modules.DocumentFormModule', {
     orderLineColumns : function(){ 
     	return [
     	        {header: 'id',  dataIndex: 'id',  flex: 1 , hidden : true},
-    	        {header: 'item_text' ,  dataIndex: 'item_text' , hidden : true},
+    	        {header: 'item_text' ,  dataIndex: 'item_text' , hidden : false},
     	        
     	        ExtUtils.searchingColumn({
     	        	header : 'item' ,  

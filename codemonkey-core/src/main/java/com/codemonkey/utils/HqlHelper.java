@@ -5,12 +5,12 @@ package com.codemonkey.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.ManyToMany;
@@ -116,19 +116,19 @@ public final class HqlHelper {
             return buffer.toString();
         }
 		
-		List<String> joinsProps = new ArrayList<String>();
+		Map<String , String> joinsProps = new HashMap<String , String>();
 		
 		buildLeftJoins(buffer , joinsProps , query , type);
 		
 		buffer.append(" where 1=1  ");
 		
-		Collections.sort(joinsProps , new Comparator<String>(){
-			@Override
-			public int compare(String o1, String o2) {
-				return o1.length() > o2.length() ? -1 : 1;
-			}
-			
-		});
+//		Collections.sort(joinsProps , new Comparator<String>(){
+//			@Override
+//			public int compare(String o1, String o2) {
+//				return o1.length() > o2.length() ? -1 : 1;
+//			}
+//			
+//		});
 		
 		buffer.append(findByToJPQL(query , joinsProps));
 		buffer.append(orderByToJPQL(query , joinsProps));
@@ -137,7 +137,7 @@ public final class HqlHelper {
 	}
 	
 	
-	private static void buildLeftJoins(StringBuffer buffer, List<String> joinsProps, String query , Class<?> type) {
+	private static void buildLeftJoins(StringBuffer buffer, Map<String , String> joinsProps, String query , Class<?> type) {
 
 		Set<String> props = new HashSet<String>();
 		
@@ -177,7 +177,7 @@ public final class HqlHelper {
 		}
 	}
 
-	private static void buildLeftJoin(String prop, Class<?> type , StringBuffer buffer , List<String> joinsProps , String prefix) {
+	private static void buildLeftJoin(String prop, Class<?> type , StringBuffer buffer , Map<String , String> joinsProps , String prefix) {
 		
 		if(prop.indexOf('.') < 0){
 			Field field = ClassHelper.getFieldFromClazz(type, prop);
@@ -193,7 +193,7 @@ public final class HqlHelper {
 				 buffer.append(" as ");
 				 buffer.append(prop);
 				 
-				 joinsProps.add(prop);
+				 joinsProps.put(prefix + prop , prop);
 			}
 			
 		}else{
@@ -204,7 +204,7 @@ public final class HqlHelper {
 			
 			if(type1.equals(List.class) || type1.equals(Set.class)){
 				
-				if(!joinsProps.contains(prop0)){
+				if(joinsProps.get(prop0) == null){
 					 buffer.append(LEFT_JOIN);
 					 buffer.append(prefix);
 					 buffer.append(prop0);
@@ -212,11 +212,10 @@ public final class HqlHelper {
 					 buffer.append(prop0);
 					 
 					 if("E.".equals(prefix)){
-						 joinsProps.add(prop0);
+						 joinsProps.put(prop0, prop0);
 					 }else{
-						 joinsProps.add(prefix + prop0);
+						 joinsProps.put(prefix + prop0 , prop0);
 					 }
-					 
 					
 				}
 			}else{
@@ -233,7 +232,7 @@ public final class HqlHelper {
 					 buffer.append(" as ");
 					 buffer.append(prop0);
 					 
-					 joinsProps.add(prop0);
+					 joinsProps.put(prefix + prop , prop);
 					 
 					 buildLeftJoin(prop1 , type1 , buffer , joinsProps , prop0 + ".");
 				}else{
@@ -248,7 +247,7 @@ public final class HqlHelper {
 		return StringUtils.uncapitalize(queryString.split("_")[0]);
 	}
 	
-	private static String orderByToJPQL(String query , List<String> joinsProps) {
+	private static String orderByToJPQL(String query , Map<String , String> joinsProps) {
 		
 		StringBuffer jpql = new StringBuffer("");
 		
@@ -448,8 +447,8 @@ public final class HqlHelper {
 		JSONArray sortArray = queryAndSort.optJSONArray(ExtConstant.SORT);
 		
 		if(sortArray != null){
+			buffer.append(ORDER_BY);
 			for(int i = 0 ; i < sortArray.length() ; i++){
-				buffer.append(ORDER_BY);
 				JSONObject sort = sortArray.getJSONObject(i);
 				
 				String prop = sort.getString("property");
@@ -471,7 +470,7 @@ public final class HqlHelper {
 		return buffer.toString();
 	}
 	
-	private static String findByToJPQL(String query , List<String> joinsProps) {
+	private static String findByToJPQL(String query , Map<String , String> joinsProps) {
 
 		String conditions = "";
 		String findBy = query;
@@ -498,7 +497,7 @@ public final class HqlHelper {
 	}
 
 
-	private static String extractHql(List<String> joinsProps, String part) {
+	private static String extractHql(Map<String , String> joinsProps, String part) {
 		
 		StringBuffer jpql = new StringBuffer();
 		
@@ -572,18 +571,26 @@ public final class HqlHelper {
 		return jpql.toString();
 	}
 	
-	private static String extractProp(String part, String end , List<String> joinsProps) {
+	private static String extractProp(String part, String end , Map<String , String> joinsProps) {
 		String prop = part.substring(0, part.length() - end.length());
-        prop = StringUtils.uncapitalize(prop);
-        
-        if(CollectionUtils.isNotEmpty(joinsProps)){
-        	for(String joinsProp : joinsProps){
-        		if(prop.startsWith(joinsProp + ".")){
-        			String[] props = prop.split("\\.");
-        			return props[props.length - 2] + "." +props[props.length - 1];
-        		}
-        	}
-        }
+		prop = StringUtils.uncapitalize(prop);
+		
+		if(prop.indexOf('.') > 0){
+			
+			String prop2 = prop;
+			String[] prop2Array = prop2.split("\\.");
+			do{
+	            if(joinsProps.get(prop2) != null){
+	            	return prop.replace(prop2 , joinsProps.get(prop2));
+	            }else if(prop2.lastIndexOf('.') > 0){
+	            	prop2 = prop2.substring(0 , prop2.lastIndexOf('.'));
+	            }else if(prop2.lastIndexOf('.') <= 0){
+	            	break;
+	            }
+	        }while(prop2Array.length >= 1);
+		}else if(joinsProps.get(prop) != null){
+        	return joinsProps.get(prop);
+		}	
         
         return "E." + prop;
     }

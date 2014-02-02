@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,8 @@ import com.codemonkey.domain.IEntity;
 import com.codemonkey.domain.UrlPermission;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.utils.ExtConstant;
-import com.codemonkey.utils.SysUtils;
 
-
+@Controller
 public abstract class AbsFormExtController<T extends IEntity> extends AbsExtController<T>{
 
 	public static final long NEW_ENTITY_ID = -1;
@@ -29,8 +29,8 @@ public abstract class AbsFormExtController<T extends IEntity> extends AbsExtCont
 	// ----------------------
 	@RequestMapping("edit/{id}")
 	public String edit(@PathVariable(ExtConstant.ID) Long id, ModelMap modelMap , HttpSession session) {
-		modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
 		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session).put(ExtConstant.ID, id));
+		modelMap.addAttribute("pageView", getType().getSimpleName() + "FormView");
 		return ExtConstant.EE_INDEX;
 	}
 	

@@ -2,10 +2,10 @@ package com.codemonkey.erp.domain;
 
 import javax.persistence.Entity;
 
-import com.codemonkey.domain.AbsMM;
+import com.codemonkey.domain.AbsEntity;
 
 @Entity
-public class Province  extends AbsMM {
+public class Province  extends AbsEntity {
 
 	/**
 	 * 

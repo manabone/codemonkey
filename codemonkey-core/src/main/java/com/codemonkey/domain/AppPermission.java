@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 @Audited
 @MappedSuperclass
-public class AppPermission extends AbsMM{
+public class AppPermission extends AbsEE{
 
 	/**
 	 * 

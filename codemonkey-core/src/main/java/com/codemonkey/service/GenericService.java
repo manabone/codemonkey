@@ -39,6 +39,8 @@ public interface GenericService<T> extends Converter<String, T> {
 
 	T doSave(JSONObject body , CustomConversionService ccService);
 	
+	void doBatchedSave(JSONObject body, CustomConversionService ccService);
+	
 	T buildEntity(JSONObject params , CustomConversionService ccService);
 	
 	T createEntity();

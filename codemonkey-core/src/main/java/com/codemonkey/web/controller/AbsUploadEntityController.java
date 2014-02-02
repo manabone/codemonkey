@@ -33,6 +33,9 @@ import com.codemonkey.utils.ResourceUtils;
 @Controller
 public abstract class AbsUploadEntityController<T extends AbsUploadEntity> extends AbsExtController<T> {
 
+	public static final int TEN_THOUSAND = 10000;
+	public static final String UPLOAD_FILE = "uploadfile";
+	
 	@Autowired private ResourceUtils resourceUtils;
 	
 	/**
@@ -89,9 +92,9 @@ public abstract class AbsUploadEntityController<T extends AbsUploadEntity> exten
 			outputStream = new FileOutputStream(filePath);
 
 			int readBytes = 0;
-			byte[] buffer = new byte[UploadFileController.TEN_THOUSAND];
+			byte[] buffer = new byte[AbsUploadEntityController.TEN_THOUSAND];
 			while ((readBytes = inputStream.read(buffer, 0,
-					UploadFileController.TEN_THOUSAND)) != -1) {
+					AbsUploadEntityController.TEN_THOUSAND)) != -1) {
 				outputStream.write(buffer, 0, readBytes);
 			}
 			outputStream.close();

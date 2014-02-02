@@ -3,7 +3,7 @@ package com.codemonkey.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class SecurityComponent extends AbsMM{
+public class SecurityComponent extends AbsEE{
 
 	/**
 	 * 

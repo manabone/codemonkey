@@ -1,8 +1,5 @@
 package com.codemonkey.utils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang.StringUtils;
 /**
  * 类描述：正则验证类型
@@ -22,9 +19,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^[a-z0-9_+.-]+@([a-z0-9-]+.)+[a-z0-9]{2,4}");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.EMAIL_REG, value);
 			}
 			return true;
 		}
@@ -37,16 +32,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-			//	Pattern pattern = Pattern.compile("^\\d{15}|(\\d{17}[0-9xX])");
-				
-				Pattern pattern = Pattern.compile(
-						"(^[1-9]\\d{5}[12]\\d{3}((01|03|05|07|08|10|12)(0[1-9]|[1-2]\\d|3[0-1])|(04|06|09|11)(0[1-9]|[1-2]\\d|30)|02(0[1-9]|[1-2]\\d))\\d{3}[0-9Xx]$)|" + 		//18闰年出生日期的
-						"(^[1-9]\\d{5}[12]\\d{3}((01|03|05|07|08|10|12)(0[1-9]|[1-2]\\d|3[0-1])|(04|06|09|11)(0[1-9]|[1-2]\\d|30)|02(0[1-9]|1\\d|2[0-8]))\\d{3}[0-9Xx]$)|" +	//18平年出生日期的
-						"(^[1-9]\\d{5}\\d{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2]\\d|3[0-1])|(04|06|09|11)(0[1-9]|[1-2]\\d|30)|02(0[1-9]|[1-2]\\d))\\d{3}$)|" +				//15闰年出生日期的
-						"(^[1-9]\\d{5}\\d{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2]\\d|3[0-1])|(04|06|09|11)(0[1-9]|[1-2]\\d|30)|02(0[1-9]|1\\d|2[0-8]))\\d{3}$)");				//15平年出生日期的
-				
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.ID_CARD_REG, value);
 			}
 			return true;
 		}
@@ -59,9 +45,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("(^((\\(\\d{3}\\))|(\\d{3}\\-)|(\\(\\+\\d{2}\\)))[12][03458]\\d{9}$)|(^[12][03458]\\d{9}$)");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.MOBILE_PHONE_REG, value);
 			}
 			return true;
 		}
@@ -74,9 +58,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("(^[0]\\d{2,3}-\\d{7,8}$)");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.FIX_PHONE_REG, value);
 			}
 			return true;
 		}
@@ -99,9 +81,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^\\d{4}$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.GROUP_PHONE_REG, value);
 			}
 			return true;
 		}
@@ -114,9 +94,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^\\d{3,4}$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.EXTENSION_PHONE_REG, value);
 			}
 			return true;
 		}
@@ -129,9 +107,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^\\w+$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.NUM_LETTER_UNDERLINE_REG, value);
 			}
 			return true;
 		}
@@ -144,9 +120,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^[a-z0-9A-Z]+$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.NUM_LETTER_REG, value);
 			}
 			return true;
 		}
@@ -159,9 +133,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^[A-Z]+$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.CAPITAL_LETTER_REG, value);
 			}
 			return true;
 		}
@@ -174,9 +146,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^[0-9]+((\\.{1}?[0-9]{1,13})|(\\.{0}))?$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.NON_REAL_NUM_REG, value);
 			}
 			return true;
 		}
@@ -189,9 +159,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^\\d+$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.NON_INT_REG, value);
 			}
 			return true;
 		}
@@ -204,9 +172,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^[0-9]*[1-9][0-9]*$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.POS_INT_REG, value);
 			}
 			return true;
 		}
@@ -219,9 +185,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^(2[5][0-5]|2[0-4]\\d|1\\d{2}|\\d{1,2})\\.(25[0-5]|2[0-4]\\d|1\\d{2}|\\d{1,2})\\.(25[0-5]|2[0-4]\\d|1\\d{2}|\\d{1,2})\\.(25[0-5]|2[0-4]\\d|1\\d{2}|\\d{1,2})$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.IP_REG, value);
 			}
 			return true;
 		}
@@ -234,9 +198,7 @@ public enum ValidateType {
 		@Override
 		public boolean validate(String value) {
 			if(StringUtils.isNotBlank(value)){
-				Pattern pattern = Pattern.compile("^[0-9]{1}(\\d){5}$");
-				Matcher matcher = pattern.matcher(value);
-				return matcher.matches();
+				return RegUtils.matches(RegUtils.POSTCODE_REG, value);
 			}
 			return true;
 		}

@@ -54,9 +54,9 @@ public class ResourceUtils {
 		return msg(key, null, SysUtils.getCurrentLocale());
 	}
 
-	public String msg(String key, Object[] args, Locale locale) {
+	public String msg(String key, Object[] args, String locale) {
 		try {
-			return  messageBundle.getMessage(key, args, locale);
+			return  messageBundle.getMessage(key, args, new Locale(locale));
 		} catch (NoSuchMessageException e) {
 			return "?" + key + "?";
 		} 

@@ -9,6 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.codemonkey.domain.AppPermission;
-import com.codemonkey.domain.EE;
 import com.codemonkey.domain.IEntity;
 import com.codemonkey.security.AppResourceHelper;
 import com.codemonkey.utils.ExtConstant;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.view.ExcelView;
 
-
-public abstract class AbsListExtController<T extends EE> extends AbsExtController<T>{
+@Controller
+public abstract class AbsListExtController<T extends IEntity> extends AbsExtController<T>{
 
 	
 	//----------------------
@@ -41,10 +41,11 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
 	//----------------------
 	// list
 	//----------------------
-	@RequestMapping("list")
-    public String list(ModelMap modelMap , HttpSession session) {
+	@RequestMapping("show")
+    public String show(ModelMap modelMap , HttpSession session) {
     	modelMap.addAttribute(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
 		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
+		modelMap.addAttribute("pageView", getType().getSimpleName() + "ListView");
     	return ExtConstant.EE_INDEX;
     }
 
@@ -79,10 +80,11 @@ public abstract class AbsListExtController<T extends EE> extends AbsExtControlle
     		total = service().countBy("name_Like" , '%' + query + '%');
     	}else if(sort != null || queryInfo != null){
     		JSONObject queryAndSort = new JSONObject().put(ExtConstant.SORT, sort).put(ExtConstant.QUERY, queryInfo);
-    		list = service().findByQueryInfo(queryAndSort , start , limit);
     		total = service().countByQueryInfo(queryAndSort);
+    		if(total > 0){
+    			list = service().findByQueryInfo(queryAndSort , start , limit);
+    		}
     	}
-    	
     	return buildJson(list , total);
 	}
     

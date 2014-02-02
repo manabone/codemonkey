@@ -28,9 +28,9 @@ public final class ExtConstant {
 	
 	public static final String LOCALE = "locale";
 	
-	public static final String DEFAULT_LOCALE = "zh_cn";
+	public static final String DEFAULT_LOCALE = "zh_CN";
 	
-	public static final String DEFAULT_THEME = "classic";
+	public static final String DEFAULT_THEME = "gray";
 	
 	public static final String APP_ROOT = "/app/ext/";
 	
@@ -47,6 +47,12 @@ public final class ExtConstant {
 	public static final String POWER_TREES = "powerTrees";
 	
 	public static final String CURRENT_USER_ID = "currentUserId";
+	
+	public static final String CURRENT_MODULE = "module";
+	
+	public static final String RECORDS_TO_MODIFY = "recordsToModify";
+	
+	public static final String RECORDS_TO_DELETE = "recordsToDelete";
 
 	private ExtConstant(){}
 }

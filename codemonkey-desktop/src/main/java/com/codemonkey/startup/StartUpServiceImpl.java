@@ -22,7 +22,6 @@ import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.AppUser;
 import com.codemonkey.domain.PowerTree;
 import com.codemonkey.domain.SecurityComponent;
-import com.codemonkey.domain.Status;
 import com.codemonkey.service.AppPermissionService;
 import com.codemonkey.service.AppUserService;
 import com.codemonkey.service.PowerTreeService;
@@ -52,11 +51,6 @@ public class StartUpServiceImpl implements StartUpService {
 	private PowerTreeService powerTreeService;
 
 	private Logger logger = SysUtils.getLog(StartUpServiceImpl.class);
-
-	@PostConstruct
-	public void initEnumHolder() {
-		enumHolder.addEnum(Status.class);
-	}
 
 	/**
 	 * 方法描述：创建初始化用户

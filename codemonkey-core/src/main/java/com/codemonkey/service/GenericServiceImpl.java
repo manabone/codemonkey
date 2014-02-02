@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.StopWatch;
 import org.hibernate.SessionFactory;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,6 +141,27 @@ public abstract class GenericServiceImpl<T extends IEntity> extends AbsService
 		T t = buildEntity(body, ccService);
 		save(t);
 		return t;
+	}
+	
+	public void doBatchedSave(JSONObject body, CustomConversionService ccService){
+		
+		JSONArray recordsToModify = body.getJSONArray(ExtConstant.RECORDS_TO_MODIFY);
+		
+		JSONArray recordsToDelete = body.getJSONArray(ExtConstant.RECORDS_TO_DELETE);
+		
+		for(int i = 0 ; i < recordsToDelete.length() ; i++){
+			JSONObject params = recordsToDelete.getJSONObject(i);
+			
+			Long id = params.getLong(ExtConstant.ID);
+			if(id != null){
+				delete(id);
+			}
+		}
+		
+		for(int i = 0 ; i < recordsToModify.length() ; i++){
+			JSONObject params = recordsToModify.getJSONObject(i);
+			doSave(params, ccService);
+		}
 	}
 
 	public boolean isUnique(T t, String query, Object... params) {

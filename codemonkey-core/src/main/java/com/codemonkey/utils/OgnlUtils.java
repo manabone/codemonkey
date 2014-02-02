@@ -41,5 +41,20 @@ public final class OgnlUtils {
 	    return value;
 	}
 	
+	public static String toFormatedDouble(String expressionString , Object obj){
+		return null;
+	}
+	
+	public static String toFormatedDouble(String expressionString , Object obj , String format){
+		return null;
+	}
+	
+	public static String toFormatedDate(String expressionString , Object obj){
+		return null;
+	}
+	
+	public static String toFormatedDate(String expressionString , Object obj , String format){
+		return null;
+	}
 	
 }

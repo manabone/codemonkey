@@ -2,8 +2,6 @@ package com.codemonkey.extcmp;
 
 import org.json.JSONObject;
 
-import com.codemonkey.utils.MMHelper;
-
 
 public class ExtSelect extends ExtFormField {
 
@@ -18,7 +16,7 @@ public class ExtSelect extends ExtFormField {
 	@Override
 	public JSONObject json(){
 		JSONObject jo = super.json();
-		jo.put("data", MMHelper.getEnmuDataByClazz(enumClazz));
+		jo.put("model", enumClazz.getSimpleName());
 		return jo;
 		
 	}	

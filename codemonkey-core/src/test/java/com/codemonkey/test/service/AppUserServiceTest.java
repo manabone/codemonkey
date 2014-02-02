@@ -11,7 +11,7 @@ import com.codemonkey.domain.AppUser;
 import com.codemonkey.service.AppRoleService;
 import com.codemonkey.service.AppUserService;
 
-public class AppUserServiceTest extends GenericServiceTest<AppUser>{
+public class AppUserServiceTest extends AbsServiceTest{
 
 	@Autowired AppUserService appUserService;
 	@Autowired AppRoleService appRoleService;

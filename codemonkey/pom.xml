@@ -6,17 +6,24 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
+		<module>../codemonkey-activiti</module>
+		<module>../codemonkey-core</module>
+		<module>../codemonkey-dbMigration</module>
+		<module>../codemonkey-desktop</module>
 		<!-- 
 		<module>../codemonkey-drools</module> 
 		-->
-		<module>../codemonkey-mybatis</module>
-		<module>../codemonkey-maven-plugin</module>
-		<module>../codemonkey-dbMigration</module>
-		<module>../codemonkey-core</module>
 		<module>../codemonkey-erp</module>
-		<module>../codemonkey-activiti</module>
-		<module>../codemonkey-jasper</module>
+		<module>../codemonkey-extjs</module>
 		<module>../codemonkey-ibatis</module>
+		<module>../codemonkey-jasper</module>
+		<!-- 
+		<module>../codemonkey-javascript</module>
+		-->
+		<module>../codemonkey-maven-plugin</module>
+		<module>../codemonkey-mybatis</module>
+		<module>../codemonkey-test</module>
+		<module>../codemonkey-webapp</module>
 	</modules>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -166,7 +173,7 @@
 		<aspectj.version>1.6.8</aspectj.version>
 		<slf4j.version>1.5.10</slf4j.version>
 		<javassist.version>3.9.0.GA</javassist.version>
-		<drools.version>5.2.0.Final</drools.version>
+		<drools.version>6.0.1.Final</drools.version>
 		<jbpm.version>5.1.0.Final</jbpm.version>
 		<activiti.version>5.9</activiti.version>
 		<servlet-api.version>2.5</servlet-api.version>

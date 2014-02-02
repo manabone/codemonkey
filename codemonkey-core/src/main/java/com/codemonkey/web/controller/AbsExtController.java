@@ -7,11 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import com.codemonkey.domain.AppPermission;
 import com.codemonkey.domain.IEntity;
@@ -23,8 +23,10 @@ import com.codemonkey.utils.ResourceUtils;
 import com.codemonkey.utils.SysUtils;
 import com.codemonkey.web.converter.CustomConversionService;
 
-
+@Controller
 public abstract class AbsExtController<T extends IEntity> extends AbsController {
+	
+//	private static final String MODULE = "module";
 	
 	private Class<?> type;
 	
@@ -54,26 +56,26 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 //		modelMap.addAttribute(ExtConstant.PAGE_DATA, getPageData(session));
 //    	return ExtConstant.INDEX;
 //    }
-
+	
 	protected JSONObject getPageData(HttpSession session) {
 		JSONObject pageData = new JSONObject();
-		List<String> fieldNames = ClassHelper.getAllFieldNames(type);
-		pageData.put(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
-		pageData.put("labels", labels(fieldNames));
+//		List<String> fieldNames = ClassHelper.getAllFieldNames(type);
+//		pageData.put("labels", labels(fieldNames));
+//		pageData.put(ExtConstant.THEME, SysUtils.getCurrentTheme(session));
 		return pageData;
 	}
 
-	private JSONObject labels(List<String> fieldNames) {
-		JSONObject labels = new JSONObject();
-		if(CollectionUtils.isNotEmpty(fieldNames)){
-			for(String fn : fieldNames){
-				String key = StringUtils.uncapitalize(type.getSimpleName()) + "." + fn;
-//				sysUtils.getAppSetting("setting.test");
-				labels.put(key , resourceUtils.msg(key));
-			}
-		}
-		return labels;
-	}
+//	private JSONObject labels(List<String> fieldNames) {
+//		JSONObject labels = new JSONObject();
+//		if(CollectionUtils.isNotEmpty(fieldNames)){
+//			for(String fn : fieldNames){
+//				String key = StringUtils.uncapitalize(type.getSimpleName()) + "." + fn;
+////				sysUtils.getAppSetting("setting.test");
+//				labels.put(key , resourceUtils.msg(key));
+//			}
+//		}
+//		return labels;
+//	}
 	
 	public String handleUpdate(String body) {
 		
@@ -81,7 +83,7 @@ public abstract class AbsExtController<T extends IEntity> extends AbsController 
 		
 		T t = service().doSave(params , getCcService());
 		
-		return result(t);
+		return result(service().get(t.getId()));
 	}
 	
 	public String result(T t) {

@@ -8,11 +8,11 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -28,6 +28,7 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -41,7 +42,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
-import com.codemonkey.domain.AbsEntity;
 import com.codemonkey.domain.AppUser;
 
 /**
@@ -57,19 +57,21 @@ public class SysUtils {
 	public static Logger getLog(Class<?> clazz) {
 		return Logger.getLogger(clazz);
 	}
-
-	/**
-	 * 方法描述：取得实体键值
-	 * 
-	 * @param: entity 实体
-	 * @return: 实体键值
-	 * @author: wy
-	 */
-	public static String idString(AbsEntity entity) {
-		if (entity != null) {
-			return entity.getId().toString();
-		}
-		return "";
+	
+	public static boolean isEmpty(String s){
+		return StringUtils.isBlank(s);
+	}
+	
+	public static boolean isNotEmpty(String s){
+		return StringUtils.isNotBlank(s);
+	}
+	
+	public static boolean isEmpty(Collection<?> coll){
+		return CollectionUtils.isEmpty(coll);
+	}
+	
+	public static boolean isNotEmpty(Collection<?> coll){
+		return CollectionUtils.isNotEmpty(coll);
 	}
 
 	/**
@@ -132,10 +134,10 @@ public class SysUtils {
 	 * @return: 本地化
 	 * @author: wy
 	 */
-	public static Locale getCurrentLocale() {
-		Locale locale = (Locale) SysUtils.getAttribute(ExtConstant.LOCALE);
-		if (locale == null) {
-			locale = new Locale(ExtConstant.DEFAULT_LOCALE);
+	public static String getCurrentLocale() {
+		String locale = (String)SysUtils.getAttribute(ExtConstant.LOCALE);
+		if(StringUtils.isBlank(locale)){
+			return ExtConstant.DEFAULT_LOCALE;
 		}
 		return locale;
 	}
@@ -226,7 +228,11 @@ public class SysUtils {
 		} else {
 			throw new DataSetException("unsupport data type");
 		}
-		return dataSet;
+		
+		ReplacementDataSet ds = new ReplacementDataSet(dataSet);
+		ds.addReplacementObject("[NULL]", null);
+		
+		return ds;
 	}
 
 	// public static void sendEmail(String subject , String msg , String to){

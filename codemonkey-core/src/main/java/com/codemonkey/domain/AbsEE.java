@@ -3,7 +3,7 @@ package com.codemonkey.domain;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class AbsEE extends AbsEntity implements EE {
+public abstract class AbsEE extends AbsEntity implements IEntity {
 
 	/**
 	 * 
